@@ -1,7 +1,7 @@
 ﻿using CK.Setup;
 using CK.SqlServer.Setup;
 
-namespace CKS.Data
+namespace ITI.Human.Data
 {
     [SqlPackage(
     ResourcePath = "Res",
