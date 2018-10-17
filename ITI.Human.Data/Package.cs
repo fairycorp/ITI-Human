@@ -5,14 +5,13 @@ namespace ITI.Human.Data
 {
     [SqlPackage(
     ResourcePath = "Res",
-    Schema = "CK",
+    Schema = "ITIH",
     Database = typeof(SqlDefaultDatabase),
     ResourceType = typeof(Package)),
     Versions("1.0.0")]
     public abstract class Package : SqlPackage
     {
-        void StobjConstruct(
-            )
+        void StobjConstruct()
         {
 
         }

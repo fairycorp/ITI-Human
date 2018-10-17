@@ -8,6 +8,36 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Res\Model\ITIH.OrderedProductTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.OrderTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.ProductTable.Install.1.0.0.sql" />
+    <None Remove="Res\sOrderCreate.sql" />
+    <None Remove="Res\sOrderedProductCreate.sql" />
+    <None Remove="Res\sProductCreate.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Res\Model\ITIH.OrderedProductTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\Model\ITIH.OrderTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\Model\ITIH.ProductTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sOrderCreate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sOrderedProductCreate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sProductCreate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CK.DB.Auth" Version="1.0.1-C0028-develop" />
   </ItemGroup>
 
