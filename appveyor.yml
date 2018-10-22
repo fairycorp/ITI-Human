@@ -10,3 +10,4 @@ environment:
 build_script:
   - dotnet run --project ITI.Human.CodeCakeBuilder -nointeraction
 test: off
+
