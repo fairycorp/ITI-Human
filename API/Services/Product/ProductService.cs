@@ -40,11 +40,11 @@ namespace API.Services.Product
         }
 
         /// <summary>
-        /// Gets a particular Product.
+        /// Gets a particular Product by its id.
         /// </summary>
         /// <param name="productId">Product id.</param>
         /// <returns></returns>
-        public async Task<PublicDataProduct> Get(int productId)
+        public async Task<PublicDataProduct> GetById(int productId)
         {
             using (var ctx = new SqlStandardCallContext())
             {
@@ -55,6 +55,26 @@ namespace API.Services.Product
                         FROM ITIH.tProduct
                         WHERE ProductId = @id;",
                         new { id = productId }
+                    );
+            }
+        }
+
+        /// <summary>
+        /// Gets a particular Product by its name.
+        /// </summary>
+        /// <param name="productName">Product name.</param>
+        /// <returns></returns>
+        public async Task<PublicDataProduct> GetByName(string productName)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await ctx[ProductTable].Connection
+                    .QueryFirstOrDefaultAsync<PublicDataProduct>(
+                        @"SELECT
+                            *
+                        FROM ITIH.tProduct
+                        WHERE [Name] = @nM;",
+                        new { nM = productName }
                     );
             }
         }

@@ -19,17 +19,29 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll() 
+        public async Task<IActionResult> GetAll()
             => Ok(await Service.GetAll());
 
-        [HttpGet("id/{productId}")]
-        public async Task<IActionResult> Get(int productId)
+        [HttpGet("get/i/{productId}")]
+        public async Task<IActionResult> GetById(int productId)
         {
-            var check = 
+            var check =
                 Guard.IsAdmissible(nameof(productId), productId);
 
             if (check.Code == Status.Success)
-                return Ok(await Service.Get(productId));
+                return Ok(await Service.GetById(productId));
+
+            return BadRequest(check.Info);
+        }
+
+        [HttpPost("get/n")]
+        public async Task<IActionResult> GetByName([FromBody] ProductGettingViewModel product)
+        {
+            var check =
+                Guard.IsAdmissible(nameof(product.Name), product.Name);
+
+            if (check.Code == Status.Success)
+                return Ok(await Service.GetByName(product.Name));
 
             return BadRequest(check.Info);
         }
