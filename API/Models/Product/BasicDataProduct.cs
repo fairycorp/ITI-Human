@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents what a product is.
     /// </summary>
-    public class PublicDataProduct
+    public class BasicDataProduct
     {
         /// <summary>
         /// Product id.

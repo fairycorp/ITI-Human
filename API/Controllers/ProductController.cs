@@ -20,7 +20,7 @@ namespace API.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
-            => Ok(await Service.GetAll());
+            => Ok((await Service.GetAll()).Content);
 
         [HttpGet("get/i/{productId}")]
         public async Task<IActionResult> GetById(int productId)
@@ -29,19 +29,19 @@ namespace API.Controllers
                 Guard.IsAdmissible(nameof(productId), productId);
 
             if (check.Code == Status.Success)
-                return Ok(await Service.GetById(productId));
+                return Ok((await Service.GetById(productId)).Content);
 
             return BadRequest(check.Info);
         }
 
         [HttpPost("get/n")]
-        public async Task<IActionResult> GetByName([FromBody] ProductGettingViewModel product)
+        public async Task<IActionResult> GetByName([FromBody] ProductNameGettingViewModel product)
         {
             var check =
                 Guard.IsAdmissible(nameof(product.Name), product.Name);
 
             if (check.Code == Status.Success)
-                return Ok(await Service.GetByName(product.Name));
+                return Ok((await Service.GetByName(product.Name)).Content);
 
             return BadRequest(check.Info);
         }

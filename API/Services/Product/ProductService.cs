@@ -2,10 +2,11 @@
 using CK.SqlServer;
 using Dapper;
 using ITI.Human.Data;
-using System;
-using System.Collections.Generic;
+using Stall.Guard.System;
 using System.Linq;
 using System.Threading.Tasks;
+
+using static API.Services.ResultFactory;
 
 namespace API.Services.Product
 {
@@ -24,18 +25,18 @@ namespace API.Services.Product
         /// <summary>
         /// Gets all Products from database.
         /// </summary>
-        /// <returns>The PublicDataProduct IReadOnlyCollection.</returns>
-        public async Task<IReadOnlyCollection<PublicDataProduct>> GetAll()
+        /// <returns>Success result where result content is a BasicDataProduct Collection.</returns>
+        public async Task<GuardResult> GetAll()
         {
             using (var ctx = new SqlStandardCallContext())
             {
                 var result = await ctx[ProductTable].Connection
-                    .QueryAsync<PublicDataProduct>(
+                    .QueryAsync<BasicDataProduct>(
                         @"SELECT
                             *
                         FROM ITIH.tProduct;"
                     );
-                return result.ToArray();
+                return Success(result.ToArray());
             }
         }
 
@@ -43,19 +44,21 @@ namespace API.Services.Product
         /// Gets a particular Product by its id.
         /// </summary>
         /// <param name="productId">Product id.</param>
-        /// <returns></returns>
-        public async Task<PublicDataProduct> GetById(int productId)
+        /// <returns>Success result where result content is a single BasicDataProduct.</returns>
+        public async Task<GuardResult> GetById(int productId)
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                return await ctx[ProductTable].Connection
-                    .QueryFirstOrDefaultAsync<PublicDataProduct>(
+                return Success(
+                    await ctx[ProductTable].Connection
+                    .QueryFirstOrDefaultAsync<BasicDataProduct>(
                         @"SELECT
                             *
                         FROM ITIH.tProduct
                         WHERE ProductId = @id;",
                         new { id = productId }
-                    );
+                    )
+                );
             }
         }
 
@@ -63,19 +66,21 @@ namespace API.Services.Product
         /// Gets a particular Product by its name.
         /// </summary>
         /// <param name="productName">Product name.</param>
-        /// <returns></returns>
-        public async Task<PublicDataProduct> GetByName(string productName)
+        /// <returns>Success result where result content is a single BasicDataProduct.</returns>
+        public async Task<GuardResult> GetByName(string productName)
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                return await ctx[ProductTable].Connection
-                    .QueryFirstOrDefaultAsync<PublicDataProduct>(
+                return Success(
+                    await ctx[ProductTable].Connection
+                    .QueryFirstOrDefaultAsync<BasicDataProduct>(
                         @"SELECT
                             *
                         FROM ITIH.tProduct
                         WHERE [Name] = @nM;",
                         new { nM = productName }
-                    );
+                    )
+                );
             }
         }
     }

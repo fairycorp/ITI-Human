@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents what an ordered product is.
     /// </summary>
-    public class PublicDataOrderedProduct
+    public class BasicDataOrderedProduct
     {
         /// <summary>
         /// Ordered product id.

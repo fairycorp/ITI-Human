@@ -5,7 +5,7 @@ namespace API.Models.Order
     /// <summary>
     /// Represents what an order is.
     /// </summary>
-    public class PublicDataOrder
+    public class BasicDataOrder
     {
         /// <summary>
         /// Order id.
