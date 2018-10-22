@@ -12,7 +12,7 @@ namespace ITI.Human.Data.Tests.OrderSystemTests
         [Test]
         public void givenNotAdmissibleArguments_whenCreateProduct_shouldThrowSqlDetailedException()
         {
-            var pTable = CK.Core.StObjModelExtension.Obtain<ProductTable>(TestHelper.StObjMap.Default);
+            var pTable = CK.Core.StObjModelExtension.Obtain<ProductTable>(TestHelper.StObjMap.StObjs);
 
             using (var ctx = new SqlStandardCallContext())
             {
@@ -27,7 +27,7 @@ namespace ITI.Human.Data.Tests.OrderSystemTests
         [Test]
         public void givenAdmissibleArguments_whenCreateProduct_shouldReturnCreatedProductId()
         {
-            var pTable = CK.Core.StObjModelExtension.Obtain<ProductTable>(TestHelper.StObjMap.Default);
+            var pTable = CK.Core.StObjModelExtension.Obtain<ProductTable>(TestHelper.StObjMap.StObjs);
 
             using (var ctx = new SqlStandardCallContext())
             {
