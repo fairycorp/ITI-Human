@@ -78,13 +78,5 @@ namespace API.Services.Product
                     );
             }
         }
-
-        public async Task Create(string name, string desc, DateTime creationDate)
-        {
-            using (var ctx = new SqlStandardCallContext())
-            {
-                // ...
-            }
-        }
     }
 }
