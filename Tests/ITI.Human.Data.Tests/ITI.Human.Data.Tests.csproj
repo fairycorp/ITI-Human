@@ -5,9 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CK.DB.Actor" Version="3.0.0" />
-    <PackageReference Include="CK.DB.Tests.NUnit" Version="8.0.0" />
+    <PackageReference Include="CK.DB.Tests.NUnit" Version="8.0.1--0038-develop" />
     <PackageReference Include="NUnit.Runners.Net4" Version="2.6.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ITI.Human.Data\ITI.Human.Data.csproj" />
   </ItemGroup>
 
 </Project>

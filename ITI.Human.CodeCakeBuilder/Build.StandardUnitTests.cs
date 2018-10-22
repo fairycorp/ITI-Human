@@ -34,7 +34,7 @@ namespace CodeCake
                 if (net461 != null)
                 {
                     Cake.Information("Testing: {0}", net461);
-                    Cake.NUnit3(new[] { net461 }, new NUnit3Settings()
+                    Cake.NUnit(new[] { net461 }, new NUnitSettings()
                     {
                         Framework = "v4.5",
                         OutputFile = test.ProjectPath.CombineWithFilePath("TestResult.Net461.xml")
