@@ -3,13 +3,16 @@
   <Import Project="..\..\Common\Shared.props" />
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <OutputType>Exe</OutputType>
     <OriginProjectName>ITI.Human.Data.Tests</OriginProjectName>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\ITI.Human.Data\ITI.Human.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="NUnitLite" Version="3.10.1" />
     <PackageReference Include="CK.DB.Tests.NUnit" Version="6.0.1-C0036-develop" />

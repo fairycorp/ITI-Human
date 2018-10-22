@@ -21,7 +21,7 @@ namespace ITI.Human.Data.Tests.OrderSystemTests
         //            sut => oTable.Create(ctx, 0, 0, new System.DateTime(0, 0, 0))
         //        )
         //        .Should()
-        //        .Throw<SqlDetailedException>();
+        //        .Throw<Exception>();
         //    }
         //}
 
