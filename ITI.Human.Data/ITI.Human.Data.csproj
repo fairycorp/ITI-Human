@@ -14,6 +14,13 @@
     <None Remove="Res\sOrderCreate.sql" />
     <None Remove="Res\sOrderedProductCreate.sql" />
     <None Remove="Res\sProductCreate.sql" />
+    <None Remove="Res\vOrderedProducts.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Res\vOrderedProducts.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
