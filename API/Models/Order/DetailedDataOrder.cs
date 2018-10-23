@@ -16,6 +16,6 @@ namespace API.Models.Order
         /// <summary>
         /// Products that mentionned Order contains.
         /// </summary>
-        public List<BasicDataOrderedProduct> Products { get; set; }
+        public IEnumerable<BasicDataOrderedProduct> Products { get; set; }
     }
 }
