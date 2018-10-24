@@ -1,17 +1,32 @@
-﻿using CK.DB.Actor;
+﻿using API.ViewModels.Product;
+using CK.DB.Actor;
 using CK.SqlServer;
+using Dapper;
 using NUnit.Framework;
 using System;
+using System.Threading.Tasks;
 using static CK.Testing.DBSetupTestHelper;
 
 namespace ITI.Human.Data.Tests
 {
     [TestFixture]
-    [Explicit]
     public class DBPopulate
     {
+        // Consts.
+        const string productName1 = "Kinder Bueno";
+        const string productName2 = "Kinder Maxi";
+        const string productName3 = "Kinder Country";
+        const string productName4 = "Coca-Cola (33cl)";
+        const string productName5 = "Coca-Cola (50cl)";
+        const string productName6 = "Redbull (33cl)";
+        const string productName7 = "Redbull (50cl)";
+        const string productName8 = "Fanta (33cl)";
+        const string productName9 = "Fanta (50cl)";
+        const string userName1 = "Geralt";
+        const string userName2 = "Jasquier";
+
         [Test]
-        public void Populate()
+        public async Task Populate()
         {
             var productTable = CK.Core.StObjModelExtension.Obtain<ProductTable>(TestHelper.StObjMap.StObjs);
             var userTable = CK.Core.StObjModelExtension.Obtain<UserTable>(TestHelper.StObjMap.StObjs);
@@ -20,27 +35,61 @@ namespace ITI.Human.Data.Tests
 
             using (var ctx = new SqlStandardCallContext())
             {
-                productTable.Create(ctx, 0, "Kinder Bueno", "", 2);
-                productTable.Create(ctx, 0, "Kinder Maxi", "", 1);
-                productTable.Create(ctx, 0, "Kinder Country", "", 1);
-                productTable.Create(ctx, 0, "Coca-Cola (33cl)", "", 1);
-                productTable.Create(ctx, 0, "Coca-Cola (50cl)", "", 2);
-                productTable.Create(ctx, 0, "Redbull (33cl)", "", 1);
-                productTable.Create(ctx, 0, "Redbull (50cl)", "", 2);
-                productTable.Create(ctx, 0, "Fanta (33cl)", "", 1);
-                productTable.Create(ctx, 0, "Fanta (50cl)", "", 2);
+                // CHECKS :
+                // On Products.
+                string[] productNames = new [] 
+                {
+                    productName1, productName2, productName3,
+                    productName4, productName5, productName6,
+                    productName7, productName8, productName9
+                };
 
-                userTable.CreateUser(ctx, 1, "Geralt");
-                userTable.CreateUser(ctx, 1, "Jasquier");
+                foreach (var name in productNames)
+                {
+                    var currentObj = await ctx[productTable].Connection
+                        .QueryFirstOrDefaultAsync<BasicDataProduct>(
+                            "SELECT ProductId FROM ITIH.tProduct WHERE [Name] = @nm;",
+                            new { nm = name }
+                    );
+                    if (currentObj != null && !string.IsNullOrWhiteSpace(currentObj.Name)) return;
+                }
 
-                orderTable.Create(ctx, 0, 1, DateTime.Now);
-                orderTable.Create(ctx, 0, 2, DateTime.Now);
+                // On Users.
+                string[] userNames = new[] { userName1, userName2 };
+                foreach (var name in userNames)
+                {
+                    var currentName = await ctx[userTable].Connection
+                        .QueryFirstOrDefaultAsync<string>(
+                            "SELECT UserName FROM CK.tUser WHERE UserName = @nm;",
+                            new { nm = name }
+                        );
+                    if (currentName != null && !string.IsNullOrWhiteSpace(currentName)) return;
+                }
+                // END OF CHECKS.
 
-                orderedProductTable.Create(ctx, 0, 1, 8);
-                orderedProductTable.Create(ctx, 0, 1, 2);
-                orderedProductTable.Create(ctx, 0, 2, 3);
-                orderedProductTable.Create(ctx, 0, 2, 3);
-                orderedProductTable.Create(ctx, 0, 2, 7);
+
+                // Insertion.
+                var product1 = productTable.Create(ctx, 0, productName1, "", 2);
+                var product2 = productTable.Create(ctx, 0, productName2, "", 1);
+                var product3 = productTable.Create(ctx, 0, productName3, "", 1);
+                var product4 = productTable.Create(ctx, 0, productName4, "", 1);
+                var product5 = productTable.Create(ctx, 0, productName5, "", 2);
+                var product6 = productTable.Create(ctx, 0, productName6, "", 1);
+                var product7 = productTable.Create(ctx, 0, productName7, "", 2);
+                var product8 = productTable.Create(ctx, 0, productName8, "", 1);
+                var product9 = productTable.Create(ctx, 0, productName9, "", 2);
+
+                var user1 = userTable.CreateUser(ctx, 1, "Geralt");
+                var user2 = userTable.CreateUser(ctx, 1, "Jasquier");
+
+                var order1 = orderTable.Create(ctx, 0, user1, DateTime.Now);
+                var order2 = orderTable.Create(ctx, 0, user2, DateTime.Now);
+
+                orderedProductTable.Create(ctx, 0, order1, product2);
+                orderedProductTable.Create(ctx, 0, order1, product9);
+                orderedProductTable.Create(ctx, 0, order2, product3);
+                orderedProductTable.Create(ctx, 0, order2, product4);
+                orderedProductTable.Create(ctx, 0, order2, product1);
             }
         }
     }
