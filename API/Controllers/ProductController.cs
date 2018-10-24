@@ -22,7 +22,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetAll()
             => Ok((await Service.GetAll()).Content);
 
-        [HttpGet("get/i/{productId}")]
+        [HttpGet("i/{productId}")]
         public async Task<IActionResult> GetById(int productId)
         {
             var check =
@@ -34,7 +34,7 @@ namespace API.Controllers
             return BadRequest(check.Info);
         }
 
-        [HttpPost("get/n")]
+        [HttpPost("n")]
         public async Task<IActionResult> GetByName([FromBody] ProductNameGettingViewModel product)
         {
             var check =
