@@ -1,4 +1,5 @@
-﻿using API.Services.Product;
+﻿using API.Services.Order;
+using API.Services.Product;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -36,6 +37,7 @@ namespace API
             services.AddStObjMap("CK.StObj.AutoAssembly");
 
             services.AddSingleton<ProductService>();
+            services.AddSingleton<OrderService>();
 
             services.AddMvc();
         }

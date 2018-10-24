@@ -24,7 +24,47 @@ namespace API.Services.Order
         }
 
         /// <summary>
-        /// Gets user's all detailed orders. 
+        /// Gets all detailed Orders.
+        /// </summary>
+        /// <returns>Success result where result content is a list of DetailedDataOrder.</returns>
+        public async Task<GuardResult> GetAllDetailedOrders()
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                var basicData = await ctx[OrderTable].Connection
+                    .QueryAsync<BasicDataOrder>(
+                        @"SELECT
+                            *
+                        FROM
+                            ITIH.tOrder;"
+                    );
+
+                List<DetailedDataOrder> ordersList = new List<DetailedDataOrder>();
+                foreach (var data in basicData)
+                {
+                    ordersList.Add(
+                        new DetailedDataOrder
+                        {
+                            OrderInfo = data,
+                            Products = await ctx[OrderTable].Connection
+                                .QueryAsync<BasicDataOrderedProduct>(
+                                    @"SELECT
+                                        *
+                                    FROM
+                                        ITIH.vOrderedProducts v
+                                    WHERE
+                                        v.OrderId = @id;",
+                                    new { id = data.OrderId }
+                                )
+                        }
+                    );
+                }
+                return Success(ordersList);
+            }
+        }
+
+        /// <summary>
+        /// Gets user's all detailed Orders. 
         /// </summary>
         /// <param name="userId">User's id.</param>
         /// <returns>Success result where result content is a list of DetailedDataOrder.</returns>
@@ -37,9 +77,9 @@ namespace API.Services.Order
                         @"SELECT
                             *
                         FROM
-                            tOrder
+                            ITIH.tOrder
                         WHERE
-                            UserId = @id",
+                            UserId = @id;",
                         new { id = userId }
                     );
 
@@ -47,28 +87,27 @@ namespace API.Services.Order
                 foreach (var data in basicData)
                 {
                     ordersByUser.Add(new DetailedDataOrder
-                        {
-                            OrderInfo = data,
-                            Products = await ctx[OrderTable].Connection
+                    {
+                        OrderInfo = data,
+                        Products = await ctx[OrderTable].Connection
                                 .QueryAsync<BasicDataOrderedProduct>(
                                     @"SELECT
                                         *
                                     FROM
-                                        v.OrderedProducts
+                                        ITIH.vOrderedProducts
                                     WHERE
-                                        OrderId = @id",
+                                        OrderId = @id;",
                                     new { id = data.OrderId }
                                 )
                         }
                     );
                 }
-
                 return Success(ordersByUser);
             }
         }
 
         /// <summary>
-        /// Gets a detailed order by its id.
+        /// Gets a detailed Order by its id.
         /// </summary>
         /// <param name="orderId">Product id.</param>
         /// <returns>Success result where result content is a single DetailedDataOrder.</returns>
@@ -81,9 +120,9 @@ namespace API.Services.Order
                         @"SELECT
                             *
                         FROM
-                            tOrder
+                            ITIH.tOrder
                         WHERE
-                            OrderId = @id",
+                            OrderId = @id;",
                         new { id = orderId }
                     );
 
@@ -94,13 +133,12 @@ namespace API.Services.Order
                             @"SELECT
                                 *
                             FROM
-                                v.OrderedProducts
+                                ITIH.vOrderedProducts
                             WHERE
-                                OrderId = @id",
+                                OrderId = @id;",
                             new { id = orderId }
                         )
                 };
-
                 return Success(detailedData);
             }
         }
