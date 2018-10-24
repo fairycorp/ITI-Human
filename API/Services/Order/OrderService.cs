@@ -1,5 +1,5 @@
-﻿using API.Models.Order;
-using API.Models.Product.Ordered;
+﻿using API.ViewModels.Order;
+using API.ViewModels.Product.Ordered;
 using CK.SqlServer;
 using Dapper;
 using ITI.Human.Data;

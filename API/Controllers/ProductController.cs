@@ -1,4 +1,4 @@
-﻿using API.Models.Product;
+﻿using API.ViewModels.Product;
 using API.Services.Product;
 using Microsoft.AspNetCore.Mvc;
 using Stall.Guard.System;

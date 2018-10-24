@@ -1,4 +1,4 @@
-﻿using API.Models.Product;
+﻿using API.ViewModels.Product;
 using CK.SqlServer;
 using Dapper;
 using ITI.Human.Data;
