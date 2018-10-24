@@ -1,4 +1,4 @@
-﻿namespace API.Models.Product
+﻿namespace API.ViewModels.Product
 {
     /// <summary>
     /// Represents what a product is.

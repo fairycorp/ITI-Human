@@ -1,4 +1,4 @@
-﻿namespace API.Models.Product
+﻿namespace API.ViewModels.Product
 {
     /// <summary>
     /// Assuming a Product name can contain spaces,

@@ -1,4 +1,4 @@
-﻿namespace API.Models.Product.Ordered
+﻿namespace API.ViewModels.Product.Ordered
 {
     /// <summary>
     /// Represents what an ordered product is.
@@ -19,5 +19,15 @@
         /// Matching product id.
         /// </summary>
         public int ProductId { get; set; }
+        
+        /// <summary>
+        /// See <see cref="BasicDataProduct.Name"/>
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// See <see cref="BasicDataProduct.Desc"/>
+        /// </summary>
+        public string Desc { get; set; }
     }
 }

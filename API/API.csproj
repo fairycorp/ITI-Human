@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Views\" />
+    <Folder Include="WebAppLogs\Textual\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -25,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\API.ViewModels\API.ViewModels.csproj" />
     <ProjectReference Include="..\ITI.Human.Data\ITI.Human.Data.csproj" />
   </ItemGroup>
 

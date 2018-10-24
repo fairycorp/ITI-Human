@@ -1,7 +1,7 @@
-﻿using API.Models.Product.Ordered;
+﻿using API.ViewModels.Product.Ordered;
 using System.Collections.Generic;
 
-namespace API.Models.Order
+namespace API.ViewModels.Order
 {
     /// <summary>
     /// Represents what a detailed Order is.

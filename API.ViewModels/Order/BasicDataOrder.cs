@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace API.Models.Order
+namespace API.ViewModels.Order
 {
     /// <summary>
     /// Represents what an order is.
