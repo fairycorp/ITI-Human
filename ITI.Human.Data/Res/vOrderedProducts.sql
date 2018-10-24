@@ -2,6 +2,7 @@
 as
 	select
 		OrderedProductId = op.OrderedProductId,
+		OrderId = op.OrderId,
 		ProductId = p.ProductId,
 		[Name] = p.[Name],
 		[Desc] = p.[Desc],
