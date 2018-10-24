@@ -1,7 +1,8 @@
 ﻿create table ITIH.tOrderedProduct (
 	OrderedProductId int not null identity(0, 1),
 	OrderId int not null,
-	ProductId int not null
+	ProductId int not null,
+	HasBeenDelivered bit not null default 0
 	
 	constraint PK_ITIH_tOrderedProduct primary key (OrderedProductId),
 	constraint FK_ITIH_tOrderedProduct_OrderId foreign key (OrderId) references ITIH.tOrder (OrderId),
