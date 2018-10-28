@@ -3,7 +3,7 @@ create proc ITIH.sProductCreate (
 	@ActorId int,
 	@Name nvarchar(256),
 	@Desc nvarchar(512),
-	@Price int,
+	@Price float,
 	@ProductIdResult int output
 )
 as

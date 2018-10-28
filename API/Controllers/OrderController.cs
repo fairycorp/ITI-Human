@@ -21,12 +21,6 @@ namespace API.Controllers
             Service = service;
         }
 
-        [HttpGet("test")]
-        public void test()
-        {
-            DataBuilder test = new DataBuilder();
-        }
-
         [HttpGet]
         public async Task<IActionResult> GetAllDetailedOrders()
             => Ok((await Service.GuardedGetAllDetailedOrders()).Content);
