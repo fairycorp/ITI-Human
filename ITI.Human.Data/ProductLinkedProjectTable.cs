@@ -14,5 +14,8 @@ namespace ITI.Human.Data
 
         [SqlProcedure("sProductLinkedProjectCreate")]
         public abstract int Create(ISqlCallContext ctx, int actorId, int productId, int projectId, bool availability);
+
+        [SqlProcedure("sProductLinkedProjectDelete")]
+        public abstract bool Delete(ISqlCallContext ctx, int actorId, int productLinkedProjectId);
     }
 }

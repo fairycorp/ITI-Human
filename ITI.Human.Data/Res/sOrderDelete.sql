@@ -2,7 +2,7 @@
 create proc ITIH.sOrderDelete (
 	@ActorId int,
 	@OrderId int,
-	@Success bit = 0
+	@Success bit = 0 output
 )
 as
 begin

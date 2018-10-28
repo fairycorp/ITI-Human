@@ -23,6 +23,6 @@
         /// <summary>
         /// Product price ; must not be negative.
         /// </summary>
-        public int Price { get; set; }
+        public double Price { get; set; }
     }
 }

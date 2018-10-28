@@ -31,7 +31,7 @@ namespace ITI.Human.Data.Tests.OrderSystemTests
 
             using (var ctx = new SqlStandardCallContext())
             {
-                var createdProduct = pTable.Create(ctx, 0, "Kinder Maxi", "A delicious chocolate bar.", 1);
+                var createdProduct = pTable.Create(ctx, 0, "Savane", "", 1);
                 Assert.That(createdProduct, Is.GreaterThan(0));
             }
         }
