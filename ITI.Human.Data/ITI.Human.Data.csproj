@@ -10,14 +10,66 @@
   <ItemGroup>
     <None Remove="Res\Model\ITIH.OrderedProductTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.OrderTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.ProductLinkedProject.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.ProductTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.ProjectTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.ProjectTypeTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.SemesterTable.Install.1.0.0.sql" />
     <None Remove="Res\sOrderCreate.sql" />
+    <None Remove="Res\sOrderDelete.sql" />
     <None Remove="Res\sOrderedProductCreate.sql" />
+    <None Remove="Res\sOrderedProductDelete.sql" />
+    <None Remove="Res\sOrderedProductUpdate.sql" />
+    <None Remove="Res\sOrderUpdate.sql" />
     <None Remove="Res\sProductCreate.sql" />
+    <None Remove="Res\sProductLinkedProjectCreate.sql" />
+    <None Remove="Res\sProductLinkedProjectDelete.sql" />
+    <None Remove="Res\sProjectCreate.sql" />
+    <None Remove="Res\sProjectTypeCreate.sql" />
+    <None Remove="Res\sSemesterCreate.sql" />
     <None Remove="Res\vOrderedProducts.sql" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Res\Model\ITIH.ProductLinkedProject.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\Model\ITIH.ProjectTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\Model\ITIH.SemesterTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\Model\ITIH.ProjectTypeTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sOrderDelete.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sOrderedProductDelete.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sOrderedProductUpdate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sOrderUpdate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sProductLinkedProjectCreate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sProductLinkedProjectDelete.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sProjectCreate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sProjectTypeCreate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sSemesterCreate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Res\vOrderedProducts.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>

@@ -6,6 +6,7 @@ as
 		ProductId = p.ProductId,
 		[Name] = p.[Name],
 		[Desc] = p.[Desc],
-		Price = p.Price
+		Price = p.Price,
+		HasBeenDelivered = op.HasBeenDelivered
 	from tOrderedProduct op
 		join tProduct p on p.ProductId = op.ProductId

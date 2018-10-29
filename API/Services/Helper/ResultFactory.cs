@@ -1,6 +1,6 @@
 ﻿using Stall.Guard.System;
 
-namespace API.Services
+namespace API.Services.Helper
 {
     /// <summary>
     /// Enables to build success/failure result.

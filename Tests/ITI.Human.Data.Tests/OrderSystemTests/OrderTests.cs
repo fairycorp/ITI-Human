@@ -19,6 +19,8 @@ namespace ITI.Human.Data.Tests.OrderSystemTests
             {
                 var createdOrder = oTable.Create(ctx, 0, 0, DateTime.Now);
                 Assert.That(createdOrder, Is.GreaterThan(0));
+
+                oTable.Delete(ctx, 0, createdOrder);
             }
         }
     }

@@ -6,7 +6,7 @@ using Stall.Guard.System;
 using System.Linq;
 using System.Threading.Tasks;
 
-using static API.Services.ResultFactory;
+using static API.Services.Helper.ResultFactory;
 
 namespace API.Services.Product
 {

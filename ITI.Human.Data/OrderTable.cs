@@ -17,5 +17,11 @@ namespace ITI.Human.Data
 
         [SqlProcedure("sOrderCreate")]
         public abstract int Create(ISqlCallContext ctx, int actorId, int userId, DateTime creationDate);
+
+        [SqlProcedure("sOrderUpdate")]
+        public abstract bool Update(ISqlCallContext ctx, int actorId, int orderId, bool hasBeenEntirelyDelivered);
+
+        [SqlProcedure("sOrderDelete")]
+        public abstract bool Delete(ISqlCallContext ctx, int actorId, int orderId);
     }
 }

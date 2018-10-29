@@ -29,5 +29,10 @@
         /// See <see cref="BasicDataProduct.Desc"/>
         /// </summary>
         public string Desc { get; set; }
+
+        /// <summary>
+        /// Has the product been delivered ?
+        /// </summary>
+        public bool HasBeenDelivered { get; set; }
     }
 }

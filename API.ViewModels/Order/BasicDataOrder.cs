@@ -21,5 +21,10 @@ namespace API.ViewModels.Order
         /// Order creation date.
         /// </summary>
         public DateTime CreationDate { get; set; }
+
+        /// <summary>
+        /// Has the order been entirely delivered ?
+        /// </summary>
+        public bool HasBeenEntirelyDelivered { get; set; }
     }
 }

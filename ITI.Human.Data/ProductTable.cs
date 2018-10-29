@@ -13,6 +13,6 @@ namespace ITI.Human.Data
         }
 
         [SqlProcedure("sProductCreate")]
-        public abstract int Create(ISqlCallContext ctx, int actorId, string name, string desc, int price);
+        public abstract int Create(ISqlCallContext ctx, int actorId, string name, string desc, double price);
     }
 }
