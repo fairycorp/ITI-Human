@@ -69,27 +69,27 @@ namespace ITI.Human.Data.Tests
 
 
                 // Insertion.
-                var product1 = productTable.Create(ctx, 0, productName1, "", 2);
-                var product2 = productTable.Create(ctx, 0, productName2, "", 1);
-                var product3 = productTable.Create(ctx, 0, productName3, "", 1);
-                var product4 = productTable.Create(ctx, 0, productName4, "", 1);
-                var product5 = productTable.Create(ctx, 0, productName5, "", 2);
-                var product6 = productTable.Create(ctx, 0, productName6, "", 1);
-                var product7 = productTable.Create(ctx, 0, productName7, "", 2);
-                var product8 = productTable.Create(ctx, 0, productName8, "", 1);
-                var product9 = productTable.Create(ctx, 0, productName9, "", 2);
+                var product1 = await productTable.Create(ctx, 0, productName1, "", 2);
+                var product2 = await productTable.Create(ctx, 0, productName2, "", 1);
+                var product3 = await productTable.Create(ctx, 0, productName3, "", 1);
+                var product4 = await productTable.Create(ctx, 0, productName4, "", 1);
+                var product5 = await productTable.Create(ctx, 0, productName5, "", 2);
+                var product6 = await productTable.Create(ctx, 0, productName6, "", 1);
+                var product7 = await productTable.Create(ctx, 0, productName7, "", 2);
+                var product8 = await productTable.Create(ctx, 0, productName8, "", 1);
+                var product9 = await productTable.Create(ctx, 0, productName9, "", 2);
 
                 var user1 = userTable.CreateUser(ctx, 1, "Geralt");
                 var user2 = userTable.CreateUser(ctx, 1, "Jasquier");
 
-                var order1 = orderTable.Create(ctx, 0, user1, DateTime.Now);
-                var order2 = orderTable.Create(ctx, 0, user2, DateTime.Now);
+                var order1 = await orderTable.Create(ctx, 0, user1, DateTime.Now);
+                var order2 = await orderTable.Create(ctx, 0, user2, DateTime.Now);
 
-                orderedProductTable.Create(ctx, 0, order1, product2);
-                orderedProductTable.Create(ctx, 0, order1, product9);
-                orderedProductTable.Create(ctx, 0, order2, product3);
-                orderedProductTable.Create(ctx, 0, order2, product4);
-                orderedProductTable.Create(ctx, 0, order2, product1);
+                await orderedProductTable.Create(ctx, 0, order1, product2);
+                await orderedProductTable.Create(ctx, 0, order1, product9);
+                await orderedProductTable.Create(ctx, 0, order2, product3);
+                await orderedProductTable.Create(ctx, 0, order2, product4);
+                await orderedProductTable.Create(ctx, 0, order2, product1);
             }
         }
     }

@@ -15,6 +15,6 @@
         /// <summary>
         /// See <see cref="BasicDataProduct.Price"/>.
         /// </summary>
-        public int Price { get; set; }
+        public double Price { get; set; }
     }
 }

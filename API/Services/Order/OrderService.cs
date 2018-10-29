@@ -70,7 +70,7 @@ namespace API.Services.Order
                     {
                         // TODO ASAP: Change ActorId to use the current UserId instead of 0
                         var hasBeenDelivered =
-                            OrderedProductTable.Update(ctx, 0, product.OrderedProductId, product.HasBeenDelivered);
+                            await OrderedProductTable.Update(ctx, 0, product.OrderedProductId, product.HasBeenDelivered);
 
                         if (!hasBeenDelivered)
                             entirelyDelivered = false;

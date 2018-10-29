@@ -83,5 +83,20 @@ namespace API.Services.Product
                 );
             }
         }
+
+        /// <summary>
+        /// Creates a new Product.
+        /// </summary>
+        /// <param name="model">Product creation view model.</param>
+        /// <returns>Success result where result content is null OR Failure result in case element does not exist in DB.</returns>
+        public async Task<GuardResult> Create(CreationViewModel model)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return Success(
+                    await ProductTable.Create(ctx, 0, model.Name, model.Desc, model.Price)
+                );
+            }
+        }
     }
 }

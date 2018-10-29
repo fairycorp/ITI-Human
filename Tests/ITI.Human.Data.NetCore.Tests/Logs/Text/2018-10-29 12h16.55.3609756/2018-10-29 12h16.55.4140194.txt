@@ -1,0 +1,18 @@
+0~~~~                            ~~ Monitor: a4c651f9-bc30-410d-b49d-1e246b8f2a72
+   2018-10-29 12h16.55.3853999 i Topic: CK.Monitoring.DispatcherSink
+   2018-10-29 12h16.55.3990304   > Initializing TextFile handler (MaxCountPerFile = 20000).
+   2018-10-29 12h16.55.4021451   < 
+1~~~~                            ~~ Monitor: 4b767134-513d-4b8c-a896-a2c3915ad4fd
+   2018-10-29 12h16.55.4144377 i Switching console log ON.
+   2018-10-29 12h16.55.4369930 i Folder 'C:\Dev\repos\ITI-Human\Tests\ITI.Human.Data.NetCore.Tests\TestStores' has been cleaned up.
+   2018-10-29 12h16.55.4763488 i > Accessing null StObj map.
+   2018-10-29 12h16.55.4779701 i | > Invoking StObjMapLoading event.
+   2018-10-29 12h16.55.4786912 i | < 
+   2018-10-29 12h16.55.4809224 i | > Loading StObj map from CK.StObj.AutoAssembly.
+   2018-10-29 12h16.55.4872483 i | | > Loading dynamic 'CK.StObj.AutoAssembly, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.
+   2018-10-29 12h16.55.5021560 i | | | > Initializing CK.DB.Auth.Package : IAuthenticationDatabaseService
+   2018-10-29 12h16.55.5031476 i | | | <  | 1 conclusion:
+                                 | | |    | 0 providers: 
+   2018-10-29 12h16.55.5048102 i | | < 
+   2018-10-29 12h16.55.5048167 i | < 
+   2018-10-29 12h16.55.5048241 i < 
