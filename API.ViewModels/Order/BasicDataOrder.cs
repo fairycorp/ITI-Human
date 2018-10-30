@@ -2,6 +2,10 @@
 
 namespace API.ViewModels.Order
 {
+    public enum State {
+        NotStarted, Underway, Paused, Finished
+    }
+
     /// <summary>
     /// Represents what an order is.
     /// </summary>
@@ -21,6 +25,11 @@ namespace API.ViewModels.Order
         /// Order creation date.
         /// </summary>
         public DateTime CreationDate { get; set; }
+        
+        /// <summary>
+        /// Order current state.
+        /// </summary>
+        public State CurrentState { get; set; }
 
         /// <summary>
         /// Has the order been entirely delivered ?

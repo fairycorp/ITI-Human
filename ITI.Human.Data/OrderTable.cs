@@ -1,4 +1,5 @@
-﻿using CK.DB.Actor;
+﻿using API.ViewModels.Order;
+using CK.DB.Actor;
 using CK.Setup;
 using CK.SqlServer;
 using CK.SqlServer.Setup;
@@ -20,7 +21,7 @@ namespace ITI.Human.Data
         public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int userId, DateTime creationDate);
 
         [SqlProcedure("sOrderUpdate")]
-        public abstract Task<bool> Update(ISqlCallContext ctx, int actorId, int orderId, bool hasBeenEntirelyDelivered);
+        public abstract Task<bool> Update(ISqlCallContext ctx, int actorId, int orderId, State currentState, bool hasBeenEntirelyDelivered);
 
         [SqlProcedure("sOrderDelete")]
         public abstract Task<bool> Delete(ISqlCallContext ctx, int actorId, int orderId);
