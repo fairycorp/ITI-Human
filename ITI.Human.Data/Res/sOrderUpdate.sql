@@ -2,8 +2,9 @@
 create proc ITIH.sOrderUpdate (
 	@ActorId int,
 	@OrderId int,
+	@CurrentState int,
 	@HasBeenEntirelyDelivered bit,
-	@CurrentStateResult bit output
+	@DeliveryResult bit output
 )
 as
 begin
@@ -11,9 +12,10 @@ begin
 
 	--<PreCreate revert />
 
+	update tOrder set CurrentState = @CurrentState;
 	update tOrder set HasBeenEntirelyDelivered = @HasBeenEntirelyDelivered;
 
-	set @CurrentStateResult = (select HasBeenEntirelyDelivered from tOrder where OrderId = @OrderId);
+	set @DeliveryResult = (select HasBeenEntirelyDelivered from tOrder where OrderId = @OrderId);
 
 	--<PostCreate />
 

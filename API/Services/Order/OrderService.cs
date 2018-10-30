@@ -51,11 +51,11 @@ namespace API.Services.Order
             => Success(await GetDetailedOrder(orderId));
 
         /// <summary>
-        /// Updates a detailed Order.
+        /// Updates a detailed Order delivery state.
         /// </summary>
         /// <param name="model">Matching model.</param>
         /// <returns>Success result where result content is null OR Failure result in case element does not exist in DB.</returns>
-        public async Task<GuardResult> UpdateDetailedOrder(ViewModels.Order.CreationViewModel model)
+        public async Task<GuardResult> UpdateDetailedOrderDeliveryState(DeliveryStateUpdateViewModel model)
         {
             using (var ctx = new SqlStandardCallContext())
             {
@@ -65,7 +65,6 @@ namespace API.Services.Order
                 if (doesExist.Code == Status.Success)
                 {
                     var entirelyDelivered = true;
-
                     foreach (var product in model.Products)
                     {
                         // TODO ASAP: Change ActorId to use the current UserId instead of 0
@@ -79,12 +78,23 @@ namespace API.Services.Order
                     if (entirelyDelivered)
                     {
                         var hasBeenEntirelyDelivered =
-                            OrderTable.Update(ctx, 0, model.Info.OrderId, true);
+                            OrderTable.Update(ctx, 0, model.Info.OrderId, State.Finished, true);
                     }
                     return Success(null);
                 }
                 return Failure(doesExist.Info);
             }
+        }
+
+        /// <summary>
+        /// Updates a detailed Order current state (NotStarted, Underway...).
+        /// </summary>
+        /// <param name="model">Matching model.</param>
+        /// <returns>Success result where result content is boolean OR Failure result in case element does not exist in DB.</returns>
+        public async Task<GuardResult> GuardedUpdateDetailedOrderCurrentState(BasicDataOrder model)
+        {
+            var result = await UpdateDetailedOrderCurrentState(model);
+            return (result) ? Success(result) : Failure(result.ToString());
         }
 
         // --------------------------------------------------------------------------------------------
@@ -194,6 +204,21 @@ namespace API.Services.Order
                 };
                 return detailedData;
             }
+        }
+
+        private async Task<bool> UpdateDetailedOrderCurrentState(BasicDataOrder model)
+        {
+            var doesExist =
+                    await Attempt.ToGetElement(GetDetailedOrder, model.OrderId, true);
+
+            if (doesExist.Code == Status.Success)
+            {
+                using (var ctx = new SqlStandardCallContext())
+                {
+                    return await OrderTable.Update(ctx, 0, model.OrderId, model.CurrentState, model.HasBeenEntirelyDelivered);
+                }
+            }
+            return false;
         }
     }
 }

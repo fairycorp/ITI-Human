@@ -1,5 +1,4 @@
-﻿using API.Services.Helper;
-using API.Services.Order;
+﻿using API.Services.Order;
 using API.ViewModels.Order;
 using Microsoft.AspNetCore.Mvc;
 using Stall.Guard.System;
@@ -50,12 +49,13 @@ namespace API.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> UpdateDetailedOrder(CreationViewModel model)
+        public async Task<IActionResult> UpdateDetailedOrderCurrentState(DeliveryStateUpdateViewModel model)
         {
             Dictionary<string, int> modelInfoAnalysis = new Dictionary<string, int>
             {
                 { nameof(model.Info.OrderId), model.Info.OrderId },
                 { nameof(model.Info.UserId), model.Info.UserId },
+                { nameof(model.Info.CurrentState), (int) model.Info.CurrentState }
             };
             var check1 = Guard.IsAdmissible(modelInfoAnalysis);
 
@@ -81,7 +81,7 @@ namespace API.Controllers
                         var check3 = Guard.IsAdmissible(modelProductStrAnalysis);
 
                         if (check3.Code == Status.Success)
-                            return Ok((await Service.UpdateDetailedOrder(model)).Content);
+                            return Ok((await Service.UpdateDetailedOrderDeliveryState(model)).Content);
                         
                         return BadRequest(check3.Info);
                     }

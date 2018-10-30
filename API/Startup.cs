@@ -39,12 +39,15 @@ namespace API
             services.AddSingleton<ProductService>();
             services.AddSingleton<OrderService>();
 
+            services.AddCors();
             services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseRequestMonitor();
+            app.UseCors(builder =>
+                builder.WithOrigins("localhost:8080").AllowAnyHeader().AllowCredentials().AllowAnyMethod().AllowAnyOrigin());
             app.UseMvc();
         }
     }

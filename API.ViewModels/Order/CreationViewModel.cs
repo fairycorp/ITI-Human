@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace API.ViewModels.Order
 {
-    public class CreationViewModel
+    public class DeliveryStateUpdateViewModel
     {
         /// <summary>
         /// See <see cref="DetailedDataOrder.OrderInfo"/>.
