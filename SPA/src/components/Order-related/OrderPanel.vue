@@ -23,8 +23,8 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import API from '../services/API';
-import { IDetailedDataOrder } from '../model/Order/OrderModel';
+import API from '../../services/API';
+import { IDetailedDataOrder } from '../../model/Order/OrderModel';
 import { AxiosResponse } from 'axios';
 
 @Component
