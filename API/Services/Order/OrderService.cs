@@ -1,9 +1,11 @@
 ﻿using API.Services.Helper;
 using API.ViewModels.Order;
 using API.ViewModels.Product.Ordered;
+using CK.DB.Actor;
 using CK.SqlServer;
 using Dapper;
 using ITI.Human.Data;
+using ITI.Human.ViewModels.User;
 using Stall.Guard.System;
 using System;
 using System.Collections.Generic;
@@ -22,10 +24,13 @@ namespace API.Services.Order
 
         public OrderedProductTable OrderedProductTable { get; set; }
 
-        public OrderService(OrderTable oTable, OrderedProductTable oPTable)
+        public UserTable UserTable { get; set; }
+
+        public OrderService(OrderTable oTable, OrderedProductTable oPTable, UserTable uTable)
         {
             OrderTable = oTable;
             OrderedProductTable = oPTable;
+            UserTable = uTable;
         }
 
         /// <summary>
@@ -222,28 +227,35 @@ namespace API.Services.Order
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                var order =
+                var doesUserExist = 
+                    await Attempt.ToGetElement(GetUser, model.UserId, true);
+
+                if (doesUserExist.Code == Status.Success)
+                {
+                    var order =
                     await OrderTable.Create(ctx, model.UserId, model.UserId, DateTime.Now);
 
-                foreach (var product in model.Products)
-                {
-                    var orderedProduct =
-                        await OrderedProductTable.Create(ctx, model.UserId, order, product.ProductId, product.Amount);
-
-                    // In case of an insertion problem, one have to clean the whole order up.
-                    if (orderedProduct == 0)
+                    foreach (var product in model.Products)
                     {
-                        var alreadyOrdered = await GetDetailedOrder(order);
+                        var orderedProduct =
+                            await OrderedProductTable.Create(ctx, model.UserId, order, product.ProductId, product.Amount);
 
-                        foreach (var alreadyOrderedProduct in alreadyOrdered.Products)
+                        // In case of an insertion problem, one have to clean the whole order up.
+                        if (orderedProduct == 0)
                         {
-                            await OrderedProductTable.Delete(ctx, 0, alreadyOrderedProduct.OrderedProductId);
+                            var alreadyOrdered = await GetDetailedOrder(order);
+
+                            foreach (var alreadyOrderedProduct in alreadyOrdered.Products)
+                            {
+                                await OrderedProductTable.Delete(ctx, 0, alreadyOrderedProduct.OrderedProductId);
+                            }
+                            await OrderTable.Delete(ctx, 0, order);
+                            return 0;
                         }
-                        await OrderTable.Delete(ctx, 0, order);
-                        return 0;
                     }
+                    return order;
                 }
-                return order;
+                return 0;
             }
         }
 
@@ -260,6 +272,23 @@ namespace API.Services.Order
                 }
             }
             return false;
+        }
+
+        private async Task<UserBasicData> GetUser(int userId)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await ctx[UserTable].Connection
+                    .QueryFirstOrDefaultAsync<UserBasicData>(
+                        @"SELECT
+                            UserId
+                        FROM
+                            CK.tUser
+                        WHERE
+                            UserId = @id",
+                        new { id = userId }
+                    );
+            }
         }
     }
 }

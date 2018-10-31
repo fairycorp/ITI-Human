@@ -49,8 +49,15 @@ namespace API.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateDetailedOrder(CreationViewModel model)
+        public async Task<IActionResult> CreateDetailedOrder([FromBody] CreationViewModel model)
         {
+            if (!(model == null))
+            {
+                if (model.UserId == 0 || model.UserId < 0 || model.Products == null)
+                    return BadRequest();
+            }
+            else return BadRequest();
+
             Dictionary<string, int> modelIntAnalysis = new Dictionary<string, int>();
             foreach (var product in model.Products)
             {
@@ -62,7 +69,14 @@ namespace API.Controllers
 
             if (check.Code == Status.Success)
             {
-                // ...
+                var result =
+                    await Service.GuardedCreateDetailedOrder(model);
+
+                if (result.Code == Status.Success)
+                {
+                    return Ok(result.Content);
+                }
+                return BadRequest(result.Info);
             }
             return BadRequest(check.Info);
         }
@@ -70,6 +84,13 @@ namespace API.Controllers
         [HttpPut("update")]
         public async Task<IActionResult> UpdateDetailedOrderCurrentState(DeliveryStateUpdateViewModel model)
         {
+            if (!(model == null))
+            {
+                if (model.Info == null || model.Products == null)
+                    return BadRequest();
+            }
+            else return BadRequest();
+
             Dictionary<string, int> modelInfoAnalysis = new Dictionary<string, int>
             {
                 { nameof(model.Info.OrderId), model.Info.OrderId },
