@@ -1,10 +1,13 @@
 ﻿using API.Services.Helper;
 using API.ViewModels.Order;
 using API.ViewModels.Product.Ordered;
+using CK.DB.Actor;
 using CK.SqlServer;
 using Dapper;
 using ITI.Human.Data;
+using ITI.Human.ViewModels.User;
 using Stall.Guard.System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,10 +24,13 @@ namespace API.Services.Order
 
         public OrderedProductTable OrderedProductTable { get; set; }
 
-        public OrderService(OrderTable oTable, OrderedProductTable oPTable)
+        public UserTable UserTable { get; set; }
+
+        public OrderService(OrderTable oTable, OrderedProductTable oPTable, UserTable uTable)
         {
             OrderTable = oTable;
             OrderedProductTable = oPTable;
+            UserTable = uTable;
         }
 
         /// <summary>
@@ -49,6 +55,17 @@ namespace API.Services.Order
         /// <returns>Success result where result content is a single DetailedDataOrder.</returns>
         public async Task<GuardResult> GuardedGetDetailedOrder(int orderId)
             => Success(await GetDetailedOrder(orderId));
+
+        /// <summary>
+        /// Creates a new detailed Order.
+        /// </summary>
+        /// <param name="model">Matching model.</param>
+        /// <returns>Success result where result content is int OR Failure result in case insertion process failed.</returns>
+        public async Task<GuardResult> GuardedCreateDetailedOrder(ViewModels.Order.CreationViewModel model)
+        {
+            var result = await CreateDetailedOrder(model);
+            return (result > 0) ? Success(result) : Failure("Error in creation process.");
+        }
 
         /// <summary>
         /// Updates a detailed Order delivery state.
@@ -94,7 +111,7 @@ namespace API.Services.Order
         public async Task<GuardResult> GuardedUpdateDetailedOrderCurrentState(BasicDataOrder model)
         {
             var result = await UpdateDetailedOrderCurrentState(model);
-            return (result) ? Success(result) : Failure(result.ToString());
+            return (result) ? Success(result) : Failure("Error in update process.");
         }
 
         // --------------------------------------------------------------------------------------------
@@ -206,6 +223,42 @@ namespace API.Services.Order
             }
         }
 
+        private async Task<int> CreateDetailedOrder(ViewModels.Order.CreationViewModel model)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                var doesUserExist = 
+                    await Attempt.ToGetElement(GetUser, model.UserId, true);
+
+                if (doesUserExist.Code == Status.Success)
+                {
+                    var order =
+                    await OrderTable.Create(ctx, model.UserId, model.UserId, DateTime.Now);
+
+                    foreach (var product in model.Products)
+                    {
+                        var orderedProduct =
+                            await OrderedProductTable.Create(ctx, model.UserId, order, product.ProductId, product.Amount);
+
+                        // In case of an insertion problem, one have to clean the whole order up.
+                        if (orderedProduct == 0)
+                        {
+                            var alreadyOrdered = await GetDetailedOrder(order);
+
+                            foreach (var alreadyOrderedProduct in alreadyOrdered.Products)
+                            {
+                                await OrderedProductTable.Delete(ctx, 0, alreadyOrderedProduct.OrderedProductId);
+                            }
+                            await OrderTable.Delete(ctx, 0, order);
+                            return 0;
+                        }
+                    }
+                    return order;
+                }
+                return 0;
+            }
+        }
+
         private async Task<bool> UpdateDetailedOrderCurrentState(BasicDataOrder model)
         {
             var doesExist =
@@ -219,6 +272,23 @@ namespace API.Services.Order
                 }
             }
             return false;
+        }
+
+        private async Task<UserBasicData> GetUser(int userId)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await ctx[UserTable].Connection
+                    .QueryFirstOrDefaultAsync<UserBasicData>(
+                        @"SELECT
+                            UserId
+                        FROM
+                            CK.tUser
+                        WHERE
+                            UserId = @id",
+                        new { id = userId }
+                    );
+            }
         }
     }
 }

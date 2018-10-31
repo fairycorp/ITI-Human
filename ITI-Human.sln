@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITI.Human.Data.Tests", "Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{A12083A2-3167-4573-B362-75A518DE7FC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.ViewModels", "API.ViewModels\API.ViewModels.csproj", "{119251C6-38C1-4354-B0BD-92B83ED0AD56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITI.Human.ViewModels", "ITI.Human.ViewModels\ITI.Human.ViewModels.csproj", "{119251C6-38C1-4354-B0BD-92B83ED0AD56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

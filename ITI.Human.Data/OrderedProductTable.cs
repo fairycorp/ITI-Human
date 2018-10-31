@@ -14,7 +14,7 @@ namespace ITI.Human.Data
         }
 
         [SqlProcedure("sOrderedProductCreate")]
-        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int orderId, int productId);
+        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int orderId, int productId, int amount);
 
         [SqlProcedure("sOrderedProductUpdate")]
         public abstract Task<bool> Update(ISqlCallContext ctx, int actorId, int orderedProductId, bool hasBeenDelivered);
