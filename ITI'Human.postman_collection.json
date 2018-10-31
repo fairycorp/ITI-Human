@@ -1,0 +1,153 @@
+{
+	"info": {
+		"_postman_id": "784e8c67-fc3b-44a5-9916-0c64e0a7f108",
+		"name": "ITI'Human",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/product/i/5",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"product",
+								"i",
+								"5"
+							]
+						},
+						"description": "Gets a Product by its id."
+					},
+					"response": []
+				},
+				{
+					"name": "getByName",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\": \"Sample\"\n}"
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/product/n",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"product",
+								"n"
+							]
+						},
+						"description": "Gets a Product by its name."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/order",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"order"
+							]
+						},
+						"description": "Gets all detailed Orders."
+					},
+					"response": []
+				},
+				{
+					"name": "getAllOfUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/order/user/3",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"order",
+								"user",
+								"3"
+							]
+						},
+						"description": "Gets all Orders of a User."
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"UserId\": 7,\n\t\"Products\": [\n\t\t{\n\t\t\t\"ProductId\": 2,\n\t\t\t\"Amount\": 1\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/order/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"order",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
