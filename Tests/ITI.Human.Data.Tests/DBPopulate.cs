@@ -85,11 +85,11 @@ namespace ITI.Human.Data.Tests
                 var order1 = await orderTable.Create(ctx, 0, user1, DateTime.Now);
                 var order2 = await orderTable.Create(ctx, 0, user2, DateTime.Now);
 
-                await orderedProductTable.Create(ctx, 0, order1, product2);
-                await orderedProductTable.Create(ctx, 0, order1, product9);
-                await orderedProductTable.Create(ctx, 0, order2, product3);
-                await orderedProductTable.Create(ctx, 0, order2, product4);
-                await orderedProductTable.Create(ctx, 0, order2, product1);
+                await orderedProductTable.Create(ctx, 0, order1, product2, 1);
+                await orderedProductTable.Create(ctx, 0, order1, product9, 1);
+                await orderedProductTable.Create(ctx, 0, order2, product3, 2);
+                await orderedProductTable.Create(ctx, 0, order2, product4, 1);
+                await orderedProductTable.Create(ctx, 0, order2, product1, 1);
             }
         }
     }

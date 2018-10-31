@@ -100,4 +100,8 @@
     <PackageReference Include="CK.DB.Auth" Version="3.0.1--0024-develop" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\API.ViewModels\API.ViewModels.csproj" />
+  </ItemGroup>
+
 </Project>
