@@ -48,6 +48,25 @@ namespace API.Controllers
             return BadRequest(check.Info);
         }
 
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateDetailedOrder(CreationViewModel model)
+        {
+            Dictionary<string, int> modelIntAnalysis = new Dictionary<string, int>();
+            foreach (var product in model.Products)
+            {
+                modelIntAnalysis.Add(nameof(product.ProductId), product.ProductId);
+                modelIntAnalysis.Add(nameof(product.Amount), product.Amount);
+            }
+            var check =
+                Guard.IsAdmissible(modelIntAnalysis);
+
+            if (check.Code == Status.Success)
+            {
+                // ...
+            }
+            return BadRequest(check.Info);
+        }
+
         [HttpPut("update")]
         public async Task<IActionResult> UpdateDetailedOrderCurrentState(DeliveryStateUpdateViewModel model)
         {

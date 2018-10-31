@@ -31,6 +31,11 @@
         public string Desc { get; set; }
 
         /// <summary>
+        /// See <see cref="BasicDataProductToOrder.Amount"/>.
+        /// </summary>
+        public int Amount { get; set; }
+
+        /// <summary>
         /// Has the product been delivered ?
         /// </summary>
         public bool HasBeenDelivered { get; set; }

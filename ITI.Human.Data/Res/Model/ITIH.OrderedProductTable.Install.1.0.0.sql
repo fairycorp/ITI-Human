@@ -2,6 +2,7 @@
 	OrderedProductId int not null identity(0, 1),
 	OrderId int not null,
 	ProductId int not null,
+	Amount int not null default 1,
 	HasBeenDelivered bit not null default 0
 	
 	constraint PK_ITIH_tOrderedProduct primary key (OrderedProductId),

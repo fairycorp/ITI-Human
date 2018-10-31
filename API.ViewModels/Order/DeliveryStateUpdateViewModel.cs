@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace API.ViewModels.Order
 {
-    public class CreationViewModel
+    public class DeliveryStateUpdateViewModel
     {
         /// <summary>
-        /// User's id.
+        /// See <see cref="DetailedDataOrder.OrderInfo"/>.
         /// </summary>
-        public int UserId { get; set; }
+        public BasicDataOrder Info { get; set; }
 
         /// <summary>
         /// See <see cref="DetailedDataOrder.Products"/>.
         /// </summary>
-        public IEnumerable<BasicDataProductToOrder> Products { get; set; }
+        public IEnumerable<BasicDataOrderedProduct> Products { get; set; }
     }
 }
