@@ -1,4 +1,5 @@
 ﻿using API.Services.Helper;
+using API.Services.Product;
 using API.ViewModels.Order;
 using API.ViewModels.Product.Ordered;
 using CK.DB.Actor;
@@ -20,13 +21,15 @@ namespace API.Services.Order
     /// </summary>
     public class OrderService
     {
+        public ProductService ProductService { get; set; }
+
         public OrderTable OrderTable { get; set; }
 
         public OrderedProductTable OrderedProductTable { get; set; }
 
         public UserTable UserTable { get; set; }
 
-        public OrderService(OrderTable oTable, OrderedProductTable oPTable, UserTable uTable)
+        public OrderService(ProductService pService, OrderTable oTable, OrderedProductTable oPTable, UserTable uTable)
         {
             OrderTable = oTable;
             OrderedProductTable = oPTable;
@@ -63,8 +66,27 @@ namespace API.Services.Order
         /// <returns>Success result where result content is int OR Failure result in case insertion process failed.</returns>
         public async Task<GuardResult> GuardedCreateDetailedOrder(ViewModels.Order.CreationViewModel model)
         {
-            var result = await CreateDetailedOrder(model);
-            return (result > 0) ? Success(result) : Failure("Error in creation process.");
+            // Checks if user exists (has to).
+            var doesUserExist =
+                await Attempt.ToGetElement(GetUser, model.UserId, true);
+
+            // Checks if each one of the products of the list exists.
+            foreach (var product in model.Products)
+            {
+                var productDoesExist =
+                    await Attempt.ToGetElement(ProductService.GetById, product.ProductId, true);
+
+                if (productDoesExist == null)
+                    return Failure(string.Format("Product with id '{0}' does not exist in database.", product.ProductId));
+            }
+
+            // Launches the creation process.
+            if (doesUserExist.Code == Status.Success)
+            {
+                var result = await CreateDetailedOrder(model);
+                return (result > 0) ? Success(result) : Failure("Error in creation process.");
+            }
+            return Failure("User does not exist.");
         }
 
         /// <summary>
@@ -227,35 +249,28 @@ namespace API.Services.Order
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                var doesUserExist = 
-                    await Attempt.ToGetElement(GetUser, model.UserId, true);
+                var order =
+                await OrderTable.Create(ctx, model.UserId, model.UserId, DateTime.Now);
 
-                if (doesUserExist.Code == Status.Success)
+                foreach (var product in model.Products)
                 {
-                    var order =
-                    await OrderTable.Create(ctx, model.UserId, model.UserId, DateTime.Now);
+                    var orderedProduct =
+                        await OrderedProductTable.Create(ctx, model.UserId, order, product.ProductId, product.Amount);
 
-                    foreach (var product in model.Products)
+                    // In case of an insertion problem, one have to clean the whole order up.
+                    if (orderedProduct == 0)
                     {
-                        var orderedProduct =
-                            await OrderedProductTable.Create(ctx, model.UserId, order, product.ProductId, product.Amount);
+                        var alreadyOrdered = await GetDetailedOrder(order);
 
-                        // In case of an insertion problem, one have to clean the whole order up.
-                        if (orderedProduct == 0)
+                        foreach (var alreadyOrderedProduct in alreadyOrdered.Products)
                         {
-                            var alreadyOrdered = await GetDetailedOrder(order);
-
-                            foreach (var alreadyOrderedProduct in alreadyOrdered.Products)
-                            {
-                                await OrderedProductTable.Delete(ctx, 0, alreadyOrderedProduct.OrderedProductId);
-                            }
-                            await OrderTable.Delete(ctx, 0, order);
-                            return 0;
+                            await OrderedProductTable.Delete(ctx, 0, alreadyOrderedProduct.OrderedProductId);
                         }
+                        await OrderTable.Delete(ctx, 0, order);
+                        return 0;
                     }
-                    return order;
                 }
-                return 0;
+                return order;
             }
         }
 
