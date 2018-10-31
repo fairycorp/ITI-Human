@@ -10,5 +10,5 @@
 	constraint FK_ITIH_tOrderedProduct_ProductId foreign key (ProductId) references ITIH.tProduct (ProductId)
 );
 
-insert into ITIH.tOrderedProduct (OrderId, ProductId)
-	values (0, 0);
+insert into ITIH.tOrderedProduct (OrderId, ProductId, Amount)
+	values (0, 0, 0);

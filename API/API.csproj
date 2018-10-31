@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\API.ViewModels\API.ViewModels.csproj" />
     <ProjectReference Include="..\ITI.Human.Data\ITI.Human.Data.csproj" />
   </ItemGroup>
 
