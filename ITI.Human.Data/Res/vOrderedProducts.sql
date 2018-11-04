@@ -4,6 +4,7 @@ as
 		OrderedProductId = op.OrderedProductId,
 		OrderId = op.OrderId,
 		ProductId = p.ProductId,
+		Amount = op.Amount,
 		[Name] = p.[Name],
 		[Desc] = p.[Desc],
 		Price = p.Price,

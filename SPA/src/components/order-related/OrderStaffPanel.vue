@@ -7,8 +7,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { IBasicDataOrder, IDetailedDataOrder } from '@/model/order/OrderModel';
-import Endpoint from '../../helpers/Endpoint';
 import API from '@/services/API';
+import Endpoint from '../../helpers/Endpoint';
 
 @Component
 export default class OrderStaffPanel extends Vue {
@@ -21,10 +21,10 @@ export default class OrderStaffPanel extends Vue {
         super();
         // Initializations.
         this.orders = [];
-        this.loadOrderList();
+        this.fetchOrderList();
     }
 
-    private async loadOrderList() {
+    private async fetchOrderList() {
         API.get(Endpoint.Order).then( (response) => {
             this.orders = response.data;
 
