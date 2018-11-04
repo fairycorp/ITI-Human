@@ -4,7 +4,7 @@ import Router from 'vue-router';
 // Components.
 import NotFound from './components/NotFound.vue';
 import Home from './components/Home.vue';
-import OrderPanel from './components/order-related/OLD-OrderStaffPanel.vue';
+import OrderStaffPanel from './components/order-related/OrderStaffPanel.vue';
 
 Vue.use(Router);
 
@@ -23,9 +23,9 @@ export default new Router({
     },
 
     {
-      path: '/order',
-      name: 'orderPanel',
-      component: OrderPanel,
+      path: '/order-staff',
+      name: 'orderStaffPanel',
+      component: OrderStaffPanel,
     },
   ],
 });
