@@ -28,6 +28,7 @@
     <None Remove="Res\sProjectTypeCreate.sql" />
     <None Remove="Res\sSemesterCreate.sql" />
     <None Remove="Res\vOrderedProducts.sql" />
+    <None Remove="Res\vOrders.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -92,6 +93,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\sProductCreate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\vOrders.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

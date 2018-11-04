@@ -1,6 +1,21 @@
 <template>
     <div class="main">
+        <div class="table">
 
+            <div class="row"
+            v-for="element in orderList" v-bind:key="element.orderInfo.orderId">
+
+                <div id="orderId" class="cell">
+                    Commande N°<span class="bold">{{ element.orderInfo.orderId }}</span>
+                </div>
+
+                <div id="userId" class="cell">
+                    pour <span class="bold">{{ element.orderInfo.userName }}</span>
+                </div>
+
+            </div>
+
+        </div>
     </div>
 </template>
 
@@ -36,5 +51,16 @@ export default class OrderStaffPanel extends Vue {
 </script>
 
 <style>
-
+    .main {
+        margin: 5em;
+    }
+    .row {
+        margin-bottom: 40px;
+        padding: 15px;
+        border: 1px dashed rgb(202, 202, 202);
+    }
+    .cell {
+        display: inline;
+        margin-left: 20px;
+    }
 </style>

@@ -11,6 +11,7 @@ namespace ITI.Human.Data
     [SqlTable("tOrder", Package = typeof(Package))]
     [Versions("1.0.0")]
     [SqlObjectItem("vOrderedProducts")]
+    [SqlObjectItem("vOrders")]
     public abstract class OrderTable : SqlTable
     {
         void StObjConstruct(UserTable uTable)

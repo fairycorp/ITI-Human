@@ -11,3 +11,4 @@ as
 		HasBeenDelivered = op.HasBeenDelivered
 	from tOrderedProduct op
 		join tProduct p on p.ProductId = op.ProductId
+	where op.OrderId <> 0;

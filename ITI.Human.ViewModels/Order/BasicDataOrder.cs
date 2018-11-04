@@ -22,6 +22,11 @@ namespace API.ViewModels.Order
         public int UserId { get; set; }
 
         /// <summary>
+        /// Client name, who is a user.
+        /// </summary>
+        public string UserName { get; set; }
+
+        /// <summary>
         /// Order creation date.
         /// </summary>
         public DateTime CreationDate { get; set; }

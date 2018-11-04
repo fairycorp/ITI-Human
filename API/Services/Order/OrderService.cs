@@ -147,7 +147,7 @@ namespace API.Services.Order
                         @"SELECT
                             *
                         FROM
-                            ITIH.tOrder;"
+                            ITIH.vOrders;"
                     );
 
                 List<DetailedDataOrder> ordersList = new List<DetailedDataOrder>();
