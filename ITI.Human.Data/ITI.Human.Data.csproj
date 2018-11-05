@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Res\Model\ITIH.ClassroomTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.OrderedProductTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.OrderTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.ProductLinkedProject.Install.1.0.0.sql" />
@@ -28,9 +29,13 @@
     <None Remove="Res\sProjectTypeCreate.sql" />
     <None Remove="Res\sSemesterCreate.sql" />
     <None Remove="Res\vOrderedProducts.sql" />
+    <None Remove="Res\vOrders.sql" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Res\Model\ITIH.ClassroomTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Res\Model\ITIH.ProductLinkedProject.Install.1.0.0.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -92,6 +97,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\sProductCreate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\vOrders.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

@@ -66,9 +66,16 @@ namespace API.Services.Order
         /// <returns>Success result where result content is int OR Failure result in case insertion process failed.</returns>
         public async Task<GuardResult> GuardedCreateDetailedOrder(ViewModels.Order.CreationViewModel model)
         {
-            // Checks if user exists (has to).
+            // Checks if classroom id is not 0.
+            if (model.ClassroomId == 0)
+                return Failure("ClassroomId cannot be 0.");
+
+            // Checks if user exists (has to) and returns failure in case he doesn't.
             var doesUserExist =
                 await Attempt.ToGetElement(GetUser, model.UserId, true);
+
+            if (doesUserExist.Code == Status.Failure)
+                return Failure(doesUserExist.Info);
 
             // Checks if each one of the products of the list exists.
             foreach (var product in model.Products)
@@ -147,28 +154,35 @@ namespace API.Services.Order
                         @"SELECT
                             *
                         FROM
-                            ITIH.tOrder;"
+                            ITIH.vOrders;"
                     );
 
                 List<DetailedDataOrder> ordersList = new List<DetailedDataOrder>();
                 foreach (var data in basicData)
                 {
-                    ordersList.Add(
-                        new DetailedDataOrder
-                        {
-                            OrderInfo = data,
-                            Products = await ctx[OrderTable].Connection
-                                .QueryAsync<BasicDataOrderedProduct>(
-                                    @"SELECT
-                                        *
-                                    FROM
-                                        ITIH.vOrderedProducts v
-                                    WHERE
-                                        v.OrderId = @id;",
-                                    new { id = data.OrderId }
-                                )
-                        }
-                    );
+                    var totalPrice = 0;
+
+                    var detailedData = new DetailedDataOrder();
+                    detailedData.OrderInfo = data;
+                    detailedData.Products = await ctx[OrderTable].Connection
+                        .QueryAsync<BasicDataOrderedProduct>(
+                            @"SELECT
+                                *
+                            FROM
+                                ITIH.vOrderedProducts v
+                            WHERE
+                                v.OrderId = @id;",
+                            new { id = data.OrderId }
+                        );
+
+
+                    foreach (var product in detailedData.Products)
+                    {
+                        totalPrice += product.Price * product.Amount;
+                    }
+                    detailedData.OrderInfo.Total = totalPrice;
+
+                    ordersList.Add(detailedData);
                 }
                 return ordersList;
             }
@@ -250,7 +264,7 @@ namespace API.Services.Order
             using (var ctx = new SqlStandardCallContext())
             {
                 var order =
-                await OrderTable.Create(ctx, model.UserId, model.UserId, DateTime.Now);
+                await OrderTable.Create(ctx, model.UserId, model.UserId, model.ClassroomId, DateTime.Now);
 
                 foreach (var product in model.Products)
                 {
