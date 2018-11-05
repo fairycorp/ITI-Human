@@ -66,9 +66,16 @@ namespace API.Services.Order
         /// <returns>Success result where result content is int OR Failure result in case insertion process failed.</returns>
         public async Task<GuardResult> GuardedCreateDetailedOrder(ViewModels.Order.CreationViewModel model)
         {
-            // Checks if user exists (has to).
+            // Checks if classroom id is not 0.
+            if (model.ClassroomId == 0)
+                return Failure("ClassroomId cannot be 0.");
+
+            // Checks if user exists (has to) and returns failure in case he doesn't.
             var doesUserExist =
                 await Attempt.ToGetElement(GetUser, model.UserId, true);
+
+            if (doesUserExist.Code == Status.Failure)
+                return Failure(doesUserExist.Info);
 
             // Checks if each one of the products of the list exists.
             foreach (var product in model.Products)
