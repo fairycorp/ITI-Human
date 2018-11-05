@@ -6,7 +6,8 @@ as
 		UserName = u.UserName,
 		CurrentMode = o.CurrentMode,
 		ClassroomName = c.[Name],
-		CreationDate = o.CreationDate
+		CreationDate = o.CreationDate,
+		HasBeenEntirelyDelivered = o.HasBeenEntirelyDelivered
 	from tOrder o
 		join CK.tUser u on u.UserId = o.UserId
 		join ITIH.tClassroom c on c.ClassroomId = o.ClassroomId

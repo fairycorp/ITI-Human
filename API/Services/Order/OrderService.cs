@@ -160,22 +160,29 @@ namespace API.Services.Order
                 List<DetailedDataOrder> ordersList = new List<DetailedDataOrder>();
                 foreach (var data in basicData)
                 {
-                    ordersList.Add(
-                        new DetailedDataOrder
-                        {
-                            OrderInfo = data,
-                            Products = await ctx[OrderTable].Connection
-                                .QueryAsync<BasicDataOrderedProduct>(
-                                    @"SELECT
-                                        *
-                                    FROM
-                                        ITIH.vOrderedProducts v
-                                    WHERE
-                                        v.OrderId = @id;",
-                                    new { id = data.OrderId }
-                                )
-                        }
-                    );
+                    var totalPrice = 0;
+
+                    var detailedData = new DetailedDataOrder();
+                    detailedData.OrderInfo = data;
+                    detailedData.Products = await ctx[OrderTable].Connection
+                        .QueryAsync<BasicDataOrderedProduct>(
+                            @"SELECT
+                                *
+                            FROM
+                                ITIH.vOrderedProducts v
+                            WHERE
+                                v.OrderId = @id;",
+                            new { id = data.OrderId }
+                        );
+
+
+                    foreach (var product in detailedData.Products)
+                    {
+                        totalPrice += product.Price * product.Amount;
+                    }
+                    detailedData.OrderInfo.Total = totalPrice;
+
+                    ordersList.Add(detailedData);
                 }
                 return ordersList;
             }

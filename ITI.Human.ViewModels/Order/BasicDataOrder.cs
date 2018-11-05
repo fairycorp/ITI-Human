@@ -52,6 +52,11 @@ namespace API.ViewModels.Order
         public State CurrentState { get; set; }
 
         /// <summary>
+        /// Order total price.
+        /// </summary>
+        public int Total { get; set; }
+
+        /// <summary>
         /// Has the order been entirely delivered ?
         /// </summary>
         public bool HasBeenEntirelyDelivered { get; set; }
