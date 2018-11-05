@@ -6,7 +6,7 @@ branches:
     - master
     - develop
 environment:
-  TestHelper::SqlServer::MasterConnectionString=TestHelper: Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!
+  TestHelper::SqlServer::MasterConnectionString: Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!
 build_script:
   - dotnet run --project CodeCakeBuilder -nointeraction
 test: off
