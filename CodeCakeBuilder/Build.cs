@@ -20,13 +20,13 @@ namespace CodeCake
             var projects = Cake.ParseSolution(solutionName)
                            .Projects
                            .Where(p => !(p is SolutionFolder)
-                                       && p.Name != "ITI.Human.CodeCakeBuilder");
+                                       && p.Name != "CodeCakeBuilder");
 
             Task("Clean")
                 .Does(() =>
                 {
-                    Cake.CleanDirectories("**/bin/" + configuration, d => !d.Path.Segments.Contains("ITI.Human.CodeCakeBuilder"));
-                    Cake.CleanDirectories("**/obj/" + configuration, d => !d.Path.Segments.Contains("ITI.Human.CodeCakeBuilder"));
+                    Cake.CleanDirectories("**/bin/" + configuration, d => !d.Path.Segments.Contains("CodeCakeBuilder"));
+                    Cake.CleanDirectories("**/obj/" + configuration, d => !d.Path.Segments.Contains("CodeCakeBuilder"));
                 });
 
             Task("Build")

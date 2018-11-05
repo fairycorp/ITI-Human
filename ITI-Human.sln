@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Common\Shared.props = Common\Shared.props
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITI.Human.CodeCakeBuilder", "ITI.Human.CodeCakeBuilder\ITI.Human.CodeCakeBuilder.csproj", "{6F9D8008-4D56-457B-8B11-0D53E1DE3FA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeCakeBuilder", "CodeCakeBuilder\CodeCakeBuilder.csproj", "{6F9D8008-4D56-457B-8B11-0D53E1DE3FA5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITI.Human.Data", "ITI.Human.Data\ITI.Human.Data.csproj", "{94AC87B9-5A25-45D9-8465-E6B97053DC33}"
 EndProject

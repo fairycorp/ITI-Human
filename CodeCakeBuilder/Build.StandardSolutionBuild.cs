@@ -21,10 +21,8 @@ namespace CodeCake
             using (var tempSln = Cake.CreateTemporarySolutionFile(solutionFileName))
             {
                 var exclude = new List<string>(excludedProjectName);
-                exclude.Add("ITI.Human.CodeCakeBuilder");
-
+                exclude.Add("CodeCakeBuilder");
                 tempSln.ExcludeProjectsFromBuild(exclude.ToArray());
-
                 Cake.DotNetCoreBuild(tempSln.FullPath.FullPath,
                     new DotNetCoreBuildSettings().AddVersionArguments(gitInfo, s =>
                     {

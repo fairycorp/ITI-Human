@@ -8,5 +8,5 @@ branches:
 environment:
   SqlServer/MasterConnectionString: Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!
 build_script:
-  - dotnet run --project ITI.Human.CodeCakeBuilder -nointeraction
+  - dotnet run --project CodeCakeBuilder -nointeraction
 test: off
