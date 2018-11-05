@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="1.50.5" />
+    <PackageReference Include="Dapper.StrongName" Version="1.50.5" />
     <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="NUnitLite" Version="3.10.1" />
     <PackageReference Include="CK.DB.Tests.NUnit" Version="8.0.1--0046-develop" />
