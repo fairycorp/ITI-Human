@@ -24,6 +24,7 @@ namespace ITI.Human.Data.Tests
         const string productName9 = "Fanta (50cl)";
         const string userName1 = "Geralt";
         const string userName2 = "Jasquier";
+        const string userName3 = "Priscilla";
 
         [Test]
         public async Task Populate()
@@ -79,17 +80,21 @@ namespace ITI.Human.Data.Tests
                 var product8 = await productTable.Create(ctx, 0, productName8, "", 1);
                 var product9 = await productTable.Create(ctx, 0, productName9, "", 2);
 
-                var user1 = userTable.CreateUser(ctx, 1, "Geralt");
-                var user2 = userTable.CreateUser(ctx, 1, "Jasquier");
+                var user1 = userTable.CreateUser(ctx, 1, userName1);
+                var user2 = userTable.CreateUser(ctx, 1, userName2);
+                var user3 = userTable.CreateUser(ctx, 1, userName3);
 
-                var order1 = await orderTable.Create(ctx, 0, user1, DateTime.Now);
-                var order2 = await orderTable.Create(ctx, 0, user2, DateTime.Now);
+                var order1 = await orderTable.Create(ctx, 0, user1, 4, DateTime.Now);
+                var order2 = await orderTable.Create(ctx, 0, user2, 2, DateTime.Now);
+                var order3 = await orderTable.Create(ctx, 0, user3, 0, DateTime.Now);
 
                 await orderedProductTable.Create(ctx, 0, order1, product2, 1);
                 await orderedProductTable.Create(ctx, 0, order1, product9, 1);
                 await orderedProductTable.Create(ctx, 0, order2, product3, 2);
                 await orderedProductTable.Create(ctx, 0, order2, product4, 1);
                 await orderedProductTable.Create(ctx, 0, order2, product1, 1);
+                await orderedProductTable.Create(ctx, 0, order3, product5, 1);
+                await orderedProductTable.Create(ctx, 0, order3, product3, 2);
             }
         }
     }

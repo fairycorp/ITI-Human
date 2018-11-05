@@ -250,7 +250,7 @@ namespace API.Services.Order
             using (var ctx = new SqlStandardCallContext())
             {
                 var order =
-                await OrderTable.Create(ctx, model.UserId, model.UserId, DateTime.Now);
+                await OrderTable.Create(ctx, model.UserId, model.UserId, model.ClassroomId, DateTime.Now);
 
                 foreach (var product in model.Products)
                 {
