@@ -16,6 +16,7 @@
     <None Remove="Res\Model\ITIH.ProjectTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.ProjectTypeTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.SemesterTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.StorageTable.Install.1.0.0.sql" />
     <None Remove="Res\sOrderCreate.sql" />
     <None Remove="Res\sOrderDelete.sql" />
     <None Remove="Res\sOrderedProductCreate.sql" />
@@ -28,6 +29,7 @@
     <None Remove="Res\sProjectCreate.sql" />
     <None Remove="Res\sProjectTypeCreate.sql" />
     <None Remove="Res\sSemesterCreate.sql" />
+    <None Remove="Res\sStorageCreate.sql" />
     <None Remove="Res\vOrderedProducts.sql" />
     <None Remove="Res\vOrders.sql" />
   </ItemGroup>
@@ -46,6 +48,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\Model\ITIH.ProjectTypeTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\Model\ITIH.StorageTable.Install.1.0.0.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\sOrderDelete.sql">
@@ -73,6 +78,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\sSemesterCreate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sStorageCreate.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\vOrderedProducts.sql">
