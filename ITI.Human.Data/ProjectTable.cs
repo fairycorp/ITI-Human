@@ -14,5 +14,8 @@ namespace ITI.Human.Data
 
         [SqlProcedure("sProjectCreate")]
         public abstract int Create(ISqlCallContext ctx, int actorId, int typeId, int semesterId, string name, string headline, string pitch);
+
+        [SqlProcedure("sProjectDelete")]
+        public abstract bool Delete(ISqlCallContext ctx, int actorId, int projectId);
     }
 }
