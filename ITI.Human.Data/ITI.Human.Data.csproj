@@ -16,6 +16,7 @@
     <None Remove="Res\Model\ITIH.ProjectTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.ProjectTypeTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.SemesterTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.StorageLinkedProductTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.StorageTable.Install.1.0.0.sql" />
     <None Remove="Res\sOrderCreate.sql" />
     <None Remove="Res\sOrderDelete.sql" />
@@ -24,12 +25,12 @@
     <None Remove="Res\sOrderedProductUpdate.sql" />
     <None Remove="Res\sOrderUpdate.sql" />
     <None Remove="Res\sProductCreate.sql" />
-    <None Remove="Res\sProductLinkedProjectCreate.sql" />
-    <None Remove="Res\sProductLinkedProjectDelete.sql" />
     <None Remove="Res\sProjectCreate.sql" />
+    <None Remove="Res\sProjectDelete.sql" />
     <None Remove="Res\sProjectTypeCreate.sql" />
     <None Remove="Res\sSemesterCreate.sql" />
     <None Remove="Res\sStorageCreate.sql" />
+    <None Remove="Res\sStorageLinkedProductCreate.sql" />
     <None Remove="Res\vOrderedProducts.sql" />
     <None Remove="Res\vOrders.sql" />
   </ItemGroup>
@@ -50,6 +51,9 @@
     <EmbeddedResource Include="Res\Model\ITIH.ProjectTypeTable.Install.1.0.0.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Res\Model\ITIH.StorageLinkedProductTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Res\Model\ITIH.StorageTable.Install.1.0.0.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -65,13 +69,10 @@
     <EmbeddedResource Include="Res\sOrderUpdate.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Res\sProductLinkedProjectCreate.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Res\sProductLinkedProjectDelete.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
     <EmbeddedResource Include="Res\sProjectCreate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sProjectDelete.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\sProjectTypeCreate.sql">
@@ -81,6 +82,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\sStorageCreate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sStorageLinkedProductCreate.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\vOrderedProducts.sql">
