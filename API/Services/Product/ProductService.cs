@@ -94,7 +94,7 @@ namespace API.Services.Product
             using (var ctx = new SqlStandardCallContext())
             {
                 return Success(
-                    await ProductTable.Create(ctx, 0, model.Name, model.Desc, model.Price)
+                    await ProductTable.Create(ctx, 0, model.Name, model.Desc)
                 );
             }
         }

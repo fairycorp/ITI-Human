@@ -3,12 +3,12 @@ as
 	select
 		OrderedProductId = op.OrderedProductId,
 		OrderId = op.OrderId,
-		ProductId = p.ProductId,
-		Amount = op.Amount,
+		StorageLinkedProductId = slp.StorageLinkedProductId,
 		[Name] = p.[Name],
 		[Desc] = p.[Desc],
-		Price = p.Price,
-		HasBeenDelivered = op.HasBeenDelivered
+		Quantity = op.Quantity,
+		UnitPrice = slp.UnitPrice
 	from tOrderedProduct op
-		join tProduct p on p.ProductId = op.ProductId
+		join tStorageLinkedProduct slp on slp.StorageLinkedProductId = op.StorageLinkedProductId
+		join tProduct p on p.ProductId = slp.ProductId
 	where op.OrderId <> 0;

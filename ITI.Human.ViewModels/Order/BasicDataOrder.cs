@@ -3,7 +3,7 @@
 namespace API.ViewModels.Order
 {
     public enum State {
-        NotStarted, Underway, Paused, Finished
+        NotStarted, Underway, Paused, Delivered, Canceled
     }
 
     public enum Mode {

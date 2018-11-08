@@ -114,17 +114,17 @@ namespace API.Services.Order
                     foreach (var product in model.Products)
                     {
                         // TODO ASAP: Change ActorId to use the current UserId instead of 0
-                        var hasBeenDelivered =
-                            await OrderedProductTable.Update(ctx, 0, product.OrderedProductId, product.HasBeenDelivered);
+                        var currentState =
+                            await OrderedProductTable.Update(ctx, 0, product.OrderedProductId, 0);
 
-                        if (!hasBeenDelivered)
+                        if (currentState != State.Delivered)
                             entirelyDelivered = false;
                     }
 
                     if (entirelyDelivered)
                     {
                         var hasBeenEntirelyDelivered =
-                            OrderTable.Update(ctx, 0, model.Info.OrderId, State.Finished, true);
+                            OrderTable.Update(ctx, 0, model.Info.OrderId, State.Delivered);
                     }
                     return Success(null);
                 }
@@ -140,7 +140,7 @@ namespace API.Services.Order
         public async Task<GuardResult> GuardedUpdateDetailedOrderCurrentState(BasicDataOrder model)
         {
             var result = await UpdateDetailedOrderCurrentState(model);
-            return (result) ? Success(result) : Failure("Error in update process.");
+            return (result == model.CurrentState) ? Success(result) : Failure("Error in update process.");
         }
 
         // --------------------------------------------------------------------------------------------
@@ -288,7 +288,7 @@ namespace API.Services.Order
             }
         }
 
-        private async Task<bool> UpdateDetailedOrderCurrentState(BasicDataOrder model)
+        private async Task<State> UpdateDetailedOrderCurrentState(BasicDataOrder model)
         {
             var doesExist =
                     await Attempt.ToGetElement(GetDetailedOrder, model.OrderId, true);
@@ -297,10 +297,16 @@ namespace API.Services.Order
             {
                 using (var ctx = new SqlStandardCallContext())
                 {
-                    return await OrderTable.Update(ctx, 0, model.OrderId, model.CurrentState, model.HasBeenEntirelyDelivered);
+                    return await OrderTable.Update(ctx, 0, model.OrderId, model.CurrentState);
                 }
             }
-            return false;
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await ctx[OrderTable].Connection
+                    .QueryFirstOrDefaultAsync<State>(
+                        "SELECT CurrentState FROM ITIH.tOrder WHERE OrderId = @OrderId;"
+                    );
+            }
         }
 
         private async Task<UserBasicData> GetUser(int userId)

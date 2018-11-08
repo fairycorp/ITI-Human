@@ -1,6 +1,7 @@
 ﻿using CK.Setup;
 using CK.SqlServer;
 using CK.SqlServer.Setup;
+using System.Threading.Tasks;
 
 namespace ITI.Human.Data
 {
@@ -13,9 +14,9 @@ namespace ITI.Human.Data
         }
 
         [SqlProcedure("sProjectCreate")]
-        public abstract int Create(ISqlCallContext ctx, int actorId, int typeId, int semesterId, string name, string headline, string pitch);
+        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int typeId, int semesterId, string name, string headline, string pitch);
 
         [SqlProcedure("sProjectDelete")]
-        public abstract bool Delete(ISqlCallContext ctx, int actorId, int projectId);
+        public abstract Task<bool> Delete(ISqlCallContext ctx, int actorId, int projectId);
     }
 }

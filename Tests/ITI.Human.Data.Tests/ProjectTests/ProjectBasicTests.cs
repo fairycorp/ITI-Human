@@ -21,9 +21,9 @@ namespace ITI.Human.Data.Tests.ProjectTests
                 // Creation process.
                 int created = 0;
                 p.Invoking(
-                    sut => 
+                    async sut => 
                     {
-                        created = p.Create(ctx, 0, 0, 0, string.Empty, string.Empty, string.Empty);
+                        created = await p.Create(ctx, 0, 0, 0, "N", "N", "N");
                     }
                 ).Should().NotThrow();
 

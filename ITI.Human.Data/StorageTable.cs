@@ -1,6 +1,7 @@
 ﻿using CK.Setup;
 using CK.SqlServer;
 using CK.SqlServer.Setup;
+using System.Threading.Tasks;
 
 namespace ITI.Human.Data
 {
@@ -13,6 +14,6 @@ namespace ITI.Human.Data
         }
 
         [SqlProcedure("sStorageCreate")]
-        public abstract int Create(ISqlCallContext ctx, int actorId, int projectId);
+        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int projectId);
     }
 }
