@@ -14,6 +14,6 @@ namespace ITI.Human.Data
         }
 
         [SqlProcedure("sStorageLinkedProductCreate")]
-        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int storageId, int productId, double unitPrice, int quantity);
+        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int storageId, int productId, double unitPrice, int stock);
     }
 }

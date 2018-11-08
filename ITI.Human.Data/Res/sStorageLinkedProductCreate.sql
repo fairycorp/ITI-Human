@@ -4,7 +4,7 @@ create proc ITIH.sStorageLinkedProductCreate (
 	@StorageId int,
 	@ProductId int,
 	@UnitPrice float,
-	@Quantity int,
+	@Stock int,
 	@StorageLinkedProductIdResult int output
 )
 as
@@ -13,8 +13,8 @@ begin
 
 	--<PreCreate revert />
 
-	insert into ITIH.tStorageLinkedProduct (StorageId, ProductId, UnitPrice, Quantity)
-		values (@StorageId, @ProductId, @UnitPrice, @Quantity);
+	insert into ITIH.tStorageLinkedProduct (StorageId, ProductId, UnitPrice, Stock)
+		values (@StorageId, @ProductId, @UnitPrice, @Stock);
 
 	set @StorageLinkedProductIdResult = scope_identity();
 
