@@ -3,7 +3,6 @@ create proc ITIH.sProductCreate (
 	@ActorId int,
 	@Name nvarchar(256),
 	@Desc nvarchar(512),
-	@Price float,
 	@ProductIdResult int output
 )
 as
@@ -12,8 +11,8 @@ begin
 	
 	--<PreCreate revert />
 
-	insert into ITIH.tProduct ([Name], [Desc], Price)
-		values (@Name, @Desc, @Price);
+	insert into ITIH.tProduct ([Name], [Desc])
+		values (@Name, @Desc);
 
 	set @ProductIdResult = scope_identity();
 

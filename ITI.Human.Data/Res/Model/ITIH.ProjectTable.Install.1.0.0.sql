@@ -5,6 +5,10 @@
 	[Name] nvarchar(256) not null,
 	Headline nvarchar(256) not null,
 	Pitch nvarchar(512) not null,
+
+	constraint PK_tProject_ProjectId primary key (ProjectId),
+	constraint FK_tProject_TypeId foreign key (TypeId) references ITIH.tProjectType (TypeId),
+	constraint FK_tProject_SemesterId foreign key (SemesterId) references ITIH.tSemester (SemesterId)
 );
 
 insert into ITIH.tProject (TypeId, SemesterId, [Name], Headline, Pitch)

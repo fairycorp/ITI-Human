@@ -17,8 +17,8 @@ begin
 	if (@ClassroomId > 0)
 		set @CurrentMode = 1;
 
-	insert into ITIH.tOrder (UserId, ClassroomId, CreationDate, CurrentMode)
-		values (@UserId, @ClassroomId, @CreationDate, @CurrentMode);
+	insert into ITIH.tOrder (UserId, ClassroomId, CreationDate)
+		values (@UserId, @ClassroomId, @CreationDate);
 
 	set @OrderIdResult = scope_identity();
 
