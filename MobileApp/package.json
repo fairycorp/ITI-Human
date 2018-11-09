@@ -9,14 +9,18 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "expo": "^31.0.2",
-    "react": "16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
+    "@signature/webfrontauth": "^0.12.0-alpha.1.5",
+    "axios": "^0.18.0",
+    "expo": "^30.0.1",
+    "expo-cli": "^2.2.4",
+    "react": "16.3.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
     "vue-native-core": "0.0.8",
-    "vue-native-helper": "0.0.9"
+    "vue-native-helper": "0.0.9",
+    "vue-native-router": "0.0.1-alpha.3",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
-    "babel-preset-expo": "^5.0.0",
     "vue-native-scripts": "0.0.14"
   }
 }
