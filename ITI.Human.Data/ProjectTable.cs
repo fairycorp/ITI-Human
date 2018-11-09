@@ -7,6 +7,7 @@ namespace ITI.Human.Data
 {
     [SqlTable("tProject", Package = typeof(Package))]
     [Versions("1.0.0")]
+    [SqlObjectItem("vProjects")]
     public abstract class ProjectTable : SqlTable
     {
         void StObjConstruct(ProjectTypeTable pTypeTable, SemesterTable sTable)

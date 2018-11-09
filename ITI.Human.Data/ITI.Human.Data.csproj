@@ -32,6 +32,7 @@
     <None Remove="Res\sStorageLinkedProductCreate.sql" />
     <None Remove="Res\vOrderedProducts.sql" />
     <None Remove="Res\vOrders.sql" />
+    <None Remove="Res\vProjects.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -108,6 +109,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\vOrders.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\vProjects.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
