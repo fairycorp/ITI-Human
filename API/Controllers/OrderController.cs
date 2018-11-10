@@ -66,8 +66,8 @@ namespace API.Controllers
                     Dictionary<string, int> modelIntAnalysis = new Dictionary<string, int>();
                     foreach (var product in model.Products)
                     {
-                        modelIntAnalysis.Add(nameof(product.ProductId), product.ProductId);
-                        modelIntAnalysis.Add(nameof(product.Amount), product.Amount);
+                        modelIntAnalysis.Add(nameof(product.StorageLinkedProductId), product.StorageLinkedProductId);
+                        modelIntAnalysis.Add(nameof(product.Quantity), product.Quantity);
                     }
                     var check =
                         Guard.IsAdmissible(modelIntAnalysis);
@@ -116,7 +116,7 @@ namespace API.Controllers
                     {
                         { nameof(product.OrderedProductId), product.OrderedProductId },
                         { nameof(product.OrderId), product.OrderId },
-                        { nameof(product.ProductId), product.ProductId },
+                        { nameof(product.StorageLinkedProductId), product.StorageLinkedProductId },
                     };
                     var check2 = Guard.IsAdmissible(modelProductIntAnalysis);
 
@@ -131,7 +131,7 @@ namespace API.Controllers
 
                         if (check3.Code == Status.Success)
                             return Ok((await Service.UpdateDetailedOrderDeliveryState(model)).Content);
-                        
+
                         return BadRequest(check3.Info);
                     }
                     return BadRequest(check2.Info);

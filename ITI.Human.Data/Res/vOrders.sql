@@ -4,6 +4,7 @@ as
 		OrderId = o.OrderId,
 		UserId = o.UserId,
 		UserName = u.UserName,
+		ClassroomId = o.ClassroomId,
 		ClassroomName = c.[Name],
 		CreationDate = o.CreationDate,
 		CurrentState = o.CurrentState

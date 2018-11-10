@@ -60,13 +60,7 @@ namespace API.Controllers
 
             if (check1.Code == Status.Success)
             {
-                var check2 = Guard.IsAdmissible(model.Price);
-
-                if (check2.Code == Status.Success)
-                {
-                    return Ok((await Service.Create(model)).Content);
-                }
-                return BadRequest(check2.Info);
+                return Ok((await Service.Create(model)).Content);
             }
             return BadRequest(check1.Info);
         }

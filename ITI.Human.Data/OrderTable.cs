@@ -14,12 +14,12 @@ namespace ITI.Human.Data
     [SqlObjectItem("vOrders")]
     public abstract class OrderTable : SqlTable
     {
-        void StObjConstruct(UserTable uTable, ClassroomTable cTable)
+        void StObjConstruct(StorageTable sTable, UserTable uTable, ClassroomTable cTable)
         {
         }
 
         [SqlProcedure("sOrderCreate")]
-        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int userId, int classroomId, DateTime creationDate);
+        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int storageId, int userId, int classroomId, DateTime creationDate);
 
         [SqlProcedure("sOrderUpdate")]
         public abstract Task<State> Update(ISqlCallContext ctx, int actorId, int orderId, State currentState);

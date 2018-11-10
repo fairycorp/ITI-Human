@@ -1,4 +1,5 @@
-﻿using API.Services.Helper;
+﻿using API.Services.Classroom;
+using API.Services.Helper;
 using API.Services.Product;
 using API.ViewModels.Order;
 using API.ViewModels.Product.Ordered;
@@ -21,7 +22,9 @@ namespace API.Services.Order
     /// </summary>
     public class OrderService
     {
-        public ProductService ProductService { get; set; }
+        public StorageService StorageService { get; set; }
+
+        public ClassroomService ClassroomService { get; set; }
 
         public OrderTable OrderTable { get; set; }
 
@@ -29,8 +32,10 @@ namespace API.Services.Order
 
         public UserTable UserTable { get; set; }
 
-        public OrderService(ProductService pService, OrderTable oTable, OrderedProductTable oPTable, UserTable uTable)
+        public OrderService(StorageService sService, ClassroomService cService, OrderTable oTable, OrderedProductTable oPTable, UserTable uTable)
         {
+            StorageService = sService;
+            ClassroomService = cService;
             OrderTable = oTable;
             OrderedProductTable = oPTable;
             UserTable = uTable;
@@ -54,7 +59,7 @@ namespace API.Services.Order
         /// <summary>
         /// Gets a detailed Order by its id.
         /// </summary>
-        /// <param name="orderId">Product id.</param>
+        /// <param name="orderId">Order id.</param>
         /// <returns>Success result where result content is a single DetailedDataOrder.</returns>
         public async Task<GuardResult> GuardedGetDetailedOrder(int orderId)
             => Success(await GetDetailedOrder(orderId));
@@ -64,11 +69,18 @@ namespace API.Services.Order
         /// </summary>
         /// <param name="model">Matching model.</param>
         /// <returns>Success result where result content is int OR Failure result in case insertion process failed.</returns>
-        public async Task<GuardResult> GuardedCreateDetailedOrder(ViewModels.Order.CreationViewModel model)
+        public async Task<GuardResult> GuardedCreateDetailedOrder(CreationViewModel model)
         {
-            // Checks if classroom id is not 0.
-            if (model.ClassroomId == 0)
-                return Failure("ClassroomId cannot be 0.");
+            // Checks if classroom id & storage id are not 0.
+            if (model.StorageId == 0 || model.UserId == 0)
+                return Failure("StorageId/UserId cannot be 0.");
+
+            // Checks if storage exists (has to) and returns failure in case it doesn't.
+            var doesStorageExist =
+                await Attempt.ToGetElement(StorageService.GetStorage, model.StorageId, true);
+
+            if (doesStorageExist.Code == Status.Failure)
+                return Failure(doesStorageExist.Info);
 
             // Checks if user exists (has to) and returns failure in case he doesn't.
             var doesUserExist =
@@ -77,14 +89,28 @@ namespace API.Services.Order
             if (doesUserExist.Code == Status.Failure)
                 return Failure(doesUserExist.Info);
 
-            // Checks if each one of the products of the list exists.
+            // Checks if classroom exists (has to) and returns failure in case it doesn't.
+            var doesClassroomExist =
+                await Attempt.ToGetElement(ClassroomService.GetClassroom, model.ClassroomId, true);
+
+            if (doesClassroomExist.Code == Status.Failure)
+                return Failure(doesClassroomExist.Info);
+
+            // Checks if each one of the products of the list exists in mentionned storage.
             foreach (var product in model.Products)
             {
-                var productDoesExist =
-                    await Attempt.ToGetElement(ProductService.GetById, product.ProductId, true);
+                // Checks if StorageLinkedProduct id & Quantity id are not 0.
+                if (product.StorageLinkedProductId == 0 || product.Quantity == 0)
+                    return Failure("StorageLinkedProductId/Quantity cannot be 0.");
 
-                if (productDoesExist == null)
-                    return Failure(string.Format("Product with id '{0}' does not exist in database.", product.ProductId));
+                var productDoesExist =
+                    await Attempt.ToGetElement(StorageService.GetStorageLinkedProductFromStorage, product.StorageLinkedProductId, model.StorageId, true);
+
+                if (productDoesExist.Code == Status.Failure)
+                    return Failure(string.Format(
+                        "Storage Linked Product with id '{0}' in Storage with id '{1}' does not exist in database.",
+                        product.StorageLinkedProductId,
+                        model.StorageId));
             }
 
             // Launches the creation process.
@@ -178,7 +204,7 @@ namespace API.Services.Order
 
                     foreach (var product in detailedData.Products)
                     {
-                        totalPrice += product.Price * product.Amount;
+                        totalPrice += product.UnitPrice * product.Quantity;
                     }
                     detailedData.OrderInfo.Total = totalPrice;
 
@@ -197,7 +223,7 @@ namespace API.Services.Order
                         @"SELECT
                             *
                         FROM
-                            ITIH.tOrder
+                            ITIH.vOrders
                         WHERE
                             UserId = @id;",
                         new { id = userId }
@@ -259,17 +285,17 @@ namespace API.Services.Order
             }
         }
 
-        private async Task<int> CreateDetailedOrder(ViewModels.Order.CreationViewModel model)
+        private async Task<int> CreateDetailedOrder(CreationViewModel model)
         {
             using (var ctx = new SqlStandardCallContext())
             {
                 var order =
-                await OrderTable.Create(ctx, model.UserId, model.UserId, model.ClassroomId, DateTime.Now);
+                await OrderTable.Create(ctx, model.UserId, model.StorageId, model.UserId, model.ClassroomId, DateTime.Now);
 
                 foreach (var product in model.Products)
                 {
                     var orderedProduct =
-                        await OrderedProductTable.Create(ctx, model.UserId, order, product.ProductId, product.Amount);
+                        await OrderedProductTable.Create(ctx, model.UserId, order, product.StorageLinkedProductId, product.Quantity);
 
                     // In case of an insertion problem, one have to clean the whole order up.
                     if (orderedProduct == 0)

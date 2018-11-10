@@ -29,5 +29,9 @@
     </Compile>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Logs\Text\" />
+  </ItemGroup>
+
 </Project>
 

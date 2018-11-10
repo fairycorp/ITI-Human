@@ -145,9 +145,9 @@ namespace ITI.Human.Data.Tests
 
 
                 // Creates orders.
-                var orderId1 = await oTable.Create(ctx, 0, userId1, 3, DateTime.Now);
-                var orderId2 = await oTable.Create(ctx, 0, userId2, 5, DateTime.Now);
-                var orderId3 = await oTable.Create(ctx, 0, userId3, 0, DateTime.Now);
+                var orderId1 = await oTable.Create(ctx, 0, storageId1, userId1, 3, DateTime.Now);
+                var orderId2 = await oTable.Create(ctx, 0, storageId2, userId2, 5, DateTime.Now);
+                var orderId3 = await oTable.Create(ctx, 0, storageId2, userId3, 0, DateTime.Now);
 
 
                 // Creates ordered products.

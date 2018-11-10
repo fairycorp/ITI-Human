@@ -1,4 +1,6 @@
-﻿namespace API.ViewModels.Product.Ordered
+﻿using API.ViewModels.Order;
+
+namespace API.ViewModels.Product.Ordered
 {
     /// <summary>
     /// Represents what an ordered product is.
@@ -16,9 +18,9 @@
         public int OrderId { get; set; }
 
         /// <summary>
-        /// Matching product id.
+        /// Matching storage linked product id.
         /// </summary>
-        public int ProductId { get; set; }
+        public int StorageLinkedProductId { get; set; }
         
         /// <summary>
         /// See <see cref="BasicDataProduct.Name"/>
@@ -31,18 +33,18 @@
         public string Desc { get; set; }
 
         /// <summary>
-        /// See <see cref="BasicDataProduct.Price"/>.
+        /// Storage linked product unit price.
         /// </summary>
-        public int Price { get; set; }
+        public int UnitPrice { get; set; }
 
         /// <summary>
-        /// See <see cref="BasicDataProductToOrder.Amount"/>.
+        /// See <see cref="BasicDataProductToOrder.Quantity"/>.
         /// </summary>
-        public int Amount { get; set; }
+        public int Quantity { get; set; }
 
         /// <summary>
-        /// Has the product been delivered ?
+        /// Ordered product current state.
         /// </summary>
-        public bool HasBeenDelivered { get; set; }
+        public State CurrentState { get; set; }
     }
 }

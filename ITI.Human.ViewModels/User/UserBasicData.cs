@@ -2,6 +2,9 @@
 {
     public class UserBasicData
     {
+        /// <summary>
+        /// User's id.
+        /// </summary>
         public int UserId { get; set; }
     }
 }

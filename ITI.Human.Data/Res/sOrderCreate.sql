@@ -1,6 +1,7 @@
 ﻿-- SetupConfig: {}
 create proc ITIH.sOrderCreate (
 	@ActorId int,
+	@StorageId int,
 	@UserId int,
 	@ClassroomId int,
 	@CreationDate datetime2,
@@ -17,8 +18,8 @@ begin
 	if (@ClassroomId > 0)
 		set @CurrentMode = 1;
 
-	insert into ITIH.tOrder (UserId, ClassroomId, CreationDate)
-		values (@UserId, @ClassroomId, @CreationDate);
+	insert into ITIH.tOrder (StorageId, UserId, ClassroomId, CreationDate)
+		values (@StorageId, @UserId, @ClassroomId, @CreationDate);
 
 	set @OrderIdResult = scope_identity();
 
