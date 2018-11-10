@@ -223,7 +223,7 @@ namespace API.Services.Order
                         @"SELECT
                             *
                         FROM
-                            ITIH.tOrder
+                            ITIH.vOrders
                         WHERE
                             UserId = @id;",
                         new { id = userId }
