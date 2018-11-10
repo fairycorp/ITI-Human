@@ -6,6 +6,11 @@ namespace API.ViewModels.Order
     public class CreationViewModel
     {
         /// <summary>
+        /// See <see cref="BasicDataOrder.StorageId"/>.
+        /// </summary>
+        public int StorageId { get; set; }
+
+        /// <summary>
         /// User's id.
         /// </summary>
         public int UserId { get; set; }

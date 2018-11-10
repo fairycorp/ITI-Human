@@ -1,4 +1,5 @@
-﻿using API.Services.Order;
+﻿using API.Services.Classroom;
+using API.Services.Order;
 using API.Services.Product;
 using CK.AspNet.Auth;
 using CK.DB.User.UserGitHub;
@@ -90,6 +91,8 @@ namespace API
 
             services.AddSingleton<ProductService>();
             services.AddSingleton<OrderService>();
+            services.AddSingleton<StorageService>();
+            services.AddSingleton<ClassroomService>();
 
             services.AddCors();
             services.AddMvc();

@@ -14,6 +14,7 @@ begin
 	set @StorageId = (select StorageId from ITIH.tStorage where ProjectId = @ProjectId);
 	
 	if (@StorageId != 0)
+		delete from ITIH.tStorageLinkedProduct where StorageId = @StorageId;
 		delete from ITIH.tStorage where StorageId = @StorageId;
 
 	delete from ITIH.tProject where ProjectId = @ProjectId;
