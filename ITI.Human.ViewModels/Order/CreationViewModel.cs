@@ -11,7 +11,7 @@ namespace API.ViewModels.Order
         public int UserId { get; set; }
 
         /// <summary>
-        /// See <see cref="BasicDataOrder.ClassroomName"/> (this is the id version of it).
+        /// See <see cref="BasicDataOrder.ClassroomId"/>.
         /// </summary>
         public int ClassroomId { get; set; }
 

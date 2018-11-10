@@ -19,10 +19,5 @@
         /// Product description.
         /// </summary>
         public string Desc { get; set; }
-
-        /// <summary>
-        /// Product price ; must not be negative.
-        /// </summary>
-        public double Price { get; set; }
     }
 }

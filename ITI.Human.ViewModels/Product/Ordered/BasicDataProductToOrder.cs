@@ -3,13 +3,13 @@
     public class BasicDataProductToOrder
     {
         /// <summary>
-        /// See <see cref="BasicDataProduct.ProductId"/>.
+        /// See <see cref="BasicDataOrderedProduct.StorageLinkedProductId"/>.
         /// </summary>
-        public int ProductId { get; set; }
+        public int StorageLinkedProductId { get; set; }
 
         /// <summary>
-        /// Desired Product amount.
+        /// Desired Product quantity.
         /// </summary>
-        public int Amount { get; set; }
+        public int Quantity { get; set; }
     }
 }
