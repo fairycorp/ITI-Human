@@ -99,7 +99,7 @@ namespace API
         {
             app.UseRequestMonitor();
             app.UseCors(builder =>
-                builder.WithOrigins("localhost:8080").AllowAnyHeader().AllowCredentials().AllowAnyMethod().AllowAnyOrigin());
+                builder.AllowAnyHeader().AllowCredentials().AllowAnyMethod().AllowAnyOrigin());
             app.UseMvc();
         }
     }
