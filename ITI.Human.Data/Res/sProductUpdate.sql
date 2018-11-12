@@ -33,15 +33,15 @@ begin
 	set @newDesc = (select [Desc] from ITIH.tProduct where ProductId = @ProductId);
 
 	if (@Name = null)
-		if (@newName != @previousName)
-			set @Success = 0;
-		else
+		if (@newName = @previousName)
 			set @Success = 1;
 
 	if (@Desc = null)
 		if (@newDesc != @previousDesc)
-			set @Success = 0;
-		else
+			set @Success = 1;
+
+	if (@Name is not null and @Desc is not null)
+		if (@newName != @previousName and @newDesc != @previousDesc)
 			set @Success = 1;
 
 	--<PostCreate />

@@ -15,8 +15,12 @@
     <None Remove="Res\Model\ITIH.ProjectTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.ProjectTypeTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.SemesterTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.SLPStockUpdateTrackTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.SLPUnitPriceUpdateTrackTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.StorageLinkedProductTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.StorageLinkedProductUpdateTrackTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.StorageTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.UpdateTrackTable.Install.1.0.0.sql" />
     <None Remove="Res\sOrderCreate.sql" />
     <None Remove="Res\sOrderDelete.sql" />
     <None Remove="Res\sOrderedProductCreate.sql" />
@@ -31,6 +35,8 @@
     <None Remove="Res\sSemesterCreate.sql" />
     <None Remove="Res\sStorageCreate.sql" />
     <None Remove="Res\sStorageLinkedProductCreate.sql" />
+    <None Remove="Res\sStorageLinkedProductStockUpdate.sql" />
+    <None Remove="Res\sStorageLinkedProductUnitPriceUpdate.sql" />
     <None Remove="Res\vOrderedProducts.sql" />
     <None Remove="Res\vOrders.sql" />
     <None Remove="Res\vProjects.sql" />
@@ -49,10 +55,22 @@
     <EmbeddedResource Include="Res\Model\ITIH.ProjectTypeTable.Install.1.0.0.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Res\Model\ITIH.SLPStockUpdateTrackTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\Model\ITIH.SLPUnitPriceUpdateTrackTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Res\Model\ITIH.StorageLinkedProductTable.Install.1.0.0.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Res\Model\ITIH.StorageLinkedProductUpdateTrackTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Res\Model\ITIH.StorageTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\Model\ITIH.UpdateTrackTable.Install.1.0.0.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\sOrderDelete.sql">
@@ -86,6 +104,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\sStorageLinkedProductCreate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sStorageLinkedProductStockUpdate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sStorageLinkedProductUnitPriceUpdate.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\vOrderedProducts.sql">

@@ -1,0 +1,35 @@
+﻿--SetupConfig: {}
+create proc ITIH.sStorageLinkedProductStockUpdate (
+	@ActorId int,
+	@StorageLinkedProductId int,
+	@Stock int,
+	@Success bit = 0 output
+)
+as
+begin
+	--[beginsp]
+
+	--<PreCreate revert />
+
+	declare @previousStock int;
+	declare @newStock int;
+	declare @updateTrack int;
+	declare @SLPUpdateTrack int;
+
+	set @previousStock = (select Stock from ITIH.tStorageLinkedProduct where StorageLinkedProductId = @StorageLinkedProductId);
+	update ITIH.tStorageLinkedProduct set Stock = @Stock where StorageLinkedProductId = @StorageLinkedProductId;
+	set @newStock = (select Stock from ITIH.tStorageLinkedProduct where StorageLinkedProductId = @StorageLinkedProductId);
+
+	if (@newStock != @previousStock)
+		set @Success = 1;
+		insert into ITIH.tUpdateTrack (ActorId) values (@ActorId);
+		set @updateTrack = scope_identity();
+		insert into ITIH.tSLPUpdateTrack (StorageLinkedProductId) values (@StorageLinkedProductId);
+		set @SLPUpdateTrack = scope_identity();
+		insert into ITIH.tSLPStockUpdateTrack (SLPUpdateTrackId, PreviousStock, NewStock) values (@SLPUpdateTrack, @previousStock, @newStock);
+
+
+	--<PostCreate />
+
+	--[endsp]
+end;
