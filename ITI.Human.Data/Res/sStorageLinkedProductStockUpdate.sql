@@ -2,7 +2,7 @@
 create proc ITIH.sStorageLinkedProductStockUpdate (
 	@ActorId int,
 	@StorageLinkedProductId int,
-	@Stock float,
+	@Stock int,
 	@Success bit = 0 output
 )
 as

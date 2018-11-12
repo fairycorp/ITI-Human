@@ -15,12 +15,12 @@
     <None Remove="Res\Model\ITIH.ProjectTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.ProjectTypeTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.SemesterTable.Install.1.0.0.sql" />
-    <None Remove="Res\Model\ITIH.SLPStockUpdateTrack.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.SLPStockUpdateTrackTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.SLPUnitPriceUpdateTrackTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.StorageLinkedProductTable.Install.1.0.0.sql" />
-    <None Remove="Res\Model\ITIH.StorageLinkedProductUpdateTrack.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.StorageLinkedProductUpdateTrackTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.StorageTable.Install.1.0.0.sql" />
-    <None Remove="Res\Model\ITIH.UpdateTrack.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.UpdateTrackTable.Install.1.0.0.sql" />
     <None Remove="Res\sOrderCreate.sql" />
     <None Remove="Res\sOrderDelete.sql" />
     <None Remove="Res\sOrderedProductCreate.sql" />
@@ -55,7 +55,7 @@
     <EmbeddedResource Include="Res\Model\ITIH.ProjectTypeTable.Install.1.0.0.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Res\Model\ITIH.SLPStockUpdateTrack.Install.1.0.0.sql">
+    <EmbeddedResource Include="Res\Model\ITIH.SLPStockUpdateTrackTable.Install.1.0.0.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\Model\ITIH.SLPUnitPriceUpdateTrackTable.Install.1.0.0.sql">
@@ -64,13 +64,13 @@
     <EmbeddedResource Include="Res\Model\ITIH.StorageLinkedProductTable.Install.1.0.0.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Res\Model\ITIH.StorageLinkedProductUpdateTrack.Install.1.0.0.sql">
+    <EmbeddedResource Include="Res\Model\ITIH.StorageLinkedProductUpdateTrackTable.Install.1.0.0.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\Model\ITIH.StorageTable.Install.1.0.0.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Res\Model\ITIH.UpdateTrack.Install.1.0.0.sql">
+    <EmbeddedResource Include="Res\Model\ITIH.UpdateTrackTable.Install.1.0.0.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\sOrderDelete.sql">

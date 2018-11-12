@@ -13,10 +13,11 @@ begin
 
 	declare @previousUnitPrice int;
 	declare @newUnitPrice int;
+	declare @updateTrack int;
+	declare @SLPUpdateTrack int;
+
 	set @previousUnitPrice = (select UnitPrice from ITIH.tStorageLinkedProduct where StorageLinkedProductId = @StorageLinkedProductId);
-
 	update ITIH.tStorageLinkedProduct set UnitPrice = @UnitPrice where StorageLinkedProductId = @StorageLinkedProductId;
-
 	set @newUnitPrice = (select UnitPrice from ITIH.tStorageLinkedProduct where StorageLinkedProductId = @StorageLinkedProductId);
 
 	if (@newUnitPrice != @previousUnitPrice)
