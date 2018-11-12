@@ -1,6 +1,7 @@
 ﻿using API.Services.Classroom;
 using API.Services.Order;
 using API.Services.Product;
+using API.Services.Project;
 using CK.AspNet.Auth;
 using CK.DB.User.UserGitHub;
 using Microsoft.AspNetCore.Authentication;
@@ -89,10 +90,11 @@ namespace API
             }
             services.AddStObjMap("CK.StObj.AutoAssembly");
 
-            services.AddSingleton<ProductService>();
-            services.AddSingleton<OrderService>();
-            services.AddSingleton<StorageService>();
             services.AddSingleton<ClassroomService>();
+            services.AddSingleton<OrderService>();
+            services.AddSingleton<ProductService>();
+            services.AddSingleton<ProjectService>();
+            services.AddSingleton<StorageService>();
 
             services.AddCors();
             services.AddMvc();

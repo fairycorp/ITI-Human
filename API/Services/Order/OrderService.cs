@@ -1,12 +1,13 @@
 ﻿using API.Services.Classroom;
 using API.Services.Helper;
 using API.Services.Product;
-using API.ViewModels.Order;
-using API.ViewModels.Product.Ordered;
+using ITI.Human.ViewModels.Order;
+using ITI.Human.ViewModels.Product.Ordered;
 using CK.DB.Actor;
 using CK.SqlServer;
 using Dapper;
 using ITI.Human.Data;
+using ITI.Human.ViewModels.Order;
 using ITI.Human.ViewModels.User;
 using Stall.Guard.System;
 using System;
@@ -290,7 +291,7 @@ namespace API.Services.Order
             using (var ctx = new SqlStandardCallContext())
             {
                 var order =
-                await OrderTable.Create(ctx, model.UserId, model.StorageId, model.UserId, model.ClassroomId, DateTime.Now);
+                await OrderTable.Create(ctx, model.UserId, model.StorageId, model.UserId, model.ClassroomId, DateTime.UtcNow);
 
                 foreach (var product in model.Products)
                 {

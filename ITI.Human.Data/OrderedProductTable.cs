@@ -1,4 +1,4 @@
-﻿using API.ViewModels.Order;
+﻿using ITI.Human.ViewModels.Order;
 using CK.Setup;
 using CK.SqlServer;
 using CK.SqlServer.Setup;

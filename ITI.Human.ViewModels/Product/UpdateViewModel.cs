@@ -1,22 +1,19 @@
 ﻿namespace ITI.Human.ViewModels.Product
 {
-    /// <summary>
-    /// Represents what a product is.
-    /// </summary>
-    public class BasicDataProduct
+    public class UpdateViewModel
     {
         /// <summary>
-        /// Product id.
+        /// See <see cref="BasicDataProduct.ProductId"/>.
         /// </summary>
         public int ProductId { get; set; }
 
         /// <summary>
-        /// Product (unique) name.
+        /// See <see cref="BasicDataProduct.Name"/>.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Product description.
+        /// See <see cref="BasicDataProduct.Desc"/>.
         /// </summary>
         public string Desc { get; set; }
     }
