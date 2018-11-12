@@ -6,6 +6,7 @@ using ITI.Human.Data;
 using ITI.Human.ViewModels.Storage;
 using ITI.Human.ViewModels.Storage.LinkedProduct;
 using Stall.Guard.System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -190,28 +191,54 @@ namespace API.Services.Product
         /// <summary>
         /// Creates a Storage Linked Product.
         /// </summary>
-        /// <param name="storageId">Storage id.</param>
-        /// <param name="productId">Product id.</param>
-        /// <param name="unitPrice">Unit price.</param>
-        /// <param name="stock">Stock in storage.</param>
-        /// <returns></returns>
+        /// <param name="model">Storage Linked Product creation view model.</param>
         public async Task<GuardResult> CreateLinkedProduct(ITI.Human.ViewModels.Storage.LinkedProduct.CreationViewModel model)
         {
+            // Checks if both mentioned Storage & Product exist.
+            // If not, returns Failure().
+            var doesStorageExist =
+                await Attempt.ToGetElement(GetStorage, model.StorageId, true);
+
+            var doesProductExist =
+                await Attempt.ToGetElement(ProductService.GetProductById, model.ProductId, true);
+
+            // Since Info properties are the same, doesn't matter which one one display.
+            if (((GuardResult)doesStorageExist.Content).Content == null 
+            || ((GuardResult)doesProductExist.Content).Content == null)
+                return Failure(doesProductExist.Info);
+
+            // Launches creation process.
             using (var ctx = new SqlStandardCallContext())
             {
-                // Checks if both mentioned Storage & Product exist.
-                // If not, returns Failure().
-                var doesStorageExist =
-                    await Attempt.ToGetElement(GetStorage, model.StorageId, true);
-
-                var doesProductExist =
-                    await Attempt.ToGetElement(ProductService.GetProductById, model.ProductId, true);
-
-                // Since Info properties are the same, doesn't matter which one one display.
-                if (doesStorageExist.Content == null || doesProductExist.Content == null) return Failure(doesProductExist.Info);
-
-                // Launches creation process.
                 return Success(await StorageLinkedProductTable.Create(ctx, 0, model.Stock, model.ProductId, model.UnitPrice, model.Stock));
+            }
+        }
+
+        /// <summary>
+        /// Updates a Storage Linked Product.
+        /// </summary>
+        /// <param name="model">Storage Linked Product update view model.</param>
+        public async Task<GuardResult> UpdateLinkedProduct(UpdateViewModel model)
+        {
+            // Checks if Storage Linked Product exists.
+            // If not, returns Failure().
+            var doesSLPExist =
+                await Attempt.ToGetElement(GetStorageLinkedProduct, model.StorageLinkedProductId, true);
+
+            if (((GuardResult)doesSLPExist.Content).Content == null) return Failure(doesSLPExist.Info);
+
+            // Launches update process.
+            using (var ctx = new SqlStandardCallContext())
+            {
+                var now = DateTime.UtcNow;
+
+                var result1 = 
+                    await StorageLinkedProductTable.UpdateUnitPrice(ctx, 0, now, model.StorageLinkedProductId, model.UnitPrice);
+
+                var result2 =
+                    await StorageLinkedProductTable.UpdateStock(ctx, 0, now, model.StorageLinkedProductId, model.Stock);
+
+                return Success(new bool[2] { result1, result2 });
             }
         }
     }

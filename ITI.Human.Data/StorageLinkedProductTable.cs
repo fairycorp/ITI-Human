@@ -1,6 +1,7 @@
 ﻿using CK.Setup;
 using CK.SqlServer;
 using CK.SqlServer.Setup;
+using System;
 using System.Threading.Tasks;
 
 namespace ITI.Human.Data
@@ -17,9 +18,9 @@ namespace ITI.Human.Data
         public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int storageId, int productId, double unitPrice, int stock);
 
         [SqlProcedure("sStorageLinkedProductUnitPriceUpdate")]
-        public abstract Task<bool> UpdateUnitPrice(ISqlCallContext ctx, int actorId, int storageLinkedProductId, double unitPrice);
+        public abstract Task<bool> UpdateUnitPrice(ISqlCallContext ctx, int actorId, DateTime updateDate, int storageLinkedProductId, double unitPrice);
 
         [SqlProcedure("sStorageLinkedProductStockUpdate")]
-        public abstract Task<bool> UpdateStock(ISqlCallContext ctx, int actorId, int storageLinkedProductId, int stock);
+        public abstract Task<bool> UpdateStock(ISqlCallContext ctx, int actorId, DateTime updateDate, int storageLinkedProductId, int stock);
     }
 }

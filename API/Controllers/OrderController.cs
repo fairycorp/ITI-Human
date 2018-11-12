@@ -1,5 +1,5 @@
 ﻿using API.Services.Order;
-using API.ViewModels.Order;
+using ITI.Human.ViewModels.Order;
 using Microsoft.AspNetCore.Mvc;
 using Stall.Guard.System;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllDetailedOrders()
+        public async Task<IActionResult> GetAll()
             => Ok((await Service.GuardedGetAllDetailedOrders()).Content);
 
         [HttpGet("user/{userId}")]
@@ -37,7 +37,7 @@ namespace API.Controllers
         }
 
         [HttpGet("i/{orderId}")]
-        public async Task<IActionResult> GetDetailedOrder(int orderId)
+        public async Task<IActionResult> Get(int orderId)
         {
             var check =
                 Guard.IsAdmissible(nameof(orderId), orderId);
@@ -49,7 +49,7 @@ namespace API.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateDetailedOrder([FromBody] CreationViewModel model)
+        public async Task<IActionResult> Create([FromBody] CreationViewModel model)
         {
             if (model != null)
             {
@@ -91,7 +91,7 @@ namespace API.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> UpdateDetailedOrderCurrentState(DeliveryStateUpdateViewModel model)
+        public async Task<IActionResult> Update(DeliveryStateUpdateViewModel model)
         {
             if (!(model == null))
             {

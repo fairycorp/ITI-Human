@@ -1,6 +1,7 @@
 ﻿--SetupConfig: {}
 create proc ITIH.sStorageLinkedProductStockUpdate (
 	@ActorId int,
+	@UpdateDate datetime2,
 	@StorageLinkedProductId int,
 	@Stock int,
 	@Success bit = 0 output
@@ -22,9 +23,9 @@ begin
 
 	if (@newStock != @previousStock)
 		set @Success = 1;
-		insert into ITIH.tUpdateTrack (ActorId) values (@ActorId);
+		insert into ITIH.tUpdateTrack (ActorId, UpdateDate) values (@ActorId, @UpdateDate);
 		set @updateTrack = scope_identity();
-		insert into ITIH.tSLPUpdateTrack (StorageLinkedProductId) values (@StorageLinkedProductId);
+		insert into ITIH.tStorageLinkedProductUpdateTrack (UpdateTrackId, StorageLinkedProductId) values (@updateTrack, @StorageLinkedProductId);
 		set @SLPUpdateTrack = scope_identity();
 		insert into ITIH.tSLPStockUpdateTrack (SLPUpdateTrackId, PreviousStock, NewStock) values (@SLPUpdateTrack, @previousStock, @newStock);
 

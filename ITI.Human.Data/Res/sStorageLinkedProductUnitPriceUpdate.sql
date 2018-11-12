@@ -1,6 +1,7 @@
 ﻿--SetupConfig: {}
 create proc ITIH.sStorageLinkedProductUnitPriceUpdate (
 	@ActorId int,
+	@UpdateDate datetime2,
 	@StorageLinkedProductId int,
 	@UnitPrice float,
 	@Success bit = 0 output
@@ -11,8 +12,8 @@ begin
 
 	--<PreCreate revert />
 
-	declare @previousUnitPrice int;
-	declare @newUnitPrice int;
+	declare @previousUnitPrice float;
+	declare @newUnitPrice float;
 	declare @updateTrack int;
 	declare @SLPUpdateTrack int;
 
@@ -22,9 +23,9 @@ begin
 
 	if (@newUnitPrice != @previousUnitPrice)
 		set @Success = 1;
-		insert into ITIH.tUpdateTrack (ActorId) values (@ActorId);
+		insert into ITIH.tUpdateTrack (ActorId, UpdateDate) values (@ActorId, @UpdateDate);
 		set @updateTrack = scope_identity();
-		insert into ITIH.tSLPUpdateTrack (StorageLinkedProductId) values (@StorageLinkedProductId);
+		insert into ITIH.tStorageLinkedProductUpdateTrack (UpdateTrackId, StorageLinkedProductId) values (@updateTrack, @StorageLinkedProductId);
 		set @SLPUpdateTrack = scope_identity();
 		insert into ITIH.tSLPUnitPriceUpdateTrack (SLPUpdateTrackId, PreviousUnitPrice, NewUnitPrice) values (@SLPUpdateTrack, @previousUnitPrice, @newUnitPrice);
 
