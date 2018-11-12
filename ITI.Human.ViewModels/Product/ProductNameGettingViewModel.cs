@@ -1,4 +1,4 @@
-﻿namespace API.ViewModels.Product
+﻿namespace ITI.Human.ViewModels.Product
 {
     /// <summary>
     /// Assuming a Product name can contain spaces,

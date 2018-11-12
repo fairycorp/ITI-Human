@@ -1,6 +1,6 @@
-﻿using API.ViewModels.Order;
+﻿using ITI.Human.ViewModels.Order;
 
-namespace API.ViewModels.Product.Ordered
+namespace ITI.Human.ViewModels.Product.Ordered
 {
     /// <summary>
     /// Represents what an ordered product is.

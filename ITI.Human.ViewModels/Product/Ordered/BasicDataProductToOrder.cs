@@ -1,4 +1,4 @@
-﻿namespace API.ViewModels.Product.Ordered
+﻿namespace ITI.Human.ViewModels.Product.Ordered
 {
     public class BasicDataProductToOrder
     {

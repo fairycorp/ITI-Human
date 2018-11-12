@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace API.ViewModels.Order
+namespace ITI.Human.ViewModels.Order
 {
     public enum State {
         NotStarted, Underway, Paused, Delivered, Canceled

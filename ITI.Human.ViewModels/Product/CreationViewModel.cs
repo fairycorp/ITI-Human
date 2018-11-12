@@ -1,4 +1,4 @@
-﻿namespace API.ViewModels.Product
+﻿namespace ITI.Human.ViewModels.Product
 {
     public class CreationViewModel
     {

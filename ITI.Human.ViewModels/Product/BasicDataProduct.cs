@@ -1,4 +1,4 @@
-﻿namespace API.ViewModels.Product
+﻿namespace ITI.Human.ViewModels.Product
 {
     /// <summary>
     /// Represents what a product is.
