@@ -45,7 +45,7 @@ namespace API.Services.Product
         /// </summary>
         /// <param name="productId">Product id.</param>
         /// <returns>Success result where result content is a single BasicDataProduct.</returns>
-        public async Task<GuardResult> GetById(int productId)
+        public async Task<GuardResult> GetProductById(int productId)
         {
             using (var ctx = new SqlStandardCallContext())
             {
@@ -67,7 +67,7 @@ namespace API.Services.Product
         /// </summary>
         /// <param name="productName">Product name.</param>
         /// <returns>Success result where result content is a single BasicDataProduct.</returns>
-        public async Task<GuardResult> GetByName(string productName)
+        public async Task<GuardResult> GetProductByName(string productName)
         {
             using (var ctx = new SqlStandardCallContext())
             {
@@ -89,7 +89,7 @@ namespace API.Services.Product
         /// </summary>
         /// <param name="model">Product creation view model.</param>
         /// <returns>Success result where result content is null OR Failure result in case element does not exist in DB.</returns>
-        public async Task<GuardResult> Create(CreationViewModel model)
+        public async Task<GuardResult> CreateProduct(CreationViewModel model)
         {
             using (var ctx = new SqlStandardCallContext())
             {
