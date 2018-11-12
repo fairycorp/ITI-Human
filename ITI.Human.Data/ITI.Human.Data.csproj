@@ -24,6 +24,7 @@
     <None Remove="Res\sOrderedProductUpdate.sql" />
     <None Remove="Res\sOrderUpdate.sql" />
     <None Remove="Res\sProductCreate.sql" />
+    <None Remove="Res\sProductUpdate.sql" />
     <None Remove="Res\sProjectCreate.sql" />
     <None Remove="Res\sProjectDelete.sql" />
     <None Remove="Res\sProjectTypeCreate.sql" />
@@ -64,6 +65,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\sOrderUpdate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sProductUpdate.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\sProjectCreate.sql">
