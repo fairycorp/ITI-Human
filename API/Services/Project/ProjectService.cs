@@ -31,7 +31,7 @@ namespace API.Services.Project
                          @"SELECT
                             *
                         FROM 
-                            ITIH.tProject;"
+                            ITIH.vProjects;"
                     );
                 if (result == null) return Failure("No element was found.");
                 return Success(result.ToArray());
@@ -51,7 +51,7 @@ namespace API.Services.Project
                         @"SELECT
                             *
                         FROM 
-                            ITIH.tProject
+                            ITIH.vProjects
                         WHERE
                             ProjectId = @Id;",
                         new { Id = projectId }
