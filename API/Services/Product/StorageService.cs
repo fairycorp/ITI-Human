@@ -234,7 +234,7 @@ namespace API.Services.Product
             if (doesStorageExist.Content == null || doesProductExist.Content == null)
                 return Failure(doesProductExist.Info);
 
-            // Checks if a SLP already exists with that specific Product id.
+            // Checks if a SLP already exists with that specific Product id in that specific Storage.
             var slpList =
                 await GetAllStorageLinkedProductsFromStorage(model.StorageId);
 
