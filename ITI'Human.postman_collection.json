@@ -9,11 +9,37 @@
 			"name": "Product",
 			"item": [
 				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/product",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "getById",
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://{{host}}:{{port}}/product/i/5",
 							"protocol": "http",
@@ -43,7 +69,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"Name\": \"Sample\"\n}"
+							"raw": "{\n\t\"Name\": \"Coca-Cola (50cl)\"\n}"
 						},
 						"url": {
 							"raw": "http://{{host}}:{{port}}/product/n",
@@ -58,6 +84,68 @@
 							]
 						},
 						"description": "Gets a Product by its name."
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\":\"Arizona Grenade (25cl)\",\n\t\"Desc\":\"Une boisson délicieuse.\"\n}"
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/product/create",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ProductId\": 10,\n\t\"Name\": \"Arizona Grenade (25cl)\",\n\t\"Desc\": \"Une boisson délicieuse.\"\n}"
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/product/update",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"product",
+								"update"
+							]
+						}
 					},
 					"response": []
 				}
@@ -130,7 +218,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"UserId\": 7,\n\t\"Products\": [\n\t\t{\n\t\t\t\"ProductId\": 2,\n\t\t\t\"Amount\": 1\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"StorageId\": 2,\n\t\"UserId\": 3,\n\t\"ClassroomId\": 2,\n\t\"Products\": [\n\t\t{\n\t\t\t\"StorageLinkedProductId\": 2,\n\t\t\t\"Quantity\": 1\n\t\t}\n\t]\n}"
 						},
 						"url": {
 							"raw": "http://localhost:5000/order/create",
@@ -141,6 +229,201 @@
 							"port": "5000",
 							"path": [
 								"order",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Storage",
+			"item": [
+				{
+					"name": "Linked Products",
+					"item": [
+						{
+							"name": "getAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/storage/products",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"storage",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"StorageId\": 1,\n\t\"ProductId\": 5,\n\t\"UnitPrice\": 0,\n\t\"Stock\": 0\n}"
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/storage/products/create",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"storage",
+										"products",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"StorageLinkedProductId\": 4,\n\t\"Stock\":40,\n\t\"UnitPrice\": 53.14\n}"
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/storage/products/update",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"storage",
+										"products",
+										"update"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/storage/i/2",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"storage",
+								"i",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFromProject",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/storage/project/2",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"storage",
+								"project",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"projectId\": 2\n}"
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/storage/create",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"storage",
 								"create"
 							]
 						}

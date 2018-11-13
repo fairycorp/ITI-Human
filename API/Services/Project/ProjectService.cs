@@ -36,6 +36,7 @@ namespace API.Services.Project
                             ProjectId = @Id;",
                         new { Id = projectId }
                     );
+                if (result == null) return Failure("Element does not exist in database.");
                 return Success(result);
             }
         }

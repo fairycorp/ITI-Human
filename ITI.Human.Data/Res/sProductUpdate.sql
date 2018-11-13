@@ -27,22 +27,13 @@ begin
 		set @Desc = @previousDesc;
 
 	update ITIH.tProduct set [Name] = @Name where ProductId = @ProductId;
-	update ITIH.tProduct set [Desc] = @Name where ProductId = @ProductId;
+	update ITIH.tProduct set [Desc] = @Desc where ProductId = @ProductId;
 
 	set @newName = (select [Name] from ITIH.tProduct where ProductId = @ProductId);
 	set @newDesc = (select [Desc] from ITIH.tProduct where ProductId = @ProductId);
 
-	if (@Name = null)
-		if (@newName = @previousName)
-			set @Success = 1;
-
-	if (@Desc = null)
-		if (@newDesc != @previousDesc)
-			set @Success = 1;
-
-	if (@Name is not null and @Desc is not null)
-		if (@newName != @previousName and @newDesc != @previousDesc)
-			set @Success = 1;
+	if (@newName != @previousName or @newDesc != @previousDesc)
+		set @Success = 1;
 
 	--<PostCreate />
 	

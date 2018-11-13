@@ -31,7 +31,12 @@ namespace API.Controllers
                 Guard.IsAdmissible(nameof(userId), userId);
 
             if (check.Code == Status.Success)
-                return Ok((await Service.GuardedGetDetailedOrdersFromUser(userId)).Content);
+            {
+                var result = await Service.GuardedGetDetailedOrdersFromUser(userId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
 
             return BadRequest(check.Info);
         }
@@ -43,7 +48,12 @@ namespace API.Controllers
                 Guard.IsAdmissible(nameof(orderId), orderId);
 
             if (check.Code == Status.Success)
-                return Ok((await Service.GuardedGetDetailedOrder(orderId)).Content);
+            {
+                var result = await Service.GuardedGetDetailedOrder(orderId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
 
             return BadRequest(check.Info);
         }
@@ -74,14 +84,10 @@ namespace API.Controllers
 
                     if (check.Code == Status.Success)
                     {
-                        var result =
-                            await Service.GuardedCreateDetailedOrder(model);
+                        var result = await Service.GuardedCreateDetailedOrder(model);
+                        if (result.Code == Status.Failure) return BadRequest(result.Info);
 
-                        if (result.Code == Status.Success)
-                        {
-                            return Ok(result.Content);
-                        }
-                        return BadRequest(result.Info);
+                        return Ok(result.Content);
                     }
                     return BadRequest(check.Info);
                 }
@@ -130,7 +136,12 @@ namespace API.Controllers
                         var check3 = Guard.IsAdmissible(modelProductStrAnalysis);
 
                         if (check3.Code == Status.Success)
-                            return Ok((await Service.UpdateDetailedOrderDeliveryState(model)).Content);
+                        {
+                            var result = await Service.UpdateDetailedOrderDeliveryState(model);
+                            if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                            return Ok(result.Content);
+                        }
 
                         return BadRequest(check3.Info);
                     }

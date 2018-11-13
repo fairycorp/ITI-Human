@@ -31,7 +31,12 @@ namespace API.Controllers
                 Guard.IsAdmissible(nameof(productId), productId);
 
             if (check.Code == Status.Success)
-                return Ok((await Service.GetProductById(productId)).Content);
+            {
+                var result = await Service.GetProductById(productId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
 
             return BadRequest(check.Info);
         }
@@ -43,7 +48,12 @@ namespace API.Controllers
                 Guard.IsAdmissible(nameof(product.Name), product.Name);
 
             if (check.Code == Status.Success)
-                return Ok((await Service.GetProductByName(product.Name)).Content);
+            {
+                var result = await Service.GetProductByName(product.Name);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
 
             return BadRequest(check.Info);
         }
@@ -56,11 +66,41 @@ namespace API.Controllers
                 { nameof(model.Name), model.Name },
                 { nameof(model.Desc), model.Desc }
             };
-            var check1 = Guard.IsAdmissible(modelStrAnalysis);
+            var check = Guard.IsAdmissible(modelStrAnalysis);
+
+            if (check.Code == Status.Success)
+            {
+                var result = await Service.CreateProduct(model);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
+            return BadRequest(check.Info);
+        }
+
+        [HttpPut("update")]
+        public async Task<IActionResult> Update([FromBody] UpdateViewModel model)
+        {
+            var check1 = 
+                Guard.IsAdmissible(nameof(model.ProductId), model.ProductId);
 
             if (check1.Code == Status.Success)
             {
-                return Ok((await Service.CreateProduct(model)).Content);
+                Dictionary<string, string> modelStrAnalysis = new Dictionary<string, string>
+                {
+                    { nameof(model.Name), model.Name },
+                    { nameof(model.Desc), model.Desc }
+                };
+                var check2 = Guard.IsAdmissible(modelStrAnalysis);
+
+                if (check2.Code == Status.Success)
+                {
+                    var result = await Service.Updateproduct(model);
+                    if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                    return Ok(result.Content);
+                }
+                return BadRequest(check2.Info);
             }
             return BadRequest(check1.Info);
         }
