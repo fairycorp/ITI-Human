@@ -3,6 +3,7 @@ using Dapper;
 using ITI.Human.Data;
 using ITI.Human.ViewModels.Project;
 using Stall.Guard.System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using static API.Services.Helper.ResultFactory;
@@ -16,6 +17,25 @@ namespace API.Services.Project
         public ProjectService(ProjectTable pTable)
         {
             ProjectTable = pTable;
+        }
+
+        /// <summary>
+        /// Gets all Projects from database.
+        /// </summary>
+        public async Task<GuardResult> GetAll()
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                var result = await ctx[ProjectTable].Connection
+                    .QueryAsync<BasicDataProject>(
+                         @"SELECT
+                            *
+                        FROM 
+                            ITIH.tProject;"
+                    );
+                if (result == null) return Failure("No element was found.");
+                return Success(result.ToArray());
+            }
         }
 
         /// <summary>
