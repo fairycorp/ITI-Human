@@ -7,6 +7,7 @@ using ITI.Human.ViewModels.Storage;
 using ITI.Human.ViewModels.Storage.LinkedProduct;
 using Stall.Guard.System;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -69,6 +70,7 @@ namespace API.Services.Product
                             StorageId = @Id;",
                         new { Id = storageId }
                     );
+                if (result == null) return Failure("Element does not exist in database.");
                 return Success(result);
             }
         }
@@ -92,6 +94,7 @@ namespace API.Services.Product
                             ProjectId = @Id;",
                         new { Id = projectId }
                     );
+                if (result == null) return Failure("Element does not exist in database.");
                 return Success(result);
             }
         }
@@ -107,16 +110,16 @@ namespace API.Services.Product
                 // Checks if Project already exists with this specific project id.
                 // If not, returns Failure().
                 var doesProjectExist =
-                    await Attempt.ToGetElement(ProjectService.GetProject, model.ProjectId, true);
+                    await ProjectService.GetProject(model.ProjectId);
 
-                if (doesProjectExist.Content == null) return Failure(doesProjectExist.Info);
+                if (doesProjectExist.Code == Status.Failure) return Failure(doesProjectExist.Info);
 
                 // Check if Storage already exists with this specific project id.
                 // If does, returns Failure().
                 var doesStorageExist =
-                    await Attempt.ToGetElement(GetStorageFromProject, model.ProjectId, false);
+                    await GetStorageFromProject(model.ProjectId);
 
-                if (doesStorageExist.Content != null) return Failure(doesStorageExist.Info);
+                if (doesStorageExist.Code == Status.Success) return Failure("A storage has already been created for this project.");
 
                 // Launches creation process.
                 return Success(await StorageTable.Create(ctx, 0, model.ProjectId));
@@ -159,6 +162,7 @@ namespace API.Services.Product
                             StorageLinkedProductId = @Id;",
                         new { Id = storageLinkedProductId }
                     );
+                if (result == null) return Failure("Element does not exist in database.");
                 return Success(result);
             }
         }
@@ -181,6 +185,7 @@ namespace API.Services.Product
                             StorageId = @Id;",
                         new { Id = storageId }
                     );
+                if (result == null) return Failure("Element does not exist in database.");
                 return Success(result.ToArray());
             }
         }
@@ -206,6 +211,7 @@ namespace API.Services.Product
                             StorageId = @SecondId;",
                         new { FirstId = storageLinkedProductId, SecondId = storageId }
                     );
+                if (result == null) return Failure("Element does not exist in database.");
                 return Success(result);
             }
         }
@@ -219,20 +225,30 @@ namespace API.Services.Product
             // Checks if both mentioned Storage & Product exist.
             // If not, returns Failure().
             var doesStorageExist =
-                await Attempt.ToGetElement(GetStorage, model.StorageId, true);
+                await GetStorage(model.StorageId);
 
             var doesProductExist =
-                await Attempt.ToGetElement(ProductService.GetProductById, model.ProductId, true);
+                await ProductService.GetProductById(model.ProductId);
 
             // Since Info properties are the same, doesn't matter which one one display.
-            if (((GuardResult)doesStorageExist.Content).Content == null 
-            || ((GuardResult)doesProductExist.Content).Content == null)
+            if (doesStorageExist.Content == null || doesProductExist.Content == null)
                 return Failure(doesProductExist.Info);
+
+            // Checks if a SLP already exists with that specific Product id.
+            var slpList =
+                await GetAllStorageLinkedProductsFromStorage(model.StorageId);
+
+            foreach (var product in (IEnumerable<BasicDataStorageLinkedProduct>) slpList.Content)
+            {
+                if (product.ProductId == model.ProductId)
+                    return Failure(string.Format("Product with id {0} already exists in the Storage with id {1}.",
+                        model.ProductId, model.StorageId));
+            }
 
             // Launches creation process.
             using (var ctx = new SqlStandardCallContext())
             {
-                return Success(await StorageLinkedProductTable.Create(ctx, 0, model.Stock, model.ProductId, model.UnitPrice, model.Stock));
+                return Success(await StorageLinkedProductTable.Create(ctx, 0, model.StorageId, model.ProductId, model.UnitPrice, model.Stock));
             }
         }
 

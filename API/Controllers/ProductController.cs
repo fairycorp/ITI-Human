@@ -31,7 +31,12 @@ namespace API.Controllers
                 Guard.IsAdmissible(nameof(productId), productId);
 
             if (check.Code == Status.Success)
-                return Ok((await Service.GetProductById(productId)).Content);
+            {
+                var result = await Service.GetProductById(productId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
 
             return BadRequest(check.Info);
         }
@@ -43,7 +48,12 @@ namespace API.Controllers
                 Guard.IsAdmissible(nameof(product.Name), product.Name);
 
             if (check.Code == Status.Success)
-                return Ok((await Service.GetProductByName(product.Name)).Content);
+            {
+                var result = await Service.GetProductByName(product.Name);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
 
             return BadRequest(check.Info);
         }
@@ -60,7 +70,10 @@ namespace API.Controllers
 
             if (check.Code == Status.Success)
             {
-                return Ok((await Service.CreateProduct(model)).Content);
+                var result = await Service.CreateProduct(model);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
             }
             return BadRequest(check.Info);
         }
@@ -82,7 +95,10 @@ namespace API.Controllers
 
                 if (check2.Code == Status.Success)
                 {
-                    return Ok(await Service.Updateproduct(model));
+                    var result = await Service.Updateproduct(model);
+                    if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                    return Ok(result.Content);
                 }
                 return BadRequest(check2.Info);
             }

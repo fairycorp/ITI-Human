@@ -24,7 +24,7 @@ namespace API.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAllStorages()
-            => Ok(await Service.GetAllStorages());
+            => Ok((await Service.GetAllStorages()).Content);
 
         [HttpGet("i/{storageId}")]
         public async Task<IActionResult> GetStorage(int storageId)
@@ -34,7 +34,10 @@ namespace API.Controllers
 
             if (check.Code == Status.Success)
             {
-                return Ok(await Service.GetStorage(storageId));
+                var result = await Service.GetStorage(storageId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
             }
             return BadRequest(check.Info);
         }
@@ -47,21 +50,29 @@ namespace API.Controllers
 
             if (check.Code == Status.Success)
             {
-                return Ok(await Service.GetStorageFromProject(projectId));
+                var result = await Service.GetStorageFromProject(projectId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
             }
             return BadRequest(check.Info);
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create(
+        public async Task<IActionResult> CreateStorage(
             [FromBody] ITI.Human.ViewModels.Storage.CreationViewModel model)
         {
+            if (model.ProjectId == 0) return BadRequest();
+
             var check1 =
                 Guard.IsAdmissible(nameof(model.ProjectId), model.ProjectId);
 
             if (check1.Code == Status.Success)
             {
-                return Ok(await Service.CreateStorage(model));
+                var result = await Service.CreateStorage(model);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
             }
             return BadRequest(check1.Info);
         }
@@ -78,7 +89,10 @@ namespace API.Controllers
 
             if (check.Code == Status.Success)
             {
-                return Ok(await Service.GetAllStorageLinkedProductsFromStorage(storageId));
+                var result = await Service.GetAllStorageLinkedProductsFromStorage(storageId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
             }
             return BadRequest(check.Info);
         }
@@ -87,6 +101,8 @@ namespace API.Controllers
         public async Task<IActionResult> CreateStorageLinkedProduct(
             [FromBody] ITI.Human.ViewModels.Storage.LinkedProduct.CreationViewModel model)
         {
+            if (model.StorageId == 0 || model.ProductId == 0) return BadRequest();
+
             Dictionary<string, int> modelIntAnalysis = new Dictionary<string, int>
             {
                 { nameof(model.StorageId), model.StorageId },
@@ -103,7 +119,10 @@ namespace API.Controllers
 
                 if (check2.Code == Status.Success)
                 {
-                    return Ok(await Service.CreateLinkedProduct(model));
+                    var result = await Service.CreateLinkedProduct(model);
+                    if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                    return Ok(result.Content);
                 }
                 return BadRequest(check2.Info);
             }
@@ -130,7 +149,10 @@ namespace API.Controllers
 
                 if (check2.Code == Status.Success)
                 {
-                    return Ok(await Service.UpdateLinkedProduct(model));
+                    var result = await Service.UpdateLinkedProduct(model);
+                    if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                    return Ok(result.Content);
                 }
                 return BadRequest(check2.Info);
             }
