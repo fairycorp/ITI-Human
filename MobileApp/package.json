@@ -1,0 +1,27 @@
+{
+  "name": "empty-project-template",
+  "main": "node_modules/expo/AppEntry.js",
+  "private": true,
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "eject": "expo eject"
+  },
+  "dependencies": {
+    "@signature/webfrontauth": "^0.12.0-alpha.1.5",
+    "axios": "^0.18.0",
+    "expo": "^30.0.1",
+    "expo-cli": "^2.3.8",
+    "react": "16.3.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
+    "vue-native-core": "0.0.8",
+    "vue-native-helper": "0.0.9",
+    "vue-native-router": "0.0.1-alpha.3",
+    "vue-router": "^3.0.1"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "vue-native-scripts": "0.0.14"
+  }
+}
