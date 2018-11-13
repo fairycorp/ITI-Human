@@ -164,6 +164,28 @@ namespace API.Services.Product
         }
 
         /// <summary>
+        /// Gets all Storage Linked Products from a specific Storage.
+        /// </summary>
+        /// <param name="storageId">Storage Id.</param>
+        public async Task<GuardResult> GetAllStorageLinkedProductsFromStorage(int storageId)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                var result = await ctx[StorageLinkedProductTable].Connection
+                    .QueryAsync<BasicDataStorageLinkedProduct>(
+                        @"SELECT
+                            *
+                        FROM
+                            ITIH.tStorageLinkedProduct
+                        WHERE
+                            StorageId = @Id;",
+                        new { Id = storageId }
+                    );
+                return Success(result.ToArray());
+            }
+        }
+
+        /// <summary>
         /// Gets a Storage Linked Product from a specific Storage.
         /// </summary>
         /// <param name="storageLinkedProductId">Storage Linked Product id.</param>

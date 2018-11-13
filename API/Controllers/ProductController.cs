@@ -56,11 +56,35 @@ namespace API.Controllers
                 { nameof(model.Name), model.Name },
                 { nameof(model.Desc), model.Desc }
             };
-            var check1 = Guard.IsAdmissible(modelStrAnalysis);
+            var check = Guard.IsAdmissible(modelStrAnalysis);
+
+            if (check.Code == Status.Success)
+            {
+                return Ok((await Service.CreateProduct(model)).Content);
+            }
+            return BadRequest(check.Info);
+        }
+
+        [HttpPut("update")]
+        public async Task<IActionResult> Update([FromBody] UpdateViewModel model)
+        {
+            var check1 = 
+                Guard.IsAdmissible(nameof(model.ProductId), model.ProductId);
 
             if (check1.Code == Status.Success)
             {
-                return Ok((await Service.CreateProduct(model)).Content);
+                Dictionary<string, string> modelStrAnalysis = new Dictionary<string, string>
+                {
+                    { nameof(model.Name), model.Name },
+                    { nameof(model.Desc), model.Desc }
+                };
+                var check2 = Guard.IsAdmissible(modelStrAnalysis);
+
+                if (check2.Code == Status.Success)
+                {
+                    return Ok(await Service.Updateproduct(model));
+                }
+                return BadRequest(check2.Info);
             }
             return BadRequest(check1.Info);
         }
