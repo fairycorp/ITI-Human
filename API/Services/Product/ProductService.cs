@@ -72,7 +72,7 @@ namespace API.Services.Product
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                return Success(
+                var result = 
                     await ctx[ProductTable].Connection
                     .QueryFirstOrDefaultAsync<BasicDataProduct>(
                         @"SELECT
@@ -80,8 +80,9 @@ namespace API.Services.Product
                         FROM ITIH.tProduct
                         WHERE [Name] = @nM;",
                         new { nM = productName }
-                    )
                 );
+                if (result == null) return Failure("Element does not exist in database.");
+                return Success(result);
             }
         }
 
@@ -96,10 +97,9 @@ namespace API.Services.Product
             {
                 // Checks if a Product already exists with this specific Product name.
                 // If does, returns Failure().
-                var doesProductExist =
-                    await Attempt.ToGetElement(GetProductByName, model.Name, false);
+                var doesProductExist = await GetProductByName(model.Name);
 
-                if (doesProductExist.Content == null) return Failure(doesProductExist.Info);
+                if (doesProductExist.Content != null) return Failure(doesProductExist.Info);
 
                 return Success(
                     await ProductTable.Create(ctx, 0, model.Name, model.Desc)
@@ -117,9 +117,8 @@ namespace API.Services.Product
             using (var ctx = new SqlStandardCallContext())
             {
                 // Checks if a Product already exsists with this specific Product name.
-                // If does, returns Failure().
-                var doesProductExist =
-                    await Attempt.ToGetElement(GetProductByName, model.Name, false);
+                // If not, returns Failure().
+                var doesProductExist = await GetProductByName(model.Name);
 
                 if (doesProductExist.Content == null) return Failure(doesProductExist.Info);
 
@@ -130,7 +129,7 @@ namespace API.Services.Product
 
                 // Launches update process.
                 var result = await ProductTable.Update(ctx, 0, model.ProductId, model.Name, model.Desc);
-                if (result == false) return Failure("Error in update process.");
+                if (result == false) return Failure("No update was proceeded.");
                 return Success(result);
             }
         }
