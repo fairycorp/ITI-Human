@@ -7,8 +7,7 @@
 </template>
 
 <script>
-import API from '../helpers/Api.js'
-import Axios from 'axios';
+import Api from '../helpers/Api.js';
 
 export default {
 
@@ -17,8 +16,8 @@ export default {
     },
 
     methods: {
-        myGetterFunction: function(endpoint) {
-            Axios.get("http://192.168.1.31:5000/order" )
+        async myGetterFunction(endpoint) {
+            await Api.get(endpoint)
             .then(response => {
                 this.Message = (response.data);
             });
@@ -28,7 +27,7 @@ export default {
     data() {
         return {
             Message: [],
-            Test: ''
+            Test: '',
         }
     }
 }

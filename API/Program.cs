@@ -9,7 +9,6 @@ namespace API
         static void Main(string[] args)
         {
             var builder = new WebHostBuilder()
-                .UseUrls("http://192.168.1.31:5000")
                 .UseMonitoring()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .ConfigureAppConfiguration((hostBuilderContext, confBuilder) =>

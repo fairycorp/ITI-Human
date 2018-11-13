@@ -5,11 +5,11 @@ class API {
     constructor() {
     }
 
-    getHost () { return "localhost"; }
+    //getHost () { return "10.8.110.166"; }
 
-    getPort () { return 5000; }
+    //getPort () { return 5000; }
 
-    get Path() { return "http://localhost:5000/"; }
+    get Path() { return "http://10.8.110.166:5000/" }
 
     get(endpoint) {
         const checked = this.routineCheck(endpoint);
