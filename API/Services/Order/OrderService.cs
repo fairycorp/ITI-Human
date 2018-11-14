@@ -7,7 +7,6 @@ using CK.DB.Actor;
 using CK.SqlServer;
 using Dapper;
 using ITI.Human.Data;
-using ITI.Human.ViewModels.Order;
 using ITI.Human.ViewModels.User;
 using Stall.Guard.System;
 using System;
@@ -53,17 +52,46 @@ namespace API.Services.Order
         /// Gets user's all detailed Orders. 
         /// </summary>
         /// <param name="userId">User's id.</param>
-        /// <returns>Success result where result content is a list of DetailedDataOrder.</returns>
+        /// <returns>Success result where result content is a list of DetailedDataOrder or Failure result if not one element was found in db.</returns>
         public async Task<GuardResult> GuardedGetDetailedOrdersFromUser(int userId)
-            => Success(await GetDetailedOrdersFromUser(userId));
+        {
+            var result = await GetDetailedOrdersFromUser(userId);
+
+            if (result == null) return Failure(
+                string.Format("Not one single element was foubd in db. | in {0}", nameof(GuardedGetDetailedOrdersFromUser))
+            );
+            return Success(result);
+        }
 
         /// <summary>
         /// Gets a detailed Order by its id.
         /// </summary>
         /// <param name="orderId">Order id.</param>
-        /// <returns>Success result where result content is a single DetailedDataOrder.</returns>
+        /// <returns>Success result where result content is a single DetailedDataOrder or Failure result if element does not exist in db.</returns>
         public async Task<GuardResult> GuardedGetDetailedOrder(int orderId)
-            => Success(await GetDetailedOrder(orderId));
+        {
+            var result = await GetDetailedOrder(orderId);
+
+            if (result == null) return Failure(
+                string.Format("Element does not exist in database. | in {0}", nameof(GuardedCreateDetailedOrder))
+            );
+            return Success(result);
+        }
+
+        /// <summary>
+        /// Gets an Ordered Product by its id.
+        /// </summary>
+        /// <param name="orderedProductId">Ordered Product id.</param>
+        /// <returns>Success result where result content is a single BasicDataOrderedProduct or Failure result if element does not exist in db.</returns>
+        public async Task<GuardResult> GuardedGetOrderedProduct(int orderedProductId)
+        {
+            var result = await GetOrderedProduct(orderedProductId);
+
+            if (result == null) return Failure(
+                string.Format("Element does not exist in database. | in {0}", nameof(GuardedGetOrderedProduct))
+            );
+            return Success(result);
+        }
 
         /// <summary>
         /// Creates a new detailed Order.
@@ -132,20 +160,35 @@ namespace API.Services.Order
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                var doesExist = 
+                var doesOrderExist = 
                     await Attempt.ToGetElement(GetDetailedOrder, model.Info.OrderId, true);
 
-                if (doesExist.Code == Status.Success)
+                if (doesOrderExist.Code == Status.Success)
                 {
+                    Dictionary<int, bool> dataUpdates = new Dictionary<int, bool>();
                     var entirelyDelivered = true;
+
                     foreach (var product in model.Products)
                     {
-                        // TODO ASAP: Change ActorId to use the current UserId instead of 0
-                        var currentState =
-                            await OrderedProductTable.Update(ctx, 0, product.OrderedProductId, 0);
+                        var doesOPExist =
+                            await Attempt.ToGetElement(GetOrderedProduct, product.OrderedProductId, true);
 
-                        if (currentState != State.Delivered)
-                            entirelyDelivered = false;
+                        if (doesOPExist.Code == Status.Success)
+                        {
+                            dataUpdates.Add(
+                                product.OrderedProductId,
+                                await OrderedProductTable.Update(ctx, 0, DateTime.UtcNow, product.OrderedProductId, product.CurrentState)
+                            );
+
+                            var currentState = await ctx[OrderedProductTable].Connection
+                                .QueryFirstOrDefaultAsync<State>(
+                                    "SELECT CurrentState FROM ITIH.vOrderedProducts WHERE OrderedProductId = @Id",
+                                    new { Id = product.OrderedProductId }
+                                );
+
+                            if (currentState != State.Delivered) entirelyDelivered = false;
+                        }
+                        else return Failure(doesOPExist.Info);
                     }
 
                     if (entirelyDelivered)
@@ -153,9 +196,17 @@ namespace API.Services.Order
                         var hasBeenEntirelyDelivered =
                             OrderTable.Update(ctx, 0, model.Info.OrderId, State.Delivered);
                     }
-                    return Success(null);
+
+                    var successReturn = false;
+                    foreach (var update in dataUpdates)
+                        if (update.Value == true)
+                            successReturn = true;
+
+                    return successReturn
+                        ? Success(dataUpdates) 
+                        : Failure("No update was proceeded.");
                 }
-                return Failure(doesExist.Info);
+                return Failure(doesOrderExist.Info);
             }
         }
 
@@ -332,6 +383,18 @@ namespace API.Services.Order
                 return await ctx[OrderTable].Connection
                     .QueryFirstOrDefaultAsync<State>(
                         "SELECT CurrentState FROM ITIH.tOrder WHERE OrderId = @OrderId;"
+                    );
+            }
+        }
+
+        private async Task<BasicDataOrderedProduct> GetOrderedProduct(int orderedProductId)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await ctx[OrderedProductTable].Connection
+                    .QueryFirstOrDefaultAsync<BasicDataOrderedProduct>(
+                        "SELECT * FROM ITIH.vOrderedProducts WHERE OrderedProductId = @Id",
+                        new { Id = orderedProductId }
                     );
             }
         }

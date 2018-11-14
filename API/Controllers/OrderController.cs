@@ -97,7 +97,7 @@ namespace API.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update(DeliveryStateUpdateViewModel model)
+        public async Task<IActionResult> Update([FromBody] DeliveryStateUpdateViewModel model)
         {
             if (!(model == null))
             {
