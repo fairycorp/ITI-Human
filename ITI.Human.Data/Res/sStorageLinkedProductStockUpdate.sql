@@ -29,7 +29,6 @@ begin
 		set @SLPUpdateTrack = scope_identity();
 		insert into ITIH.tSLPStockUpdateTrack (SLPUpdateTrackId, PreviousStock, NewStock) values (@SLPUpdateTrack, @previousStock, @newStock);
 
-
 	--<PostCreate />
 
 	--[endsp]

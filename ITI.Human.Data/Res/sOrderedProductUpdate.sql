@@ -1,9 +1,10 @@
 ﻿-- SetupConfig: {}
 create proc ITIH.sOrderedProductUpdate (
 	@ActorId int,
+	@UpdateDate datetime2,
 	@OrderedProductId int,
 	@CurrentState int,
-	@CurrentStateResult int output
+	@Success bit = 0 output
 )
 as
 begin
@@ -11,9 +12,22 @@ begin
 
 	--<PreCreate revert />
 
-	update tOrderedProduct set CurrentState = @CurrentState;
+	declare @previousState int;
+	declare @newState int;
+	declare @updateTrack int;
+	declare @OPUpdateTrack int;
 
-	set @CurrentStateResult = (select CurrentState from tOrderedProduct where OrderedProductId = @OrderedProductId);
+	set @previousState = (select CurrentState from tOrderedProduct where OrderedProductId = @OrderedProductId);
+	update tOrderedProduct set CurrentState = @CurrentState where OrderedProductId = @OrderedProductId;
+	set @newState = (select CurrentState from tOrderedProduct where OrderedProductId = @OrderedProductId);
+
+	if (@previousState != @newState)
+		set @Success = 1;
+		insert into ITIH.tUpdateTrack (ActorId, UpdateDate) values (@ActorId, @UpdateDate);
+		set @updateTrack = scope_identity();
+		insert into ITIH.tOrderedProductUpdateTrack (UpdateTrackId, OrderedProductId) values (@updateTrack, @OrderedProductId);
+		set @OPUpdateTrack = scope_identity();
+		insert into ITIH.tOPCurrentStateUpdateTrack (OPUpdateTrackId, PreviousState, NewState) values (@OPUpdateTrack, @previousState, @newState);
 
 	--<PostCreate />
 
