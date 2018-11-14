@@ -11,7 +11,7 @@ namespace ITI.Human.ViewModels.Order
         /// <summary>
         /// Information on the mentionned Order.
         /// </summary>
-        public BasicDataOrder OrderInfo { get; set; }
+        public BasicDataOrder Info { get; set; }
 
         /// <summary>
         /// Products that mentionned Order contains.

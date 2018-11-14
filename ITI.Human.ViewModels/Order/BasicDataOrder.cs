@@ -55,6 +55,6 @@ namespace ITI.Human.ViewModels.Order
         /// <summary>
         /// Order total price.
         /// </summary>
-        public int Total { get; set; }
+        public double Total { get; set; }
     }
 }

@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using static API.Services.Helper.ResultFactory;
+using ITI.Human.ViewModels.Storage;
 
 namespace API.Services.Order
 {
@@ -30,14 +31,19 @@ namespace API.Services.Order
 
         public OrderedProductTable OrderedProductTable { get; set; }
 
+        public OrderFinalDueTable OrderFinalDueTable { get; set; }
+
         public UserTable UserTable { get; set; }
 
-        public OrderService(StorageService sService, ClassroomService cService, OrderTable oTable, OrderedProductTable oPTable, UserTable uTable)
+        public OrderService(
+            StorageService sService, ClassroomService cService, OrderTable oTable, 
+            OrderedProductTable oPTable, OrderFinalDueTable oFDTable, UserTable uTable)
         {
             StorageService = sService;
             ClassroomService = cService;
             OrderTable = oTable;
             OrderedProductTable = oPTable;
+            OrderFinalDueTable = oFDTable;
             UserTable = uTable;
         }
 
@@ -98,11 +104,12 @@ namespace API.Services.Order
         /// </summary>
         /// <param name="model">Matching model.</param>
         /// <returns>Success result where result content is int OR Failure result in case insertion process failed.</returns>
-        public async Task<GuardResult> GuardedCreateDetailedOrder(CreationViewModel model)
+        public async Task<GuardResult> GuardedCreateDetailedOrder(ITI.Human.ViewModels.Order.CreationViewModel model)
         {
             // Checks if classroom id & storage id are not 0.
             if (model.StorageId == 0 || model.UserId == 0)
                 return Failure("StorageId/UserId cannot be 0.");
+
 
             // Checks if storage exists (has to) and returns failure in case it doesn't.
             var doesStorageExist =
@@ -111,6 +118,28 @@ namespace API.Services.Order
             if (doesStorageExist.Code == Status.Failure)
                 return Failure(doesStorageExist.Info);
 
+
+            // Checks if mentionned Ordered Products exist in the mentionned Storage.
+            var existingStorageProducts = 
+                await StorageService.GetAllStorageLinkedProductsFromStorage(model.StorageId);
+
+            IEnumerable<BasicDataStorageLinkedProduct> CastIntoEnumerableSLP(object obj)
+                => (IEnumerable<BasicDataStorageLinkedProduct>)obj;
+
+            List<int> id = new List<int>();
+            foreach (var existingStorageProduct in CastIntoEnumerableSLP(existingStorageProducts.Content))
+                id.Add(existingStorageProduct.StorageLinkedProductId);
+
+            foreach (var orderedProduct in model.Products)
+                if (!id.Contains(orderedProduct.StorageLinkedProductId))
+                {
+                    return Failure(string.Format(
+                        "Product with StorageLinkedProductId {0} is not referenced by Storage with id {1}.",
+                        orderedProduct.StorageLinkedProductId, model.StorageId)
+                    );
+                }
+
+
             // Checks if user exists (has to) and returns failure in case he doesn't.
             var doesUserExist =
                 await Attempt.ToGetElement(GetUser, model.UserId, true);
@@ -118,12 +147,14 @@ namespace API.Services.Order
             if (doesUserExist.Code == Status.Failure)
                 return Failure(doesUserExist.Info);
 
+
             // Checks if classroom exists (has to) and returns failure in case it doesn't.
             var doesClassroomExist =
                 await Attempt.ToGetElement(ClassroomService.GetClassroom, model.ClassroomId, true);
 
             if (doesClassroomExist.Code == Status.Failure)
                 return Failure(doesClassroomExist.Info);
+
 
             // Checks if each one of the products of the list exists in mentionned storage.
             foreach (var product in model.Products)
@@ -142,10 +173,14 @@ namespace API.Services.Order
                         model.StorageId));
             }
 
+
             // Launches the creation process.
             if (doesUserExist.Code == Status.Success)
             {
                 var result = await CreateDetailedOrder(model);
+                var detailedOrder = await GetDetailedOrder(result);
+                await CreateOrderFinalDue(detailedOrder);
+
                 return (result > 0) ? Success(result) : Failure("Error in creation process.");
             }
             return Failure("User does not exist.");
@@ -238,10 +273,10 @@ namespace API.Services.Order
                 List<DetailedDataOrder> ordersList = new List<DetailedDataOrder>();
                 foreach (var data in basicData)
                 {
-                    var totalPrice = 0;
+                    double totalPrice = 0;
 
                     var detailedData = new DetailedDataOrder();
-                    detailedData.OrderInfo = data;
+                    detailedData.Info = data;
                     detailedData.Products = await ctx[OrderTable].Connection
                         .QueryAsync<BasicDataOrderedProduct>(
                             @"SELECT
@@ -252,13 +287,7 @@ namespace API.Services.Order
                                 v.OrderId = @id;",
                             new { id = data.OrderId }
                         );
-
-
-                    foreach (var product in detailedData.Products)
-                    {
-                        totalPrice += product.UnitPrice * product.Quantity;
-                    }
-                    detailedData.OrderInfo.Total = totalPrice;
+                    detailedData.Info.Total = CalculateOrderTotal(detailedData.Products);
 
                     ordersList.Add(detailedData);
                 }
@@ -286,7 +315,7 @@ namespace API.Services.Order
                 {
                     ordersByUser.Add(new DetailedDataOrder
                     {
-                        OrderInfo = data,
+                        Info = data,
                         Products = await ctx[OrderTable].Connection
                                 .QueryAsync<BasicDataOrderedProduct>(
                                     @"SELECT
@@ -321,7 +350,7 @@ namespace API.Services.Order
 
                 var detailedData = new DetailedDataOrder
                 {
-                    OrderInfo = basicData,
+                    Info = basicData,
                     Products = await ctx[OrderTable].Connection
                         .QueryAsync<BasicDataOrderedProduct>(
                             @"SELECT
@@ -337,7 +366,7 @@ namespace API.Services.Order
             }
         }
 
-        private async Task<int> CreateDetailedOrder(CreationViewModel model)
+        private async Task<int> CreateDetailedOrder(ITI.Human.ViewModels.Order.CreationViewModel model)
         {
             using (var ctx = new SqlStandardCallContext())
             {
@@ -397,6 +426,25 @@ namespace API.Services.Order
                         new { Id = orderedProductId }
                     );
             }
+        }
+
+        private async Task<int> CreateOrderFinalDue(DetailedDataOrder order)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                //var storage = StorageService.GetStorageFromOrder(order.Info.OrderId);
+                return await OrderFinalDueTable.Create(ctx, 0, order.Info.OrderId, CalculateOrderTotal(order.Products), 0);
+            }
+        }
+
+        private static double CalculateOrderTotal(IEnumerable<BasicDataOrderedProduct> products)
+        {
+            double total = 0;
+            foreach (var product in products)
+            {
+                total += product.UnitPrice;
+            }
+            return total;
         }
 
         private async Task<UserBasicData> GetUser(int userId)

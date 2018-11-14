@@ -35,7 +35,7 @@ namespace ITI.Human.ViewModels.Product.Ordered
         /// <summary>
         /// Storage linked product unit price.
         /// </summary>
-        public int UnitPrice { get; set; }
+        public double UnitPrice { get; set; }
 
         /// <summary>
         /// See <see cref="BasicDataProductToOrder.Quantity"/>.

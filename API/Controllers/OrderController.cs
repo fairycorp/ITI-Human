@@ -74,10 +74,12 @@ namespace API.Controllers
                 if (basicCheck.Code == Status.Success)
                 {
                     Dictionary<string, int> modelIntAnalysis = new Dictionary<string, int>();
+                    int idx = 0;
                     foreach (var product in model.Products)
                     {
-                        modelIntAnalysis.Add(nameof(product.StorageLinkedProductId), product.StorageLinkedProductId);
-                        modelIntAnalysis.Add(nameof(product.Quantity), product.Quantity);
+                        idx++;
+                        modelIntAnalysis.Add($"{nameof(product.StorageLinkedProductId)}-{idx}", product.StorageLinkedProductId);
+                        modelIntAnalysis.Add($"{nameof(product.Quantity)}-{idx}", product.Quantity);
                     }
                     var check =
                         Guard.IsAdmissible(modelIntAnalysis);
