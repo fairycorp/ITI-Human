@@ -12,6 +12,7 @@
     <None Remove="Res\Model\ITIH.OPCurrentStateUpdateTrackTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.OrderedProductTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.OrderedProductUpdateTrackTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.OrderFinalDueTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.OrderTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.ProductTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.ProjectTable.Install.1.0.0.sql" />
@@ -52,6 +53,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\Model\ITIH.OrderedProductUpdateTrackTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\Model\ITIH.OrderFinalDueTable.Install.1.0.0.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\Model\ITIH.ProjectTable.Install.1.0.0.sql">

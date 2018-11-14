@@ -6,7 +6,7 @@
 	CreationDate datetime2 not null,
 	CurrentState int not null default 0
 
-	constraint PK_ITIH_tOrder primary key (OrderId),
+	constraint PK_ITIH_tOrder_OrderId primary key (OrderId),
 	constraint FK_ITIH_tOrder_StorageId foreign key (StorageId) references ITIH.tStorage (StorageId),
 	constraint FK_ITIH_tOrder_UserId foreign key (UserId) references CK.tUser (UserId),
 	constraint FK_ITIH_Order_ClassroomId foreign key (ClassroomId) references ITIH.tClassroom (ClassroomId)

@@ -13,11 +13,6 @@ begin
 
 	--<PreCreate revert />
 
-	declare @CurrentMode int = 0;
-
-	if (@ClassroomId > 0)
-		set @CurrentMode = 1;
-
 	insert into ITIH.tOrder (StorageId, UserId, ClassroomId, CreationDate)
 		values (@StorageId, @UserId, @ClassroomId, @CreationDate);
 
