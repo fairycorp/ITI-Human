@@ -3,6 +3,7 @@ using CK.Setup;
 using CK.SqlServer;
 using CK.SqlServer.Setup;
 using System.Threading.Tasks;
+using System;
 
 namespace ITI.Human.Data
 {
@@ -18,7 +19,7 @@ namespace ITI.Human.Data
         public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int orderId, int storageLinkedProductId, int quantity);
 
         [SqlProcedure("sOrderedProductUpdate")]
-        public abstract Task<State> Update(ISqlCallContext ctx, int actorId, int orderedProductId, int currentState);
+        public abstract Task<bool> Update(ISqlCallContext ctx, int actorId, DateTime updateDate, int orderedProductId, State currentState);
 
         [SqlProcedure("sOrderedProductDelete")]
         public abstract Task<bool> Delete(ISqlCallContext ctx, int actorId, int orderedProductId);
