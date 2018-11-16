@@ -1,4 +1,4 @@
-﻿namespace ITI.Human.ViewModels.Storage
+﻿namespace ITI.Human.ViewModels.Storage.LinkedProduct
 {
     public class BasicDataStorageLinkedProduct
     {

@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using static API.Services.Helper.ResultFactory;
-using ITI.Human.ViewModels.Storage;
+using ITI.Human.ViewModels.Storage.LinkedProduct;
 
 namespace API.Services.Order
 {
@@ -191,7 +191,7 @@ namespace API.Services.Order
         /// </summary>
         /// <param name="model">Matching model.</param>
         /// <returns>Success result where result content is null OR Failure result in case element does not exist in DB.</returns>
-        public async Task<GuardResult> UpdateDetailedOrderDeliveryState(DeliveryStateUpdateViewModel model)
+        public async Task<GuardResult> UpdateDetailedOrder(ITI.Human.ViewModels.Order.UpdateViewModel model)
         {
             using (var ctx = new SqlStandardCallContext())
             {
@@ -200,7 +200,7 @@ namespace API.Services.Order
 
                 if (doesOrderExist.Code == Status.Success)
                 {
-                    Dictionary<int, bool> dataUpdates = new Dictionary<int, bool>();
+                    Dictionary<string, bool> dataUpdates = new Dictionary<string, bool>();
                     var entirelyDelivered = true;
 
                     foreach (var product in model.Products)
@@ -211,8 +211,25 @@ namespace API.Services.Order
                         if (doesOPExist.Code == Status.Success)
                         {
                             dataUpdates.Add(
-                                product.OrderedProductId,
-                                await OrderedProductTable.Update(ctx, 0, DateTime.UtcNow, product.OrderedProductId, product.CurrentState)
+                                string.Format("Has OrderedProduct n°{0} Current State been updated?", product.OrderedProductId),
+                                await OrderedProductTable.UpdateCurrentState(ctx, 0, DateTime.UtcNow, product.OrderedProductId, product.CurrentState)
+                            );
+
+                            if (product.Payment.State == Payment.Paid)
+                                product.Payment.Amount = product.UnitPrice;
+                            else
+                                product.Payment.Amount = 0;
+
+                            var orderFinalDueId = await ctx[OrderFinalDueTable].Connection
+                                .QueryFirstOrDefaultAsync<int>(
+                                    "SELECT OrderFinalDueId FROM ITIH.tOrderFinalDue WHERE OrderId = @Id",
+                                    new { Id = model.Info.OrderId }
+                                );
+
+                            dataUpdates.Add(
+                                string.Format("Has OrderedProduct n°{0} Payment State been updated?", product.OrderedProductId),
+                                await OrderedProductTable.UpdatePaymentState(ctx, 0, DateTime.UtcNow, product.OrderedProductId,
+                                orderFinalDueId, product.Payment.State, product.Payment.Amount)
                             );
 
                             var currentState = await ctx[OrderedProductTable].Connection
@@ -273,8 +290,6 @@ namespace API.Services.Order
                 List<DetailedDataOrder> ordersList = new List<DetailedDataOrder>();
                 foreach (var data in basicData)
                 {
-                    double totalPrice = 0;
-
                     var detailedData = new DetailedDataOrder();
                     detailedData.Info = data;
                     detailedData.Products = await ctx[OrderTable].Connection
@@ -313,21 +328,21 @@ namespace API.Services.Order
                 List<DetailedDataOrder> ordersByUser = new List<DetailedDataOrder>();
                 foreach (var data in basicData)
                 {
-                    ordersByUser.Add(new DetailedDataOrder
-                    {
-                        Info = data,
-                        Products = await ctx[OrderTable].Connection
-                                .QueryAsync<BasicDataOrderedProduct>(
-                                    @"SELECT
-                                        *
-                                    FROM
-                                        ITIH.vOrderedProducts
-                                    WHERE
-                                        OrderId = @id;",
-                                    new { id = data.OrderId }
-                                )
-                    }
-                    );
+                    var detailedData = new DetailedDataOrder();
+                    detailedData.Info = data;
+                    detailedData.Products = await ctx[OrderTable].Connection
+                        .QueryAsync<BasicDataOrderedProduct>(
+                            @"SELECT
+                                *
+                            FROM
+                                ITIH.vOrderedProducts
+                            WHERE
+                                OrderId = @id;",
+                            new { id = data.OrderId }
+                        );
+                    detailedData.Info.Total = CalculateOrderTotal(detailedData.Products);
+
+                    ordersByUser.Add(detailedData);
                 }
                 return ordersByUser;
             }
@@ -444,7 +459,7 @@ namespace API.Services.Order
             {
                 total += product.UnitPrice;
             }
-            return total;
+            return Math.Round(total, 2);
         }
 
         private async Task<UserBasicData> GetUser(int userId)

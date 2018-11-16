@@ -1,14 +1,22 @@
 ﻿using ITI.Human.ViewModels.Order;
+using ITI.Human.ViewModels.Storage.LinkedProduct;
 
 namespace ITI.Human.ViewModels.Product.Ordered
 {
     /// <summary>
-    /// Represents what an ordered product is.
+    /// Defines what an Ordered Product payment state is.
+    /// </summary>
+    public enum Payment {
+        Unpaid, Paid, Credited
+    }
+
+    /// <summary>
+    /// Represents what an Ordered Product is.
     /// </summary>
     public class BasicDataOrderedProduct
     {
         /// <summary>
-        /// Ordered product id.
+        /// Ordered Product id.
         /// </summary>
         public int OrderedProductId { get; set; }
 
@@ -33,7 +41,7 @@ namespace ITI.Human.ViewModels.Product.Ordered
         public string Desc { get; set; }
 
         /// <summary>
-        /// Storage linked product unit price.
+        /// See <see cref="BasicDataStorageLinkedProduct.UnitPrice"/>.
         /// </summary>
         public double UnitPrice { get; set; }
 
@@ -43,8 +51,19 @@ namespace ITI.Human.ViewModels.Product.Ordered
         public int Quantity { get; set; }
 
         /// <summary>
-        /// Ordered product current state.
+        /// Ordered Product current state.
         /// </summary>
         public State CurrentState { get; set; }
+
+        /// <summary>
+        /// Ordered Product Payment info.
+        /// </summary>
+        public PaymentState Payment { get; set; }
+
+        public class PaymentState
+        {
+            public Payment State { get; set; }
+            public double Amount { get; set; }
+        }
     }
 }

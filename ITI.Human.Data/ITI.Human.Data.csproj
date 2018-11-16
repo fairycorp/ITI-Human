@@ -10,6 +10,7 @@
   <ItemGroup>
     <None Remove="Res\Model\ITIH.ClassroomTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.OPCurrentStateUpdateTrackTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.OPPaymentStateUpdateTrackTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.OrderedProductTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.OrderedProductUpdateTrackTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.OrderFinalDueTable.Install.1.0.0.sql" />
@@ -28,8 +29,9 @@
     <None Remove="Res\sOrderCreate.sql" />
     <None Remove="Res\sOrderDelete.sql" />
     <None Remove="Res\sOrderedProductCreate.sql" />
+    <None Remove="Res\sOrderedProductCurrentStateUpdate.sql" />
     <None Remove="Res\sOrderedProductDelete.sql" />
-    <None Remove="Res\sOrderedProductUpdate.sql" />
+    <None Remove="Res\sOrderedProductPaymentStateUpdate.sql" />
     <None Remove="Res\sOrderFinalDueCreate.sql" />
     <None Remove="Res\sOrderFinalDueUpdate.sql" />
     <None Remove="Res\sOrderUpdate.sql" />
@@ -46,6 +48,15 @@
     <None Remove="Res\vOrderedProducts.sql" />
     <None Remove="Res\vOrders.sql" />
     <None Remove="Res\vProjects.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Res\Model\ITIH.OPPaymentStateUpdateTrackTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sOrderedProductPaymentStateUpdate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -94,7 +105,7 @@
     <EmbeddedResource Include="Res\sOrderedProductDelete.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Res\sOrderedProductUpdate.sql">
+    <EmbeddedResource Include="Res\sOrderedProductCurrentStateUpdate.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\sOrderFinalDueCreate.sql">

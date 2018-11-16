@@ -4,6 +4,7 @@ using CK.SqlServer;
 using CK.SqlServer.Setup;
 using System.Threading.Tasks;
 using System;
+using ITI.Human.ViewModels.Product.Ordered;
 
 namespace ITI.Human.Data
 {
@@ -18,8 +19,12 @@ namespace ITI.Human.Data
         [SqlProcedure("sOrderedProductCreate")]
         public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int orderId, int storageLinkedProductId, int quantity);
 
-        [SqlProcedure("sOrderedProductUpdate")]
-        public abstract Task<bool> Update(ISqlCallContext ctx, int actorId, DateTime updateDate, int orderedProductId, State currentState);
+        [SqlProcedure("sOrderedProductCurrentStateUpdate")]
+        public abstract Task<bool> UpdateCurrentState(ISqlCallContext ctx, int actorId, DateTime updateDate, int orderedProductId, State currentState);
+
+        [SqlProcedure("sOrderedProductPaymentStateUpdate")]
+        public abstract Task<bool> UpdatePaymentState(ISqlCallContext ctx, int actorId, DateTime updateDate, int orderedProductId, int orderFinalDueId,
+            Payment paymentState, double amount);
 
         [SqlProcedure("sOrderedProductDelete")]
         public abstract Task<bool> Delete(ISqlCallContext ctx, int actorId, int orderedProductId);
