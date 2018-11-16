@@ -36,9 +36,9 @@ begin
 			insert into ITIH.tOPPaymentStateUpdateTrack (OPUpdateTrackId, PreviousState, NewState) values (@OPUpdateTrack, @previousState, @newState);
 			
 			insert into ITIH.tOrderPayment (OrderFinalDueId, Amount, PaymentTime) values (@OrderFinalDueId, @Amount, @UpdateDate);
-			update tOrderFinalDue 
+			update ITIH.tOrderFinalDue 
 				set Paid = 
-					((select Paid from tOrderFinalDue where OrderFinalDueId = @OrderFinalDueId) + @Amount)
+					((select Paid from ITIH.tOrderFinalDue where OrderFinalDueId = @OrderFinalDueId) + @Amount)
 				where OrderFinalDueId = @OrderFinalDueId;
 		end;
 

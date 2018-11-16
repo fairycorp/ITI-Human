@@ -215,16 +215,31 @@ namespace API.Services.Order
                                 await OrderedProductTable.UpdateCurrentState(ctx, 0, DateTime.UtcNow, product.OrderedProductId, product.CurrentState)
                             );
 
-                            if (product.Payment.State == Payment.Paid)
-                                product.Payment.Amount = product.UnitPrice;
-                            else
-                                product.Payment.Amount = 0;
-
                             var orderFinalDueId = await ctx[OrderFinalDueTable].Connection
                                 .QueryFirstOrDefaultAsync<int>(
                                     "SELECT OrderFinalDueId FROM ITIH.tOrderFinalDue WHERE OrderId = @Id",
                                     new { Id = model.Info.OrderId }
                                 );
+
+                            var orderFinalPaid = await ctx[OrderFinalDueTable].Connection
+                                .QueryFirstOrDefaultAsync<double>(
+                                    "SELECT Paid FROM ITIH.tOrderFinalDue WHERE OrderFinalDueId = @Id",
+                                    new { Id = orderFinalDueId }
+                                );
+
+                            switch (product.Payment.State)
+                            {
+                                case Payment.Paid:
+                                    product.Payment.Amount = product.UnitPrice;
+                                    break;
+
+                                case Payment.Unpaid:
+                                    if (orderFinalPaid > 0)
+                                        product.Payment.Amount = -(product.UnitPrice);
+                                    else
+                                        product.Payment.Amount = 0;
+                                    break;
+                            }
 
                             dataUpdates.Add(
                                 string.Format("Has OrderedProduct n°{0} Payment State been updated?", product.OrderedProductId),

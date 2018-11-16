@@ -1,4 +1,4 @@
-﻿create table ITIH.tOrderPaymentTable (
+﻿create table ITIH.tOrderPayment (
 	OrderPaymentId int not null identity(0, 1),
 	OrderFinalDueId int not null,
 	Amount float not null,
@@ -8,5 +8,5 @@
 	constraint FK_tOrderPaymentTable_OrderFinalDueId foreign key (OrderFinalDueId) references ITIH.tOrderFinalDue (OrderFinalDueId)
 );
 
-insert into ITIH.tOrderPaymentTable (OrderFinalDueId, Amount)
+insert into ITIH.tOrderPayment (OrderFinalDueId, Amount)
 	values (0, 0);

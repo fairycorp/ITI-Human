@@ -3,7 +3,7 @@ using CK.SqlServer.Setup;
 
 namespace ITI.Human.Data
 {
-    [SqlTable("tOrderPaymentTable", Package = typeof(Package))]
+    [SqlTable("tOrderPayment", Package = typeof(Package))]
     [Versions("1.0.0")]
     public abstract class OrderPaymentTable : SqlTable
     {
