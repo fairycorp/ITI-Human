@@ -9,7 +9,12 @@
 
   <ItemGroup>
     <None Remove="Res\Model\ITIH.ClassroomTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.OPCurrentStateUpdateTrackTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.OPPaymentStateUpdateTrackTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.OrderedProductTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.OrderedProductUpdateTrackTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.OrderFinalDueTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.OrderPaymentTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.OrderTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.ProductTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.ProjectTable.Install.1.0.0.sql" />
@@ -24,8 +29,13 @@
     <None Remove="Res\sOrderCreate.sql" />
     <None Remove="Res\sOrderDelete.sql" />
     <None Remove="Res\sOrderedProductCreate.sql" />
+    <None Remove="Res\sOrderedProductCurrentStateUpdate.sql" />
     <None Remove="Res\sOrderedProductDelete.sql" />
-    <None Remove="Res\sOrderedProductUpdate.sql" />
+    <None Remove="Res\sOrderedProductPaymentStateUpdate.sql" />
+    <None Remove="Res\sOrderFinalDueCreate.sql" />
+    <None Remove="Res\sOrderFinalDueUpdate.sql" />
+    <None Remove="Res\sOrderPaymentCreate.sql" />
+    <None Remove="Res\sOrderPaymentDelete.sql" />
     <None Remove="Res\sOrderUpdate.sql" />
     <None Remove="Res\sProductCreate.sql" />
     <None Remove="Res\sProductUpdate.sql" />
@@ -43,7 +53,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Res\Model\ITIH.OPPaymentStateUpdateTrackTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sOrderedProductPaymentStateUpdate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="Res\Model\ITIH.ClassroomTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\Model\ITIH.OPCurrentStateUpdateTrackTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\Model\ITIH.OrderedProductUpdateTrackTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\Model\ITIH.OrderFinalDueTable.Install.1.0.0.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\Model\ITIH.ProjectTable.Install.1.0.0.sql">
@@ -79,7 +107,19 @@
     <EmbeddedResource Include="Res\sOrderedProductDelete.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Res\sOrderedProductUpdate.sql">
+    <EmbeddedResource Include="Res\sOrderedProductCurrentStateUpdate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sOrderFinalDueCreate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sOrderFinalDueUpdate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sOrderPaymentCreate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sOrderPaymentDelete.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\sOrderUpdate.sql">
@@ -147,6 +187,12 @@
   <ItemGroup>
     <PackageReference Include="CK.DB.Auth" Version="3.0.1--0028-develop" />
     <PackageReference Include="CK.DB.User.UserGithub" Version="0.3.1--0032-develop" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Res\Model\ITIH.OrderPaymentTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

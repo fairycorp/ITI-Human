@@ -1,4 +1,5 @@
 ﻿using Stall.Guard.System;
+using System.Collections.Generic;
 
 namespace API.Services.Helper.Guard
 {
@@ -12,12 +13,25 @@ namespace API.Services.Helper.Guard
             return new GuardResult(Status.Success, string.Empty);
         }
 
-        public GuardResult IsAdmissible(string parameter, double argument)
+        public GuardResult IsAdmissible(string parameter, decimal argument)
         {
             if (argument < 0)
             {
                 var info = string.Format("{0} is negative.", parameter);
                 return new GuardResult(Status.Failure, info);
+            }
+            return new GuardResult(Status.Success, string.Empty);
+        }
+
+        public GuardResult IsAdmissible(Dictionary<string, decimal> analysis)
+        {
+            foreach (var line in analysis)
+            {
+                if (line.Value < 0)
+                {
+                    var info = string.Format("{0} is negative.", line.Key);
+                    return new GuardResult(Status.Failure, info);
+                }
             }
             return new GuardResult(Status.Success, string.Empty);
         }

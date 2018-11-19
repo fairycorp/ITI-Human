@@ -15,10 +15,10 @@ namespace ITI.Human.Data
         }
 
         [SqlProcedure("sStorageLinkedProductCreate")]
-        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int storageId, int productId, double unitPrice, int stock);
+        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int storageId, int productId, int unitPrice, int stock);
 
         [SqlProcedure("sStorageLinkedProductUnitPriceUpdate")]
-        public abstract Task<bool> UpdateUnitPrice(ISqlCallContext ctx, int actorId, DateTime updateDate, int storageLinkedProductId, double unitPrice);
+        public abstract Task<bool> UpdateUnitPrice(ISqlCallContext ctx, int actorId, DateTime updateDate, int storageLinkedProductId, int unitPrice);
 
         [SqlProcedure("sStorageLinkedProductStockUpdate")]
         public abstract Task<bool> UpdateStock(ISqlCallContext ctx, int actorId, DateTime updateDate, int storageLinkedProductId, int stock);

@@ -3,7 +3,8 @@
 	OrderId int not null,
 	StorageLinkedProductId int not null,
 	Quantity int not null default 1,
-	CurrentState int not null default 0
+	CurrentState int not null default 0,
+	PaymentState int not null default 0
 	
 	constraint PK_ITIH_tOrderedProduct primary key (OrderedProductId),
 	constraint FK_ITIH_tOrderedProduct_OrderId foreign key (OrderId) references ITIH.tOrder (OrderId),

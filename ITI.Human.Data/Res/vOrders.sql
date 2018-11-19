@@ -3,6 +3,7 @@ as
 	select
 		OrderId = o.OrderId,
 		UserId = o.UserId,
+		StorageId = o.StorageId,
 		UserName = u.UserName,
 		ClassroomId = o.ClassroomId,
 		ClassroomName = c.[Name],

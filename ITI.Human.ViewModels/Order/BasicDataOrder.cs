@@ -2,6 +2,8 @@
 
 namespace ITI.Human.ViewModels.Order
 {
+    /// <summary>
+    /// Defines what an Order current State is.
     public enum State {
         NotStarted, Underway, Paused, Delivered, Canceled
     }

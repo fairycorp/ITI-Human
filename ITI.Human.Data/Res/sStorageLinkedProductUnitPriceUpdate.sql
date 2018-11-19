@@ -3,7 +3,7 @@ create proc ITIH.sStorageLinkedProductUnitPriceUpdate (
 	@ActorId int,
 	@UpdateDate datetime2,
 	@StorageLinkedProductId int,
-	@UnitPrice float,
+	@UnitPrice int,
 	@Success bit = 0 output
 )
 as
@@ -22,12 +22,17 @@ begin
 	set @newUnitPrice = (select UnitPrice from ITIH.tStorageLinkedProduct where StorageLinkedProductId = @StorageLinkedProductId);
 
 	if (@newUnitPrice != @previousUnitPrice)
-		set @Success = 1;
-		insert into ITIH.tUpdateTrack (ActorId, UpdateDate) values (@ActorId, @UpdateDate);
-		set @updateTrack = scope_identity();
-		insert into ITIH.tStorageLinkedProductUpdateTrack (UpdateTrackId, StorageLinkedProductId) values (@updateTrack, @StorageLinkedProductId);
-		set @SLPUpdateTrack = scope_identity();
-		insert into ITIH.tSLPUnitPriceUpdateTrack (SLPUpdateTrackId, PreviousUnitPrice, NewUnitPrice) values (@SLPUpdateTrack, @previousUnitPrice, @newUnitPrice);
+		begin;
+			set @Success = 1;
+
+			insert into ITIH.tUpdateTrack (ActorId, UpdateDate) values (@ActorId, @UpdateDate);
+
+			set @updateTrack = scope_identity();
+			insert into ITIH.tStorageLinkedProductUpdateTrack (UpdateTrackId, StorageLinkedProductId) values (@updateTrack, @StorageLinkedProductId);
+
+			set @SLPUpdateTrack = scope_identity();
+			insert into ITIH.tSLPUnitPriceUpdateTrack (SLPUpdateTrackId, PreviousUnitPrice, NewUnitPrice) values (@SLPUpdateTrack, @previousUnitPrice, @newUnitPrice);
+		end;
 
 	--<PostCreate />
 

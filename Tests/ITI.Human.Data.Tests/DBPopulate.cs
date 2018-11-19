@@ -1,8 +1,11 @@
 ﻿using CK.DB.Actor;
 using CK.SqlServer;
 using Dapper;
+using ITI.Human.ViewModels.Order;
+using ITI.Human.ViewModels.Product.Ordered;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using static CK.Testing.DBSetupTestHelper;
@@ -34,6 +37,9 @@ namespace ITI.Human.Data.Tests
             var oTable = (OrderTable)
                 Initialize(Element.Order);
 
+            var oFDTable = (OrderFinalDueTable)
+                Initialize(Element.OrderFinalDue);
+
             var oPTable = (OrderedProductTable)
                 Initialize(Element.OrderedProduct);
 
@@ -57,33 +63,17 @@ namespace ITI.Human.Data.Tests
                 object doesExist;
 
                 // Checks on products.
-                doesExist = await GetElement(Element.Product, strIdentifier: productName1);
-                if (doesExist != null) return;
+                var productNames = new string[] {
+                    productName1, productName2, productName3,
+                    productName4, productName5, productName6,
+                    productName7, productName8, productName9
+                };
 
-                doesExist = await GetElement(Element.Product, strIdentifier: productName2);
-                if (doesExist != null) return;
-
-                doesExist = await GetElement(Element.Product, strIdentifier: productName3);
-                if (doesExist != null) return;
-
-                doesExist = await GetElement(Element.Product, strIdentifier: productName4);
-                if (doesExist != null) return;
-
-                doesExist = await GetElement(Element.Product, strIdentifier: productName5);
-                if (doesExist != null) return;
-
-                doesExist = await GetElement(Element.Product, strIdentifier: productName6);
-                if (doesExist != null) return;
-
-                doesExist = await GetElement(Element.Product, strIdentifier: productName7);
-                if (doesExist != null) return;
-
-                doesExist = await GetElement(Element.Product, strIdentifier: productName8);
-                if (doesExist != null) return;
-
-                doesExist = await GetElement(Element.Product, strIdentifier: productName9);
-                if (doesExist != null) return;
-
+                foreach (var productName in productNames)
+                {
+                    doesExist = await GetElement(Element.Product, strIdentifier: productName);
+                    if (doesExist != null) return;
+                }
 
                 // Creates products.
                 var productId1 = await pTable.Create(ctx, 0, productName1, string.Empty);
@@ -132,16 +122,16 @@ namespace ITI.Human.Data.Tests
      
                 // Creates storage linked products.
                 var storageLinkedProductId1 = await sLTable.Create(ctx, 0, storageId1, productId1, 1, 20);
-                var storageLinkedProductId2 = await sLTable.Create(ctx, 0, storageId1, productId2, 0.8, 40);
-                var storageLinkedProductId4 = await sLTable.Create(ctx, 0, storageId1, productId4, 0.9, 40);
-                var storageLinkedProductId5 = await sLTable.Create(ctx, 0, storageId1, productId8, 0.9, 30);
-                var storageLinkedProductId6 = await sLTable.Create(ctx, 0, storageId1, productId9, 1.3, 20);
+                var storageLinkedProductId2 = await sLTable.Create(ctx, 0, storageId1, productId2, 80, 40);
+                var storageLinkedProductId4 = await sLTable.Create(ctx, 0, storageId1, productId4, 90, 40);
+                var storageLinkedProductId5 = await sLTable.Create(ctx, 0, storageId1, productId8, 90, 30);
+                var storageLinkedProductId6 = await sLTable.Create(ctx, 0, storageId1, productId9, 130, 20);
 
-                var storageLinkedProductId7 = await sLTable.Create(ctx, 0, storageId2, productId3, 0.9, 40);
-                var storageLinkedProductId8 = await sLTable.Create(ctx, 0, storageId2, productId3, 0.9, 40);
-                var storageLinkedProductId9 = await sLTable.Create(ctx, 0, storageId2, productId5, 1.4, 30);
-                var storageLinkedProductId10 = await sLTable.Create(ctx, 0, storageId2, productId6, 1.5, 20);
-                var storageLinkedProductId11 = await sLTable.Create(ctx, 0, storageId2, productId7, 1.8, 40);
+                var storageLinkedProductId7 = await sLTable.Create(ctx, 0, storageId2, productId3, 90, 40);
+                var storageLinkedProductId8 = await sLTable.Create(ctx, 0, storageId2, productId1, 100, 40);
+                var storageLinkedProductId9 = await sLTable.Create(ctx, 0, storageId2, productId5, 140, 30);
+                var storageLinkedProductId10 = await sLTable.Create(ctx, 0, storageId2, productId6, 150, 20);
+                var storageLinkedProductId11 = await sLTable.Create(ctx, 0, storageId2, productId7, 180, 40);
 
 
                 // Creates orders.
@@ -156,7 +146,59 @@ namespace ITI.Human.Data.Tests
                 await oPTable.Create(ctx, 0, orderId2, storageLinkedProductId11, 1);
                 await oPTable.Create(ctx, 0, orderId3, storageLinkedProductId7, 2);
                 await oPTable.Create(ctx, 0, orderId3, storageLinkedProductId10, 1);
+
+                // -----------------------------------------------------------------
+
+                var basicData = await ctx[oTable].Connection
+                    .QueryAsync<BasicDataOrder>(
+                        @"SELECT
+                            *
+                        FROM
+                            ITIH.vOrders;"
+                    );
+
+                List<DetailedDataOrder> ordersList = new List<DetailedDataOrder>();
+                foreach (var data in basicData)
+                {
+                    var detailedData = new DetailedDataOrder();
+                    detailedData.Info = data;
+                    detailedData.Products = await ctx[oTable].Connection
+                        .QueryAsync<BasicDataOrderedProduct>(
+                            @"SELECT
+                                *
+                            FROM
+                                ITIH.vOrderedProducts v
+                            WHERE
+                                v.OrderId = @id;",
+                            new { id = data.OrderId }
+                        );
+                    detailedData.Info.Total = CalculateOrderTotal(detailedData.Products);
+                    ordersList.Add(detailedData);
+                }
+
+
+                // -----------------------------------------------------------------
+
+                foreach (var order in ordersList)
+                {
+                    var total = 0;
+                    foreach (var product in order.Products)
+                    {
+                        total += product.UnitPrice;
+                    }
+                    await oFDTable.Create(ctx, 0, order.Info.OrderId, total, 0);
+                }
             }
+        }
+
+        static int CalculateOrderTotal(IEnumerable<BasicDataOrderedProduct> products)
+        {
+            int total = 0;
+            foreach (var product in products)
+            {
+                total += product.UnitPrice;
+            }
+            return total;
         }
 
         /// <summary>
@@ -165,6 +207,7 @@ namespace ITI.Human.Data.Tests
         private enum Element
         {
             Order,
+            OrderFinalDue,
             OrderedProduct,
             Product,
             Project,
@@ -199,6 +242,11 @@ namespace ITI.Human.Data.Tests
                     case (Element.Order):
                         table = (OrderTable)Initialize(Element.Order);
                         tableName = "ITIH.tOrder"; fieldName = "OrderId";
+                        break;
+
+                    case (Element.OrderFinalDue):
+                        table = (OrderFinalDueTable)Initialize(Element.OrderFinalDue);
+                        tableName = "ITIH.tOrderFinalDue"; fieldName = "OrderFinalDueId";
                         break;
 
                     case (Element.OrderedProduct):
@@ -273,6 +321,9 @@ namespace ITI.Human.Data.Tests
             {
                 case (Element.Order):
                     return CK.Core.StObjModelExtension.Obtain<OrderTable>(TestHelper.StObjMap.StObjs);
+
+                case (Element.OrderFinalDue):
+                    return CK.Core.StObjModelExtension.Obtain<OrderFinalDueTable>(TestHelper.StObjMap.StObjs);
 
                 case (Element.OrderedProduct):
                     return CK.Core.StObjModelExtension.Obtain<OrderedProductTable>(TestHelper.StObjMap.StObjs);

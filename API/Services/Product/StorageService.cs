@@ -79,7 +79,6 @@ namespace API.Services.Product
         /// Gets a Storage by its matching Project id.
         /// </summary>
         /// <param name="projectId">Project id.</param>
-        /// <returns></returns>
         public async Task<GuardResult> GetStorageFromProject(int projectId)
         {
             using (var ctx = new SqlStandardCallContext())
@@ -96,6 +95,33 @@ namespace API.Services.Product
                     );
                 if (result == null) return Failure("Element does not exist in database.");
                 return Success(result);
+            }
+        }
+
+        /// <summary>
+        /// Gets a Storage from an Order id.
+        /// </summary>
+        /// <param name="orderId">Order id.</param>
+        public async Task<GuardResult> GetStorageFromOrder(int orderId)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                var storageId = await ctx[StorageTable].Connection
+                    .QueryFirstOrDefaultAsync<int>(
+                        @"SELECT
+                            StorageId
+                        FROM 
+                            ITIH.tOrder
+                        WHERE
+                            OrderId = @Id;",
+                        new { Id = orderId }
+                    );
+                if (storageId == 0) return Failure("Element does not exist in database.");
+
+                var storage = await GetStorage(storageId);
+
+                if (storage.Code == Status.Failure) return Failure(storage.Info);
+                return Success(storage);
             }
         }
 

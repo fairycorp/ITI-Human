@@ -6,7 +6,7 @@ namespace ITI.Human.ViewModels.Order
     public class UpdateViewModel
     {
         /// <summary>
-        /// See <see cref="DetailedDataOrder.OrderInfo"/>.
+        /// See <see cref="DetailedDataOrder.Info"/>.
         /// </summary>
         public BasicDataOrder Info { get; set; }
 

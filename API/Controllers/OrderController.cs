@@ -1,4 +1,5 @@
-﻿using API.Services.Order;
+﻿using API.Services.Helper.Guard;
+using API.Services.Order;
 using ITI.Human.ViewModels.Order;
 using Microsoft.AspNetCore.Mvc;
 using Stall.Guard.System;
@@ -10,13 +11,13 @@ namespace API.Controllers
     [Route("[controller]")]
     public class OrderController : Controller
     {
-        public StdGuard Guard { get; }
+        public APIGuard Guard { get; }
 
         public OrderService Service { get; }
 
         public OrderController(OrderService service)
         {
-            Guard = new StdGuard();
+            Guard = new APIGuard();
             Service = service;
         }
 
@@ -74,10 +75,12 @@ namespace API.Controllers
                 if (basicCheck.Code == Status.Success)
                 {
                     Dictionary<string, int> modelIntAnalysis = new Dictionary<string, int>();
+                    int idx = 0;
                     foreach (var product in model.Products)
                     {
-                        modelIntAnalysis.Add(nameof(product.StorageLinkedProductId), product.StorageLinkedProductId);
-                        modelIntAnalysis.Add(nameof(product.Quantity), product.Quantity);
+                        idx++;
+                        modelIntAnalysis.Add($"{nameof(product.StorageLinkedProductId)}-{idx}", product.StorageLinkedProductId);
+                        modelIntAnalysis.Add($"{nameof(product.Quantity)}-{idx}", product.Quantity);
                     }
                     var check =
                         Guard.IsAdmissible(modelIntAnalysis);
@@ -97,7 +100,7 @@ namespace API.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update(DeliveryStateUpdateViewModel model)
+        public async Task<IActionResult> Update([FromBody] UpdateViewModel model)
         {
             if (!(model == null))
             {
@@ -123,26 +126,39 @@ namespace API.Controllers
                         { nameof(product.OrderedProductId), product.OrderedProductId },
                         { nameof(product.OrderId), product.OrderId },
                         { nameof(product.StorageLinkedProductId), product.StorageLinkedProductId },
+                        { nameof(product.Quantity), product.Quantity },
+                        { nameof(product.CurrentState), (int)product.CurrentState },
+                        { nameof(product.Payment.State), (int)product.Payment.State }
                     };
                     var check2 = Guard.IsAdmissible(modelProductIntAnalysis);
 
                     if (check2.Code == Status.Success)
                     {
-                        Dictionary<string, string> modelProductStrAnalysis = new Dictionary<string, string>
+                        Dictionary<string, int> modelProductDblAnalysis = new Dictionary<string, int>
                         {
-                            { nameof(product.Name), product.Name },
-                            { nameof(product.Desc), product.Desc }
+                            { nameof(product.UnitPrice), product.UnitPrice },
+                            { nameof(product.Payment.Amount), product.Payment.Amount }
                         };
-                        var check3 = Guard.IsAdmissible(modelProductStrAnalysis);
+                        var check3 = Guard.IsAdmissible(modelProductDblAnalysis);
 
                         if (check3.Code == Status.Success)
                         {
-                            var result = await Service.UpdateDetailedOrderDeliveryState(model);
-                            if (result.Code == Status.Failure) return BadRequest(result.Info);
+                            Dictionary<string, string> modelProductStrAnalysis = new Dictionary<string, string>
+                            {
+                                { nameof(product.Name), product.Name },
+                                { nameof(product.Desc), product.Desc }
+                            };
+                            var check4 = Guard.IsAdmissible(modelProductStrAnalysis);
 
-                            return Ok(result.Content);
+                            if (check4.Code == Status.Success)
+                            {
+                                var result = await Service.UpdateDetailedOrder(model);
+                                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                                return Ok(result.Content);
+                            }
+                            return BadRequest(check4.Info);
                         }
-
                         return BadRequest(check3.Info);
                     }
                     return BadRequest(check2.Info);
