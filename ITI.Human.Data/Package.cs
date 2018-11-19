@@ -11,7 +11,10 @@ namespace ITI.Human.Data
     Versions("1.0.0")]
     public abstract class Package : SqlPackage
     {
-        void StObjConstruct(CK.DB.User.UserGitHub.Package githubUserPackage)
+        void StObjConstruct(
+            CK.DB.User.UserPassword.Package userPasswordPackage,
+            CK.DB.User.UserGitHub.Package githubUserPackage
+        )
         {
 
         }

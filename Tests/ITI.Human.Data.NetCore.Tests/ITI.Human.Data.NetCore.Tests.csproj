@@ -9,12 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CK.DB.User.UserPassword" Version="3.0.1--0028-develop" />
     <PackageReference Include="Dapper.StrongName" Version="1.50.5" />
     <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="NUnitLite" Version="3.10.1" />
     <PackageReference Include="CK.DB.Tests.NUnit" Version="8.0.1--0046-develop" />
     <PackageReference Include="CK.DB.User.UserGitHub.Tests" Version="0.3.1--0032-develop" />
     <PackageReference Include="Stall.Guard" Version="0.0.5" />
+    <PackageReference Include="Dapper.StrongName" Version="1.50.5" />
   </ItemGroup>
   
   <ItemGroup>
