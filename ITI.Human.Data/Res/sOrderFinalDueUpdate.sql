@@ -2,8 +2,7 @@
 create proc ITIH.sOrderFinalDueUpdate (
 	@ActorId int,
 	@OrderFinalDueId int,
-	@Paid float,
-	@PaymentTime datetime2,
+	@Paid int,
 	@Success bit = 0 output
 )
 as
@@ -19,8 +18,8 @@ begin
 	update ITIH.tOrderFinalDue set Paid = (@previousPaid + @Paid) where OrderFinalDueId = @OrderFinalDueId;
 	set @newPaid = (select Paid from ITIH.tOrderFinalDue where OrderFinalDueId = @OrderFinalDueId);
 
-	if (@previousPaid != @newPaid)
-		insert into ITIH.tOrderPayment (OrderFinalDueId, Amount) values (@OrderFinalDueId, @Paid);
+	if (@previousPaid != @newPaid and @Paid > 0)
+		set @Success = 1;
 
 	--<PostCreate />
 

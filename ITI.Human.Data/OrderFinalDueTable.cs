@@ -15,9 +15,9 @@ namespace ITI.Human.Data
         }
 
         [SqlProcedure("sOrderFinalDueCreate")]
-        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int orderId, double total, double paid);
+        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int orderId, int total, int paid);
 
         [SqlProcedure("sOrderFinalDueUpdate")]
-        public abstract Task<bool> Update(ISqlCallContext ctx, int actorId, int orderFinalDueId, double paid, DateTime paymentTime);
+        public abstract Task<bool> Update(ISqlCallContext ctx, int actorId, int orderFinalDueId, int paid);
     }
 }

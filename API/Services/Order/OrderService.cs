@@ -33,17 +33,21 @@ namespace API.Services.Order
 
         public OrderFinalDueTable OrderFinalDueTable { get; set; }
 
+        public OrderPaymentTable OrderPaymentTable { get; set; }
+
         public UserTable UserTable { get; set; }
 
         public OrderService(
             StorageService sService, ClassroomService cService, OrderTable oTable, 
-            OrderedProductTable oPTable, OrderFinalDueTable oFDTable, UserTable uTable)
+            OrderedProductTable oPTable, OrderFinalDueTable oFDTable, 
+            OrderPaymentTable oPayTable, UserTable uTable)
         {
             StorageService = sService;
             ClassroomService = cService;
             OrderTable = oTable;
             OrderedProductTable = oPTable;
             OrderFinalDueTable = oFDTable;
+            OrderPaymentTable = oPayTable;
             UserTable = uTable;
         }
 
@@ -231,21 +235,45 @@ namespace API.Services.Order
                             {
                                 case Payment.Paid:
                                     product.Payment.Amount = product.UnitPrice;
+
+                                    // Looks for an existing Payment State in database.
+                                    var doesPaymentStateExist =
+                                        await ctx[OrderPaymentTable].Connection
+                                            .QueryFirstOrDefaultAsync<int>(
+                                                "SELECT OrderPaymentId FROM ITIH.tOrderPayment WHERE OrderedProductId = @Id;",
+                                                new { Id = product.OrderedProductId }
+                                            );
+                                    if (doesPaymentStateExist == 0)
+                                    {
+                                        dataUpdates.Add(
+                                            string.Format("Has OrderedProduct n°{0} Payment State been updated?", product.OrderedProductId),
+                                            await OrderedProductTable.UpdatePaymentState(ctx, 0, DateTime.UtcNow, product.OrderedProductId,
+                                            orderFinalDueId, product.Payment.State, product.Payment.Amount)
+                                        );
+                                    }
                                     break;
 
                                 case Payment.Unpaid:
                                     if (orderFinalPaid > 0)
-                                        product.Payment.Amount = -(product.UnitPrice);
-                                    else
-                                        product.Payment.Amount = 0;
+                                    {
+                                        if (orderFinalPaid >= product.UnitPrice)
+                                            product.Payment.Amount = -(product.UnitPrice);
+
+                                        var isOrderedProductReferencedInPaymentTable =
+                                            await ctx[OrderPaymentTable].Connection
+                                                .QueryAsync<int>("SELECT OrderPaymentId FROM ITIH.tOrderPayment WHERE OrderedProductId = @Id",
+                                                new { Id = product.OrderedProductId });
+
+                                        if (isOrderedProductReferencedInPaymentTable.AsList().Count >= 1)
+                                        {
+                                            await OrderPaymentTable.Delete(ctx, 0, product.OrderedProductId);
+                                            await OrderFinalDueTable.Update(ctx, 0, orderFinalDueId, product.Payment.Amount);
+                                        }
+
+                                    }
+                                    else product.Payment.Amount = 0;
                                     break;
                             }
-
-                            dataUpdates.Add(
-                                string.Format("Has OrderedProduct n°{0} Payment State been updated?", product.OrderedProductId),
-                                await OrderedProductTable.UpdatePaymentState(ctx, 0, DateTime.UtcNow, product.OrderedProductId,
-                                orderFinalDueId, product.Payment.State, product.Payment.Amount)
-                            );
 
                             var currentState = await ctx[OrderedProductTable].Connection
                                 .QueryFirstOrDefaultAsync<State>(
@@ -467,14 +495,14 @@ namespace API.Services.Order
             }
         }
 
-        private static double CalculateOrderTotal(IEnumerable<BasicDataOrderedProduct> products)
+        private static int CalculateOrderTotal(IEnumerable<BasicDataOrderedProduct> products)
         {
-            double total = 0;
+            int total = 0;
             foreach (var product in products)
             {
                 total += product.UnitPrice;
             }
-            return Math.Round(total, 2);
+            return total;
         }
 
         private async Task<UserBasicData> GetUser(int userId)

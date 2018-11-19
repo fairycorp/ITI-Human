@@ -10,7 +10,7 @@
         /// <summary>
         /// See <see cref="BasicDataStorageLinkedProduct.UnitPrice"/>.
         /// </summary>
-        public double UnitPrice { get; set; }
+        public int UnitPrice { get; set; }
 
         /// <summary>
         /// See <see cref="BasicDataStorageLinkedProduct.Stock"/>.

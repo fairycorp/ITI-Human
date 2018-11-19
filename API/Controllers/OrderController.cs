@@ -134,7 +134,7 @@ namespace API.Controllers
 
                     if (check2.Code == Status.Success)
                     {
-                        Dictionary<string, double> modelProductDblAnalysis = new Dictionary<string, double>
+                        Dictionary<string, int> modelProductDblAnalysis = new Dictionary<string, int>
                         {
                             { nameof(product.UnitPrice), product.UnitPrice },
                             { nameof(product.Payment.Amount), product.Payment.Amount }

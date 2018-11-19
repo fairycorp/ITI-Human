@@ -2,8 +2,8 @@
 create proc ITIH.sOrderFinalDueCreate (
 	@ActorId int,
 	@OrderId int,
-	@Total float,
-	@Paid float,
+	@Total int,
+	@Paid int,
 	@OrderFinalDueIdResult int output
 )
 as

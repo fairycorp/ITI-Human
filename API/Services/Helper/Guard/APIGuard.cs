@@ -13,7 +13,7 @@ namespace API.Services.Helper.Guard
             return new GuardResult(Status.Success, string.Empty);
         }
 
-        public GuardResult IsAdmissible(string parameter, double argument)
+        public GuardResult IsAdmissible(string parameter, decimal argument)
         {
             if (argument < 0)
             {
@@ -23,7 +23,7 @@ namespace API.Services.Helper.Guard
             return new GuardResult(Status.Success, string.Empty);
         }
 
-        public GuardResult IsAdmissible(Dictionary<string, double> analysis)
+        public GuardResult IsAdmissible(Dictionary<string, decimal> analysis)
         {
             foreach (var line in analysis)
             {

@@ -34,6 +34,8 @@
     <None Remove="Res\sOrderedProductPaymentStateUpdate.sql" />
     <None Remove="Res\sOrderFinalDueCreate.sql" />
     <None Remove="Res\sOrderFinalDueUpdate.sql" />
+    <None Remove="Res\sOrderPaymentCreate.sql" />
+    <None Remove="Res\sOrderPaymentDelete.sql" />
     <None Remove="Res\sOrderUpdate.sql" />
     <None Remove="Res\sProductCreate.sql" />
     <None Remove="Res\sProductUpdate.sql" />
@@ -112,6 +114,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\sOrderFinalDueUpdate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sOrderPaymentCreate.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sOrderPaymentDelete.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\sOrderUpdate.sql">

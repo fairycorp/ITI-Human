@@ -3,7 +3,7 @@ create proc ITIH.sStorageLinkedProductCreate (
 	@ActorId int,
 	@StorageId int,
 	@ProductId int,
-	@UnitPrice float,
+	@UnitPrice int,
 	@Stock int,
 	@StorageLinkedProductIdResult int output
 )

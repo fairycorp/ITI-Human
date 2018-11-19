@@ -5,7 +5,7 @@ create proc ITIH.sOrderedProductPaymentStateUpdate (
 	@OrderedProductId int,
 	@OrderFinalDueId int,
 	@PaymentState int,
-	@Amount float,
+	@Amount int,
 	@Success bit = 0 output
 )
 as
@@ -35,7 +35,7 @@ begin
 			set @OPUpdateTrack = scope_identity();
 			insert into ITIH.tOPPaymentStateUpdateTrack (OPUpdateTrackId, PreviousState, NewState) values (@OPUpdateTrack, @previousState, @newState);
 			
-			insert into ITIH.tOrderPayment (OrderFinalDueId, Amount, PaymentTime) values (@OrderFinalDueId, @Amount, @UpdateDate);
+			insert into ITIH.tOrderPayment (OrderedProductId, OrderFinalDueId, Amount, PaymentTime) values (@OrderedProductId, @OrderFinalDueId, @Amount, @UpdateDate);
 			update ITIH.tOrderFinalDue 
 				set Paid = 
 					((select Paid from ITIH.tOrderFinalDue where OrderFinalDueId = @OrderFinalDueId) + @Amount)

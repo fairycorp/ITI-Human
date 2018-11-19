@@ -121,17 +121,17 @@ namespace ITI.Human.Data.Tests
 
      
                 // Creates storage linked products.
-                var storageLinkedProductId1 = await sLTable.Create(ctx, 0, storageId1, productId1, 1d, 20);
-                var storageLinkedProductId2 = await sLTable.Create(ctx, 0, storageId1, productId2, 0.8d, 40);
-                var storageLinkedProductId4 = await sLTable.Create(ctx, 0, storageId1, productId4, 0.9d, 40);
-                var storageLinkedProductId5 = await sLTable.Create(ctx, 0, storageId1, productId8, 0.9d, 30);
-                var storageLinkedProductId6 = await sLTable.Create(ctx, 0, storageId1, productId9, 1.3d, 20);
+                var storageLinkedProductId1 = await sLTable.Create(ctx, 0, storageId1, productId1, 1, 20);
+                var storageLinkedProductId2 = await sLTable.Create(ctx, 0, storageId1, productId2, 80, 40);
+                var storageLinkedProductId4 = await sLTable.Create(ctx, 0, storageId1, productId4, 90, 40);
+                var storageLinkedProductId5 = await sLTable.Create(ctx, 0, storageId1, productId8, 90, 30);
+                var storageLinkedProductId6 = await sLTable.Create(ctx, 0, storageId1, productId9, 130, 20);
 
-                var storageLinkedProductId7 = await sLTable.Create(ctx, 0, storageId2, productId3, 0.9d, 40);
-                var storageLinkedProductId8 = await sLTable.Create(ctx, 0, storageId2, productId1, 1d, 40);
-                var storageLinkedProductId9 = await sLTable.Create(ctx, 0, storageId2, productId5, 1.4d, 30);
-                var storageLinkedProductId10 = await sLTable.Create(ctx, 0, storageId2, productId6, 1.5d, 20);
-                var storageLinkedProductId11 = await sLTable.Create(ctx, 0, storageId2, productId7, 1.8d, 40);
+                var storageLinkedProductId7 = await sLTable.Create(ctx, 0, storageId2, productId3, 90, 40);
+                var storageLinkedProductId8 = await sLTable.Create(ctx, 0, storageId2, productId1, 100, 40);
+                var storageLinkedProductId9 = await sLTable.Create(ctx, 0, storageId2, productId5, 140, 30);
+                var storageLinkedProductId10 = await sLTable.Create(ctx, 0, storageId2, productId6, 150, 20);
+                var storageLinkedProductId11 = await sLTable.Create(ctx, 0, storageId2, productId7, 180, 40);
 
 
                 // Creates orders.
@@ -181,7 +181,7 @@ namespace ITI.Human.Data.Tests
 
                 foreach (var order in ordersList)
                 {
-                    var total = 0d;
+                    var total = 0;
                     foreach (var product in order.Products)
                     {
                         total += product.UnitPrice;
@@ -191,14 +191,14 @@ namespace ITI.Human.Data.Tests
             }
         }
 
-        static double CalculateOrderTotal(IEnumerable<BasicDataOrderedProduct> products)
+        static int CalculateOrderTotal(IEnumerable<BasicDataOrderedProduct> products)
         {
-            double total = 0;
+            int total = 0;
             foreach (var product in products)
             {
                 total += product.UnitPrice;
             }
-            return Math.Round(total, 2);
+            return total;
         }
 
         /// <summary>

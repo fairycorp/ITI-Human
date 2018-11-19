@@ -43,7 +43,7 @@ namespace ITI.Human.ViewModels.Product.Ordered
         /// <summary>
         /// See <see cref="BasicDataStorageLinkedProduct.UnitPrice"/>.
         /// </summary>
-        public double UnitPrice { get; set; }
+        public int UnitPrice { get; set; }
 
         /// <summary>
         /// See <see cref="BasicDataProductToOrder.Quantity"/>.
@@ -63,7 +63,7 @@ namespace ITI.Human.ViewModels.Product.Ordered
         public class PaymentState
         {
             public Payment State { get; set; }
-            public double Amount { get; set; }
+            public int Amount { get; set; }
         }
     }
 }

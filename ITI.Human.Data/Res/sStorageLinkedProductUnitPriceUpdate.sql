@@ -3,7 +3,7 @@ create proc ITIH.sStorageLinkedProductUnitPriceUpdate (
 	@ActorId int,
 	@UpdateDate datetime2,
 	@StorageLinkedProductId int,
-	@UnitPrice float,
+	@UnitPrice int,
 	@Success bit = 0 output
 )
 as

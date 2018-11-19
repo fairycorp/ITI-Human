@@ -20,7 +20,7 @@
         /// <summary>
         /// Current Storage Linked Product unit price.
         /// </summary>
-        public double UnitPrice { get; set; }
+        public int UnitPrice { get; set; }
 
         /// <summary>
         /// Stock of the mentionned product in storage.

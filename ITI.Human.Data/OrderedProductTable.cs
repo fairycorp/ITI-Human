@@ -24,7 +24,7 @@ namespace ITI.Human.Data
 
         [SqlProcedure("sOrderedProductPaymentStateUpdate")]
         public abstract Task<bool> UpdatePaymentState(ISqlCallContext ctx, int actorId, DateTime updateDate, int orderedProductId, int orderFinalDueId,
-            Payment paymentState, double amount);
+            Payment paymentState, int amount);
 
         [SqlProcedure("sOrderedProductDelete")]
         public abstract Task<bool> Delete(ISqlCallContext ctx, int actorId, int orderedProductId);
