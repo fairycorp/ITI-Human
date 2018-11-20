@@ -11,6 +11,7 @@
     <None Remove="Res\Model\ITIH.ClassroomTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.OPCurrentStateUpdateTrackTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.OPPaymentStateUpdateTrackTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.OrderCreditTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.OrderedProductTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.OrderedProductUpdateTrackTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.OrderFinalDueTable.Install.1.0.0.sql" />
@@ -27,6 +28,7 @@
     <None Remove="Res\Model\ITIH.StorageTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.UpdateTrackTable.Install.1.0.0.sql" />
     <None Remove="Res\sOrderCreate.sql" />
+    <None Remove="Res\sOrderCreditCreate.sql" />
     <None Remove="Res\sOrderDelete.sql" />
     <None Remove="Res\sOrderedProductCreate.sql" />
     <None Remove="Res\sOrderedProductCurrentStateUpdate.sql" />
@@ -53,7 +55,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Res\Model\ITIH.OrderCreditTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="Res\Model\ITIH.OPPaymentStateUpdateTrackTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\sOrderCreditCreate.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\sOrderedProductPaymentStateUpdate.sql">

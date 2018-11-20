@@ -35,12 +35,14 @@ namespace API.Services.Order
 
         public OrderPaymentTable OrderPaymentTable { get; set; }
 
+        public OrderCreditTable OrderCreditTable { get; set; }
+
         public UserTable UserTable { get; set; }
 
         public OrderService(
             StorageService sService, ClassroomService cService, OrderTable oTable, 
             OrderedProductTable oPTable, OrderFinalDueTable oFDTable, 
-            OrderPaymentTable oPayTable, UserTable uTable)
+            OrderPaymentTable oPayTable, OrderCreditTable oCTable, UserTable uTable)
         {
             StorageService = sService;
             ClassroomService = cService;
@@ -48,6 +50,7 @@ namespace API.Services.Order
             OrderedProductTable = oPTable;
             OrderFinalDueTable = oFDTable;
             OrderPaymentTable = oPayTable;
+            OrderCreditTable = oCTable;
             UserTable = uTable;
         }
 
@@ -273,6 +276,29 @@ namespace API.Services.Order
                                     }
                                     else product.Payment.Amount = 0;
                                     break;
+
+                                case Payment.Credited:
+                                    if (product.Payment.Amount > 0)
+                                    {
+                                        if (product.Payment.Amount > product.UnitPrice)
+                                            return Failure("A Credit cannot be superior to the ordered product unit price.");
+
+                                        var isOrderedProductReferencedInCreditTable =
+                                            await ctx[OrderCreditTable].Connection
+                                                .QueryAsync<int>("SELECT OrderCreditId FROM ITIH.tOrderCredit WHERE OrderedProductId = @Id",
+                                                new { Id = product.OrderedProductId });
+
+                                        if (isOrderedProductReferencedInCreditTable.AsList().Count == 0)
+                                        {
+                                            await OrderCreditTable.Create(ctx, 0, product.OrderedProductId, product.Payment.Amount, DateTime.UtcNow);
+                                            dataUpdates.Add(
+                                                string.Format("Has a credit been created for Ordered Product n°{0}", product.OrderedProductId),
+                                                true
+                                            );
+                                        }
+                                    }
+                                    else return Failure("When Payment State is 'Credited', 'Amount' must be filled in.");
+                                    break;
                             }
 
                             var currentState = await ctx[OrderedProductTable].Connection
@@ -333,9 +359,10 @@ namespace API.Services.Order
                 List<DetailedDataOrder> ordersList = new List<DetailedDataOrder>();
                 foreach (var data in basicData)
                 {
-                    var detailedData = new DetailedDataOrder();
-                    detailedData.Info = data;
-                    detailedData.Products = await ctx[OrderTable].Connection
+                    var detailedData = new DetailedDataOrder
+                    {
+                        Info = data,
+                        Products = await ctx[OrderTable].Connection
                         .QueryAsync<BasicDataOrderedProduct>(
                             @"SELECT
                                 *
@@ -344,7 +371,8 @@ namespace API.Services.Order
                             WHERE
                                 v.OrderId = @id;",
                             new { id = data.OrderId }
-                        );
+                        )
+                    };
                     detailedData.Info.Total = CalculateOrderTotal(detailedData.Products);
 
                     ordersList.Add(detailedData);
@@ -371,9 +399,10 @@ namespace API.Services.Order
                 List<DetailedDataOrder> ordersByUser = new List<DetailedDataOrder>();
                 foreach (var data in basicData)
                 {
-                    var detailedData = new DetailedDataOrder();
-                    detailedData.Info = data;
-                    detailedData.Products = await ctx[OrderTable].Connection
+                    var detailedData = new DetailedDataOrder
+                    {
+                        Info = data,
+                        Products = await ctx[OrderTable].Connection
                         .QueryAsync<BasicDataOrderedProduct>(
                             @"SELECT
                                 *
@@ -382,7 +411,8 @@ namespace API.Services.Order
                             WHERE
                                 OrderId = @id;",
                             new { id = data.OrderId }
-                        );
+                        )
+                    };
                     detailedData.Info.Total = CalculateOrderTotal(detailedData.Products);
 
                     ordersByUser.Add(detailedData);
