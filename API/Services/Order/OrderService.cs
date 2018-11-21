@@ -29,6 +29,8 @@ namespace API.Services.Order
 
         public OrderTable OrderTable { get; set; }
 
+        public StorageLinkedProductTable StorageLinkedProductTable { get; set; }
+
         public OrderedProductTable OrderedProductTable { get; set; }
 
         public OrderFinalDueTable OrderFinalDueTable { get; set; }
@@ -41,12 +43,14 @@ namespace API.Services.Order
 
         public OrderService(
             StorageService sService, ClassroomService cService, OrderTable oTable, 
-            OrderedProductTable oPTable, OrderFinalDueTable oFDTable, 
-            OrderPaymentTable oPayTable, OrderCreditTable oCTable, UserTable uTable)
+            StorageLinkedProductTable sLPTable, OrderedProductTable oPTable,
+            OrderFinalDueTable oFDTable, OrderPaymentTable oPayTable, 
+            OrderCreditTable oCTable, UserTable uTable)
         {
             StorageService = sService;
             ClassroomService = cService;
             OrderTable = oTable;
+            StorageLinkedProductTable = sLPTable;
             OrderedProductTable = oPTable;
             OrderFinalDueTable = oFDTable;
             OrderPaymentTable = oPayTable;
@@ -283,6 +287,18 @@ namespace API.Services.Order
                                         if (product.Payment.Amount > product.UnitPrice)
                                             return Failure("A Credit cannot be superior to the ordered product unit price.");
 
+                                        // Checks if the ordered product can be credited or not.
+                                        var canBeCredited = await ctx[StorageLinkedProductTable].Connection
+                                            .QueryFirstOrDefaultAsync<bool>(
+                                            "SELECT CreditState FROM ITIH.tStorageLinkedProduct WHERE StorageLinkedProductId = @Id",
+                                            new { Id = product.StorageLinkedProductId }
+                                        );
+
+                                        if (!canBeCredited) return Failure(
+                                                string.Format("StorageLinkedProduct n°{0} cannot be credited.", product.StorageLinkedProductId)
+                                            );
+
+                                        // Checks if the ordered product is already referenced in Credit table.
                                         var isOrderedProductReferencedInCreditTable =
                                             await ctx[OrderCreditTable].Connection
                                                 .QueryAsync<int>("SELECT OrderCreditId FROM ITIH.tOrderCredit WHERE OrderedProductId = @Id",

@@ -22,5 +22,8 @@ namespace ITI.Human.Data
 
         [SqlProcedure("sStorageLinkedProductStockUpdate")]
         public abstract Task<bool> UpdateStock(ISqlCallContext ctx, int actorId, DateTime updateDate, int storageLinkedProductId, int stock);
+
+        [SqlProcedure("sStorageLinkedProductCreditStateUpdate")]
+        public abstract Task<bool> UpdateCreditState(ISqlCallContext ctx, int actorId, DateTime updateDate, int storageLinkedProductId, bool creditState);
     }
 }
