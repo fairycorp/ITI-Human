@@ -9,12 +9,20 @@
     ]
   },
   "rules": {
-    "quotemark": [true, "single"],
+    "quotemark": [true, "double"],
     "indent": [true, "spaces", 2],
     "interface-name": false,
     "ordered-imports": false,
     "object-literal-sort-keys": false,
     "no-consecutive-blank-lines": false,
-    "no-console": false
+    "semicolon": [true, "always"],
+    "triple-equals": [true, "allow-undefined-check","allow-null-check"],
+    "curly": [true, "ignore-same-line"],
+    "trailing-comma": "ignore",
+    "comment-format": false,
+    "max-classes-per-file": false,
+    "no-var-requires" : false,
+    "no-console": false,
+    "arrow-parens": false
   }
 }

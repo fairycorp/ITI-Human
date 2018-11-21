@@ -1,4 +1,4 @@
-import Axios, { AxiosRequestConfig } from 'axios';
+import Axios, { AxiosRequestConfig } from "axios";
 
 class API {
     private configuration: any;
@@ -8,12 +8,12 @@ class API {
 
     constructor() {
         this.configuration = {
-            host: 'localhost',
+            host: "localhost",
             port: 5000,
         };
         this.requestConfig = {
             headers: {
-                'Access-Control-Allow-Origin': '*',
+                "Access-Control-Allow-Origin": "*",
             },
         };
     }
@@ -38,9 +38,9 @@ class API {
         return Axios.delete(`${this.Path}${checked}`, this.requestConfig);
     }
 
-    // Checks if endpoint starts with a '/' and removes it if it's the case.
+    // Checks if endpoint starts with a "/" and removes it if it"s the case.
     private routineCheck(endpoint: string) {
-        return (endpoint.startsWith('/')) ? endpoint.substr(1) : endpoint;
+        return (endpoint.startsWith("/")) ? endpoint.substr(1) : endpoint;
     }
 
 }

@@ -12,7 +12,7 @@
   }
 
   #app {
-    font-family: 'Yu Gothic UI';
+    font-family: "Yu Gothic UI";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #313538;
@@ -51,7 +51,7 @@
       border-radius: 3px;
       background-color: #ffffff;
       box-shadow: 0px 4px 6px rgb(204, 204, 204);
-      font-family: 'Yu Gothic UI';
+      font-family: "Yu Gothic UI";
       font-size: 100%;
       font-weight: bold;
       color: #01b04b;

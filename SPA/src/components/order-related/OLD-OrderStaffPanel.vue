@@ -22,10 +22,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import API from '../../services/API';
-import { IDetailedDataOrder } from '../../model/Order/OrderModel';
-import { AxiosResponse } from 'axios';
+import { Component, Prop, Vue } from "vue-property-decorator";
+import API from "../../services/API";
+import { IDetailedDataOrder } from "../../model/Order/OrderModel";
+import { AxiosResponse } from "axios";
 
 @Component
 export default class OrderPanel extends Vue {
@@ -38,7 +38,7 @@ export default class OrderPanel extends Vue {
     public constructor() {
         super();
         // Attributions.
-        this.componentEndpoint = 'order';
+        this.componentEndpoint = "order";
         this.ordersInformation = null;
 
         // Method call.

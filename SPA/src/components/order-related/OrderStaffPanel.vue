@@ -59,10 +59,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { IBasicDataOrder, IDetailedDataOrder } from '@/model/order/OrderModel';
-import API from '@/services/API';
-import Endpoint from '../../helpers/Endpoint';
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { IBasicDataOrder, IDetailedDataOrder } from "@/model/order/OrderModel";
+import API from "@/services/API";
+import Endpoint from "../../helpers/Endpoint";
 
 @Component
 export default class OrderStaffPanel extends Vue {
