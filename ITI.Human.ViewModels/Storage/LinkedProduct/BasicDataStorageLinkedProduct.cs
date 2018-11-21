@@ -26,5 +26,10 @@
         /// Stock of the mentionned product in storage.
         /// </summary>
         public int Stock { get; set; }
+
+        /// <summary>
+        /// Defines wether a SLP can be credited or not.
+        /// </summary>
+        public bool CreditState { get; set; }
     }
 }
