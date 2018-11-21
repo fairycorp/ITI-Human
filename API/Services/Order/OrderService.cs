@@ -284,8 +284,8 @@ namespace API.Services.Order
                                 case Payment.Credited:
                                     if (product.Payment.Amount > 0)
                                     {
-                                        if (product.Payment.Amount > product.UnitPrice)
-                                            return Failure("A Credit cannot be superior to the ordered product unit price.");
+                                        if (product.Payment.Amount >= product.UnitPrice)
+                                            return Failure("A Credit cannot be superior or equal to the ordered product unit price.");
 
                                         // Checks if the ordered product can be credited or not.
                                         var canBeCredited = await ctx[StorageLinkedProductTable].Connection
@@ -482,6 +482,21 @@ namespace API.Services.Order
                     var orderedProduct =
                         await OrderedProductTable.Create(ctx, model.UserId, order, product.StorageLinkedProductId, product.Quantity);
 
+                    // Updates matching SLP Stock.
+                    BasicDataStorageLinkedProduct CastIntoSLP(object obj)
+                        => (BasicDataStorageLinkedProduct)obj;
+                    var slp = await StorageService.GetStorageLinkedProduct(product.StorageLinkedProductId);
+
+                    if (CastIntoSLP(slp.Content).Stock == 0) return 0;
+
+                    var update = new ITI.Human.ViewModels.Storage.LinkedProduct.UpdateViewModel
+                    {
+                        StorageLinkedProductId = CastIntoSLP(slp.Content).StorageLinkedProductId,
+                        UnitPrice = CastIntoSLP(slp.Content).UnitPrice,
+                        Stock = CastIntoSLP(slp.Content).Stock - product.Quantity
+                    };
+                    await StorageService.UpdateLinkedProduct(update);
+
                     // In case of an insertion problem, one have to clean the whole order up.
                     if (orderedProduct == 0)
                     {
@@ -490,6 +505,9 @@ namespace API.Services.Order
                         foreach (var alreadyOrderedProduct in alreadyOrdered.Products)
                         {
                             await OrderedProductTable.Delete(ctx, 0, alreadyOrderedProduct.OrderedProductId);
+
+                            update.Stock += alreadyOrderedProduct.Quantity;
+                            await StorageService.UpdateLinkedProduct(update);
                         }
                         await OrderTable.Delete(ctx, 0, order);
                         return 0;
@@ -536,7 +554,6 @@ namespace API.Services.Order
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                //var storage = StorageService.GetStorageFromOrder(order.Info.OrderId);
                 return await OrderFinalDueTable.Create(ctx, 0, order.Info.OrderId, CalculateOrderTotal(order.Products), 0);
             }
         }
