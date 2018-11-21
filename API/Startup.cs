@@ -3,6 +3,8 @@ using API.Services.Order;
 using API.Services.Product;
 using API.Services.Project;
 using CK.AspNet.Auth;
+using CK.Auth;
+using CK.DB.AspNet.Auth;
 using CK.DB.User.UserGitHub;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
@@ -90,6 +92,8 @@ namespace API
             }
             services.AddStObjMap("CK.StObj.AutoAssembly");
 
+            services.AddSingleton<IAuthenticationTypeSystem, StdAuthenticationTypeSystem>();
+            services.AddSingleton<IWebFrontAuthLoginService, SqlWebFrontAuthLoginService>();
             services.AddSingleton<ClassroomService>();
             services.AddSingleton<OrderService>();
             services.AddSingleton<ProductService>();
@@ -105,6 +109,7 @@ namespace API
             app.UseRequestMonitor();
             app.UseCors(builder =>
                 builder.AllowAnyHeader().AllowCredentials().AllowAnyMethod().AllowAnyOrigin());
+            app.UseAuthentication();
             app.UseMvc();
         }
     }
