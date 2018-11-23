@@ -6,17 +6,18 @@
             Il semblerait que cette page soit introuvable.
         </div>
         <router-link to="/">
-            <button class="basic-button return-button">RETOURNER À LA PAGE D"ACCUEIL</button>
+            <button class="basic-button return-button">RETOURNER À LA PAGE D'ACCUEIL</button>
         </router-link>
     </div>
 </template>
 
 <script>
-    import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 
-    export default class NotFound extends Vue {
-        // ...
-    }
+@Component()
+export default class NotFound extends Vue {
+    // ...
+}
 </script>
 
 <style>

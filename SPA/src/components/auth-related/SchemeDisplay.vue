@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-tooltip v-for="scheme in schemes" :key="scheme.name" :content="scheme.name+dateString(scheme.lastUsed)" placement="right" >
+        <el-tooltip class="scheme" v-for="scheme in schemes" :key="scheme.name" :content="scheme.name+dateString(scheme.lastUsed)" placement="right" >
             <img :alt="scheme.name" :src="getSchemeImage(scheme.name)" v-on:click="parameter.authService.startPopupLogin(scheme.name)" class="button" >
         </el-tooltip>
         <el-tooltip v-if="parameterReduced != null" content="Plus..."> 
@@ -152,6 +152,10 @@ export default class SchemeDisplay extends Vue {
 <style scoped>
 .button {
   cursor: pointer;
+}
+
+.scheme {
+  padding: 15px;
 }
 </style>
 

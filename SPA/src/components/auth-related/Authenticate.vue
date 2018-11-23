@@ -1,27 +1,28 @@
 <template>
    <div id="app">
-    <div>
+    <div v-if="$store.state.authService._authenticationInfo.level === 0">
+      <div class="logo"></div>
+      <div class="headline">
+        Bonjour et bienvenue sur <span class="bold">ITI'Human</span>
+      </div>
+      <div class="text">
+        Bénéficiez de l'ensemble de nos services en vous connectant.
+      </div>
+
+      <div class="sign-in">
         <UserInfoBox :authService=authService>
-            <div slot="None">
-                <el-button v-on:click="switchLoginBox()"> Login </el-button>
-            </div>
-            <div slot="Unsafe">
-                Hello {{authService.authenticationInfo.user.userName}}
-                <a v-on:click="logOut()">I'm not {{authService.authenticationInfo.unsafeUser.userName}}.</a>
-                <SchemeDisplay :parameter=schemeDisplayReducedModeParameter> </SchemeDisplay>
-                ----------------------------------
-            </div>
-            <div slot="Normal"> 
-              <el-button v-on:click="authService.logout()"> Logout </el-button>
-              normal </div>
-            <div slot="Critical"> critical</div>
+          <div slot="None">
+              <el-button v-on:click="switchLoginBox()"> <i class="el-icon-arrow-right"></i> Se connecter...</el-button>
+          </div>
         </UserInfoBox>
-        <div v-if="displayLoginBox">
-            <SchemeDisplay :parameter=schemeDisplayParemeter> </SchemeDisplay>
-        </div>
+      </div>
+      <div class="schemes" v-if="displayLoginBox">
+          <SchemeDisplay :parameter=schemeDisplayParemeter> </SchemeDisplay>
+      </div>
     </div>
-    
-    <router-view />
+    <div v-else>
+      <el-button v-on:click="logOut()"> Logout </el-button>
+    </div>
   </div> 
 </template>
 
@@ -53,7 +54,7 @@ export default class Authenticate extends Vue {
   public authService: AuthService;
   private schemeDisplayParemeter: SchemeDisplayParameter;
   private schemeDisplayReducedModeParameter: SchemeDisplayReducedModeParameter;
-  private displayLoginBox: boolean = true;
+  private displayLoginBox: boolean = false;
 
   constructor() {
     super();
@@ -61,6 +62,11 @@ export default class Authenticate extends Vue {
     const configuration: IAuthServiceConfiguration = appSettings;
     this.authService = new AuthService(configuration, Axios);
     this.authService.refresh(true, true, true);
+    this.$store.commit("change", this.authService);
+    console.log("LEVEL = " + this.$store.state.authService._authenticationInfo.level);
+    if (this.$store.state.authService.level > 0) {
+      this.$router.push("/home");
+    }
     this.schemeDisplayParemeter = new SchemeDisplayParameter(
       this.authService,
       "localhost:8081/assets/"
@@ -77,16 +83,62 @@ export default class Authenticate extends Vue {
 
   private switchLoginBox(state: boolean) {
     this.displayLoginBox = !this.displayLoginBox;
-    console.log("yaya" + this.displayLoginBox);
   }
 
   private async logOut() {
     await this.authService.logout(true);
+    this.$store.commit("change", this.authService);
     this.displayLoginBox = false;
   }
 }
 </script>
 
 <style>
+.logo {
+  background-image: url("https://image.noelshack.com/fichiers/2018/47/5/1542987497-itih-logo.png");
+  width: 152px;
+  height: 152px;
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -170%);
+  animation: fadein 0.5s;
+}
 
+.headline {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -260%);
+  font-size: 160%;
+  color: #01b04b;
+  font-weight: lighter;
+  animation: fadein 0.5s;
+}
+
+.text {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -200%);
+  font-size: 120%;
+  color: #5a5a5a;
+  font-weight: lighter;
+  animation: fadein 0.5s;
+}
+
+.sign-in {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -20%);
+  animation: fadein 0.5s;
+}
+
+.schemes {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, 40%);
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
 </style>
