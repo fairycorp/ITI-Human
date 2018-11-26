@@ -75,7 +75,22 @@ namespace API.Services.Order
             var result = await GetDetailedOrdersFromUser(userId);
 
             if (result == null) return Failure(
-                string.Format("Not one single element was foubd in db. | in {0}", nameof(GuardedGetDetailedOrdersFromUser))
+                string.Format("Not one single element was found in db. | in {0}", nameof(GuardedGetDetailedOrdersFromUser))
+            );
+            return Success(result);
+        }
+
+        /// <summary>
+        /// Gets all detailed Orders from a project.
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns></returns>
+        public async Task<GuardResult> GuardedGetDetailedOrdersFromProject(int projectId)
+        {
+            var result = await GetDetailedOrdersFromProject(projectId);
+
+            if (result == null) return Failure(
+                string.Format("Not one single element was found in db. | in {0}", nameof(GetDetailedOrdersFromProject))
             );
             return Success(result);
         }
@@ -434,6 +449,49 @@ namespace API.Services.Order
                     ordersByUser.Add(detailedData);
                 }
                 return ordersByUser;
+            }
+        }
+
+        private async Task<IEnumerable<DetailedDataOrder>> GetDetailedOrdersFromProject(int projectId)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                // Retrieves storageId from projectId.
+                var storageId = await StorageService.GetStorageFromProject(projectId);
+
+                var basicData = await ctx[OrderTable].Connection
+                    .QueryAsync<BasicDataOrder>(
+                        @"SELECT
+                            *
+                        FROM
+                            ITIH.tOrder
+                        WHERE
+                            StorageId = @id;",
+                        new { id = storageId.Content }
+                    );
+
+                List<DetailedDataOrder> ordersFromProject = new List<DetailedDataOrder>();
+                foreach (var data in basicData)
+                {
+                    var detailedData = new DetailedDataOrder
+                    {
+                        Info = data,
+                        Products = await ctx[OrderTable].Connection
+                        .QueryAsync<BasicDataOrderedProduct>(
+                            @"SELECT
+                                *
+                            FROM
+                                ITIH.vOrderedProducts
+                            WHERE
+                                OrderId = @id;",
+                            new { id = data.OrderId }
+                        )
+                    };
+                    detailedData.Info.Total = CalculateOrderTotal(detailedData.Products);
+
+                    ordersFromProject.Add(detailedData);
+                }
+                return ordersFromProject;
             }
         }
 

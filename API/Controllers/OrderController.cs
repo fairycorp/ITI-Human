@@ -42,6 +42,23 @@ namespace API.Controllers
             return BadRequest(check.Info);
         }
 
+        [HttpGet("project/{projectId}")]
+        public async Task<IActionResult> GetAllDetailedOrdersFromProject(int projectId)
+        {
+            var check =
+                Guard.IsAdmissible(nameof(projectId), projectId);
+
+            if (check.Code == Status.Success)
+            {
+                var result = await Service.GuardedGetDetailedOrdersFromProject(projectId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
+
+            return BadRequest(check.Info);
+        }
+
         [HttpGet("i/{orderId}")]
         public async Task<IActionResult> Get(int orderId)
         {
