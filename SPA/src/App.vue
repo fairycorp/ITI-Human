@@ -6,10 +6,16 @@
       </div>
       <div class="menu">
         <div class="menu-element">
-          <router-link to="/home">Accueil</router-link>
+          <router-link to="/home"
+          v-bind:class="{ current: $route.name == 'home' }">
+            Home
+          </router-link>
         </div>
         <div class="menu-element">
-          <router-link to="/order-staff">Staff Dashboard</router-link>
+          <router-link to="/staff-dashboard"
+          v-bind:class="{ current: $route.name == 'staffDashboard' }">
+            Staff Dashboard
+          </router-link>
         </div>
       </div>
     </div>
@@ -38,12 +44,17 @@
   a:hover {
     color: #01b04b;
   }
+  
 
   #app {
     font-family: "Yu Gothic UI";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #313538;
+  }
+
+  .current {
+    color: #01b04b;
   }
 
   .bar {

@@ -5,7 +5,7 @@ import Router from "vue-router";
 import NotFound from "@/components/NotFound.vue";
 import Home from "@/components/Home.vue";
 import Authenticate from "@/components/auth-related/Authenticate.vue";
-import OrderStaffPanel from "@/components/order-related/OrderStaffPanel.vue";
+import StaffDashboard from "@/components/Staff/StaffDashboard.vue";
 
 Vue.use(Router);
 
@@ -31,9 +31,9 @@ export default new Router({
     },
 
     {
-      path: "/order-staff",
-      name: "orderStaffPanel",
-      component: OrderStaffPanel,
+      path: "/staff-dashboard",
+      name: "staffDashboard",
+      component: StaffDashboard,
     },
   ],
 });
