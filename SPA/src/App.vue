@@ -1,5 +1,18 @@
 <template>
   <div id="app">
+    <div v-if="$route.name !== 'authenticate'" class="bar">
+      <div class="bar-logo">
+        <img src="https://image.noelshack.com/fichiers/2018/48/1/1543227353-bar-logo.png" />
+      </div>
+      <div class="menu">
+        <div class="menu-element">
+          <router-link to="/home">Accueil</router-link>
+        </div>
+        <div class="menu-element">
+          <router-link to="/order-staff">Staff Dashboard</router-link>
+        </div>
+      </div>
+    </div>
     <router-view />
   </div>
 </template>
@@ -11,11 +24,49 @@
     background-attachment: fixed;
   }
 
+  body {
+    margin: 0;
+  }
+
+  a {
+    color: #5c5c5c;
+    text-decoration: none;
+    transition-property: color;
+    transition-duration: 0.2s;
+  }
+
+  a:hover {
+    color: #01b04b;
+  }
+
   #app {
     font-family: "Yu Gothic UI";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #313538;
+  }
+
+  .bar {
+    height: 60px;
+    background-color: white;
+    box-shadow: 0px 3px 30px rgb(218, 218, 218);
+  }
+
+  .bar-logo {
+    padding-top: 8px;
+    padding-left: 15px;
+  }
+
+  .menu {
+    position: absolute;
+    top: 16px;
+    left: 60px;
+    font-size: 120%;
+  }
+
+  .menu-element {
+    display: inline;
+    margin-left: 15px;
   }
 
   .bold {
