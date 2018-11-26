@@ -1,6 +1,6 @@
 <template>
    <div id="app">
-    <div v-if="$store.state.authService._authenticationInfo.level === 0">
+    <div>
       <div class="logo"></div>
       <div class="headline">
         Bonjour et bienvenue sur <span class="bold">ITI'Human</span>
@@ -20,9 +20,9 @@
           <SchemeDisplay :parameter=schemeDisplayParemeter> </SchemeDisplay>
       </div>
     </div>
-    <div v-else>
+    <!-- <div>
       <el-button v-on:click="logOut()"> Logout </el-button>
-    </div>
+    </div> -->
   </div> 
 </template>
 
@@ -63,7 +63,6 @@ export default class Authenticate extends Vue {
     this.authService = new AuthService(configuration, Axios);
     this.authService.refresh(true, true, true);
     this.$store.commit("change", this.authService);
-    console.log("LEVEL = " + this.$store.state.authService._authenticationInfo.level);
     if (this.$store.state.authService.level > 0) {
       this.$router.push("/home");
     }
