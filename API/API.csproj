@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Views\" />
-    <Folder Include="WebAppLogs\Textual\" />
+    <Folder Include="WebAppLogs\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

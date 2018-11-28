@@ -11,6 +11,8 @@ begin
 	--<PreCreate revert />
 
 	declare @stillExisting int;
+	declare @updateTrack int;
+	declare @OPUpdateTrack int;
 
 	update ITIH.tOrderedProduct set PaymentState = 0 where OrderedProductId = @OrderedProductId;
 
@@ -18,7 +20,17 @@ begin
 	set @stillExisting = (select OrderPaymentId from tOrderPayment where OrderedProductId = @OrderedProductId);
 
 	if (@stillExisting is null)
-		set @Success = 1;
+		begin;
+			set @Success = 1;
+
+			insert into ITIH.tUpdateTrack (ActorId, UpdateDate) values (@ActorId, sysutcdatetime());
+
+			set @updateTrack = scope_identity();
+			insert into ITIH.tOrderedProductUpdateTrack (UpdateTrackId, OrderedProductId) values (@updateTrack, @OrderedProductId);
+
+			set @OPUpdateTrack = scope_identity();
+			insert into ITIH.tOPPaymentStateUpdateTrack (OPUpdateTrackId, PreviousState, NewState) values (@OPUpdateTrack, 1, 0);
+		end;
 
 	--<PostCreate />
 

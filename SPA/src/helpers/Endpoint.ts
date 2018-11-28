@@ -1,5 +1,6 @@
 enum Endpoint {
-    Order = 'order',
-    Product = 'product',
+    Project = "project",
+    Order = "order",
+    Product = "product",
 }
 export default Endpoint;

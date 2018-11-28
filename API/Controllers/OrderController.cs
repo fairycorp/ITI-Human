@@ -42,6 +42,23 @@ namespace API.Controllers
             return BadRequest(check.Info);
         }
 
+        [HttpGet("project/{projectId}")]
+        public async Task<IActionResult> GetAllDetailedOrdersFromProject(int projectId)
+        {
+            var check =
+                Guard.IsAdmissible(nameof(projectId), projectId);
+
+            if (check.Code == Status.Success)
+            {
+                var result = await Service.GuardedGetDetailedOrdersFromProject(projectId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
+
+            return BadRequest(check.Info);
+        }
+
         [HttpGet("i/{orderId}")]
         public async Task<IActionResult> Get(int orderId)
         {
@@ -51,6 +68,23 @@ namespace API.Controllers
             if (check.Code == Status.Success)
             {
                 var result = await Service.GuardedGetDetailedOrder(orderId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
+
+            return BadRequest(check.Info);
+        }
+
+        [HttpGet("d/{orderId}")]
+        public async Task<IActionResult> GetDetailedOrderFinalDue(int orderId)
+        {
+            var check =
+                Guard.IsAdmissible(nameof(orderId), orderId);
+
+            if (check.Code == Status.Success)
+            {
+                var result = await Service.GuardedGetDetailedOrderFinalDue(orderId);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                 return Ok(result.Content);
@@ -105,7 +139,10 @@ namespace API.Controllers
             if (!(model == null))
             {
                 if (model.Info == null || model.Products == null)
-                    return BadRequest();
+                    return BadRequest("Info/Products is/are null.");
+
+                if (model.Info.OrderId == 0)
+                    return BadRequest("Cannot update Order 0.");
             }
             else return BadRequest();
 

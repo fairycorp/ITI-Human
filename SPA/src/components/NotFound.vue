@@ -12,11 +12,12 @@
 </template>
 
 <script>
-    import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from "vue-property-decorator";
 
-    export default class NotFound extends Vue {
-        // ...
-    }
+@Component()
+export default class NotFound extends Vue {
+    // ...
+}
 </script>
 
 <style>

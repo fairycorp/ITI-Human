@@ -258,7 +258,7 @@ namespace API.Services.Product
 
             // Since Info properties are the same, doesn't matter which one one display.
             if (doesStorageExist.Content == null || doesProductExist.Content == null)
-                return Failure(doesProductExist.Info);
+                return Failure("Either Storage/Product doesn't exist in database.");
 
             // Checks if a SLP already exists with that specific Product id in that specific Storage.
             var slpList =
