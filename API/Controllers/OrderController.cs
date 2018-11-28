@@ -76,6 +76,23 @@ namespace API.Controllers
             return BadRequest(check.Info);
         }
 
+        [HttpGet("d/{orderId}")]
+        public async Task<IActionResult> GetDetailedOrderFinalDue(int orderId)
+        {
+            var check =
+                Guard.IsAdmissible(nameof(orderId), orderId);
+
+            if (check.Code == Status.Success)
+            {
+                var result = await Service.GuardedGetDetailedOrderFinalDue(orderId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
+
+            return BadRequest(check.Info);
+        }
+
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CreationViewModel model)
         {
@@ -122,7 +139,10 @@ namespace API.Controllers
             if (!(model == null))
             {
                 if (model.Info == null || model.Products == null)
-                    return BadRequest();
+                    return BadRequest("Info/Products is/are null.");
+
+                if (model.Info.OrderId == 0)
+                    return BadRequest("Cannot update Order 0.");
             }
             else return BadRequest();
 

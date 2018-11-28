@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 
 using static API.Services.Helper.ResultFactory;
 using ITI.Human.ViewModels.Storage.LinkedProduct;
+using ITI.Human.ViewModels.Order.Payment;
 
 namespace API.Services.Order
 {
@@ -373,6 +374,24 @@ namespace API.Services.Order
             return (result == model.CurrentState) ? Success(result) : Failure("Error in update process.");
         }
 
+        /// <summary>
+        /// Gets a detailed Order Final Due.
+        /// </summary>
+        /// <param name="orderId">Order id.</param>
+        /// <returns>Success result where result is a DetailedDataOrderFinalDue OR Failure result in case element does not exist in DB.</returns>
+        public async Task<GuardResult> GuardedGetDetailedOrderFinalDue(int orderId)
+        {
+            var doesOrderExist =
+                await Attempt.ToGetElement(GetDetailedOrder, orderId, true);
+
+            if (doesOrderExist.Content == null)
+                return Failure(
+                    string.Format("Order with id {0} does not exist in database.", orderId)
+                );
+
+            return Success(await GetDetailedOrderFinalDue(orderId));
+        }
+
         // --------------------------------------------------------------------------------------------
 
         private async Task<List<DetailedDataOrder>> GetAllDetailedOrders()
@@ -591,7 +610,8 @@ namespace API.Services.Order
             {
                 return await ctx[OrderTable].Connection
                     .QueryFirstOrDefaultAsync<State>(
-                        "SELECT CurrentState FROM ITIH.tOrder WHERE OrderId = @OrderId;"
+                        "SELECT CurrentState FROM ITIH.tOrder WHERE OrderId = @id;",
+                        new { id = model.OrderId }
                     );
             }
         }
@@ -602,8 +622,8 @@ namespace API.Services.Order
             {
                 return await ctx[OrderedProductTable].Connection
                     .QueryFirstOrDefaultAsync<BasicDataOrderedProduct>(
-                        "SELECT * FROM ITIH.vOrderedProducts WHERE OrderedProductId = @Id",
-                        new { Id = orderedProductId }
+                        "SELECT * FROM ITIH.vOrderedProducts WHERE OrderedProductId = @id;",
+                        new { id = orderedProductId }
                     );
             }
         }
@@ -616,14 +636,28 @@ namespace API.Services.Order
             }
         }
 
-        private static int CalculateOrderTotal(IEnumerable<BasicDataOrderedProduct> products)
+        private async Task<DetailedDataOrderFinalDue> GetDetailedOrderFinalDue(int orderId)
         {
-            int total = 0;
-            foreach (var product in products)
+            using (var ctx = new SqlStandardCallContext())
             {
-                total += product.UnitPrice;
+                var info = await ctx[OrderFinalDueTable].Connection
+                    .QueryFirstOrDefaultAsync<BasicDataOrderFinalDue>(
+                        "SELECT * FROM ITIH.tOrderFinalDue WHERE OrderId = @id",
+                        new { id = orderId }
+                    );
+
+                var payments = await ctx[OrderPaymentTable].Connection
+                    .QueryAsync<BasicDataOrderPayment>(
+                        "SELECT * FROM ITIH.tOrderPayment WHERE OrderFinalDueId = @id",
+                        new { id = info.OrderFinalDueId }
+                    );
+
+                return new DetailedDataOrderFinalDue
+                {
+                    Info = info,
+                    Payments = payments
+                };
             }
-            return total;
         }
 
         private async Task<UserBasicData> GetUser(int userId)
@@ -641,6 +675,16 @@ namespace API.Services.Order
                         new { id = userId }
                     );
             }
+        }
+
+        private static int CalculateOrderTotal(IEnumerable<BasicDataOrderedProduct> products)
+        {
+            int total = 0;
+            foreach (var product in products)
+            {
+                total += product.UnitPrice;
+            }
+            return total;
         }
     }
 }
