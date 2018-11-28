@@ -28,6 +28,7 @@
     <None Remove="Res\Model\ITIH.StorageLinkedProductUpdateTrackTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.StorageTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.UpdateTrackTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.UserBalanceTable.Install.1.0.0.sql" />
     <None Remove="Res\sOrderCreate.sql" />
     <None Remove="Res\sOrderCreditCreate.sql" />
     <None Remove="Res\sOrderDelete.sql" />
@@ -67,6 +68,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\Model\ITIH.SLPCreditStateUpdateTrackTable.Install.1.0.0.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\Model\ITIH.UserBalanceTable.Install.1.0.0.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Res\sOrderCreditCreate.sql">
