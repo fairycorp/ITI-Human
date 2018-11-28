@@ -14,21 +14,11 @@ enum Payment {
 
 // Interfaces.
 
-interface IDetailedDataOrder {
-    info: IBasicDataOrder;
-    products: IBasicDataOrderedProduct[];
-}
-
 interface IBasicDataOrder {
     orderId: number;
     userId: number;
     creationDate: Date;
     currentState: State;
-}
-
-interface PaymentState {
-    state: Payment;
-    amount: number;
 }
 
 interface IBasicDataOrderedProduct {
@@ -44,12 +34,29 @@ interface IBasicDataOrderedProduct {
 
 }
 
+interface ICreationViewModel {
+    storageId: number;
+    userId: number;
+    classroomId: number;
+    products: IBasicDataOrderedProduct[];
+}
+
+interface IDetailedDataOrder {
+    info: IBasicDataOrder;
+    products: IBasicDataOrderedProduct[];
+}
+
+interface PaymentState {
+    state: Payment;
+    amount: number;
+}
 
 export {
     State,
     Payment,
-    IDetailedDataOrder,
-    PaymentState,
     IBasicDataOrder,
     IBasicDataOrderedProduct,
+    ICreationViewModel,
+    IDetailedDataOrder,
+    PaymentState,
 };
