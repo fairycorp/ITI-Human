@@ -1,6 +1,6 @@
 interface IBasicDataClassroom {
-    ClassroomId: number;
-    Name: string;
+    classroomId: number;
+    name: string;
 }
 
 export { IBasicDataClassroom };
