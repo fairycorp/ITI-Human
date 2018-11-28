@@ -74,7 +74,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { IProject } from "@/model/order/OrderModel";
+import { IProject } from "@/models/model.Project";
 import API from "@/services/API";
 import Endpoint from "../../helpers/Endpoint";
 

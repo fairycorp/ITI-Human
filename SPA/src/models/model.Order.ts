@@ -1,14 +1,18 @@
-interface IProject {
-    projectId: number;
-    projectTypeId: number;
-    projectTypeName: string;
-    projectName: string;
-    projectHeadline: string;
-    projectPitch: string;
-    semesterId: number;
-    semesterName: string;
-    storageId: number;
+// --------------------------------------
+
+// Enumerators.
+
+enum State {
+    NotStarted, Underway, Paused, Delivered, Canceled
 }
+
+enum Payment {
+    Unpaid, Paid, Credited
+}
+
+// --------------------------------------
+
+// Interfaces.
 
 interface IDetailedDataOrder {
     info: IBasicDataOrder;
@@ -20,6 +24,11 @@ interface IBasicDataOrder {
     userId: number;
     creationDate: Date;
     currentState: State;
+}
+
+interface PaymentState {
+    state: Payment;
+    amount: number;
 }
 
 interface IBasicDataOrderedProduct {
@@ -35,26 +44,12 @@ interface IBasicDataOrderedProduct {
 
 }
 
-enum State {
-    NotStarted, Underway, Paused, Delivered, Canceled
-}
-
-enum Payment {
-    Unpaid, Paid, Credited
-}
-
-interface PaymentState {
-    state: Payment;
-    amount: number;
-}
-
 
 export {
-    IProject,
-    IDetailedDataOrder,
-    IBasicDataOrder,
-    IBasicDataOrderedProduct,
     State,
     Payment,
+    IDetailedDataOrder,
     PaymentState,
+    IBasicDataOrder,
+    IBasicDataOrderedProduct,
 };
