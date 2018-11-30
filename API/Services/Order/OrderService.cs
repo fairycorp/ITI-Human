@@ -660,12 +660,12 @@ namespace API.Services.Order
             }
         }
 
-        private async Task<UserBasicData> GetUser(int userId)
+        private async Task<BasicDataUser> GetUser(int userId)
         {
             using (var ctx = new SqlStandardCallContext())
             {
                 return await ctx[UserTable].Connection
-                    .QueryFirstOrDefaultAsync<UserBasicData>(
+                    .QueryFirstOrDefaultAsync<BasicDataUser>(
                         @"SELECT
                             UserId
                         FROM

@@ -1,18 +1,13 @@
-﻿using System;
-using API.Services.Helper.Guard;
-using API.Services.Product;
-using ITI.Human.ViewModels.Storage.LinkedProduct;
-using ITI.Human.ViewModels.Storage;
+﻿using API.Services.Helper.Guard;
+using API.Services.User;
 using Microsoft.AspNetCore.Mvc;
 using Stall.Guard.System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using API.Services.User;
 
 namespace API.Controllers
 {
     [Route("[controller]")]
-    public class UserController
+    public class UserController : Controller
     {
         public APIGuard Guard { get; }
 
@@ -26,17 +21,22 @@ namespace API.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
-            => Ok((await Service.GetAllUsers()).Content);
+        {
+            var result = await Service.GuardedGetAll();
+            if (result.Code == Status.Failure) return BadRequest(result.Info);
 
-        [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetAllDetailedOrdersOfUser(int userId)
+            return Ok(result.Content);
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetById(int userId)
         {
             var check =
                 Guard.IsAdmissible(nameof(userId), userId);
 
             if (check.Code == Status.Success)
             {
-                var result = await Service.GuardedGetDetailedOrdersFromUser(userId);
+                var result = await Service.GuardedGet(userId);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                 return Ok(result.Content);
@@ -44,7 +44,5 @@ namespace API.Controllers
 
             return BadRequest(check.Info);
         }
-
-
     }
 }
