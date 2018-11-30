@@ -2,6 +2,7 @@
 using API.Services.Order;
 using API.Services.Product;
 using API.Services.Project;
+using API.Services.User;
 using CK.AspNet.Auth;
 using CK.Auth;
 using CK.DB.AspNet.Auth;
@@ -99,6 +100,7 @@ namespace API
             services.AddSingleton<ProductService>();
             services.AddSingleton<ProjectService>();
             services.AddSingleton<StorageService>();
+            services.AddSingleton<UserService>();
 
             services.AddCors();
             services.AddMvc();
