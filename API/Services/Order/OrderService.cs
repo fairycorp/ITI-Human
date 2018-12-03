@@ -215,7 +215,7 @@ namespace API.Services.Order
         /// Updates a detailed Order delivery state.
         /// </summary>
         /// <param name="model">Matching model.</param>
-        public async Task<GuardResult> GuardedUpdate(ITI.Human.ViewModels.Order.UpdateViewModel model)
+        public async Task<GuardResult> GuardedUpdate(ITI.Human.ViewModels.Order.DetailedDataOrder model)
         {
             using (var ctx = new SqlStandardCallContext())
             {
