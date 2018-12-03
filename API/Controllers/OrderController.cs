@@ -1,6 +1,7 @@
 ﻿using API.Services.Helper.Guard;
 using API.Services.Order;
 using ITI.Human.ViewModels.Order;
+using ITI.Human.ViewModels.Order.Payment;
 using Microsoft.AspNetCore.Mvc;
 using Stall.Guard.System;
 using System.Collections.Generic;
@@ -17,11 +18,14 @@ namespace API.Controllers
 
         public OrderDueServices OrderDueServices { get; }
 
-        public OrderController(OrderService oService, OrderDueServices oDServices)
+        public OrderedProductService OrderedProductService { get; set; }
+
+        public OrderController(OrderService oService, OrderDueServices oDServices, OrderedProductService oPService)
         {
             Guard = new APIGuard();
             OrderService = oService;
             OrderDueServices = oDServices;
+            OrderedProductService = oPService;
         }
 
         [HttpGet]
@@ -205,6 +209,38 @@ namespace API.Controllers
                 }
             }
             return BadRequest(check1.Info);
+        }
+
+        [HttpPut("paymentState")]
+        public async Task<IActionResult> UpdatePaymentState([FromBody] IEnumerable<PaymentStateUpdateViewModel> models)
+        {
+            if (models != null)
+            {
+                var results = new List<object>();
+                foreach (var model in models)
+                {
+                    var modelIntAnalysis = new Dictionary<string, int>
+                    {
+                        { nameof(model.OrderedProductId), model.OrderedProductId },
+                        { nameof(model.PaymentState.State), (int)model.PaymentState.State },
+                        { nameof(model.PaymentState.Amount), model.PaymentState.Amount }
+                    };
+                    var check =
+                        Guard.IsAdmissible(modelIntAnalysis);
+
+                    if (check.Code == Status.Success)
+                    {
+                        var result = await OrderedProductService.GuardedUpdatePaymentState(
+                            model.OrderedProductId, model.PaymentState.State, model.PaymentState.Amount
+                        );
+                        if (result.Code == Status.Failure) results.Add(result.Info);
+                        else results.Add(result.Content);
+                    }
+                    else return BadRequest(check.Info);
+                }
+                return Ok(results);
+            }
+            return BadRequest();
         }
     }
 }

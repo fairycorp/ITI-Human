@@ -3,11 +3,11 @@ using CK.SqlServer;
 using Dapper;
 using ITI.Human.Data;
 using Stall.Guard.System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 using static API.Services.Helper.ResultFactory;
-using System.Collections.Generic;
 
 namespace API.Services.Product
 {
