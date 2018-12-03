@@ -36,6 +36,7 @@ namespace API.Services.Product
         /// <summary>
         /// Gets all Storages from database.
         /// </summary>
+        /// <returns>
         /// Success result where result content is a list of <see cref="BasicDataStorage"/>
         /// or Failure result if no element exists in db.
         /// </returns>

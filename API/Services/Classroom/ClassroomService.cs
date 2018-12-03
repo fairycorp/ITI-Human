@@ -26,6 +26,7 @@ namespace API.Services.Classroom
         /// <summary>
         /// Gets all Classrooms from database.
         /// </summary>
+        /// <returns>
         /// Success result where result content is a list of <see cref="BasicDataClassroom"/>
         /// or Failure result if no element exists in db.
         /// </returns>

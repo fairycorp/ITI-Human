@@ -26,6 +26,7 @@ namespace API.Services.Project
         /// <summary>
         /// Gets all Projects from database.
         /// </summary>
+        /// <returns>
         /// Success result where result content is a list of <see cref="BasicDataProject"/>
         /// or Failure result if no element exists in db.
         /// </returns>
