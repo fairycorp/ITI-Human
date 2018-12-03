@@ -217,14 +217,23 @@ namespace API.Controllers
             if (models != null)
             {
                 var results = new List<object>();
+<<<<<<< HEAD
+=======
                 var floor = 0;
+>>>>>>> 544b7ffc18200dacfcfd6758808bf79b13d78187
                 foreach (var model in models)
                 {
                     var modelIntAnalysis = new Dictionary<string, int>
                     {
+<<<<<<< HEAD
+                        { nameof(model.OrderedProductId), model.OrderedProductId },
+                        { nameof(model.PaymentState.State), (int)model.PaymentState.State },
+                        { nameof(model.PaymentState.Amount), model.PaymentState.Amount }
+=======
                         { BuildKey(nameof(model.OrderedProductId), floor), model.OrderedProductId },
                         { BuildKey(nameof(model.PaymentState.State), floor), (int)model.PaymentState.State },
                         { BuildKey(nameof(model.PaymentState.Amount), floor), model.PaymentState.Amount }
+>>>>>>> 544b7ffc18200dacfcfd6758808bf79b13d78187
                     };
                     var check =
                         Guard.IsAdmissible(modelIntAnalysis);
@@ -238,14 +247,51 @@ namespace API.Controllers
                         else results.Add(result.Content);
                     }
                     else return BadRequest(check.Info);
+<<<<<<< HEAD
+=======
                     floor++;
+>>>>>>> 544b7ffc18200dacfcfd6758808bf79b13d78187
                 }
                 return Ok(results);
             }
             return BadRequest();
         }
 
+<<<<<<< HEAD
+        [HttpPut("currentState")]
+        public async Task<IActionResult> UpdateCurrentState([FromBody] IEnumerable<CurrentStateUpdateViewModel> models)
+        {
+            if (models != null)
+            {
+                var results = new List<object>();
+                foreach (var model in models)
+                {
+                    var modelIntAnalysis = new Dictionary<string, int>
+                    {
+                        { nameof(model.OrdereredProductId), model.OrdereredProductId },
+                        { nameof(model.CurrentState), (int)model.CurrentState },
+
+                    };
+                    var check =
+                        Guard.IsAdmissible(modelIntAnalysis);
+
+                    if (check.Code == Status.Success)
+                    {
+                        var result = await OrderedProductService.GuardedUpdateCurrentState(
+                            model.OrdereredProductId, model.CurrentState
+                        );
+                        if (result.Code == Status.Failure) results.Add(result.Info);
+                        else results.Add(result.Content);
+                    }
+                    else return BadRequest(check.Info);
+                }
+                return Ok(results);
+            }
+            return BadRequest();
+        }
+=======
         private static string BuildKey(string name, int index)
             => string.Format("{0} (at floor {1})", name, index);
+>>>>>>> 544b7ffc18200dacfcfd6758808bf79b13d78187
     }
 }
