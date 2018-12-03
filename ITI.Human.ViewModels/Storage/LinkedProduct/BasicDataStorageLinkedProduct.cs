@@ -1,6 +1,6 @@
 ﻿namespace ITI.Human.ViewModels.Storage.LinkedProduct
 {
-    public class BasicDataStorageLinkedProduct
+    public class BasicDataStorageSLP
     {
         /// <summary>
         /// Current Storage Linked Product id.

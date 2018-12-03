@@ -13,17 +13,20 @@ namespace API.Controllers
     {
         public APIGuard Guard { get; }
 
-        public OrderService Service { get; }
+        public OrderService OrderService { get; }
 
-        public OrderController(OrderService service)
+        public OrderDueServices OrderDueServices { get; }
+
+        public OrderController(OrderService oService, OrderDueServices oDServices)
         {
             Guard = new APIGuard();
-            Service = service;
+            OrderService = oService;
+            OrderDueServices = oDServices;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
-            => Ok((await Service.GuardedGetAllDetailedOrders()).Content);
+            => Ok((await OrderService.GuardedGetAll()).Content);
 
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetAllDetailedOrdersOfUser(int userId)
@@ -33,7 +36,7 @@ namespace API.Controllers
 
             if (check.Code == Status.Success)
             {
-                var result = await Service.GuardedGetDetailedOrdersFromUser(userId);
+                var result = await OrderService.GuardedGetFromUser(userId);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                 return Ok(result.Content);
@@ -50,7 +53,7 @@ namespace API.Controllers
 
             if (check.Code == Status.Success)
             {
-                var result = await Service.GuardedGetDetailedOrdersFromProject(projectId);
+                var result = await OrderService.GuardedGetFromProject(projectId);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                 return Ok(result.Content);
@@ -67,7 +70,7 @@ namespace API.Controllers
 
             if (check.Code == Status.Success)
             {
-                var result = await Service.GuardedGetDetailedOrder(orderId);
+                var result = await OrderService.GuardedGet(orderId);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                 return Ok(result.Content);
@@ -84,7 +87,7 @@ namespace API.Controllers
 
             if (check.Code == Status.Success)
             {
-                var result = await Service.GuardedGetDetailedOrderFinalDue(orderId);
+                var result = await OrderDueServices.GuardedGetFinalDueFromOrder(orderId);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                 return Ok(result.Content);
@@ -121,7 +124,7 @@ namespace API.Controllers
 
                     if (check.Code == Status.Success)
                     {
-                        var result = await Service.GuardedCreateDetailedOrder(model);
+                        var result = await OrderService.GuardedCreate(model);
                         if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                         return Ok(result.Content);
@@ -189,7 +192,7 @@ namespace API.Controllers
 
                             if (check4.Code == Status.Success)
                             {
-                                var result = await Service.UpdateDetailedOrder(model);
+                                var result = await OrderService.GuardedUpdate(model);
                                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                                 return Ok(result.Content);

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Stall.Guard.System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.Services.Storage;
 
 namespace API.Controllers
 {
@@ -14,17 +15,20 @@ namespace API.Controllers
     {
         public APIGuard Guard { get; }
 
-        public StorageService Service { get; }
+        public StorageService StorageService { get; }
 
-        public StorageController(StorageService service)
+        public SLPService SLPService { get; }
+
+        public StorageController(StorageService sService, SLPService slpService)
         {
             Guard = new APIGuard();
-            Service = service;
+            StorageService = sService;
+            SLPService = slpService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllStorages()
-            => Ok((await Service.GetAllStorages()).Content);
+            => Ok((await StorageService.GuardedGetAll()).Content);
 
         [HttpGet("i/{storageId}")]
         public async Task<IActionResult> GetStorage(int storageId)
@@ -34,7 +38,7 @@ namespace API.Controllers
 
             if (check.Code == Status.Success)
             {
-                var result = await Service.GetStorage(storageId);
+                var result = await StorageService.GuardedGet(storageId);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                 return Ok(result.Content);
@@ -50,7 +54,7 @@ namespace API.Controllers
 
             if (check.Code == Status.Success)
             {
-                var result = await Service.GetStorageFromProject(projectId);
+                var result = await StorageService.GuardedGetFromProject(projectId);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                 return Ok(result.Content);
@@ -69,7 +73,7 @@ namespace API.Controllers
 
             if (check1.Code == Status.Success)
             {
-                var result = await Service.CreateStorage(model);
+                var result = await StorageService.GuardedCreate(model);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                 return Ok(result.Content);
@@ -79,7 +83,7 @@ namespace API.Controllers
 
         [HttpGet("products")]
         public async Task<IActionResult> GetAllStorageLinkedProducts()
-            => Ok(await Service.GetAllStorageLinkedProducts());
+            => Ok(await SLPService.GuardedGetAll());
 
         [HttpGet("products/from/{storageId}")]
         public async Task<IActionResult> GetProductsFromStorage(int storageId)
@@ -89,7 +93,7 @@ namespace API.Controllers
 
             if (check.Code == Status.Success)
             {
-                var result = await Service.GetAllStorageLinkedProductsFromStorage(storageId);
+                var result = await SLPService.GuardedGetAllFromStorage(storageId);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                 return Ok(result.Content);
@@ -119,7 +123,7 @@ namespace API.Controllers
 
                 if (check2.Code == Status.Success)
                 {
-                    var result = await Service.CreateLinkedProduct(model);
+                    var result = await SLPService.GuardedCreate(model);
                     if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                     return Ok(result.Content);
@@ -149,7 +153,7 @@ namespace API.Controllers
 
                 if (check2.Code == Status.Success)
                 {
-                    var result = await Service.UpdateLinkedProduct(model);
+                    var result = await SLPService.GuardedUpdate(model);
                     if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                     return Ok(result.Content);

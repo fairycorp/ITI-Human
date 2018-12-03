@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace ITI.Human.ViewModels.Order
 {
     /// <summary>
-    /// Represents what a detailed Order is.
+    /// A Detailed Order is composed of a <see cref="BasicDataOrder"/> and a list of <see cref="BasicDataOrderedProduct"/>.
     /// </summary>
     public class DetailedDataOrder
     {

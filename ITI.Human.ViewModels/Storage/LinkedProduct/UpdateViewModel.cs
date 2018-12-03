@@ -3,17 +3,17 @@
     public class UpdateViewModel
     {
         /// <summary>
-        /// See <see cref="BasicDataStorageLinkedProduct.StorageLinkedProductId"/>.
+        /// See <see cref="BasicDataStorageSLP.StorageLinkedProductId"/>.
         /// </summary>
         public int StorageLinkedProductId { get; set; }
 
         /// <summary>
-        /// See <see cref="BasicDataStorageLinkedProduct.UnitPrice"/>.
+        /// See <see cref="BasicDataStorageSLP.UnitPrice"/>.
         /// </summary>
         public int UnitPrice { get; set; }
 
         /// <summary>
-        /// See <see cref="BasicDataStorageLinkedProduct.Stock"/>.
+        /// See <see cref="BasicDataStorageSLP.Stock"/>.
         /// </summary>
         public int Stock { get; set; }
     }

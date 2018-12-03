@@ -6,6 +6,182 @@
 	},
 	"item": [
 		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Dues",
+					"item": [
+						{
+							"name": "getDetailedOrderFinalDue",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/order/d/1",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"order",
+										"d",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/order",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"order"
+							]
+						},
+						"description": "Gets all detailed Orders."
+					},
+					"response": []
+				},
+				{
+					"name": "getAllOfUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/order/user/3",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"order",
+								"user",
+								"3"
+							]
+						},
+						"description": "Gets all Orders of a User."
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"StorageId\": 2,\n\t\"UserId\": 3712,\n\t\"ClassroomId\": 2,\n\t\"Products\": [\n\t\t{\n\t\t\t\"StorageLinkedProductId\": 6,\n\t\t\t\"Quantity\": 1\n\t\t},\n\t\t{\n\t\t\t\"StorageLinkedProductId\": 7,\n\t\t\t\"Quantity\": 2\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/order/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"order",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"info\": {\n        \"orderId\": 1,\n        \"storageId\": 1,\n        \"userId\": 2,\n        \"userName\": \"Geralt\",\n        \"classroomId\": 3,\n        \"classroomName\": \"E03\",\n        \"creationDate\": \"2018-11-16T11:37:22.0349466\",\n        \"currentState\": 0,\n        \"total\": 170\n    },\n    \"products\": [\n        {\n            \"orderedProductId\": 1,\n            \"orderId\": 1,\n            \"storageLinkedProductId\": 2,\n            \"name\": \"Kinder Maxi\",\n            \"desc\": \"a\",\n            \"unitPrice\": 80,\n            \"quantity\": 4,\n            \"currentState\": 0,\n            \"payment\": {\n            \t\"State\": 0,\n            \t\"Amount\": 0\n            }\n        },\n        {\n            \"orderedProductId\": 2,\n            \"orderId\": 1,\n            \"storageLinkedProductId\": 3,\n            \"name\": \"Coca-Cola (33cl)\",\n            \"desc\": \"a\",\n            \"unitPrice\": 90,\n            \"quantity\": 2,\n            \"currentState\": 0,\n            \"payment\": {\n            \t\"State\": 0,\n            \t\"Amount\": 0\n            }\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/order/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"order",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Project",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/project",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"project"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Product",
 			"item": [
 				{
@@ -152,92 +328,6 @@
 			]
 		},
 		{
-			"name": "Order",
-			"item": [
-				{
-					"name": "getAll",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{host}}:{{port}}/order",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"order"
-							]
-						},
-						"description": "Gets all detailed Orders."
-					},
-					"response": []
-				},
-				{
-					"name": "getAllOfUser",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{host}}:{{port}}/order/user/3",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"order",
-								"user",
-								"3"
-							]
-						},
-						"description": "Gets all Orders of a User."
-					},
-					"response": []
-				},
-				{
-					"name": "create",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"StorageId\": 2,\n\t\"UserId\": 3,\n\t\"ClassroomId\": 2,\n\t\"Products\": [\n\t\t{\n\t\t\t\"StorageLinkedProductId\": 2,\n\t\t\t\"Quantity\": 1\n\t\t}\n\t]\n}"
-						},
-						"url": {
-							"raw": "http://localhost:5000/order/create",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"order",
-								"create"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "Storage",
 			"item": [
 				{
@@ -313,7 +403,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"StorageLinkedProductId\": 4,\n\t\"Stock\":40,\n\t\"UnitPrice\": 53.14\n}"
+									"raw": "{\n\t\"StorageLinkedProductId\": 4,\n\t\"Stock\":40,\n\t\"UnitPrice\": 10\n}"
 								},
 								"url": {
 									"raw": "http://{{host}}:{{port}}/storage/products/update",
@@ -425,6 +515,58 @@
 							"path": [
 								"storage",
 								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/user",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/user/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"user",
+								"4"
 							]
 						}
 					},

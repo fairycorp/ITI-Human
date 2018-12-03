@@ -16,6 +16,6 @@ namespace API.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
-            => Ok((await Service.GetAll()).Content);
+            => Ok((await Service.GuardedGetAll()).Content);
     }
 }

@@ -7,12 +7,12 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using static API.Services.Helper.ResultFactory;
-using API.Services.Helper;
+using System.Collections.Generic;
 
 namespace API.Services.Product
 {
     /// <summary>
-    /// Handles any database interaction concerning Products.
+    /// Handles interactions with Products.
     /// </summary>
     public class ProductService
     {
@@ -24,101 +24,95 @@ namespace API.Services.Product
         }
 
         /// <summary>
-        /// Gets all Products from database.
+        /// Gets all Products.
         /// </summary>
-        /// <returns>Success result where result content is a BasicDataProduct Collection.</returns>
-        public async Task<GuardResult> GetAll()
+        /// <returns>
+        /// Success result where result content is a list of <see cref="BasicDataProduct"/> 
+        /// or Failure result if element does not exist in db.
+        /// </returns>
+        public async Task<GuardResult> GuardedGetAll()
         {
-            using (var ctx = new SqlStandardCallContext())
-            {
-                var result = await ctx[ProductTable].Connection
-                    .QueryAsync<BasicDataProduct>(
-                        @"SELECT
-                            *
-                        FROM ITIH.tProduct;"
-                    );
-                return Success(result.ToArray());
-            }
+            var result = await GetAll();
+            if (result == null) return Failure("Not a single Product was found.");
+
+            return Success(result);
         }
 
         /// <summary>
-        /// Gets a particular Product by its id.
+        /// Gets a Product by its id.
         /// </summary>
-        /// <param name="productId">Product id.</param>
-        /// <returns>Success result where result content is a single BasicDataProduct.</returns>
-        public async Task<GuardResult> GetProductById(int productId)
+        /// <param name="productId">Product's id.</param>
+        /// <returns>
+        /// Success result where result content is a list of <see cref="BasicDataProduct"/> 
+        /// or Failure result if element does not exist in db.
+        /// </returns>
+        public async Task<GuardResult> GuardedGet(int productId)
         {
-            using (var ctx = new SqlStandardCallContext())
-            {
-                return Success(
-                    await ctx[ProductTable].Connection
-                    .QueryFirstOrDefaultAsync<BasicDataProduct>(
-                        @"SELECT
-                            *
-                        FROM ITIH.tProduct
-                        WHERE ProductId = @id;",
-                        new { id = productId }
-                    )
-                );
-            }
+            var result = await GetById(productId);
+
+            if (result == null) return Failure(
+                string.Format("No Product with id {0} was found.", productId)
+            );
+            return Success(result);
         }
 
         /// <summary>
-        /// Gets a particular Product by its name.
+        /// Gets a Product by its name.
         /// </summary>
-        /// <param name="productName">Product name.</param>
-        /// <returns>Success result where result content is a single BasicDataProduct.</returns>
-        public async Task<GuardResult> GetProductByName(string productName)
+        /// <param name="productName">Product's name.</param>
+        /// <returns>
+        /// Success result where result content is a list of <see cref="BasicDataProduct"/> 
+        /// or Failure result if element does not exist in db.
+        /// </returns>
+        public async Task<GuardResult> GuardedGetByName(string productName)
         {
-            using (var ctx = new SqlStandardCallContext())
-            {
-                var result = 
-                    await ctx[ProductTable].Connection
-                    .QueryFirstOrDefaultAsync<BasicDataProduct>(
-                        @"SELECT
-                            *
-                        FROM ITIH.tProduct
-                        WHERE [Name] = @nM;",
-                        new { nM = productName }
-                );
-                if (result == null) return Failure("Element does not exist in database.");
-                return Success(result);
-            }
+            var result = await GetByName(productName);
+
+            if (result == null) return Failure(
+                string.Format("No Product with name {0} was found.", productName)
+            );
+            return Success(result);
         }
 
         /// <summary>
         /// Creates a new Product.
         /// </summary>
-        /// <param name="model">Product creation view model.</param>
-        /// <returns>Success result where result content is null OR Failure result in case element does not exist in DB.</returns>
-        public async Task<GuardResult> CreateProduct(CreationViewModel model)
+        /// <param name="model">Matching model.</param>
+        /// <returns>
+        /// Success result where result content is a <see cref="BasicDataProduct.ProductId"/>
+        /// or Failure result if element has not been created.
+        /// </returns>
+        public async Task<GuardResult> GuardedCreate(CreationViewModel model)
         {
             using (var ctx = new SqlStandardCallContext())
             {
                 // Checks if a Product already exists with this specific Product name.
                 // If does, returns Failure().
-                var doesProductExist = await GetProductByName(model.Name);
-
+                var doesProductExist = await GuardedGetByName(model.Name);
                 if (doesProductExist.Content != null) return Failure(doesProductExist.Info);
 
-                return Success(
-                    await ProductTable.Create(ctx, 0, model.Name, model.Desc)
-                );
+                var result = await Create(model);
+                if (result == 0) return Failure("Error in creation process.");
+
+                return Success(result);
             }
         }
 
         /// <summary>
-        /// Updates a specific Product.
+        /// Updates a Product.
         /// </summary>
-        /// <param name="model">Product update view model.</param>
-        /// <returns>Success result where result content is true OR Failure result in case there's problem in update process.</returns>
-        public async Task<GuardResult> Updateproduct(UpdateViewModel model)
+        /// <param name="model">Matching model.</param>
+        /// <returns>
+        /// Success result where result content is a <see cref="bool"/> that represents update state,
+        /// or Failure result if element does not exist in db.
+        /// </returns>
+        public async Task<GuardResult> GuardedUpdate(UpdateViewModel model)
         {
             using (var ctx = new SqlStandardCallContext())
             {
                 // Checks if a Product already exsists with this specific Product name.
                 // If not, returns Failure().
-                var doesProductExist = await GetProductByName(model.Name);
+                var doesProductExist = await GuardedGetByName(model.Name);
 
                 if (doesProductExist.Content == null) return Failure(doesProductExist.Info);
 
@@ -128,9 +122,71 @@ namespace API.Services.Product
                 model.Desc = model.Desc ?? ((BasicDataProduct)currentProduct).Desc;
 
                 // Launches update process.
-                var result = await ProductTable.Update(ctx, 0, model.ProductId, model.Name, model.Desc);
+                var result = await Update(model);
                 if (result == false) return Failure("No update was proceeded.");
+
                 return Success(result);
+            }
+        }
+
+        // --------------------------------------------------------------------------------------------
+
+        private async Task<IEnumerable<BasicDataProduct>> GetAll()
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return (await ctx[ProductTable].Connection
+                    .QueryAsync<BasicDataProduct>(
+                        @"SELECT
+                            *
+                        FROM ITIH.tProduct;"
+                    )).ToArray();
+            }
+        }
+
+        private async Task<BasicDataProduct> GetById(int productId)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await ctx[ProductTable].Connection
+                    .QueryFirstOrDefaultAsync<BasicDataProduct>(
+                        @"SELECT
+                            *
+                        FROM ITIH.tProduct
+                        WHERE ProductId = @id;",
+                        new { id = productId }
+                    );
+            }
+        }
+
+        private async Task<BasicDataProduct> GetByName(string productName)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await ctx[ProductTable].Connection
+                    .QueryFirstOrDefaultAsync<BasicDataProduct>(
+                        @"SELECT
+                            *
+                        FROM ITIH.tProduct
+                        WHERE [Name] = @nM;",
+                        new { nM = productName }
+                );
+            }
+        }
+
+        private async Task<int> Create(CreationViewModel model)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await ProductTable.Create(ctx, 0, model.Name, model.Desc);
+            }
+        }
+
+        private async Task<bool> Update(UpdateViewModel model)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await ProductTable.Update(ctx, 0, model.ProductId, model.Name, model.Desc);
             }
         }
     }

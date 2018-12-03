@@ -2,6 +2,8 @@
 using API.Services.Order;
 using API.Services.Product;
 using API.Services.Project;
+using API.Services.Storage;
+using API.Services.User;
 using CK.AspNet.Auth;
 using CK.Auth;
 using CK.DB.AspNet.Auth;
@@ -96,9 +98,13 @@ namespace API
             services.AddSingleton<IWebFrontAuthLoginService, SqlWebFrontAuthLoginService>();
             services.AddSingleton<ClassroomService>();
             services.AddSingleton<OrderService>();
+            services.AddSingleton<OrderDueServices>();
+            services.AddSingleton<OrderedProductService>();
             services.AddSingleton<ProductService>();
             services.AddSingleton<ProjectService>();
             services.AddSingleton<StorageService>();
+            services.AddSingleton<SLPService>();
+            services.AddSingleton<UserService>();
 
             services.AddCors();
             services.AddMvc();

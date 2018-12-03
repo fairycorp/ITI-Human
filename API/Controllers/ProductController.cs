@@ -22,7 +22,7 @@ namespace API.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
-            => Ok((await Service.GetAll()).Content);
+            => Ok((await Service.GuardedGetAll()).Content);
 
         [HttpGet("i/{productId}")]
         public async Task<IActionResult> GetById(int productId)
@@ -32,7 +32,7 @@ namespace API.Controllers
 
             if (check.Code == Status.Success)
             {
-                var result = await Service.GetProductById(productId);
+                var result = await Service.GuardedGet(productId);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                 return Ok(result.Content);
@@ -49,7 +49,7 @@ namespace API.Controllers
 
             if (check.Code == Status.Success)
             {
-                var result = await Service.GetProductByName(product.Name);
+                var result = await Service.GuardedGetByName(product.Name);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                 return Ok(result.Content);
@@ -70,7 +70,7 @@ namespace API.Controllers
 
             if (check.Code == Status.Success)
             {
-                var result = await Service.CreateProduct(model);
+                var result = await Service.GuardedCreate(model);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                 return Ok(result.Content);
@@ -95,7 +95,7 @@ namespace API.Controllers
 
                 if (check2.Code == Status.Success)
                 {
-                    var result = await Service.Updateproduct(model);
+                    var result = await Service.GuardedUpdate(model);
                     if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                     return Ok(result.Content);
