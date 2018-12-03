@@ -3,22 +3,22 @@
     public class CreationViewModel
     {
         /// <summary>
-        /// See <see cref="BasicDataStorageLinkedProduct.StorageId"/>.
+        /// See <see cref="BasicDataStorageSLP.StorageId"/>.
         /// </summary>
         public int StorageId { get; set; }
 
         /// <summary>
-        /// See <see cref="BasicDataStorageLinkedProduct.ProductId"/>.
+        /// See <see cref="BasicDataStorageSLP.ProductId"/>.
         /// </summary>
         public int ProductId { get; set; }
 
         /// <summary>
-        /// See <see cref="BasicDataStorageLinkedProduct.UnitPrice"/>.
+        /// See <see cref="BasicDataStorageSLP.UnitPrice"/>.
         /// </summary>
         public int UnitPrice { get; set; }
 
         /// <summary>
-        /// See <see cref="BasicDataStorageLinkedProduct.Stock"/>.
+        /// See <see cref="BasicDataStorageSLP.Stock"/>.
         /// </summary>
         public int Stock { get; set; }
     }

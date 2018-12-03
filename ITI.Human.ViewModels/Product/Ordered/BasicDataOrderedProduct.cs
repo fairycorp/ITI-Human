@@ -41,7 +41,7 @@ namespace ITI.Human.ViewModels.Product.Ordered
         public string Desc { get; set; }
 
         /// <summary>
-        /// See <see cref="BasicDataStorageLinkedProduct.UnitPrice"/>.
+        /// See <see cref="BasicDataStorageSLP.UnitPrice"/>.
         /// </summary>
         public int UnitPrice { get; set; }
 
