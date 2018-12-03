@@ -245,7 +245,41 @@ namespace API.Controllers
             return BadRequest();
         }
 
+        [HttpPut("currentState")]
+        public async Task<IActionResult> UpdateCurrentState([FromBody] IEnumerable<CurrentStateUpdateViewModel> models)
+        {
+            if (models != null)
+            {
+                var results = new List<object>();
+                var floor = 0;
+                foreach (var model in models)
+                {
+                    var modelIntAnalysis = new Dictionary<string, int>
+                    {
+                        { BuildKey(nameof(model.OrderedProductId), floor), model.OrderedProductId },
+                        { BuildKey(nameof(model.CurrentState), floor), (int)model.CurrentState },
+                    };
+                    var check =
+                        Guard.IsAdmissible(modelIntAnalysis);
+
+                    if (check.Code == Status.Success)
+                    {
+                        var result = await OrderedProductService.GuardedUpdateCurrentState(
+                            model.OrderedProductId, model.CurrentState
+                        );
+                        if (result.Code == Status.Failure) results.Add(result.Info);
+                        else results.Add(result.Content);
+                    }
+                    else return BadRequest(check.Info);
+                    floor++;
+                }
+                return Ok(results);
+            }
+            return BadRequest();
+        }
+
         private static string BuildKey(string name, int index)
             => string.Format("{0} (at floor {1})", name, index);
+
     }
 }
