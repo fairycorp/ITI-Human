@@ -4,7 +4,7 @@ namespace ITI.Human.ViewModels.Order.Payment
 {
     public class PaymentStateUpdateViewModel
     {
-        public int OrdereredProductId { get; set; }
+        public int OrderedProductId { get; set; }
 
         public PaymentState PaymentState { get; set; }
     }

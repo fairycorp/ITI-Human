@@ -1,6 +1,7 @@
 ﻿using API.Services.Helper.Guard;
 using API.Services.Order;
 using ITI.Human.ViewModels.Order;
+using ITI.Human.ViewModels.Order.Payment;
 using Microsoft.AspNetCore.Mvc;
 using Stall.Guard.System;
 using System.Collections.Generic;
@@ -17,11 +18,14 @@ namespace API.Controllers
 
         public OrderDueServices OrderDueServices { get; }
 
-        public OrderController(OrderService oService, OrderDueServices oDServices)
+        public OrderedProductService OrderedProductService { get; set; }
+
+        public OrderController(OrderService oService, OrderDueServices oDServices, OrderedProductService oPService)
         {
             Guard = new APIGuard();
             OrderService = oService;
             OrderDueServices = oDServices;
+            OrderedProductService = oPService;
         }
 
         [HttpGet]
@@ -112,12 +116,12 @@ namespace API.Controllers
                 if (basicCheck.Code == Status.Success)
                 {
                     Dictionary<string, int> modelIntAnalysis = new Dictionary<string, int>();
-                    int idx = 0;
+                    var floor = 0;
                     foreach (var product in model.Products)
                     {
-                        idx++;
-                        modelIntAnalysis.Add($"{nameof(product.StorageLinkedProductId)}-{idx}", product.StorageLinkedProductId);
-                        modelIntAnalysis.Add($"{nameof(product.Quantity)}-{idx}", product.Quantity);
+                        modelIntAnalysis.Add(BuildKey(nameof(product.StorageLinkedProductId), floor), product.StorageLinkedProductId);
+                        modelIntAnalysis.Add(BuildKey(nameof(product.Quantity), floor), product.Quantity);
+                        floor++;
                     }
                     var check =
                         Guard.IsAdmissible(modelIntAnalysis);
@@ -206,5 +210,42 @@ namespace API.Controllers
             }
             return BadRequest(check1.Info);
         }
+
+        [HttpPut("paymentState")]
+        public async Task<IActionResult> UpdatePaymentState([FromBody] IEnumerable<PaymentStateUpdateViewModel> models)
+        {
+            if (models != null)
+            {
+                var results = new List<object>();
+                var floor = 0;
+                foreach (var model in models)
+                {
+                    var modelIntAnalysis = new Dictionary<string, int>
+                    {
+                        { BuildKey(nameof(model.OrderedProductId), floor), model.OrderedProductId },
+                        { BuildKey(nameof(model.PaymentState.State), floor), (int)model.PaymentState.State },
+                        { BuildKey(nameof(model.PaymentState.Amount), floor), model.PaymentState.Amount }
+                    };
+                    var check =
+                        Guard.IsAdmissible(modelIntAnalysis);
+
+                    if (check.Code == Status.Success)
+                    {
+                        var result = await OrderedProductService.GuardedUpdatePaymentState(
+                            model.OrderedProductId, model.PaymentState.State, model.PaymentState.Amount
+                        );
+                        if (result.Code == Status.Failure) results.Add(result.Info);
+                        else results.Add(result.Content);
+                    }
+                    else return BadRequest(check.Info);
+                    floor++;
+                }
+                return Ok(results);
+            }
+            return BadRequest();
+        }
+
+        private static string BuildKey(string name, int index)
+            => string.Format("{0} (at floor {1})", name, index);
     }
 }
