@@ -1,82 +1,84 @@
 ﻿using API.Services.Classroom;
 using API.Services.Helper;
 using API.Services.Product;
-using ITI.Human.ViewModels.Order;
-using ITI.Human.ViewModels.Product.Ordered;
-using CK.DB.Actor;
+using API.Services.Storage;
+using API.Services.User;
 using CK.SqlServer;
 using Dapper;
 using ITI.Human.Data;
-using ITI.Human.ViewModels.User;
+using ITI.Human.ViewModels.Order;
+using ITI.Human.ViewModels.Product.Ordered;
+using ITI.Human.ViewModels.Storage.LinkedProduct;
 using Stall.Guard.System;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using static API.Services.Helper.ResultFactory;
-using ITI.Human.ViewModels.Storage.LinkedProduct;
-using ITI.Human.ViewModels.Order.Payment;
 
 namespace API.Services.Order
 {
     /// <summary>
-    /// Handles any database interaction concerning Orders.
+    /// Handles interactions with Orders.
     /// </summary>
     public class OrderService
     {
         public StorageService StorageService { get; set; }
 
+        public SLPService SLPService { get; set; }
+
+        public OrderedProductService OrderedProductService { get; set; }
+
+        public OrderDueServices OrderDueServices { get; set; }
+
         public ClassroomService ClassroomService { get; set; }
+
+        public UserService UserService { get; set; }
 
         public OrderTable OrderTable { get; set; }
 
-        public StorageLinkedProductTable StorageLinkedProductTable { get; set; }
-
-        public OrderedProductTable OrderedProductTable { get; set; }
-
-        public OrderFinalDueTable OrderFinalDueTable { get; set; }
-
-        public OrderPaymentTable OrderPaymentTable { get; set; }
-
-        public OrderCreditTable OrderCreditTable { get; set; }
-
-        public UserTable UserTable { get; set; }
-
-        public OrderService(
-            StorageService sService, ClassroomService cService, OrderTable oTable, 
-            StorageLinkedProductTable sLPTable, OrderedProductTable oPTable,
-            OrderFinalDueTable oFDTable, OrderPaymentTable oPayTable, 
-            OrderCreditTable oCTable, UserTable uTable)
+        public OrderService(StorageService sService, SLPService slpService,
+            OrderedProductService oPService, OrderDueServices oDServices,
+            ClassroomService cService, UserService uService, OrderTable oTable)
         {
             StorageService = sService;
+            SLPService = slpService;
+            OrderedProductService = oPService;
+            OrderDueServices = oDServices;
             ClassroomService = cService;
+            UserService = uService;
             OrderTable = oTable;
-            StorageLinkedProductTable = sLPTable;
-            OrderedProductTable = oPTable;
-            OrderFinalDueTable = oFDTable;
-            OrderPaymentTable = oPayTable;
-            OrderCreditTable = oCTable;
-            UserTable = uTable;
         }
 
         /// <summary>
         /// Gets all detailed Orders.
         /// </summary>
-        /// <returns>Success result where result content is a list of DetailedDataOrder.</returns>
-        public async Task<GuardResult> GuardedGetAllDetailedOrders()
-            => Success(await GetAllDetailedOrders());
+        /// <returns>
+        /// Success result where result content is a list of <see cref="DetailedDataOrder"/> 
+        /// or Failure result if element does not exist in db.
+        /// </returns>
+        public async Task<GuardResult> GuardedGetAll()
+        {
+            var result = await GetAll();
+            if (result == null) return Failure("Not a single Order was found.");
+
+            return Success(result);
+        }
 
         /// <summary>
         /// Gets user's all detailed Orders. 
         /// </summary>
         /// <param name="userId">User's id.</param>
-        /// <returns>Success result where result content is a list of DetailedDataOrder or Failure result if not one element was found in db.</returns>
-        public async Task<GuardResult> GuardedGetDetailedOrdersFromUser(int userId)
+        /// <returns>
+        /// Success result where result content is a list of <see cref="DetailedDataOrder"/> 
+        /// or Failure result if element does not exist in db.
+        /// </returns>
+        public async Task<GuardResult> GuardedGetFromUser(int userId)
         {
-            var result = await GetDetailedOrdersFromUser(userId);
+            var result = await GetFromUser(userId);
 
             if (result == null) return Failure(
-                string.Format("Not one single element was found in db. | in {0}", nameof(GuardedGetDetailedOrdersFromUser))
+                string.Format("No Order with userId {0} was found.", userId)
             );
             return Success(result);
         }
@@ -84,14 +86,17 @@ namespace API.Services.Order
         /// <summary>
         /// Gets all detailed Orders from a project.
         /// </summary>
-        /// <param name="projectId"></param>
-        /// <returns></returns>
-        public async Task<GuardResult> GuardedGetDetailedOrdersFromProject(int projectId)
+        /// <param name="projectId">Order's Project id.</param>
+        /// <returns>
+        /// Success result where result content is a list of <see cref="DetailedDataOrder"/> 
+        /// or Failure result if element does not exist in db.
+        /// </returns>
+        public async Task<GuardResult> GuardedGetFromProject(int projectId)
         {
-            var result = await GetDetailedOrdersFromProject(projectId);
+            var result = await GetFromProject(projectId);
 
             if (result == null) return Failure(
-                string.Format("Not one single element was found in db. | in {0}", nameof(GetDetailedOrdersFromProject))
+                string.Format("No Order with projectId {0} was found.", projectId)
             );
             return Success(result);
         }
@@ -100,28 +105,16 @@ namespace API.Services.Order
         /// Gets a detailed Order by its id.
         /// </summary>
         /// <param name="orderId">Order id.</param>
-        /// <returns>Success result where result content is a single DetailedDataOrder or Failure result if element does not exist in db.</returns>
-        public async Task<GuardResult> GuardedGetDetailedOrder(int orderId)
+        /// <returns>
+        /// Success result where result content is a single <see cref="DetailedDataOrder"/> 
+        /// or Failure result if element does not exist in db.
+        /// </returns>
+        public async Task<GuardResult> GuardedGet(int orderId)
         {
-            var result = await GetDetailedOrder(orderId);
+            var result = await Get(orderId);
 
             if (result == null) return Failure(
-                string.Format("Element does not exist in database. | in {0}", nameof(GuardedCreateDetailedOrder))
-            );
-            return Success(result);
-        }
-
-        /// <summary>
-        /// Gets an Ordered Product by its id.
-        /// </summary>
-        /// <param name="orderedProductId">Ordered Product id.</param>
-        /// <returns>Success result where result content is a single BasicDataOrderedProduct or Failure result if element does not exist in db.</returns>
-        public async Task<GuardResult> GuardedGetOrderedProduct(int orderedProductId)
-        {
-            var result = await GetOrderedProduct(orderedProductId);
-
-            if (result == null) return Failure(
-                string.Format("Element does not exist in database. | in {0}", nameof(GuardedGetOrderedProduct))
+                string.Format("No Order with id {0} was found.", orderId)
             );
             return Success(result);
         }
@@ -130,8 +123,11 @@ namespace API.Services.Order
         /// Creates a new detailed Order.
         /// </summary>
         /// <param name="model">Matching model.</param>
-        /// <returns>Success result where result content is int OR Failure result in case insertion process failed.</returns>
-        public async Task<GuardResult> GuardedCreateDetailedOrder(ITI.Human.ViewModels.Order.CreationViewModel model)
+        /// <returns>
+        /// Success result where result content is a <see cref="BasicDataOrder.OrderId"/>
+        /// or Failure result if element has not been created.
+        /// </returns>
+        public async Task<GuardResult> GuardedCreate(ITI.Human.ViewModels.Order.CreationViewModel model)
         {
             // Checks if classroom id & storage id are not 0.
             if (model.StorageId == 0 || model.UserId == 0)
@@ -140,7 +136,7 @@ namespace API.Services.Order
 
             // Checks if storage exists (has to) and returns failure in case it doesn't.
             var doesStorageExist =
-                await Attempt.ToGetElement(StorageService.GetStorage, model.StorageId, true);
+                await Attempt.ToGetElement(StorageService.GuardedGet, model.StorageId, true);
 
             if (doesStorageExist.Code == Status.Failure)
                 return Failure(doesStorageExist.Info);
@@ -148,10 +144,10 @@ namespace API.Services.Order
 
             // Checks if mentionned Ordered Products exist in the mentionned Storage.
             var existingStorageProducts = 
-                await StorageService.GetAllStorageLinkedProductsFromStorage(model.StorageId);
+                await SLPService.GuardedGetAllFromStorage(model.StorageId);
 
-            IEnumerable<BasicDataStorageLinkedProduct> CastIntoEnumerableSLP(object obj)
-                => (IEnumerable<BasicDataStorageLinkedProduct>)obj;
+            IEnumerable<BasicDataStorageSLP> CastIntoEnumerableSLP(object obj)
+                => (IEnumerable<BasicDataStorageSLP>)obj;
 
             List<int> id = new List<int>();
             foreach (var existingStorageProduct in CastIntoEnumerableSLP(existingStorageProducts.Content))
@@ -169,7 +165,7 @@ namespace API.Services.Order
 
             // Checks if user exists (has to) and returns failure in case he doesn't.
             var doesUserExist =
-                await Attempt.ToGetElement(GetUser, model.UserId, true);
+                await UserService.GuardedGet(model.UserId);
 
             if (doesUserExist.Code == Status.Failure)
                 return Failure(doesUserExist.Info);
@@ -177,7 +173,7 @@ namespace API.Services.Order
 
             // Checks if classroom exists (has to) and returns failure in case it doesn't.
             var doesClassroomExist =
-                await Attempt.ToGetElement(ClassroomService.GetClassroom, model.ClassroomId, true);
+                await ClassroomService.GuardedGet(model.ClassroomId);
 
             if (doesClassroomExist.Code == Status.Failure)
                 return Failure(doesClassroomExist.Info);
@@ -191,7 +187,7 @@ namespace API.Services.Order
                     return Failure("StorageLinkedProductId/Quantity cannot be 0.");
 
                 var productDoesExist =
-                    await Attempt.ToGetElement(StorageService.GetStorageLinkedProductFromStorage, product.StorageLinkedProductId, model.StorageId, true);
+                    await SLPService.GuardedGetFromStorage(product.StorageLinkedProductId, model.StorageId);
 
                 if (productDoesExist.Code == Status.Failure)
                     return Failure(string.Format(
@@ -204,51 +200,52 @@ namespace API.Services.Order
             // Launches the creation process.
             if (doesUserExist.Code == Status.Success)
             {
-                var result = await CreateDetailedOrder(model);
-                var detailedOrder = await GetDetailedOrder(result);
-                await CreateOrderFinalDue(detailedOrder);
+                var result = await Create(model);
+                var detailedOrder = await Get(result);
+                await OrderDueServices.GuardedCreateFinalDue(detailedOrder);
 
                 return (result > 0) ? Success(result) : Failure("Error in creation process.");
             }
             return Failure("User does not exist.");
         }
 
+        // NEEDS TO BE FULLY REWORKED !
+        // TODO: Each update type must have its own matching method.
         /// <summary>
         /// Updates a detailed Order delivery state.
         /// </summary>
         /// <param name="model">Matching model.</param>
-        /// <returns>Success result where result content is null OR Failure result in case element does not exist in DB.</returns>
-        public async Task<GuardResult> UpdateDetailedOrder(ITI.Human.ViewModels.Order.UpdateViewModel model)
+        public async Task<GuardResult> GuardedUpdate(ITI.Human.ViewModels.Order.UpdateViewModel model)
         {
             using (var ctx = new SqlStandardCallContext())
             {
                 var doesOrderExist = 
-                    await Attempt.ToGetElement(GetDetailedOrder, model.Info.OrderId, true);
+                    await Attempt.ToGetElement(Get, model.Info.OrderId, true);
 
                 if (doesOrderExist.Code == Status.Success)
                 {
-                    Dictionary<string, bool> dataUpdates = new Dictionary<string, bool>();
+                    Dictionary<string, GuardResult> dataUpdates = new Dictionary<string, GuardResult>();
                     var entirelyDelivered = true;
 
                     foreach (var product in model.Products)
                     {
                         var doesOPExist =
-                            await Attempt.ToGetElement(GetOrderedProduct, product.OrderedProductId, true);
+                            await OrderedProductService.GuardedGet(product.OrderedProductId);
 
                         if (doesOPExist.Code == Status.Success)
                         {
                             dataUpdates.Add(
                                 string.Format("Has OrderedProduct n°{0} Current State been updated?", product.OrderedProductId),
-                                await OrderedProductTable.UpdateCurrentState(ctx, 0, DateTime.UtcNow, product.OrderedProductId, product.CurrentState)
+                                await OrderedProductService.GuardedUpdateCurrentState(product.OrderedProductId, product.CurrentState)
                             );
 
-                            var orderFinalDueId = await ctx[OrderFinalDueTable].Connection
+                            var orderFinalDueId = await ctx[OrderDueServices.OrderFinalDueTable].Connection
                                 .QueryFirstOrDefaultAsync<int>(
                                     "SELECT OrderFinalDueId FROM ITIH.tOrderFinalDue WHERE OrderId = @Id",
                                     new { Id = model.Info.OrderId }
                                 );
 
-                            var orderFinalPaid = await ctx[OrderFinalDueTable].Connection
+                            var orderFinalPaid = await ctx[OrderDueServices.OrderFinalDueTable].Connection
                                 .QueryFirstOrDefaultAsync<double>(
                                     "SELECT Paid FROM ITIH.tOrderFinalDue WHERE OrderFinalDueId = @Id",
                                     new { Id = orderFinalDueId }
@@ -261,7 +258,7 @@ namespace API.Services.Order
 
                                     // Looks for an existing Payment State in database.
                                     var doesPaymentStateExist =
-                                        await ctx[OrderPaymentTable].Connection
+                                        await ctx[OrderDueServices.OrderPaymentTable].Connection
                                             .QueryFirstOrDefaultAsync<int>(
                                                 "SELECT OrderPaymentId FROM ITIH.tOrderPayment WHERE OrderedProductId = @Id;",
                                                 new { Id = product.OrderedProductId }
@@ -270,8 +267,9 @@ namespace API.Services.Order
                                     {
                                         dataUpdates.Add(
                                             string.Format("Has OrderedProduct n°{0} Payment State been updated?", product.OrderedProductId),
-                                            await OrderedProductTable.UpdatePaymentState(ctx, 0, DateTime.UtcNow, product.OrderedProductId,
-                                            orderFinalDueId, product.Payment.State, product.Payment.Amount)
+                                            await OrderedProductService.GuardedUpdatePaymentState(
+                                                product.OrderedProductId,product.Payment.State, product.Payment.Amount
+                                            )
                                         );
                                     }
                                     break;
@@ -283,14 +281,14 @@ namespace API.Services.Order
                                             product.Payment.Amount = -(product.UnitPrice);
 
                                         var isOrderedProductReferencedInPaymentTable =
-                                            await ctx[OrderPaymentTable].Connection
+                                            await ctx[OrderDueServices.OrderFinalDueTable].Connection
                                                 .QueryAsync<int>("SELECT OrderPaymentId FROM ITIH.tOrderPayment WHERE OrderedProductId = @Id",
                                                 new { Id = product.OrderedProductId });
 
                                         if (isOrderedProductReferencedInPaymentTable.AsList().Count >= 1)
                                         {
-                                            await OrderPaymentTable.Delete(ctx, 0, product.OrderedProductId);
-                                            await OrderFinalDueTable.Update(ctx, 0, orderFinalDueId, product.Payment.Amount);
+                                            await OrderDueServices.OrderPaymentTable.Delete(ctx, 0, product.OrderedProductId);
+                                            await OrderDueServices.OrderFinalDueTable.Update(ctx, 0, orderFinalDueId, product.Payment.Amount);
                                         }
 
                                     }
@@ -304,7 +302,7 @@ namespace API.Services.Order
                                             return Failure("A Credit cannot be superior or equal to the ordered product unit price.");
 
                                         // Checks if the ordered product can be credited or not.
-                                        var canBeCredited = await ctx[StorageLinkedProductTable].Connection
+                                        var canBeCredited = await ctx[SLPService.SLPTable].Connection
                                             .QueryFirstOrDefaultAsync<bool>(
                                             "SELECT CreditState FROM ITIH.tStorageLinkedProduct WHERE StorageLinkedProductId = @Id",
                                             new { Id = product.StorageLinkedProductId }
@@ -316,16 +314,17 @@ namespace API.Services.Order
 
                                         // Checks if the ordered product is already referenced in Credit table.
                                         var isOrderedProductReferencedInCreditTable =
-                                            await ctx[OrderCreditTable].Connection
+                                            await ctx[OrderedProductService.OrderedProductTable].Connection
                                                 .QueryAsync<int>("SELECT OrderCreditId FROM ITIH.tOrderCredit WHERE OrderedProductId = @Id",
                                                 new { Id = product.OrderedProductId });
 
+
                                         if (isOrderedProductReferencedInCreditTable.AsList().Count == 0)
                                         {
-                                            await OrderCreditTable.Create(ctx, 0, product.OrderedProductId, product.Payment.Amount, DateTime.UtcNow);
+                                            var created = await OrderDueServices.OrderCreditTable.Create(ctx, 0, product.OrderedProductId, product.Payment.Amount, DateTime.UtcNow);
                                             dataUpdates.Add(
                                                 string.Format("Has a credit been created for Ordered Product n°{0}", product.OrderedProductId),
-                                                true
+                                                Success(created)
                                             );
                                         }
                                     }
@@ -333,7 +332,7 @@ namespace API.Services.Order
                                     break;
                             }
 
-                            var currentState = await ctx[OrderedProductTable].Connection
+                            var currentState = await ctx[OrderedProductService.OrderedProductTable].Connection
                                 .QueryFirstOrDefaultAsync<State>(
                                     "SELECT CurrentState FROM ITIH.vOrderedProducts WHERE OrderedProductId = @Id",
                                     new { Id = product.OrderedProductId }
@@ -350,51 +349,15 @@ namespace API.Services.Order
                             OrderTable.Update(ctx, 0, model.Info.OrderId, State.Delivered);
                     }
 
-                    var successReturn = false;
-                    foreach (var update in dataUpdates)
-                        if (update.Value == true)
-                            successReturn = true;
-
-                    return successReturn
-                        ? Success(dataUpdates) 
-                        : Failure("No update was proceeded.");
+                    return Success("WIP update result");
                 }
                 return Failure(doesOrderExist.Info);
             }
         }
 
-        /// <summary>
-        /// Updates a detailed Order current state (NotStarted, Underway...).
-        /// </summary>
-        /// <param name="model">Matching model.</param>
-        /// <returns>Success result where result content is boolean OR Failure result in case element does not exist in DB.</returns>
-        public async Task<GuardResult> GuardedUpdateDetailedOrderCurrentState(BasicDataOrder model)
-        {
-            var result = await UpdateDetailedOrderCurrentState(model);
-            return (result == model.CurrentState) ? Success(result) : Failure("Error in update process.");
-        }
-
-        /// <summary>
-        /// Gets a detailed Order Final Due.
-        /// </summary>
-        /// <param name="orderId">Order id.</param>
-        /// <returns>Success result where result is a DetailedDataOrderFinalDue OR Failure result in case element does not exist in DB.</returns>
-        public async Task<GuardResult> GuardedGetDetailedOrderFinalDue(int orderId)
-        {
-            var doesOrderExist =
-                await Attempt.ToGetElement(GetDetailedOrder, orderId, true);
-
-            if (doesOrderExist.Content == null)
-                return Failure(
-                    string.Format("Order with id {0} does not exist in database.", orderId)
-                );
-
-            return Success(await GetDetailedOrderFinalDue(orderId));
-        }
-
         // --------------------------------------------------------------------------------------------
 
-        private async Task<List<DetailedDataOrder>> GetAllDetailedOrders()
+        private async Task<List<DetailedDataOrder>> GetAll()
         {
             using (var ctx = new SqlStandardCallContext())
             {
@@ -431,7 +394,7 @@ namespace API.Services.Order
             }
         }
 
-        private async Task<List<DetailedDataOrder>> GetDetailedOrdersFromUser(int userId)
+        private async Task<List<DetailedDataOrder>> GetFromUser(int userId)
         {
             using (var ctx = new SqlStandardCallContext())
             {
@@ -471,12 +434,12 @@ namespace API.Services.Order
             }
         }
 
-        private async Task<IEnumerable<DetailedDataOrder>> GetDetailedOrdersFromProject(int projectId)
+        private async Task<IEnumerable<DetailedDataOrder>> GetFromProject(int projectId)
         {
             using (var ctx = new SqlStandardCallContext())
             {
                 // Retrieves storageId from projectId.
-                var storageId = await StorageService.GetStorageFromProject(projectId);
+                var storageId = await StorageService.GuardedGetFromProject(projectId);
 
                 var basicData = await ctx[OrderTable].Connection
                     .QueryAsync<BasicDataOrder>(
@@ -514,7 +477,7 @@ namespace API.Services.Order
             }
         }
 
-        private async Task<DetailedDataOrder> GetDetailedOrder(int orderId)
+        private async Task<DetailedDataOrder> Get(int orderId)
         {
             using (var ctx = new SqlStandardCallContext())
             {
@@ -547,7 +510,7 @@ namespace API.Services.Order
             }
         }
 
-        private async Task<int> CreateDetailedOrder(ITI.Human.ViewModels.Order.CreationViewModel model)
+        private async Task<int> Create(ITI.Human.ViewModels.Order.CreationViewModel model)
         {
             using (var ctx = new SqlStandardCallContext())
             {
@@ -557,12 +520,12 @@ namespace API.Services.Order
                 foreach (var product in model.Products)
                 {
                     var orderedProduct =
-                        await OrderedProductTable.Create(ctx, model.UserId, order, product.StorageLinkedProductId, product.Quantity);
+                        await OrderedProductService.OrderedProductTable.Create(ctx, model.UserId, order, product.StorageLinkedProductId, product.Quantity);
 
                     // Updates matching SLP Stock.
-                    BasicDataStorageLinkedProduct CastIntoSLP(object obj)
-                        => (BasicDataStorageLinkedProduct)obj;
-                    var slp = await StorageService.GetStorageLinkedProduct(product.StorageLinkedProductId);
+                    BasicDataStorageSLP CastIntoSLP(object obj)
+                        => (BasicDataStorageSLP)obj;
+                    var slp = await SLPService.GuardedGet(product.StorageLinkedProductId);
 
                     if (CastIntoSLP(slp.Content).Stock == 0) return 0;
 
@@ -572,108 +535,25 @@ namespace API.Services.Order
                         UnitPrice = CastIntoSLP(slp.Content).UnitPrice,
                         Stock = CastIntoSLP(slp.Content).Stock - product.Quantity
                     };
-                    await StorageService.UpdateLinkedProduct(update);
+                    await SLPService.GuardedUpdate(update);
 
                     // In case of an insertion problem, one have to clean the whole order up.
                     if (orderedProduct == 0)
                     {
-                        var alreadyOrdered = await GetDetailedOrder(order);
+                        var alreadyOrdered = await Get(order);
 
                         foreach (var alreadyOrderedProduct in alreadyOrdered.Products)
                         {
-                            await OrderedProductTable.Delete(ctx, 0, alreadyOrderedProduct.OrderedProductId);
+                            await OrderedProductService.OrderedProductTable.Delete(ctx, 0, alreadyOrderedProduct.OrderedProductId);
 
                             update.Stock += alreadyOrderedProduct.Quantity;
-                            await StorageService.UpdateLinkedProduct(update);
+                            await SLPService.GuardedUpdate(update);
                         }
                         await OrderTable.Delete(ctx, 0, order);
                         return 0;
                     }
                 }
                 return order;
-            }
-        }
-
-        private async Task<State> UpdateDetailedOrderCurrentState(BasicDataOrder model)
-        {
-            var doesExist =
-                    await Attempt.ToGetElement(GetDetailedOrder, model.OrderId, true);
-
-            if (doesExist.Code == Status.Success)
-            {
-                using (var ctx = new SqlStandardCallContext())
-                {
-                    return await OrderTable.Update(ctx, 0, model.OrderId, model.CurrentState);
-                }
-            }
-            using (var ctx = new SqlStandardCallContext())
-            {
-                return await ctx[OrderTable].Connection
-                    .QueryFirstOrDefaultAsync<State>(
-                        "SELECT CurrentState FROM ITIH.tOrder WHERE OrderId = @id;",
-                        new { id = model.OrderId }
-                    );
-            }
-        }
-
-        private async Task<BasicDataOrderedProduct> GetOrderedProduct(int orderedProductId)
-        {
-            using (var ctx = new SqlStandardCallContext())
-            {
-                return await ctx[OrderedProductTable].Connection
-                    .QueryFirstOrDefaultAsync<BasicDataOrderedProduct>(
-                        "SELECT * FROM ITIH.vOrderedProducts WHERE OrderedProductId = @id;",
-                        new { id = orderedProductId }
-                    );
-            }
-        }
-
-        private async Task<int> CreateOrderFinalDue(DetailedDataOrder order)
-        {
-            using (var ctx = new SqlStandardCallContext())
-            {
-                return await OrderFinalDueTable.Create(ctx, 0, order.Info.OrderId, CalculateOrderTotal(order.Products), 0);
-            }
-        }
-
-        private async Task<DetailedDataOrderFinalDue> GetDetailedOrderFinalDue(int orderId)
-        {
-            using (var ctx = new SqlStandardCallContext())
-            {
-                var info = await ctx[OrderFinalDueTable].Connection
-                    .QueryFirstOrDefaultAsync<BasicDataOrderFinalDue>(
-                        "SELECT * FROM ITIH.tOrderFinalDue WHERE OrderId = @id",
-                        new { id = orderId }
-                    );
-
-                var payments = await ctx[OrderPaymentTable].Connection
-                    .QueryAsync<BasicDataOrderPayment>(
-                        "SELECT * FROM ITIH.tOrderPayment WHERE OrderFinalDueId = @id",
-                        new { id = info.OrderFinalDueId }
-                    );
-
-                return new DetailedDataOrderFinalDue
-                {
-                    Info = info,
-                    Payments = payments
-                };
-            }
-        }
-
-        private async Task<BasicDataUser> GetUser(int userId)
-        {
-            using (var ctx = new SqlStandardCallContext())
-            {
-                return await ctx[UserTable].Connection
-                    .QueryFirstOrDefaultAsync<BasicDataUser>(
-                        @"SELECT
-                            UserId
-                        FROM
-                            CK.tUser
-                        WHERE
-                            UserId = @id",
-                        new { id = userId }
-                    );
             }
         }
 

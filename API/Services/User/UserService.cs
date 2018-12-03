@@ -11,6 +11,9 @@ using static API.Services.Helper.ResultFactory;
 
 namespace API.Services.User
 {
+    /// <summary>
+    /// Handles interactions with Users.
+    /// </summary>
     public class UserService
     {
         public UserTable UserTable { get; set; }
@@ -33,7 +36,7 @@ namespace API.Services.User
             {
                 var result = await GetAll();
 
-                if (result == null) return Failure("No element was found.");
+                if (result == null) return Failure("Not a single User was found.");
                 return Success(result);
             }
         }
@@ -50,7 +53,9 @@ namespace API.Services.User
         {
             var result = await Get(userId);
 
-            if (result == null) return Failure("No element was found.");
+            if (result == null) return Failure(
+                string.Format("No User with id {0} was found.", userId)
+            );
             return Success(result);
         }
 
