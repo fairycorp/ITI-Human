@@ -8,6 +8,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const Dotenv = require('dotenv-webpack');
   
 const entryFile = path.join(__dirname, 'src/main.js');
 const devServerPort = 8081;
@@ -111,7 +112,8 @@ let config = function (env) {
           minifyCSS: true
         }
       }),
-      new VueLoaderPlugin()
+      new VueLoaderPlugin(),
+      new Dotenv()
     ]
   }
   
