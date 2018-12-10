@@ -1,7 +1,8 @@
 ﻿-- SetupConfig: {}
 create proc ITIH.sOrderCreditCreate (
 	@ActorId int,
-	@OrderedProductId int,
+	@ProjectId int,
+	@UserId int,
 	@Amount int,
 	@CreditTime datetime2,
 	@OrderCreditId int output
@@ -12,8 +13,8 @@ begin
 
 	--<PreCreate revert />
 
-	insert into ITIH.tOrderCredit (OrderedProductId, Amount, CreditTime)
-		values (@OrderedProductId, @Amount, @CreditTime);
+	insert into ITIH.tOrderCredit (ProjectId, UserId, Amount, CreditTime)
+		values (@ProjectId, @UserId, @Amount, @CreditTime);
 
 	set @OrderCreditId = scope_identity();
 

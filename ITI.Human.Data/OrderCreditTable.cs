@@ -1,4 +1,5 @@
-﻿using CK.Setup;
+﻿using CK.DB.Actor;
+using CK.Setup;
 using CK.SqlServer;
 using CK.SqlServer.Setup;
 using System;
@@ -10,11 +11,11 @@ namespace ITI.Human.Data
     [Versions("1.0.0")]
     public abstract class OrderCreditTable : SqlTable
     {
-        void StObjConstruct(OrderedProductTable oPTable)
+        void StObjConstruct(OrderedProductTable oPTable, UserTable uTable)
         {
         }
 
         [SqlProcedure("sOrderCreditCreate")]
-        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int orderedProductId, int amount, DateTime creditTime);
+        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int projectId, int userId, int amount, DateTime creditTime);
     }
 }

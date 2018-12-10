@@ -49,7 +49,7 @@ namespace API.Services.Project
         /// Success result where result content is a single <see cref="BasicDataProject"/> 
         /// or Failure result if element does not exist in db.
         /// </returns>
-        public async Task<GuardResult> GetProject(int projectId)
+        public async Task<GuardResult> GuardedGet(int projectId)
         {
             using (var ctx = new SqlStandardCallContext())
             {

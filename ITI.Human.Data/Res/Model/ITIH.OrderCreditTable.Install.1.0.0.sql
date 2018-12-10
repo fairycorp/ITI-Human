@@ -1,12 +1,14 @@
 ﻿create table ITIH.tOrderCredit (
 	OrderCreditId int not null identity(0, 1),
-	OrderedProductId int not null,
+	ProjectId int not null,
+	UserId int not null,
 	Amount int not null,
 	CreditTime datetime2 default sysutcdatetime()
 
 	constraint PK_tOrderCredit_OrderCreditId primary key (OrderCreditId),
-	constraint FK_tOrderCredit_OrderedProductId foreign key (OrderedProductId) references ITIH.tOrderedProduct (OrderedProductId)
+	constraint FK_tOrderCredit_ProjectId foreign key (ProjectId) references ITIH.tProject (ProjectId),
+	constraint FK_tOrderCredit_UserId foreign key (UserId) references CK.tUser (UserId)
 );
 
-insert into ITIH.tOrderCredit (OrderedProductId, Amount)
-	values (0, 0);
+insert into ITIH.tOrderCredit (ProjectId, UserId, Amount)
+	values (0, 0, 0);

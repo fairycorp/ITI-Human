@@ -1,8 +1,10 @@
-﻿using API.Services.Project;
-using API.Services.Storage;
+﻿using API.Services.Order;
+using API.Services.Product;
+using API.Services.Project;
 using CK.SqlServer;
 using Dapper;
 using ITI.Human.Data;
+using ITI.Human.ViewModels.Product.Ordered;
 using ITI.Human.ViewModels.Storage;
 using Stall.Guard.System;
 using System.Collections.Generic;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 using static API.Services.Helper.ResultFactory;
 
-namespace API.Services.Product
+namespace API.Services.Storage
 {
     /// <summary>
     /// Handles interactions with Storages.
@@ -21,16 +23,18 @@ namespace API.Services.Product
         public ProjectService ProjectService { get; set; }
 
         public ProductService ProductService { get; set; }
-
-        public SLPService SLPService { get; set; }
-
+        
         public StorageTable StorageTable { get; set; }
 
-        public StorageService(ProjectService projService, ProductService prodService, StorageTable sTable)
+        public StorageLinkedProductTable SLPTable { get; set; }
+
+        public StorageService(ProjectService projService, ProductService prodService,
+            StorageTable sTable, StorageLinkedProductTable slpTable)
         {
             ProjectService = projService;
             ProductService = prodService;
             StorageTable = sTable;
+            SLPTable = slpTable;
         }
 
         /// <summary>
@@ -88,18 +92,18 @@ namespace API.Services.Product
         }
 
         /// <summary>
-        /// Gets a Storage from a specific Order.
+        /// Gets a Storage from an Ordered Product.
         /// </summary>
-        /// <param name="orderId">Order's id.</param>
+        /// <param name="orderedProduct">Ordered Product.</param>
         /// <returns>
         /// Success result where result content is a single <see cref="BasicDataStorage"/> 
         /// or Failure result if element does not exist in db.
         /// </returns>
-        public async Task<GuardResult> GuardedGetFromOrder(int orderId)
+        public async Task<GuardResult> GuardedGetFromOrderedProduct(BasicDataOrderedProduct orderedProduct)
         {
-            var result = await GetFromOrder(orderId);
+            var result = await GetFromOrderedProduct(orderedProduct);
             if (result == null) return Failure(
-                string.Format("No Storage with orderId {0} was found.", orderId)
+                string.Format("No Storage with orderedProductId {0} was found.", orderedProduct)
             );
 
             return Success(result);
@@ -120,7 +124,7 @@ namespace API.Services.Product
                 // Checks if Project already exists with this specific project id.
                 // If not, returns Failure().
                 var doesProjectExist =
-                    await ProjectService.GetProject(model.ProjectId);
+                    await ProjectService.GuardedGet(model.ProjectId);
 
                 if (doesProjectExist.Code == Status.Failure) return Failure(doesProjectExist.Info);
 
@@ -189,20 +193,18 @@ namespace API.Services.Product
             }
         }
 
-        private async Task<BasicDataStorage> GetFromOrder(int orderId)
+        private async Task<BasicDataStorage> GetFromOrderedProduct(BasicDataOrderedProduct orderedProduct)
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                return await ctx[StorageTable].Connection
-                    .QueryFirstOrDefaultAsync<BasicDataStorage>(
-                        @"SELECT
-                            *
-                        FROM 
-                            ITIH.tOrder
-                        WHERE
-                            OrderId = @Id;",
-                        new { Id = orderId }
-                    );
+                var storageId =
+                    await ctx[SLPTable].Connection
+                        .QueryFirstAsync<int>(
+                            "SELECT StorageId FROM ITIH.tStorageLinkedProduct WHERE StorageLinkedProductId = @id",
+                            new { id = orderedProduct.StorageLinkedProductId }
+                        );
+
+                return await Get(storageId);
             }
         }
 

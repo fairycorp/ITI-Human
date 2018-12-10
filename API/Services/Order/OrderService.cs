@@ -1,6 +1,5 @@
 ﻿using API.Services.Classroom;
 using API.Services.Helper;
-using API.Services.Product;
 using API.Services.Storage;
 using API.Services.User;
 using CK.SqlServer;
@@ -27,8 +26,6 @@ namespace API.Services.Order
 
         public SLPService SLPService { get; set; }
 
-        public OrderedProductService OrderedProductService { get; set; }
-
         public OrderDueServices OrderDueServices { get; set; }
 
         public ClassroomService ClassroomService { get; set; }
@@ -37,17 +34,19 @@ namespace API.Services.Order
 
         public OrderTable OrderTable { get; set; }
 
+        private OrderedProductTable OrderedProductTable { get; }
+
         public OrderService(StorageService sService, SLPService slpService,
-            OrderedProductService oPService, OrderDueServices oDServices,
-            ClassroomService cService, UserService uService, OrderTable oTable)
+            OrderDueServices oDServices, ClassroomService cService, 
+            UserService uService, OrderTable oTable, OrderedProductTable oPTable)
         {
             StorageService = sService;
             SLPService = slpService;
-            OrderedProductService = oPService;
             OrderDueServices = oDServices;
             ClassroomService = cService;
             UserService = uService;
             OrderTable = oTable;
+            OrderedProductTable = oPTable;
         }
 
         /// <summary>
@@ -209,152 +208,6 @@ namespace API.Services.Order
             return Failure("User does not exist.");
         }
 
-        // NEEDS TO BE FULLY REWORKED !
-        // TODO: Each update type must have its own matching method.
-        /// <summary>
-        /// Updates a detailed Order delivery state.
-        /// </summary>
-        /// <param name="model">Matching model.</param>
-        public async Task<GuardResult> GuardedUpdate(ITI.Human.ViewModels.Order.UpdateViewModel model)
-        {
-            using (var ctx = new SqlStandardCallContext())
-            {
-                var doesOrderExist = 
-                    await Attempt.ToGetElement(Get, model.Info.OrderId, true);
-
-                if (doesOrderExist.Code == Status.Success)
-                {
-                    Dictionary<string, GuardResult> dataUpdates = new Dictionary<string, GuardResult>();
-                    var entirelyDelivered = true;
-
-                    foreach (var product in model.Products)
-                    {
-                        var doesOPExist =
-                            await OrderedProductService.GuardedGet(product.OrderedProductId);
-
-                        if (doesOPExist.Code == Status.Success)
-                        {
-                            dataUpdates.Add(
-                                string.Format("Has OrderedProduct n°{0} Current State been updated?", product.OrderedProductId),
-                                await OrderedProductService.GuardedUpdateCurrentState(product.OrderedProductId, product.CurrentState)
-                            );
-
-                            var orderFinalDueId = await ctx[OrderDueServices.OrderFinalDueTable].Connection
-                                .QueryFirstOrDefaultAsync<int>(
-                                    "SELECT OrderFinalDueId FROM ITIH.tOrderFinalDue WHERE OrderId = @Id",
-                                    new { Id = model.Info.OrderId }
-                                );
-
-                            var orderFinalPaid = await ctx[OrderDueServices.OrderFinalDueTable].Connection
-                                .QueryFirstOrDefaultAsync<double>(
-                                    "SELECT Paid FROM ITIH.tOrderFinalDue WHERE OrderFinalDueId = @Id",
-                                    new { Id = orderFinalDueId }
-                                );
-
-                            switch (product.Payment.State)
-                            {
-                                case Payment.Paid:
-                                    product.Payment.Amount = product.UnitPrice;
-
-                                    // Looks for an existing Payment State in database.
-                                    var doesPaymentStateExist =
-                                        await ctx[OrderDueServices.OrderPaymentTable].Connection
-                                            .QueryFirstOrDefaultAsync<int>(
-                                                "SELECT OrderPaymentId FROM ITIH.tOrderPayment WHERE OrderedProductId = @Id;",
-                                                new { Id = product.OrderedProductId }
-                                            );
-                                    if (doesPaymentStateExist == 0)
-                                    {
-                                        dataUpdates.Add(
-                                            string.Format("Has OrderedProduct n°{0} Payment State been updated?", product.OrderedProductId),
-                                            await OrderedProductService.GuardedUpdatePaymentState(
-                                                product.OrderedProductId,product.Payment.State, product.Payment.Amount
-                                            )
-                                        );
-                                    }
-                                    break;
-
-                                case Payment.Unpaid:
-                                    if (orderFinalPaid > 0)
-                                    {
-                                        if (orderFinalPaid >= product.UnitPrice)
-                                            product.Payment.Amount = -(product.UnitPrice);
-
-                                        var isOrderedProductReferencedInPaymentTable =
-                                            await ctx[OrderDueServices.OrderFinalDueTable].Connection
-                                                .QueryAsync<int>("SELECT OrderPaymentId FROM ITIH.tOrderPayment WHERE OrderedProductId = @Id",
-                                                new { Id = product.OrderedProductId });
-
-                                        if (isOrderedProductReferencedInPaymentTable.AsList().Count >= 1)
-                                        {
-                                            await OrderDueServices.OrderPaymentTable.Delete(ctx, 0, product.OrderedProductId);
-                                            await OrderDueServices.OrderFinalDueTable.Update(ctx, 0, orderFinalDueId, product.Payment.Amount);
-                                        }
-
-                                    }
-                                    else product.Payment.Amount = 0;
-                                    break;
-
-                                case Payment.Credited:
-                                    if (product.Payment.Amount > 0)
-                                    {
-                                        if (product.Payment.Amount >= product.UnitPrice)
-                                            return Failure("A Credit cannot be superior or equal to the ordered product unit price.");
-
-                                        // Checks if the ordered product can be credited or not.
-                                        var canBeCredited = await ctx[SLPService.SLPTable].Connection
-                                            .QueryFirstOrDefaultAsync<bool>(
-                                            "SELECT CreditState FROM ITIH.tStorageLinkedProduct WHERE StorageLinkedProductId = @Id",
-                                            new { Id = product.StorageLinkedProductId }
-                                        );
-
-                                        if (!canBeCredited) return Failure(
-                                                string.Format("StorageLinkedProduct n°{0} cannot be credited.", product.StorageLinkedProductId)
-                                            );
-
-                                        // Checks if the ordered product is already referenced in Credit table.
-                                        var isOrderedProductReferencedInCreditTable =
-                                            await ctx[OrderedProductService.OrderedProductTable].Connection
-                                                .QueryAsync<int>("SELECT OrderCreditId FROM ITIH.tOrderCredit WHERE OrderedProductId = @Id",
-                                                new { Id = product.OrderedProductId });
-
-
-                                        if (isOrderedProductReferencedInCreditTable.AsList().Count == 0)
-                                        {
-                                            var created = await OrderDueServices.OrderCreditTable.Create(ctx, 0, product.OrderedProductId, product.Payment.Amount, DateTime.UtcNow);
-                                            dataUpdates.Add(
-                                                string.Format("Has a credit been created for Ordered Product n°{0}", product.OrderedProductId),
-                                                Success(created)
-                                            );
-                                        }
-                                    }
-                                    else return Failure("When Payment State is 'Credited', 'Amount' must be filled in.");
-                                    break;
-                            }
-
-                            var currentState = await ctx[OrderedProductService.OrderedProductTable].Connection
-                                .QueryFirstOrDefaultAsync<State>(
-                                    "SELECT CurrentState FROM ITIH.vOrderedProducts WHERE OrderedProductId = @Id",
-                                    new { Id = product.OrderedProductId }
-                                );
-
-                            if (currentState != State.Delivered) entirelyDelivered = false;
-                        }
-                        else return Failure(doesOPExist.Info);
-                    }
-
-                    if (entirelyDelivered)
-                    {
-                        var hasBeenEntirelyDelivered =
-                            OrderTable.Update(ctx, 0, model.Info.OrderId, State.Delivered);
-                    }
-
-                    return Success("WIP update result");
-                }
-                return Failure(doesOrderExist.Info);
-            }
-        }
-
         // --------------------------------------------------------------------------------------------
 
         private async Task<List<DetailedDataOrder>> GetAll()
@@ -376,7 +229,7 @@ namespace API.Services.Order
                     {
                         Info = data,
                         Products = await ctx[OrderTable].Connection
-                        .QueryAsync<BasicDataOrderedProduct>(
+                        .QueryAsync<DetailedDataOrderedProduct>(
                             @"SELECT
                                 *
                             FROM
@@ -416,7 +269,7 @@ namespace API.Services.Order
                     {
                         Info = data,
                         Products = await ctx[OrderTable].Connection
-                        .QueryAsync<BasicDataOrderedProduct>(
+                        .QueryAsync<DetailedDataOrderedProduct>(
                             @"SELECT
                                 *
                             FROM
@@ -459,7 +312,7 @@ namespace API.Services.Order
                     {
                         Info = data,
                         Products = await ctx[OrderTable].Connection
-                        .QueryAsync<BasicDataOrderedProduct>(
+                        .QueryAsync<DetailedDataOrderedProduct>(
                             @"SELECT
                                 *
                             FROM
@@ -496,7 +349,7 @@ namespace API.Services.Order
                 {
                     Info = basicData,
                     Products = await ctx[OrderTable].Connection
-                        .QueryAsync<BasicDataOrderedProduct>(
+                        .QueryAsync<DetailedDataOrderedProduct>(
                             @"SELECT
                                 *
                             FROM
@@ -520,7 +373,7 @@ namespace API.Services.Order
                 foreach (var product in model.Products)
                 {
                     var orderedProduct =
-                        await OrderedProductService.OrderedProductTable.Create(ctx, model.UserId, order, product.StorageLinkedProductId, product.Quantity);
+                        await OrderedProductTable.Create(ctx, model.UserId, order, product.StorageLinkedProductId, product.Quantity);
 
                     // Updates matching SLP Stock.
                     BasicDataStorageSLP CastIntoSLP(object obj)
@@ -544,7 +397,7 @@ namespace API.Services.Order
 
                         foreach (var alreadyOrderedProduct in alreadyOrdered.Products)
                         {
-                            await OrderedProductService.OrderedProductTable.Delete(ctx, 0, alreadyOrderedProduct.OrderedProductId);
+                            await OrderedProductTable.Delete(ctx, 0, alreadyOrderedProduct.OrderedProductId);
 
                             update.Stock += alreadyOrderedProduct.Quantity;
                             await SLPService.GuardedUpdate(update);
@@ -557,7 +410,7 @@ namespace API.Services.Order
             }
         }
 
-        private static int CalculateOrderTotal(IEnumerable<BasicDataOrderedProduct> products)
+        private static int CalculateOrderTotal(IEnumerable<DetailedDataOrderedProduct> products)
         {
             int total = 0;
             foreach (var product in products)

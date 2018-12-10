@@ -2,7 +2,7 @@
 {
     public class CurrentStateUpdateViewModel
     {       
-        public int OrdereredProductId { get; set; }
+        public int OrderedProductId { get; set; }
 
         public State CurrentState { get; set; }
     }
