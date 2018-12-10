@@ -1,14 +1,19 @@
-﻿using CK.SqlServer;
+﻿using API.Services.Storage;
+using CK.SqlServer;
 using Dapper;
 using ITI.Human.Data;
 using ITI.Human.ViewModels.Order;
 using ITI.Human.ViewModels.Order.Payment;
 using ITI.Human.ViewModels.Product.Ordered;
+using ITI.Human.ViewModels.Storage;
+using ITI.Human.ViewModels.Storage.LinkedProduct;
 using Stall.Guard.System;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using static API.Services.Helper.ResultFactory;
+using static ITI.Human.ViewModels.Product.Ordered.DetailedDataOrderedProduct;
 
 namespace API.Services.Order
 {
@@ -17,14 +22,20 @@ namespace API.Services.Order
     /// </summary>
     public class OrderedProductService
     {
+        public OrderService OrderService { get; set; }
+
         public OrderDueServices OrderDueServices { get; set; }
+
+        public SLPService SLPService { get; set; }
 
         public OrderedProductTable OrderedProductTable { get; set; }
 
-        public OrderedProductService(OrderDueServices oDServices,
-            OrderedProductTable oPTable)
+        public OrderedProductService(SLPService slpService, OrderService oService,
+            OrderDueServices oDServices, OrderedProductTable oPTable)
         {
+            OrderService = oService;
             OrderDueServices = oDServices;
+            SLPService = slpService;
             OrderedProductTable = oPTable;
         }
 
@@ -33,7 +44,7 @@ namespace API.Services.Order
         /// </summary>
         /// <param name="orderedProductId">Ordered Product id.</param>
         /// <returns>
-        /// Success result where result content is a single <see cref="BasicDataOrderedProduct"/> 
+        /// Success result where result content is a single <see cref="DetailedDataOrderedProduct"/> 
         /// or Failure result if element does not exist in db.
         /// </returns>
         public async Task<GuardResult> GuardedGet(int orderedProductId)
@@ -52,7 +63,7 @@ namespace API.Services.Order
         /// <param name="orderedProductId">Ordered Product's id.</param>
         /// <param name="orderId">Order's id.w/param>
         /// <returns>
-        /// Success result where result content is a single <see cref="BasicDataOrderedProduct"/> 
+        /// Success result where result content is a single <see cref="DetailedDataOrderedProduct"/> 
         /// or Failure result if element does not exist in db.
         /// </returns>
         public async Task<GuardResult> GuardedGetFromOrder(int orderedProductId, int orderId)
@@ -101,7 +112,7 @@ namespace API.Services.Order
         /// Success result where result content is a <see cref="bool"/> that indicates if an update was made
         /// or Failure result if element does not exist in db.
         /// </returns>
-        public async Task<GuardResult> GuardedUpdatePaymentState(int orderedProductId, Payment paymentState, int amount)
+        public async Task<GuardResult> GuardedUpdatePaymentState(int userId, int orderedProductId, Payment paymentState, int amount)
         {
             // Checks if Ordered Product exists.
             // If not, returns Failure().
@@ -112,10 +123,102 @@ namespace API.Services.Order
                 string.Format("No Ordered Product with id {0} was found.", orderedProductId)
             );
 
-            var result = await UpdatePaymentState(orderedProductId, paymentState, amount);
-            if (!result) return Failure("No update was proceeded.");
+            // Retrieves Payment State existence.
+            var doesPSExist = 
+                await OrderDueServices.GuardedGetSingleOrderPaymentFromOrderedProduct(orderedProductId);
 
-            return Success(result);
+            // Retrieves order's final due.
+            var orderFinalDue =
+                        await OrderDueServices.GuardedGetFinalDueFromOrder(doesOPExist.OrderId);
+
+            // Cast functions declaration.
+            IEnumerable<BasicDataOrderPayment> CastIntoOrderPaymentEnumerable(object obj)
+                => (IEnumerable<BasicDataOrderPayment>)obj;
+
+            DetailedDataOrderFinalDue CastIntoOrderFinalDue(object obj)
+                => (DetailedDataOrderFinalDue)obj;
+
+            BasicDataStorageSLP CastIntoSLP(object obj)
+                => (BasicDataStorageSLP)obj;
+
+            BasicDataStorage CastIntoStorage(object obj)
+                => (BasicDataStorage)obj;
+
+            bool result = false;
+            switch (paymentState)
+            {
+                case Payment.Paid:
+                    amount = doesOPExist.UnitPrice;
+                    
+                    if (doesPSExist.Content == null)
+                    {
+                        result = await UpdatePaymentState(orderedProductId, paymentState, amount);
+                    }
+                    break;
+
+                case Payment.Unpaid:
+                    
+                    var orderFinalPaid = CastIntoOrderFinalDue(orderFinalDue.Content).Info.Paid;
+                    if (orderFinalPaid > 0)
+                    {
+                        if (orderFinalPaid >= doesOPExist.UnitPrice)
+                            amount = -(doesOPExist.UnitPrice);
+
+                        var orderedProductsPaymentStateReferences =
+                            await OrderDueServices.GuardedGetAllOrderPaymentsFromOrderedProduct(orderedProductId);
+
+                        if (CastIntoOrderPaymentEnumerable(orderedProductsPaymentStateReferences.Content).AsList().Count > 0)
+                        {
+                            var deletion = await OrderDueServices.GuardedDeleteOrderPayments(orderedProductId);
+                            var update = await OrderDueServices.GuardedUpdateFinalDue(CastIntoOrderFinalDue(orderFinalDue.Content).Info.OrderFinalDueId, amount);
+                            result = (deletion.Code == Status.Success || update.Code == Status.Success) ? true : false;
+                        }
+                    }
+                    else amount = 0;
+                    break;
+
+                case Payment.Credited:
+                    if (amount > 0)
+                    {
+                        if (doesOPExist.PaymentState == Payment.Credited)
+                            return Failure("A credit has already been made for this ordered product.");
+
+                        if (amount >= doesOPExist.UnitPrice)
+                            return Failure("A Credit cannot be superior or equal to the ordered product unit price.");
+
+                        // Checks if the ordered product can be credited or not.
+                        var slp = await SLPService.GuardedGet(doesOPExist.StorageLinkedProductId);
+                        if (!CastIntoSLP(slp.Content).CreditState)
+                        {
+                            return Failure(
+                                string.Format("StorageLinkedProduct with id {0} cannot be credited.", doesOPExist.StorageLinkedProductId)
+                            );
+                        }
+
+                        var storage = CastIntoStorage(
+                            (await SLPService.StorageService.GuardedGetFromOrderedProduct(doesOPExist)
+                        ).Content);
+                        var created = await OrderDueServices.GuardedCreateOrderCredit(
+                            storage.ProjectId,
+                            userId,
+                            amount
+                        );
+                        using (var ctx = new SqlStandardCallContext())
+                        {
+                            var updated = await OrderedProductTable.UpdatePaymentState(
+                                ctx, 0, DateTime.UtcNow, orderedProductId, 
+                                CastIntoOrderFinalDue(orderFinalDue.Content).Info.OrderFinalDueId,
+                                paymentState, 0
+                            );
+                        }
+
+                        result = ((int)created.Content > 0) ? true : false;
+                    }
+                    else return Failure("When Payment State is 'Credited', 'Amount' must be filled in.");
+                    break;
+            }
+
+            return result ? Success(result) : Failure("No update was proceeded.");
         }
 
         // --------------------------------------------------------------------------------------------
@@ -132,12 +235,12 @@ namespace API.Services.Order
             }
         }
 
-        private async Task<BasicDataOrderedProduct> GetFromOrder(int orderedProductId, int orderId)
+        private async Task<DetailedDataOrderedProduct> GetFromOrder(int orderedProductId, int orderId)
         {
             using (var ctx = new SqlStandardCallContext())
             {
                 return await ctx[OrderedProductTable].Connection
-                    .QueryFirstOrDefaultAsync<BasicDataOrderedProduct>(
+                    .QueryFirstOrDefaultAsync<DetailedDataOrderedProduct>(
                         @"SELECT
                             *
                         FROM

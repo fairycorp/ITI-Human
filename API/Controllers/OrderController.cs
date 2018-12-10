@@ -140,77 +140,6 @@ namespace API.Controllers
             return BadRequest();
         }
 
-        [HttpPut("update")]
-        public async Task<IActionResult> Update([FromBody] DetailedDataOrder model)
-        {
-            if (!(model == null))
-            {
-                if (model.Info == null || model.Products == null)
-                    return BadRequest("Info/Products is/are null.");
-
-                if (model.Info.OrderId == 0)
-                    return BadRequest("Cannot update Order 0.");
-            }
-            else return BadRequest();
-
-            Dictionary<string, int> modelInfoAnalysis = new Dictionary<string, int>
-            {
-                { nameof(model.Info.OrderId), model.Info.OrderId },
-                { nameof(model.Info.UserId), model.Info.UserId },
-                { nameof(model.Info.CurrentState), (int) model.Info.CurrentState }
-            };
-            var check1 = Guard.IsAdmissible(modelInfoAnalysis);
-
-            if (check1.Code == Status.Success)
-            {
-                foreach (var product in model.Products)
-                {
-                    Dictionary<string, int> modelProductIntAnalysis = new Dictionary<string, int>
-                    {
-                        { nameof(product.OrderedProductId), product.OrderedProductId },
-                        { nameof(product.OrderId), product.OrderId },
-                        { nameof(product.StorageLinkedProductId), product.StorageLinkedProductId },
-                        { nameof(product.Quantity), product.Quantity },
-                        { nameof(product.CurrentState), (int)product.CurrentState },
-                        { nameof(product.Payment.State), (int)product.Payment.State }
-                    };
-                    var check2 = Guard.IsAdmissible(modelProductIntAnalysis);
-
-                    if (check2.Code == Status.Success)
-                    {
-                        Dictionary<string, int> modelProductDblAnalysis = new Dictionary<string, int>
-                        {
-                            { nameof(product.UnitPrice), product.UnitPrice },
-                            { nameof(product.Payment.Amount), product.Payment.Amount }
-                        };
-                        var check3 = Guard.IsAdmissible(modelProductDblAnalysis);
-
-                        if (check3.Code == Status.Success)
-                        {
-                            Dictionary<string, string> modelProductStrAnalysis = new Dictionary<string, string>
-                            {
-                                { nameof(product.Name), product.Name },
-                                { nameof(product.Desc), product.Desc }
-                            };
-                            var check4 = Guard.IsAdmissible(modelProductStrAnalysis);
-
-                            if (check4.Code == Status.Success)
-                            {
-                                var result = await OrderService.GuardedUpdate(model);
-                                if (result.Code == Status.Failure) return BadRequest(result.Info);
-
-                                return Ok(result.Content);
-                            }
-                            return BadRequest(check4.Info);
-                        }
-                        return BadRequest(check3.Info);
-                    }
-                    return BadRequest(check2.Info);
-                }
-            }
-            return BadRequest(check1.Info);
-        }
-
         [HttpPut("paymentState")]
         public async Task<IActionResult> UpdatePaymentState([FromBody] IEnumerable<PaymentStateUpdateViewModel> models)
         {
@@ -232,7 +161,7 @@ namespace API.Controllers
                     if (check.Code == Status.Success)
                     {
                         var result = await OrderedProductService.GuardedUpdatePaymentState(
-                            model.OrderedProductId, model.PaymentState.State, model.PaymentState.Amount
+                            model.UserId, model.OrderedProductId, model.PaymentState.State, model.PaymentState.Amount
                         );
                         if (result.Code == Status.Failure) results.Add(result.Info);
                         else results.Add(result.Content);

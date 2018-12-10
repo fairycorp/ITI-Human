@@ -3,7 +3,7 @@
     public class BasicDataProductToOrder
     {
         /// <summary>
-        /// See <see cref="BasicDataOrderedProduct.StorageLinkedProductId"/>.
+        /// See <see cref="DetailedDataOrderedProduct.StorageLinkedProductId"/>.
         /// </summary>
         public int StorageLinkedProductId { get; set; }
 

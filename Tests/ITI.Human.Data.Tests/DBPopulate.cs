@@ -163,7 +163,7 @@ namespace ITI.Human.Data.Tests
                     var detailedData = new DetailedDataOrder();
                     detailedData.Info = data;
                     detailedData.Products = await ctx[oTable].Connection
-                        .QueryAsync<BasicDataOrderedProduct>(
+                        .QueryAsync<DetailedDataOrderedProduct>(
                             @"SELECT
                                 *
                             FROM
@@ -191,7 +191,7 @@ namespace ITI.Human.Data.Tests
             }
         }
 
-        static int CalculateOrderTotal(IEnumerable<BasicDataOrderedProduct> products)
+        static int CalculateOrderTotal(IEnumerable<DetailedDataOrderedProduct> products)
         {
             int total = 0;
             foreach (var product in products)

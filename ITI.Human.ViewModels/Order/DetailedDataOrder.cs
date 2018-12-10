@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace ITI.Human.ViewModels.Order
 {
     /// <summary>
-    /// A Detailed Order is composed of a <see cref="BasicDataOrder"/> and a list of <see cref="BasicDataOrderedProduct"/>.
+    /// A Detailed Order is composed of a <see cref="BasicDataOrder"/> and a list of <see cref="DetailedDataOrderedProduct"/>.
     /// </summary>
     public class DetailedDataOrder
     {
@@ -16,6 +16,6 @@ namespace ITI.Human.ViewModels.Order
         /// <summary>
         /// Products that mentionned Order contains.
         /// </summary>
-        public IEnumerable<BasicDataOrderedProduct> Products { get; set; }
+        public IEnumerable<DetailedDataOrderedProduct> Products { get; set; }
     }
 }

@@ -35,7 +35,9 @@ begin
 			set @OPUpdateTrack = scope_identity();
 			insert into ITIH.tOPPaymentStateUpdateTrack (OPUpdateTrackId, PreviousState, NewState) values (@OPUpdateTrack, @previousState, @newState);
 			
-			insert into ITIH.tOrderPayment (OrderedProductId, OrderFinalDueId, Amount, PaymentTime) values (@OrderedProductId, @OrderFinalDueId, @Amount, @UpdateDate);
+			if (@PaymentState = 1)
+				insert into ITIH.tOrderPayment (OrderedProductId, OrderFinalDueId, Amount, PaymentTime) values (@OrderedProductId, @OrderFinalDueId, @Amount, @UpdateDate);
+
 			update ITIH.tOrderFinalDue 
 				set Paid = 
 					((select Paid from ITIH.tOrderFinalDue where OrderFinalDueId = @OrderFinalDueId) + @Amount)

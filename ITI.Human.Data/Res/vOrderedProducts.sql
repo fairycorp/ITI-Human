@@ -8,7 +8,8 @@ as
 		[Desc] = p.[Desc],
 		Quantity = op.Quantity,
 		UnitPrice = slp.UnitPrice,
-		CurrentState = op.CurrentState
+		CurrentState = op.CurrentState,
+		PaymentState = op.PaymentState
 	from ITIH.tOrderedProduct op
 		join ITIH.tStorageLinkedProduct slp on slp.StorageLinkedProductId = op.StorageLinkedProductId
 		join ITIH.tProduct p on p.ProductId = slp.ProductId
