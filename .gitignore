@@ -333,3 +333,4 @@ ASALocalRun/
 .mfractor/
 /MobileApp/.env
 /MobileApp/platforms
+/MobileApp/www

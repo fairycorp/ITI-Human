@@ -25,20 +25,13 @@ import FontAwesome from 'font-awesome/css/font-awesome.css'
 // Import App Component
 import app from './main.vue'
 
-
-// Import Vuex Storage
-import store from './assets/vuex/storage.js'
-
-
 // Different F7-Vue plugin initialization with f7 v3.0
 Framework7.use(Framework7Vue)
-
 
 // Init Vue App
 export default new Vue({
   // Root Element
   el: '#app',
-  store,
   render: c => c('app'),
   components: {
     app

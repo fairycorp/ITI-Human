@@ -5,7 +5,6 @@
         <f7-panel left cover>
             <f7-view url="/panel-left/" links-view=".view-main" />
         </f7-panel>
-        <f7-block>Test</f7-block>
         <f7-view url="/" :main="true" class="ios-edges"></f7-view>
     </f7-app>
 </template>
