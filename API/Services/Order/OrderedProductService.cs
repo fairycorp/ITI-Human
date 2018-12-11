@@ -1,4 +1,5 @@
 ﻿using API.Services.Storage;
+using API.Services.User;
 using CK.SqlServer;
 using Dapper;
 using ITI.Human.Data;
@@ -7,13 +8,13 @@ using ITI.Human.ViewModels.Order.Payment;
 using ITI.Human.ViewModels.Product.Ordered;
 using ITI.Human.ViewModels.Storage;
 using ITI.Human.ViewModels.Storage.LinkedProduct;
+using ITI.Human.ViewModels.User;
 using Stall.Guard.System;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using static API.Services.Helper.ResultFactory;
-using static ITI.Human.ViewModels.Product.Ordered.DetailedDataOrderedProduct;
 
 namespace API.Services.Order
 {
@@ -28,14 +29,17 @@ namespace API.Services.Order
 
         public SLPService SLPService { get; set; }
 
+        public UserBalanceService UserBalanceService { get; set; }
+
         public OrderedProductTable OrderedProductTable { get; set; }
 
         public OrderedProductService(SLPService slpService, OrderService oService,
-            OrderDueServices oDServices, OrderedProductTable oPTable)
+            OrderDueServices oDServices, UserBalanceService uBService, OrderedProductTable oPTable)
         {
             OrderService = oService;
             OrderDueServices = oDServices;
             SLPService = slpService;
+            UserBalanceService = uBService;
             OrderedProductTable = oPTable;
         }
 
@@ -144,10 +148,16 @@ namespace API.Services.Order
             BasicDataStorage CastIntoStorage(object obj)
                 => (BasicDataStorage)obj;
 
+            BasicDataUserBalance CastIntoUserBalance(object obj)
+                => (BasicDataUserBalance)obj;
+
             bool result = false;
             switch (paymentState)
             {
                 case Payment.Paid:
+                    if (doesOPExist.PaymentState == Payment.Credited)
+                        return Failure("Cannot pay this way. A credit has been made for this ordered product.");
+
                     amount = doesOPExist.UnitPrice;
                     
                     if (doesPSExist.Content == null)
@@ -157,7 +167,9 @@ namespace API.Services.Order
                     break;
 
                 case Payment.Unpaid:
-                    
+                    if (doesOPExist.PaymentState == Payment.Credited)
+                        return Failure("Cannot unpay this way. A credit has been made for this ordered product.");
+
                     var orderFinalPaid = CastIntoOrderFinalDue(orderFinalDue.Content).Info.Paid;
                     if (orderFinalPaid > 0)
                     {
@@ -183,6 +195,9 @@ namespace API.Services.Order
                         if (doesOPExist.PaymentState == Payment.Credited)
                             return Failure("A credit has already been made for this ordered product.");
 
+                        if (doesOPExist.PaymentState == Payment.Paid)
+                            return Failure("This ordered product has already been paid.");
+
                         if (amount >= doesOPExist.UnitPrice)
                             return Failure("A Credit cannot be superior or equal to the ordered product unit price.");
 
@@ -195,14 +210,45 @@ namespace API.Services.Order
                             );
                         }
 
+                        // Retrieves concerned storage.
                         var storage = CastIntoStorage(
                             (await SLPService.StorageService.GuardedGetFromOrderedProduct(doesOPExist)
                         ).Content);
-                        var created = await OrderDueServices.GuardedCreateOrderCredit(
+
+                        // Prepares update function for the following step.
+                        async Task<GuardResult> UpdateBalance(int uBId, int amnt)
+                        {
+                            if (amnt >= 0) return Failure("Amount must be negative.");
+                            return await UserBalanceService.GuardedUpdateUserBalance(uBId, amnt);
+                        }
+                        // Creates a new User Balance if it doesn't exist,
+                        // then edits it or directly edits the already existing one.
+                        var userBalance = await UserBalanceService.GuardedGetFromUser(userId);
+
+                        if (userBalance.Code == Status.Failure)
+                        {
+                            var createdBalance = await UserBalanceService.GuardedCreateUserBalance(userId, storage.ProjectId);
+
+                            await UpdateBalance(
+                                (int)createdBalance.Content,
+                                -(amount)
+                            );
+                        }
+                        else
+                        {
+                            await UpdateBalance(
+                                CastIntoUserBalance(userBalance.Content).UserBalanceId,
+                                -(amount)
+                            );
+                        }
+
+                        // Creates a new Order Credit.
+                        var createdCredit = await OrderDueServices.GuardedCreateOrderCredit(
                             storage.ProjectId,
                             userId,
                             amount
                         );
+                        // Updates Ordered Product payment state (sets it to Payment.Credited).
                         using (var ctx = new SqlStandardCallContext())
                         {
                             var updated = await OrderedProductTable.UpdatePaymentState(
@@ -212,12 +258,11 @@ namespace API.Services.Order
                             );
                         }
 
-                        result = ((int)created.Content > 0) ? true : false;
+                        result = ((int)createdCredit.Content > 0) ? true : false;
                     }
                     else return Failure("When Payment State is 'Credited', 'Amount' must be filled in.");
                     break;
             }
-
             return result ? Success(result) : Failure("No update was proceeded.");
         }
 

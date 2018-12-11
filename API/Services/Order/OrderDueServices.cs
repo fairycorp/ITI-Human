@@ -5,6 +5,7 @@ using ITI.Human.Data;
 using ITI.Human.ViewModels.Order;
 using ITI.Human.ViewModels.Order.Payment;
 using ITI.Human.ViewModels.Product.Ordered;
+using ITI.Human.ViewModels.User;
 using Stall.Guard.System;
 using System;
 using System.Collections.Generic;
@@ -27,13 +28,16 @@ namespace API.Services.Order
 
         public OrderCreditTable OrderCreditTable { get; set; }
 
+        public UserBalanceTable UserBalanceTable { get; set; }
+
         public OrderDueServices(ProjectService pService, OrderFinalDueTable oFDTable,
-            OrderPaymentTable oPTable, OrderCreditTable oCTable)
+            OrderPaymentTable oPTable, OrderCreditTable oCTable, UserBalanceTable uBTable)
         {
             ProjectService = pService;
             OrderFinalDueTable = oFDTable;
             OrderPaymentTable = oPTable;
             OrderCreditTable = oCTable;
+            UserBalanceTable = uBTable;
         }
 
         /// <summary>
@@ -193,6 +197,8 @@ namespace API.Services.Order
             return Success(result);
         }
 
+        
+
         // --------------------------------------------------------------------------------------------
 
         private async Task<BasicDataOrderFinalDue> GetOrderFinalDue(int orderFinalDue)
@@ -318,6 +324,26 @@ namespace API.Services.Order
             using (var ctx = new SqlStandardCallContext())
             {
                 return await OrderCreditTable.Create(ctx, 0, projectId, userId, amount, moment);
+            }
+        }
+
+        private async Task<BasicDataUserBalance> GetUserBalance(int userBalanceId)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await ctx[UserBalanceTable].Connection
+                    .QueryFirstOrDefaultAsync<BasicDataUserBalance>(
+                        "SELECT * FROM ITIH.tUserBalance WHERE UserBalanceId = @id",
+                        new { id = userBalanceId }
+                    );
+            }
+        }
+
+        private async Task<bool> UpdateUserBalance(int userBalanceId, int amount)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await UserBalanceTable.Update(ctx, 0, userBalanceId, amount);
             }
         }
 
