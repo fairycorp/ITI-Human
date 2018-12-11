@@ -105,6 +105,7 @@ namespace API
             services.AddSingleton<StorageService>();
             services.AddSingleton<SLPService>();
             services.AddSingleton<UserService>();
+            services.AddSingleton<UserBalanceService>();
 
             services.AddCors();
             services.AddMvc();
