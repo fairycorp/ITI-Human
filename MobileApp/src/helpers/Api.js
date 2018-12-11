@@ -14,7 +14,6 @@ class API {
     get(endpoint) {
         const checked = this.routineCheck(endpoint);
         let url = `${this.Path}${checked}`;
-        console.log('url: ' + url);
         return Axios.get(url);
     }
 

@@ -1,6 +1,10 @@
 <template>
     <f7-page>
-        <button v-for="projectInfos in ProjectInfos" :key="projectInfos.projectId" @click="GetStorage(projectInfos.projectId)">{{ projectInfos.projectName }}</button>
+        <button v-for="projectInfos in ProjectInfos" 
+          :key="projectInfos.projectId" 
+          @click="GetStorage(projectInfos.projectId)">
+          {{ projectInfos.projectName }}
+        </button>
     </f7-page>
 </template>
 

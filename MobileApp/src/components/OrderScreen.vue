@@ -1,15 +1,18 @@
 <template>
-  <scroll-view>
-    <view>
-      <text> En quelle salle êtes vous</text> <input id="ClassroomId" type="text">
+  <f7-page>
+    <f7-block>
+      <p> En quelle salle êtes vous </p>
       <br/>
-      <button
-        :on-press="Continue"
-        title="Continue"
-      />
-      <text>{{StorageProducts}}</text>
-    </view> 
-  </scroll-view>
+      <f7-input type="text" input-id="ClassroomId" placeholder="Your name"></f7-input>
+      <br/>
+      <br/>
+      <button v-for="projectInfos in ProjectInfos" 
+        :key="projectInfos.projectId" 
+        @click="Continue()"> 
+        Continue
+      </button>
+    </f7-block>
+  </f7-page>
 </template>
 
 <script>
