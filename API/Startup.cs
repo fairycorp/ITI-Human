@@ -1,4 +1,5 @@
-﻿using API.Services.Classroom;
+﻿using API.Services;
+using API.Services.Classroom;
 using API.Services.Order;
 using API.Services.Product;
 using API.Services.Project;
@@ -52,6 +53,7 @@ namespace API
                  options.CallbackPath = new PathString("/signin-github");
 
                  options.Scope.Add("user:email");
+                 options.Scope.Add("user:profile");
                  options.AuthorizationEndpoint = "https://github.com/login/oauth/authorize";
                  options.TokenEndpoint = "https://github.com/login/oauth/access_token";
                  options.UserInformationEndpoint = "https://api.github.com/user";
@@ -96,6 +98,7 @@ namespace API
 
             services.AddSingleton<IAuthenticationTypeSystem, StdAuthenticationTypeSystem>();
             services.AddSingleton<IWebFrontAuthLoginService, SqlWebFrontAuthLoginService>();
+            services.AddSingleton<IWebFrontAuthAutoCreateAccountService, AutoCreateAccountService>();
             services.AddSingleton<ClassroomService>();
             services.AddSingleton<OrderService>();
             services.AddSingleton<OrderDueServices>();
