@@ -61,6 +61,9 @@ namespace ITI.Human.Data.Tests
             var sMTable = (SchoolMemberTable)
                 Initialize(Element.SchoolMember);
 
+            var uDTable = (UserDetailsTable)
+                Initialize(Element.UserDetails);
+
             using (var ctx = new SqlStandardCallContext())
             {
                 object doesExist;
@@ -100,7 +103,7 @@ namespace ITI.Human.Data.Tests
                 doesExist = await GetElement(Element.User, strIdentifier: userName3);
                 if (doesExist != null) return;
 
-                // Creates users (considered as school members).
+                // Creates users (considered as school members) and their details.
                 var userId1 = await uTable.CreateUserAsync(ctx, 1, userName1);
                 var userId2 = await uTable.CreateUserAsync(ctx, 1, userName2);
                 var userId3 = await uTable.CreateUserAsync(ctx, 1, userName3);
@@ -108,6 +111,11 @@ namespace ITI.Human.Data.Tests
                 var schoolMember1 = await sMTable.Create(ctx, 0, userId1, 5);
                 var schoolMember2 = await sMTable.Create(ctx, 0, userId2, 5);
                 var schoolMember3 = await sMTable.Create(ctx, 0, userId3, 5);
+
+                var userDetails1 = await uDTable.Create(ctx, 0, userId1, "Charles", "Resini", new DateTime(1997, 10, 12));
+                var userDetails2 = await uDTable.Create(ctx, 0, userId2, "Pierre", "Loderin", new DateTime(1995, 04, 19));
+                var userDetails3 = await uDTable.Create(ctx, 0, userId3, "Emma", "Ruvol", new DateTime(1996, 07, 02));
+
 
                 // Checks on projects.
                 doesExist = await GetElement(Element.Project, strIdentifier: projectName1);
@@ -222,6 +230,7 @@ namespace ITI.Human.Data.Tests
             Storage,
             StorageLinkedProduct,
             User,
+            UserDetails,
             SchoolMember
         }
 
@@ -286,6 +295,11 @@ namespace ITI.Human.Data.Tests
                     case (Element.User):
                         table = (UserTable)Initialize(Element.User);
                         tableName = "CK.tUser"; fieldName = "UserName";
+                        break;
+
+                    case (Element.UserDetails):
+                        table = (UserDetailsTable)Initialize(Element.UserDetails);
+                        tableName = "ITIH.tUserDetails"; fieldName = "UserDetailsId";
                         break;
 
                     case (Element.SchoolMember):
@@ -356,6 +370,9 @@ namespace ITI.Human.Data.Tests
 
                 case (Element.User):
                     return CK.Core.StObjModelExtension.Obtain<UserTable>(TestHelper.StObjMap.StObjs);
+
+                case (Element.UserDetails):
+                    return CK.Core.StObjModelExtension.Obtain<UserDetailsTable>(TestHelper.StObjMap.StObjs);
 
                 case (Element.SchoolMember):
                     return CK.Core.StObjModelExtension.Obtain<SchoolMemberTable>(TestHelper.StObjMap.StObjs);
