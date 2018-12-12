@@ -6,5 +6,4 @@
 );
 
 insert into ITIH.tProjectType ([Name]) values (N'');
-insert into ITIH.tProjectType ([Name]) values ('HFP');
-insert into ITIH.tProjectType ([Name]) values ('ITP');
+insert into ITIH.tProjectType ([Name]) values ('PFH');
