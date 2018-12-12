@@ -20,6 +20,8 @@
     <None Remove="Res\Model\ITIH.SchoolMemberTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.SchoolStatusTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.UserDetailsTable.Install.1.0.0.sql" />
+    <None Remove="Res\sSchoolMemberCreate.sql" />
+    <None Remove="Res\vSchoolMembers.sql" />
   </ItemGroup>
 
   <ItemGroup>

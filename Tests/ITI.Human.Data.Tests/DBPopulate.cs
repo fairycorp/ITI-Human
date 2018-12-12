@@ -58,6 +58,9 @@ namespace ITI.Human.Data.Tests
             var uTable = (UserTable)
                 Initialize(Element.User);
 
+            var sMTable = (SchoolMemberTable)
+                Initialize(Element.SchoolMember);
+
             using (var ctx = new SqlStandardCallContext())
             {
                 object doesExist;
@@ -97,11 +100,14 @@ namespace ITI.Human.Data.Tests
                 doesExist = await GetElement(Element.User, strIdentifier: userName3);
                 if (doesExist != null) return;
 
-                // Creates users.
+                // Creates users (considered as school members).
                 var userId1 = await uTable.CreateUserAsync(ctx, 1, userName1);
                 var userId2 = await uTable.CreateUserAsync(ctx, 1, userName2);
                 var userId3 = await uTable.CreateUserAsync(ctx, 1, userName3);
 
+                var schoolMember1 = await sMTable.Create(ctx, 0, userId1, 5);
+                var schoolMember2 = await sMTable.Create(ctx, 0, userId2, 5);
+                var schoolMember3 = await sMTable.Create(ctx, 0, userId3, 5);
 
                 // Checks on projects.
                 doesExist = await GetElement(Element.Project, strIdentifier: projectName1);
@@ -160,9 +166,10 @@ namespace ITI.Human.Data.Tests
                 List<DetailedDataOrder> ordersList = new List<DetailedDataOrder>();
                 foreach (var data in basicData)
                 {
-                    var detailedData = new DetailedDataOrder();
-                    detailedData.Info = data;
-                    detailedData.Products = await ctx[oTable].Connection
+                    var detailedData = new DetailedDataOrder
+                    {
+                        Info = data,
+                        Products = await ctx[oTable].Connection
                         .QueryAsync<DetailedDataOrderedProduct>(
                             @"SELECT
                                 *
@@ -171,7 +178,8 @@ namespace ITI.Human.Data.Tests
                             WHERE
                                 v.OrderId = @id;",
                             new { id = data.OrderId }
-                        );
+                        )
+                    };
                     detailedData.Info.Total = CalculateOrderTotal(detailedData.Products);
                     ordersList.Add(detailedData);
                 }
@@ -213,7 +221,8 @@ namespace ITI.Human.Data.Tests
             Project,
             Storage,
             StorageLinkedProduct,
-            User
+            User,
+            SchoolMember
         }
 
         /// <summary>
@@ -277,6 +286,11 @@ namespace ITI.Human.Data.Tests
                     case (Element.User):
                         table = (UserTable)Initialize(Element.User);
                         tableName = "CK.tUser"; fieldName = "UserName";
+                        break;
+
+                    case (Element.SchoolMember):
+                        table = (SchoolMemberTable)Initialize(Element.SchoolMember);
+                        tableName = "ITIH.tSchoolMember"; fieldName = "SchoolMemberId";
                         break;
                 }
 
@@ -342,6 +356,9 @@ namespace ITI.Human.Data.Tests
 
                 case (Element.User):
                     return CK.Core.StObjModelExtension.Obtain<UserTable>(TestHelper.StObjMap.StObjs);
+
+                case (Element.SchoolMember):
+                    return CK.Core.StObjModelExtension.Obtain<SchoolMemberTable>(TestHelper.StObjMap.StObjs);
 
                 default:
                     return new object();
