@@ -1,13 +1,17 @@
 <template>
   <f7-page>
     <f7-block>
-      <p> En quelle salle êtes vous </p>
+      <f7-list-item title="Ta Salle" smart-select>
+        <select name="salles">
+          <option v-for="classrooms in Classrooms" 
+          :key="classrooms.classroomId">
+            {{classrooms.classroomName}}
+          </option>
+        </select>
+      </f7-list-item>
       <br/>
-      <f7-input type="text" input-id="ClassroomId" placeholder="Your name"></f7-input>
       <br/>
-      <br/>
-      <button v-for="projectInfos in ProjectInfos" 
-        :key="projectInfos.projectId" 
+      <button
         @click="Continue()"> 
         Continue
       </button>
@@ -24,26 +28,30 @@ export default {
   mounted() {
     this.Projects = this.projectinfos;
     this.GetStorageProducts("storage/products/from/"+this.Projects.storageId);
+    this.GetClassrooms("classroom");
   },
 
   methods: {
-    GetStorageProducts(endpoint){
-      Api.get(endpoint).then(response => {
-        this.StorageProducts = response.data;
-      })
+    async GetStorageProducts(endpoint){
+      let response = await Api.get(endpoint);
+      this.StorageProducts = response.data;
     },
 
-    GetProductsName(endpoint){      
-      Api.get(endpoint).then(response => {
-        this.ProductName = response.data;
-      })
+    async GetProductsName(endpoint){      
+      let response = await Api.get(endpoint);
+      this.ProductName = response.data;
+    },
+
+    async GetClassrooms(endpoint){
+      let response = await Api.get(endpoint);
+      this.Classrooms = response.data;
     },
 
     Continue() {
       let order = {
         storageId: this.Projects.storageId,
         userId: 1,
-        ClassroomId: document.getElementById("ClassroomId").value,
+        //ClassroomId: document.getElementById("ClassroomId").value,
         products: []
       } 
     }
@@ -54,6 +62,7 @@ export default {
       Projects: '',
       StorageProducts: '',
       ProductName: '',
+      Classrooms: [],
     };
   }
         //new OrderViewModel(0, 1739, 0, {StorageLinkedProductId: 2147, Quantity: 2369})

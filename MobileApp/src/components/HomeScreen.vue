@@ -24,13 +24,12 @@ export default {
       this.ProjectInfos = response.data;
     },
 
-    getStorageInfos(endpoint){
-      Api.get(endpoint).then(response => {
-        this.StorageInfos = response.data;
-        this.$f7router.navigate({ name: 'order' }, {
-            props: { projectinfos: this.StorageInfos }
-        });
-      })
+    async getStorageInfos(endpoint){
+      let response = await Api.get(endpoint);
+      this.StorageInfos = response.data;
+      this.$f7router.navigate({ name: 'order' }, {
+        props: { projectinfos: this.StorageInfos }
+      });
     },
 
     GetStorage(projectId) {
