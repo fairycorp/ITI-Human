@@ -17,6 +17,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Res\Model\ITIH.SchoolMemberTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.SchoolStatusTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.UserDetailsTable.Install.1.0.0.sql" />
+    <None Remove="Res\sSchoolMemberCreate.sql" />
+    <None Remove="Res\sUserDetailsCreate.sql" />
+    <None Remove="Res\vSchoolMembers.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CK.DB.Auth" Version="3.0.1--0028-develop" />
     <PackageReference Include="CK.DB.User.UserGithub" Version="0.3.1--0032-develop" />
     <PackageReference Include="CK.DB.User.UserPassword" Version="3.0.1--0028-develop" />

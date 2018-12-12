@@ -11,18 +11,21 @@ namespace API.Controllers
     {
         public APIGuard Guard { get; }
 
-        public UserService Service { get; }
+        public UserReferenceTooltipService TooltipService { get; set; }
 
-        public UserController(UserService service)
+        public UserService UserService { get; }
+
+        public UserController(UserReferenceTooltipService uRTService, UserService service)
         {
             Guard = new APIGuard();
-            Service = service;
+            UserService = service;
+            TooltipService = uRTService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await Service.GuardedGetAll();
+            var result = await UserService.GuardedGetAll();
             if (result.Code == Status.Failure) return BadRequest(result.Info);
 
             return Ok(result.Content);
@@ -36,12 +39,28 @@ namespace API.Controllers
 
             if (check.Code == Status.Success)
             {
-                var result = await Service.GuardedGet(userId);
+                var result = await UserService.GuardedGet(userId);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                 return Ok(result.Content);
             }
 
+            return BadRequest(check.Info);
+        }
+
+        [HttpGet("tooltip/{userId}")]
+        public async Task<IActionResult> GetReferenceTooltip(int userId)
+        {
+            var check =
+                Guard.IsAdmissible(nameof(userId), userId);
+
+            if (check.Code == Status.Success)
+            {
+                var result = await TooltipService.GuardedGet(userId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
             return BadRequest(check.Info);
         }
     }

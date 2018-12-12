@@ -1,4 +1,5 @@
-﻿using API.Services.Classroom;
+﻿using API.Services;
+using API.Services.Classroom;
 using API.Services.Order;
 using API.Services.Product;
 using API.Services.Project;
@@ -6,8 +7,10 @@ using API.Services.Storage;
 using API.Services.User;
 using CK.AspNet.Auth;
 using CK.Auth;
+using CK.Core;
 using CK.DB.AspNet.Auth;
 using CK.DB.User.UserGitHub;
+using ITI.Human.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
@@ -52,6 +55,7 @@ namespace API
                  options.CallbackPath = new PathString("/signin-github");
 
                  options.Scope.Add("user:email");
+                 options.Scope.Add("user:profile");
                  options.AuthorizationEndpoint = "https://github.com/login/oauth/authorize";
                  options.TokenEndpoint = "https://github.com/login/oauth/access_token";
                  options.UserInformationEndpoint = "https://api.github.com/user";
@@ -96,16 +100,18 @@ namespace API
 
             services.AddSingleton<IAuthenticationTypeSystem, StdAuthenticationTypeSystem>();
             services.AddSingleton<IWebFrontAuthLoginService, SqlWebFrontAuthLoginService>();
+            services.AddSingleton<IWebFrontAuthAutoCreateAccountService, AutoCreateAccountService>();
             services.AddSingleton<ClassroomService>();
-            services.AddSingleton<OrderService>();
             services.AddSingleton<OrderDueServices>();
+            services.AddSingleton<OrderService>();
             services.AddSingleton<OrderedProductService>();
             services.AddSingleton<ProductService>();
             services.AddSingleton<ProjectService>();
-            services.AddSingleton<StorageService>();
             services.AddSingleton<SLPService>();
-            services.AddSingleton<UserService>();
+            services.AddSingleton<StorageService>();
             services.AddSingleton<UserBalanceService>();
+            services.AddSingleton<UserService>();
+            services.AddSingleton<UserReferenceTooltipService>();
 
             services.AddCors();
             services.AddMvc();
@@ -126,9 +132,10 @@ namespace API
         public override Task TicketReceived(TicketReceivedContext c)
         {
             var authService = c.HttpContext.RequestServices.GetRequiredService<WebFrontAuthService>();
-            return authService.HandleRemoteAuthentication<IUserGitHubInfo>(c, payload =>
+            return authService.HandleRemoteAuthentication<IExtendedUserGitHubInfo>(c, payload =>
             {
                 payload.GitHubAccountId = c.Principal.FindFirst(ClaimTypes.NameIdentifier).Value;
+                payload.Name = c.Principal.FindFirst(ClaimTypes.Name).Value;
             });
         }
     }
