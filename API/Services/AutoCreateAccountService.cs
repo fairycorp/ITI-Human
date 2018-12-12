@@ -4,7 +4,10 @@ using CK.Core;
 using CK.DB.Actor;
 using CK.DB.Auth;
 using CK.SqlServer;
+using Microsoft.Extensions.Primitives;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace API.Services
@@ -40,13 +43,37 @@ namespace API.Services
         /// <param name="context">The user creation context.</param>
         public async Task<UserLoginResult> CreateAccountAndLoginAsync(IActivityMonitor monitor, IWebFrontAuthAutoCreateAccountContext context)
         {
+            object accountId = null;
+            object userName = Guid.NewGuid();
+
+            Type payloadType = context.Payload.GetType();
+            IList<PropertyInfo> props = new List<PropertyInfo>(payloadType.GetProperties());
+            foreach (PropertyInfo prop in props)
+            {
+                if (prop.Name == "GitHubAccountId")
+                    accountId = prop.GetValue(context.Payload, null);
+
+                if (prop.Name == "Name")
+                    userName = BuildUserName(prop.GetValue(context.Payload, null).ToString());
+            }
+            if (accountId == null) return null;
+
             var ctx = context.HttpContext.RequestServices.GetService<ISqlCallContext>();
             var result = ValidateLoginContext(ctx, monitor, context);
 
-            int idUser = await UserTable.CreateUserAsync(ctx, 1, Guid.NewGuid().ToString());
+            int idUser = await UserTable.CreateUserAsync(ctx, 1, userName.ToString());
             UCLResult dbResult = await result.Provider.CreateOrUpdateUserAsync(ctx, 1, idUser, context.Payload, UCLMode.CreateOnly | UCLMode.WithActualLogin);
             if (dbResult.OperationResult != UCResult.Created) return null;
             return await DbAuth.CreateUserLoginResultFromDatabase(ctx, TypeSystem, dbResult.LoginResult);
+        }
+
+        private string BuildUserName(string fullname)
+        {
+            var difference = fullname.Split(" ");
+            var firstName = difference[0].ToCharArray();
+            var lastName = difference[1];
+
+            return string.Format("{0}.{1}", firstName[0].ToString().ToLower(), lastName.ToLower());
         }
 
         private struct ValidateResult
@@ -61,7 +88,7 @@ namespace API.Services
         {
             if (context.CallingScheme != "GitHub")
             {
-                throw new ArgumentException("Only Github provider supports invitation.");
+                throw new ArgumentException("Only Github provider is supported.");
             }
             return new ValidateResult(DbAuth.FindProvider(context.CallingScheme));
         }
