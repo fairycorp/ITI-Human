@@ -100,6 +100,7 @@ namespace API
             services.AddSingleton<IAuthenticationTypeSystem, StdAuthenticationTypeSystem>();
             services.AddSingleton<IWebFrontAuthLoginService, SqlWebFrontAuthLoginService>();
             services.AddSingleton<IWebFrontAuthAutoCreateAccountService, AutoCreateAccountService>();
+            services.AddSingleton<AuthCheckService>();
             services.AddSingleton<ClassroomService>();
             services.AddSingleton<OrderDueServices>();
             services.AddSingleton<OrderService>();

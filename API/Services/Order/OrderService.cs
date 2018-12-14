@@ -135,7 +135,7 @@ namespace API.Services.Order
 
             // Checks if storage exists (has to) and returns failure in case it doesn't.
             var doesStorageExist =
-                await Attempt.ToGetElement(StorageService.GuardedGet, model.StorageId, true);
+                await StorageService.GuardedGet(model.StorageId);
 
             if (doesStorageExist.Code == Status.Failure)
                 return Failure(doesStorageExist.Info);

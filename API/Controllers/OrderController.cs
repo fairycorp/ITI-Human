@@ -1,4 +1,5 @@
-﻿using API.Services.Helper.Guard;
+﻿using API.Services.Auth;
+using API.Services.Helper.Guard;
 using API.Services.Order;
 using ITI.Human.ViewModels.Order;
 using ITI.Human.ViewModels.Order.Payment;
@@ -14,15 +15,18 @@ namespace API.Controllers
     {
         public APIGuard Guard { get; }
 
+        public AuthCheckService AuthCheckService { get; set; }
+
         public OrderService OrderService { get; }
 
         public OrderDueServices OrderDueServices { get; }
 
         public OrderedProductService OrderedProductService { get; set; }
 
-        public OrderController(OrderService oService, OrderDueServices oDServices, OrderedProductService oPService)
+        public OrderController(AuthCheckService aCService, OrderService oService, OrderDueServices oDServices, OrderedProductService oPService)
         {
             Guard = new APIGuard();
+            AuthCheckService = aCService;
             OrderService = oService;
             OrderDueServices = oDServices;
             OrderedProductService = oPService;
@@ -30,7 +34,12 @@ namespace API.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
-            => Ok((await OrderService.GuardedGetAll()).Content);
+        {
+            var result = await OrderService.GuardedGetAll();
+            if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+            return Ok(result.Content);
+        }
 
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetAllDetailedOrdersOfUser(int userId)
