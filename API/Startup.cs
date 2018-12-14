@@ -1,4 +1,4 @@
-﻿using API.Services;
+﻿using API.Services.Auth;
 using API.Services.Classroom;
 using API.Services.Order;
 using API.Services.Product;
@@ -9,7 +9,6 @@ using CK.AspNet.Auth;
 using CK.Auth;
 using CK.Core;
 using CK.DB.AspNet.Auth;
-using CK.DB.User.UserGitHub;
 using ITI.Human.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
