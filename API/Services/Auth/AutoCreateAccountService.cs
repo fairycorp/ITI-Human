@@ -4,13 +4,12 @@ using CK.Core;
 using CK.DB.Actor;
 using CK.DB.Auth;
 using CK.SqlServer;
-using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace API.Services
+namespace API.Services.Auth
 {
     /// <summary>
     /// Auto creation of account from Github login based on a simple invitation.
@@ -43,17 +42,19 @@ namespace API.Services
         /// <param name="context">The user creation context.</param>
         public async Task<UserLoginResult> CreateAccountAndLoginAsync(IActivityMonitor monitor, IWebFrontAuthAutoCreateAccountContext context)
         {
+            const string GitHubAccountIdPropName = "GitHubAccountId";
+            const string UserFullNamePropName = "Name";
             object accountId = null;
             object userName = Guid.NewGuid();
 
-            Type payloadType = context.Payload.GetType();
-            IList<PropertyInfo> props = new List<PropertyInfo>(payloadType.GetProperties());
+            var payloadType = context.Payload.GetType();
+            var props = new List<PropertyInfo>(payloadType.GetProperties());
             foreach (PropertyInfo prop in props)
             {
-                if (prop.Name == "GitHubAccountId")
+                if (prop.Name == GitHubAccountIdPropName)
                     accountId = prop.GetValue(context.Payload, null);
 
-                if (prop.Name == "Name")
+                if (prop.Name == UserFullNamePropName)
                     userName = BuildUserName(prop.GetValue(context.Payload, null).ToString());
             }
             if (accountId == null) return null;

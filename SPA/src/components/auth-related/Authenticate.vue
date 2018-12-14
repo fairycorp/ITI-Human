@@ -62,10 +62,6 @@ export default class Authenticate extends Vue {
     const configuration: IAuthServiceConfiguration = appSettings;
     this.authService = new AuthService(configuration, Axios);
     this.authService.refresh(true, true, true);
-    this.$store.commit("change", this.authService);
-    if (this.$store.state.authService.level > 0) {
-      this.$router.push("/home");
-    }
     this.schemeDisplayParemeter = new SchemeDisplayParameter(
       this.authService,
       "localhost:8081/assets/"
@@ -86,7 +82,6 @@ export default class Authenticate extends Vue {
 
   private async logOut() {
     await this.authService.logout(true);
-    this.$store.commit("change", this.authService);
     this.displayLoginBox = false;
   }
 }
