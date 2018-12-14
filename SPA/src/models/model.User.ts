@@ -2,4 +2,4 @@ interface IUserBasicData {
     userId: number;
 }
 
-export { IUserBasicData }
+export { IUserBasicData };

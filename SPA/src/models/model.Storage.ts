@@ -35,4 +35,4 @@ export {
     IBasicDataStorageLinkedProduct,
     ILinkedProductCreationViewModel,
     ILinkedProductUpdateViewModel,
-}
+};

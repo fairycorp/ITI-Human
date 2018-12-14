@@ -13,7 +13,7 @@ interface IProductNameGettingViewModel {
     name: string;
 }
 
-interface IUpdateViewModel{
+interface IUpdateViewModel {
     productId: number;
     name: string;
     desc: string;
@@ -23,5 +23,5 @@ export {
     IBasicDataProduct,
     ICreationViewModel,
     IProductNameGettingViewModel,
-    IUpdateViewModel
-}
+    IUpdateViewModel,
+};
