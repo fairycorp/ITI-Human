@@ -1,7 +1,14 @@
-﻿namespace ITI.Human.ViewModels.Storage.LinkedProduct
+﻿using ITI.Human.ViewModels.User;
+
+namespace ITI.Human.ViewModels.Storage.LinkedProduct
 {
     public class CreationViewModel
     {
+        /// <summary>
+        /// See <see cref="BasicDataUser.UserId"/>.
+        /// </summary>
+        public int UserId { get; set; }
+
         /// <summary>
         /// See <see cref="BasicDataStorageSLP.StorageId"/>.
         /// </summary>

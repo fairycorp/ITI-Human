@@ -181,7 +181,7 @@ namespace API.Services.Order
 
                         if (CastIntoOrderPaymentEnumerable(orderedProductsPaymentStateReferences.Content).AsList().Count > 0)
                         {
-                            var deletion = await OrderDueServices.GuardedDeleteOrderPayments(orderedProductId);
+                            var deletion = await OrderDueServices.GuardedDeleteOrderPayments(userId, orderedProductId);
                             var update = await OrderDueServices.GuardedUpdateFinalDue(CastIntoOrderFinalDue(orderFinalDue.Content).Info.OrderFinalDueId, amount);
                             result = (deletion.Code == Status.Success || update.Code == Status.Success) ? true : false;
                         }
@@ -244,6 +244,7 @@ namespace API.Services.Order
 
                         // Creates a new Order Credit.
                         var createdCredit = await OrderDueServices.GuardedCreateOrderCredit(
+                            userId,
                             storage.ProjectId,
                             userId,
                             amount

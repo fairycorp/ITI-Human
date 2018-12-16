@@ -35,6 +35,37 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "updatePaymentState",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"userId\": 3,\n\t\t\"orderedProductId\": 1,\n\t\t\"paymentState\": {\n\t\t\t\"state\": 1,\n\t\t\t\"amount\": 20\n\t\t}\n\t},\n\t\n\t{\n\t\t\"userId\": 3,\n\t\t\"orderedProductId\": 2,\n\t\t\"paymentState\": {\n\t\t\t\"state\": 0,\n\t\t\t\"amount\": 30\n\t\t}\n\t}\n]"
+								},
+								"url": {
+									"raw": "http://localhost:5000/order/paymentState",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"order",
+										"paymentState"
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"_postman_isSubFolder": true
@@ -43,7 +74,13 @@
 					"name": "getAll",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer CfDJ8I4393VoVCJBgJ_CPZXSn1rS4Xbzkw0_cYS19RsTXbbgW5LiSUKeIcMuvy0yBLitscv2vbJOC2-P1hMFP8u_LgFUwS29GiBWczb_dO2kCIr_Y1MDoQ7XCH5K4YiMCprDr4K2n3t287wXHnIBhokVC0jRKHg6bcE1-8tT_2bo-FUcoA3sMPFUopy3LFhosz2Thw",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -57,6 +94,13 @@
 							"port": "{{port}}",
 							"path": [
 								"order"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
 							]
 						},
 						"description": "Gets all detailed Orders."
@@ -67,7 +111,13 @@
 					"name": "getAllOfUser",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer CfDJ8I4393VoVCJBgJ_CPZXSn1rS4Xbzkw0_cYS19RsTXbbgW5LiSUKeIcMuvy0yBLitscv2vbJOC2-P1hMFP8u_LgFUwS29GiBWczb_dO2kCIr_Y1MDoQ7XCH5K4YiMCprDr4K2n3t287wXHnIBhokVC0jRKHg6bcE1-8tT_2bo-FUcoA3sMPFUopy3LFhosz2Thw",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -99,11 +149,16 @@
 								"name": "Content-Type",
 								"value": "application/json",
 								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer CfDJ8I4393VoVCJBgJ_CPZXSn1poTwaJQv-Z6Dh6Q9Bm3IMn91d9ws4UbU1uVRapfVwtPlIiQciE_VuAo2-1aXb0qNUma_klWV94G1KGuH2jziac6umlcBcI3qCcoD0UOJ0sp5BbVmGjxxTPn55BnoyVLKOi1t_md_nu1ccRPNxwxP6jK2KKpRSBUy_OWzEbatyIvQ",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"StorageId\": 2,\n\t\"UserId\": 3712,\n\t\"ClassroomId\": 2,\n\t\"Products\": [\n\t\t{\n\t\t\t\"StorageLinkedProductId\": 6,\n\t\t\t\"Quantity\": 1\n\t\t},\n\t\t{\n\t\t\t\"StorageLinkedProductId\": 7,\n\t\t\t\"Quantity\": 2\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"StorageId\": 2,\n\t\"UserId\": 5,\n\t\"ClassroomId\": 2,\n\t\"Products\": [\n\t\t{\n\t\t\t\"StorageLinkedProductId\": 6,\n\t\t\t\"Quantity\": 1\n\t\t},\n\t\t{\n\t\t\t\"StorageLinkedProductId\": 7,\n\t\t\t\"Quantity\": 2\n\t\t}\n\t]\n}"
 						},
 						"url": {
 							"raw": "http://localhost:5000/order/create",
@@ -119,37 +174,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "update",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"info\": {\n        \"orderId\": 1,\n        \"storageId\": 1,\n        \"userId\": 2,\n        \"userName\": \"Geralt\",\n        \"classroomId\": 3,\n        \"classroomName\": \"E03\",\n        \"creationDate\": \"2018-11-16T11:37:22.0349466\",\n        \"currentState\": 0,\n        \"total\": 170\n    },\n    \"products\": [\n        {\n            \"orderedProductId\": 1,\n            \"orderId\": 1,\n            \"storageLinkedProductId\": 2,\n            \"name\": \"Kinder Maxi\",\n            \"desc\": \"a\",\n            \"unitPrice\": 80,\n            \"quantity\": 4,\n            \"currentState\": 0,\n            \"payment\": {\n            \t\"State\": 0,\n            \t\"Amount\": 0\n            }\n        },\n        {\n            \"orderedProductId\": 2,\n            \"orderId\": 1,\n            \"storageLinkedProductId\": 3,\n            \"name\": \"Coca-Cola (33cl)\",\n            \"desc\": \"a\",\n            \"unitPrice\": 90,\n            \"quantity\": 2,\n            \"currentState\": 0,\n            \"payment\": {\n            \t\"State\": 0,\n            \t\"Amount\": 0\n            }\n        }\n    ]\n}"
-						},
-						"url": {
-							"raw": "http://localhost:5000/order/update",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"order",
-								"update"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -160,7 +184,13 @@
 					"name": "getAll",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer CfDJ8I4393VoVCJBgJ_CPZXSn1poTwaJQv-Z6Dh6Q9Bm3IMn91d9ws4UbU1uVRapfVwtPlIiQciE_VuAo2-1aXb0qNUma_klWV94G1KGuH2jziac6umlcBcI3qCcoD0UOJ0sp5BbVmGjxxTPn55BnoyVLKOi1t_md_nu1ccRPNxwxP6jK2KKpRSBUy_OWzEbatyIvQ",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -188,7 +218,13 @@
 					"name": "getAll",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer CfDJ8I4393VoVCJBgJ_CPZXSn1poTwaJQv-Z6Dh6Q9Bm3IMn91d9ws4UbU1uVRapfVwtPlIiQciE_VuAo2-1aXb0qNUma_klWV94G1KGuH2jziac6umlcBcI3qCcoD0UOJ0sp5BbVmGjxxTPn55BnoyVLKOi1t_md_nu1ccRPNxwxP6jK2KKpRSBUy_OWzEbatyIvQ",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -211,7 +247,13 @@
 					"name": "getById",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer CfDJ8I4393VoVCJBgJ_CPZXSn1poTwaJQv-Z6Dh6Q9Bm3IMn91d9ws4UbU1uVRapfVwtPlIiQciE_VuAo2-1aXb0qNUma_klWV94G1KGuH2jziac6umlcBcI3qCcoD0UOJ0sp5BbVmGjxxTPn55BnoyVLKOi1t_md_nu1ccRPNxwxP6jK2KKpRSBUy_OWzEbatyIvQ",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -241,6 +283,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer CfDJ8I4393VoVCJBgJ_CPZXSn1poTwaJQv-Z6Dh6Q9Bm3IMn91d9ws4UbU1uVRapfVwtPlIiQciE_VuAo2-1aXb0qNUma_klWV94G1KGuH2jziac6umlcBcI3qCcoD0UOJ0sp5BbVmGjxxTPn55BnoyVLKOi1t_md_nu1ccRPNxwxP6jK2KKpRSBUy_OWzEbatyIvQ",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -273,11 +320,16 @@
 								"name": "Content-Type",
 								"value": "application/json",
 								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer CfDJ8I4393VoVCJBgJ_CPZXSn1poTwaJQv-Z6Dh6Q9Bm3IMn91d9ws4UbU1uVRapfVwtPlIiQciE_VuAo2-1aXb0qNUma_klWV94G1KGuH2jziac6umlcBcI3qCcoD0UOJ0sp5BbVmGjxxTPn55BnoyVLKOi1t_md_nu1ccRPNxwxP6jK2KKpRSBUy_OWzEbatyIvQ",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"Name\":\"Arizona Grenade (25cl)\",\n\t\"Desc\":\"Une boisson délicieuse.\"\n}"
+							"raw": "{\n\t\"UserId\": 5,\n\t\"Name\":\"Arizona Grenade (25cl)\",\n\t\"Desc\":\"Une boisson délicieuse.\"\n}"
 						},
 						"url": {
 							"raw": "http://{{host}}:{{port}}/product/create",
@@ -304,11 +356,16 @@
 								"name": "Content-Type",
 								"type": "text",
 								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer CfDJ8I4393VoVCJBgJ_CPZXSn1poTwaJQv-Z6Dh6Q9Bm3IMn91d9ws4UbU1uVRapfVwtPlIiQciE_VuAo2-1aXb0qNUma_klWV94G1KGuH2jziac6umlcBcI3qCcoD0UOJ0sp5BbVmGjxxTPn55BnoyVLKOi1t_md_nu1ccRPNxwxP6jK2KKpRSBUy_OWzEbatyIvQ",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"ProductId\": 10,\n\t\"Name\": \"Arizona Grenade (25cl)\",\n\t\"Desc\": \"Une boisson délicieuse.\"\n}"
+							"raw": "{\n\t\"UserId\": 5,\n\t\"ProductId\": 10,\n\t\"Name\": \"Arizona Grenade (25cl)\",\n\t\"Desc\": \"Une boisson délicieuse.\"\n}"
 						},
 						"url": {
 							"raw": "http://{{host}}:{{port}}/product/update",
@@ -337,7 +394,13 @@
 							"name": "getAll",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer CfDJ8I4393VoVCJBgJ_CPZXSn1poTwaJQv-Z6Dh6Q9Bm3IMn91d9ws4UbU1uVRapfVwtPlIiQciE_VuAo2-1aXb0qNUma_klWV94G1KGuH2jziac6umlcBcI3qCcoD0UOJ0sp5BbVmGjxxTPn55BnoyVLKOi1t_md_nu1ccRPNxwxP6jK2KKpRSBUy_OWzEbatyIvQ",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": ""
@@ -367,11 +430,16 @@
 										"name": "Content-Type",
 										"value": "application/json",
 										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer CfDJ8I4393VoVCJBgJ_CPZXSn1poTwaJQv-Z6Dh6Q9Bm3IMn91d9ws4UbU1uVRapfVwtPlIiQciE_VuAo2-1aXb0qNUma_klWV94G1KGuH2jziac6umlcBcI3qCcoD0UOJ0sp5BbVmGjxxTPn55BnoyVLKOi1t_md_nu1ccRPNxwxP6jK2KKpRSBUy_OWzEbatyIvQ",
+										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"StorageId\": 1,\n\t\"ProductId\": 5,\n\t\"UnitPrice\": 0,\n\t\"Stock\": 0\n}"
+									"raw": "{\n\t\"UserId\": 5,\n\t\"StorageId\": 1,\n\t\"ProductId\": 5,\n\t\"UnitPrice\": 0,\n\t\"Stock\": 0\n}"
 								},
 								"url": {
 									"raw": "http://{{host}}:{{port}}/storage/products/create",
@@ -399,11 +467,16 @@
 										"name": "Content-Type",
 										"type": "text",
 										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer CfDJ8I4393VoVCJBgJ_CPZXSn1poTwaJQv-Z6Dh6Q9Bm3IMn91d9ws4UbU1uVRapfVwtPlIiQciE_VuAo2-1aXb0qNUma_klWV94G1KGuH2jziac6umlcBcI3qCcoD0UOJ0sp5BbVmGjxxTPn55BnoyVLKOi1t_md_nu1ccRPNxwxP6jK2KKpRSBUy_OWzEbatyIvQ",
+										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"StorageLinkedProductId\": 4,\n\t\"Stock\":40,\n\t\"UnitPrice\": 10\n}"
+									"raw": "{\n\t\"UserId\": 5,\n\t\"StorageLinkedProductId\": 4,\n\t\"Stock\": 40,\n\t\"UnitPrice\": 10\n}"
 								},
 								"url": {
 									"raw": "http://{{host}}:{{port}}/storage/products/update",
@@ -428,13 +501,27 @@
 					"name": "getAll",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer CfDJ8I4393VoVCJBgJ_CPZXSn1poTwaJQv-Z6Dh6Q9Bm3IMn91d9ws4UbU1uVRapfVwtPlIiQciE_VuAo2-1aXb0qNUma_klWV94G1KGuH2jziac6umlcBcI3qCcoD0UOJ0sp5BbVmGjxxTPn55BnoyVLKOi1t_md_nu1ccRPNxwxP6jK2KKpRSBUy_OWzEbatyIvQ",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
 						"url": {
-							"raw": ""
+							"raw": "http://{{host}}:{{port}}/storage",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"storage"
+							]
 						}
 					},
 					"response": []
@@ -443,7 +530,13 @@
 					"name": "getById",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer CfDJ8I4393VoVCJBgJ_CPZXSn1poTwaJQv-Z6Dh6Q9Bm3IMn91d9ws4UbU1uVRapfVwtPlIiQciE_VuAo2-1aXb0qNUma_klWV94G1KGuH2jziac6umlcBcI3qCcoD0UOJ0sp5BbVmGjxxTPn55BnoyVLKOi1t_md_nu1ccRPNxwxP6jK2KKpRSBUy_OWzEbatyIvQ",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -468,7 +561,13 @@
 					"name": "getFromProject",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer CfDJ8I4393VoVCJBgJ_CPZXSn1poTwaJQv-Z6Dh6Q9Bm3IMn91d9ws4UbU1uVRapfVwtPlIiQciE_VuAo2-1aXb0qNUma_klWV94G1KGuH2jziac6umlcBcI3qCcoD0UOJ0sp5BbVmGjxxTPn55BnoyVLKOi1t_md_nu1ccRPNxwxP6jK2KKpRSBUy_OWzEbatyIvQ",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -484,6 +583,13 @@
 								"storage",
 								"project",
 								"2"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -498,6 +604,11 @@
 								"key": "Content-Type",
 								"name": "Content-Type",
 								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer CfDJ8I4393VoVCJBgJ_CPZXSn1poTwaJQv-Z6Dh6Q9Bm3IMn91d9ws4UbU1uVRapfVwtPlIiQciE_VuAo2-1aXb0qNUma_klWV94G1KGuH2jziac6umlcBcI3qCcoD0UOJ0sp5BbVmGjxxTPn55BnoyVLKOi1t_md_nu1ccRPNxwxP6jK2KKpRSBUy_OWzEbatyIvQ",
 								"type": "text"
 							}
 						],
@@ -525,6 +636,27 @@
 		{
 			"name": "User",
 			"item": [
+				{
+					"name": "Tooltip",
+					"item": [
+						{
+							"name": "getTooltip",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": ""
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
 				{
 					"name": "getAll",
 					"request": {

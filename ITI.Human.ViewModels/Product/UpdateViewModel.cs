@@ -1,7 +1,14 @@
-﻿namespace ITI.Human.ViewModels.Product
+﻿using ITI.Human.ViewModels.User;
+
+namespace ITI.Human.ViewModels.Product
 {
     public class UpdateViewModel
     {
+        /// <summary>
+        /// See <see cref="BasicDataUser.UserId"/>.
+        /// </summary>
+        public int UserId { get; set; }
+
         /// <summary>
         /// See <see cref="BasicDataProduct.ProductId"/>.
         /// </summary>
