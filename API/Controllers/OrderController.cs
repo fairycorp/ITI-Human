@@ -23,7 +23,8 @@ namespace API.Controllers
 
         public OrderedProductService OrderedProductService { get; set; }
 
-        public OrderController(AuthCheckService aCService, OrderService oService, OrderDueServices oDServices, OrderedProductService oPService)
+        public OrderController(AuthCheckService aCService, OrderService oService, 
+            OrderDueServices oDServices, OrderedProductService oPService)
         {
             Guard = new APIGuard();
             AuthCheckService = aCService;
@@ -35,6 +36,10 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             var result = await OrderService.GuardedGetAll();
             if (result.Code == Status.Failure) return BadRequest(result.Info);
 
@@ -44,6 +49,10 @@ namespace API.Controllers
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetAllDetailedOrdersOfUser(int userId)
         {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             var check =
                 Guard.IsAdmissible(nameof(userId), userId);
 
@@ -61,6 +70,10 @@ namespace API.Controllers
         [HttpGet("project/{projectId}")]
         public async Task<IActionResult> GetAllDetailedOrdersFromProject(int projectId)
         {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             var check =
                 Guard.IsAdmissible(nameof(projectId), projectId);
 
@@ -78,6 +91,10 @@ namespace API.Controllers
         [HttpGet("i/{orderId}")]
         public async Task<IActionResult> Get(int orderId)
         {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             var check =
                 Guard.IsAdmissible(nameof(orderId), orderId);
 
@@ -95,6 +112,10 @@ namespace API.Controllers
         [HttpGet("d/{orderId}")]
         public async Task<IActionResult> GetDetailedOrderFinalDue(int orderId)
         {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             var check =
                 Guard.IsAdmissible(nameof(orderId), orderId);
 
@@ -112,6 +133,10 @@ namespace API.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CreationViewModel model)
         {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             if (model != null)
             {
                 var modelBasicIntAnalyis = new Dictionary<string, int>
@@ -137,6 +162,10 @@ namespace API.Controllers
 
                     if (check.Code == Status.Success)
                     {
+                        var isUserIsWhoHeSaidHeWas =
+                            AuthCheckService.CheckCurrentUserIdentity(HttpContext, model.UserId);
+                        if (isUserIsWhoHeSaidHeWas.Code == Status.Failure) return Forbid();
+
                         var result = await OrderService.GuardedCreate(model);
                         if (result.Code == Status.Failure) return BadRequest(result.Info);
 
@@ -152,6 +181,10 @@ namespace API.Controllers
         [HttpPut("paymentState")]
         public async Task<IActionResult> UpdatePaymentState([FromBody] IEnumerable<PaymentStateUpdateViewModel> models)
         {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             if (models != null)
             {
                 var results = new List<object>();
@@ -160,6 +193,7 @@ namespace API.Controllers
                 {
                     var modelIntAnalysis = new Dictionary<string, int>
                     {
+                        { BuildKey(nameof(model.UserId), floor), model.UserId },
                         { BuildKey(nameof(model.OrderedProductId), floor), model.OrderedProductId },
                         { BuildKey(nameof(model.PaymentState.State), floor), (int)model.PaymentState.State },
                         { BuildKey(nameof(model.PaymentState.Amount), floor), model.PaymentState.Amount }
@@ -169,6 +203,10 @@ namespace API.Controllers
 
                     if (check.Code == Status.Success)
                     {
+                        var isUserIsWhoHeSaidHeWas =
+                            AuthCheckService.CheckCurrentUserIdentity(HttpContext, model.UserId);
+                        if (isUserIsWhoHeSaidHeWas.Code == Status.Failure) return Forbid();
+
                         var result = await OrderedProductService.GuardedUpdatePaymentState(
                             model.UserId, model.OrderedProductId, model.PaymentState.State, model.PaymentState.Amount
                         );
@@ -186,6 +224,10 @@ namespace API.Controllers
         [HttpPut("currentState")]
         public async Task<IActionResult> UpdateCurrentState([FromBody] IEnumerable<CurrentStateUpdateViewModel> models)
         {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             if (models != null)
             {
                 var results = new List<object>();
@@ -194,6 +236,7 @@ namespace API.Controllers
                 {
                     var modelIntAnalysis = new Dictionary<string, int>
                     {
+                        { BuildKey(nameof(model.UserId), floor), model.UserId },
                         { BuildKey(nameof(model.OrderedProductId), floor), model.OrderedProductId },
                         { BuildKey(nameof(model.CurrentState), floor), (int)model.CurrentState },
                     };
@@ -202,8 +245,12 @@ namespace API.Controllers
 
                     if (check.Code == Status.Success)
                     {
+                        var isUserIsWhoHeSaidHeWas =
+                            AuthCheckService.CheckCurrentUserIdentity(HttpContext, model.UserId);
+                        if (isUserIsWhoHeSaidHeWas.Code == Status.Failure) return Forbid();
+
                         var result = await OrderedProductService.GuardedUpdateCurrentState(
-                            model.OrderedProductId, model.CurrentState
+                            model.UserId, model.OrderedProductId, model.CurrentState
                         );
                         if (result.Code == Status.Failure) results.Add(result.Info);
                         else results.Add(result.Content);
@@ -218,6 +265,5 @@ namespace API.Controllers
 
         private static string BuildKey(string name, int index)
             => string.Format("{0} (at floor {1})", name, index);
-
     }
 }

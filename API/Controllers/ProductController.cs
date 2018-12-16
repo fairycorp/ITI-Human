@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Stall.Guard.System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using API.Services.Auth;
 
 namespace API.Controllers
 {
@@ -12,21 +13,38 @@ namespace API.Controllers
     public class ProductController : Controller
     {
         private APIGuard Guard { get; }
+
+        public AuthCheckService AuthCheckService { get; set; }
+
         private ProductService Service { get; }
 
-        public ProductController(ProductService service)
+        public ProductController(AuthCheckService aCService, ProductService service)
         {
             Guard = new APIGuard();
+            AuthCheckService = aCService;
             Service = service;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
-            => Ok((await Service.GuardedGetAll()).Content);
+        {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
+            var result = await Service.GuardedGetAll();
+            if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+            return Ok(result.Content);
+        }
 
         [HttpGet("i/{productId}")]
         public async Task<IActionResult> GetById(int productId)
         {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             var check =
                 Guard.IsAdmissible(nameof(productId), productId);
 
@@ -44,6 +62,10 @@ namespace API.Controllers
         [HttpPost("n")]
         public async Task<IActionResult> GetByName([FromBody] ProductNameGettingViewModel product)
         {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             var check =
                 Guard.IsAdmissible(nameof(product.Name), product.Name);
 
@@ -61,6 +83,10 @@ namespace API.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CreationViewModel model)
         {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             Dictionary<string, string> modelStrAnalysis = new Dictionary<string, string>
             {
                 { nameof(model.Name), model.Name },
@@ -70,6 +96,10 @@ namespace API.Controllers
 
             if (check.Code == Status.Success)
             {
+                var isUserIsWhoHeSaidHeWas =
+                    AuthCheckService.CheckCurrentUserIdentity(HttpContext, model.UserId);
+                if (isUserIsWhoHeSaidHeWas.Code == Status.Failure) return Forbid();
+
                 var result = await Service.GuardedCreate(model);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
@@ -81,6 +111,10 @@ namespace API.Controllers
         [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] UpdateViewModel model)
         {
+            var isAuthenticated =
+               AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             var check1 = 
                 Guard.IsAdmissible(nameof(model.ProductId), model.ProductId);
 
@@ -95,6 +129,10 @@ namespace API.Controllers
 
                 if (check2.Code == Status.Success)
                 {
+                    var isUserIsWhoHeSaidHeWas =
+                        AuthCheckService.CheckCurrentUserIdentity(HttpContext, model.UserId);
+                    if (isUserIsWhoHeSaidHeWas.Code == Status.Failure) return Forbid();
+
                     var result = await Service.GuardedUpdate(model);
                     if (result.Code == Status.Failure) return BadRequest(result.Info);
 

@@ -382,7 +382,7 @@ namespace API.Services.Order
 
                     if (CastIntoSLP(slp.Content).Stock == 0) return 0;
 
-                    var update = new ITI.Human.ViewModels.Storage.LinkedProduct.UpdateViewModel
+                    var update = new UpdateViewModel
                     {
                         StorageLinkedProductId = CastIntoSLP(slp.Content).StorageLinkedProductId,
                         UnitPrice = CastIntoSLP(slp.Content).UnitPrice,
@@ -397,12 +397,12 @@ namespace API.Services.Order
 
                         foreach (var alreadyOrderedProduct in alreadyOrdered.Products)
                         {
-                            await OrderedProductTable.Delete(ctx, 0, alreadyOrderedProduct.OrderedProductId);
+                            await OrderedProductTable.Delete(ctx, 1, alreadyOrderedProduct.OrderedProductId);
 
                             update.Stock += alreadyOrderedProduct.Quantity;
                             await SLPService.GuardedUpdate(update);
                         }
-                        await OrderTable.Delete(ctx, 0, order);
+                        await OrderTable.Delete(ctx, 1, order);
                         return 0;
                     }
                 }
