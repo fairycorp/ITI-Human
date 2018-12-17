@@ -90,7 +90,7 @@ namespace API.Services.Order
         /// Success result where result content is a <see cref="bool"/> that indicates if an update was made
         /// or Failure result if element does not exist in db.
         /// </returns>
-        public async Task<GuardResult> GuardedUpdateCurrentState(int orderedProductId, State currentState)
+        public async Task<GuardResult> GuardedUpdateCurrentState(int userId, int orderedProductId, State currentState)
         {
             // Checks if Ordered Product exists.
             // If not, returns Failure().
@@ -101,7 +101,7 @@ namespace API.Services.Order
                 string.Format("No Ordered Product with id {0} was found.", orderedProductId)
             );
 
-            var result = await UpdateCurrentState(orderedProductId, currentState);
+            var result = await UpdateCurrentState(userId, orderedProductId, currentState);
             if (!result) return Failure("No update was proceeded.");
 
             return Success(result);
@@ -162,7 +162,7 @@ namespace API.Services.Order
                     
                     if (doesPSExist.Content == null)
                     {
-                        result = await UpdatePaymentState(orderedProductId, paymentState, amount);
+                        result = await UpdatePaymentState(userId, orderedProductId, paymentState, amount);
                     }
                     break;
 
@@ -181,7 +181,7 @@ namespace API.Services.Order
 
                         if (CastIntoOrderPaymentEnumerable(orderedProductsPaymentStateReferences.Content).AsList().Count > 0)
                         {
-                            var deletion = await OrderDueServices.GuardedDeleteOrderPayments(orderedProductId);
+                            var deletion = await OrderDueServices.GuardedDeleteOrderPayments(userId, orderedProductId);
                             var update = await OrderDueServices.GuardedUpdateFinalDue(CastIntoOrderFinalDue(orderFinalDue.Content).Info.OrderFinalDueId, amount);
                             result = (deletion.Code == Status.Success || update.Code == Status.Success) ? true : false;
                         }
@@ -244,6 +244,7 @@ namespace API.Services.Order
 
                         // Creates a new Order Credit.
                         var createdCredit = await OrderDueServices.GuardedCreateOrderCredit(
+                            userId,
                             storage.ProjectId,
                             userId,
                             amount
@@ -252,7 +253,7 @@ namespace API.Services.Order
                         using (var ctx = new SqlStandardCallContext())
                         {
                             var updated = await OrderedProductTable.UpdatePaymentState(
-                                ctx, 0, DateTime.UtcNow, orderedProductId, 
+                                ctx, userId, DateTime.UtcNow, orderedProductId, 
                                 CastIntoOrderFinalDue(orderFinalDue.Content).Info.OrderFinalDueId,
                                 paymentState, 0
                             );
@@ -299,22 +300,22 @@ namespace API.Services.Order
             }
         }
 
-        private async Task<bool> UpdateCurrentState(int orderedProductId, State currentState)
+        private async Task<bool> UpdateCurrentState(int userId, int orderedProductId, State currentState)
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                return await OrderedProductTable.UpdateCurrentState(ctx, 0, DateTime.UtcNow, orderedProductId, currentState);
+                return await OrderedProductTable.UpdateCurrentState(ctx, userId, DateTime.UtcNow, orderedProductId, currentState);
             }
         }
 
-        private async Task<bool> UpdatePaymentState(int orderedProductId, Payment paymentState, int amount)
+        private async Task<bool> UpdatePaymentState(int userId, int orderedProductId, Payment paymentState, int amount)
         {
             using (var ctx = new SqlStandardCallContext())
             {
                 var orderedProduct = await Get(orderedProductId);
                 var orderFinalDue = await OrderDueServices.GuardedGetFinalDueFromOrder(orderedProduct.OrderId);
 
-                return await OrderedProductTable.UpdatePaymentState(ctx, 0, DateTime.UtcNow, orderedProductId,
+                return await OrderedProductTable.UpdatePaymentState(ctx, userId, DateTime.UtcNow, orderedProductId,
                     ((DetailedDataOrderFinalDue)orderFinalDue.Content).Info.OrderFinalDueId, paymentState, amount);
             }
         }

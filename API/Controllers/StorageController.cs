@@ -1,12 +1,11 @@
 ﻿using API.Services.Helper.Guard;
-using API.Services.Product;
 using ITI.Human.ViewModels.Storage.LinkedProduct;
-using ITI.Human.ViewModels.Storage;
 using Microsoft.AspNetCore.Mvc;
 using Stall.Guard.System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Services.Storage;
+using API.Services.Auth;
 
 namespace API.Controllers
 {
@@ -15,24 +14,41 @@ namespace API.Controllers
     {
         public APIGuard Guard { get; }
 
+        public AuthCheckService AuthCheckService { get; set; }
+
         public StorageService StorageService { get; }
 
         public SLPService SLPService { get; }
 
-        public StorageController(StorageService sService, SLPService slpService)
+        public StorageController(AuthCheckService aCService, StorageService sService,
+            SLPService slpService)
         {
             Guard = new APIGuard();
+            AuthCheckService = aCService;
             StorageService = sService;
             SLPService = slpService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllStorages()
-            => Ok((await StorageService.GuardedGetAll()).Content);
+        {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
+            var result = await StorageService.GuardedGetAll();
+            if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+            return Ok(result.Content);
+        }
 
         [HttpGet("i/{storageId}")]
         public async Task<IActionResult> GetStorage(int storageId)
         {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             var check =
                 Guard.IsAdmissible(nameof(storageId), storageId);
 
@@ -49,6 +65,10 @@ namespace API.Controllers
         [HttpGet("project/{projectId}")]
         public async Task<IActionResult> GetStorageFromProject(int projectId)
         {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             var check =
                 Guard.IsAdmissible(nameof(projectId), projectId);
 
@@ -66,6 +86,10 @@ namespace API.Controllers
         public async Task<IActionResult> CreateStorage(
             [FromBody] ITI.Human.ViewModels.Storage.CreationViewModel model)
         {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             if (model.ProjectId == 0) return BadRequest();
 
             var check1 =
@@ -83,11 +107,24 @@ namespace API.Controllers
 
         [HttpGet("products")]
         public async Task<IActionResult> GetAllStorageLinkedProducts()
-            => Ok(await SLPService.GuardedGetAll());
+        {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
+            var result = await SLPService.GuardedGetAll();
+            if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+            return Ok(result.Content);
+        }
 
         [HttpGet("products/from/{storageId}")]
         public async Task<IActionResult> GetProductsFromStorage(int storageId)
         {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             var check =
                 Guard.IsAdmissible(nameof(storageId), storageId);
 
@@ -102,13 +139,17 @@ namespace API.Controllers
         }
 
         [HttpPost("products/create")]
-        public async Task<IActionResult> CreateStorageLinkedProduct(
-            [FromBody] ITI.Human.ViewModels.Storage.LinkedProduct.CreationViewModel model)
+        public async Task<IActionResult> CreateStorageLinkedProduct([FromBody] CreationViewModel model)
         {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             if (model.StorageId == 0 || model.ProductId == 0) return BadRequest();
 
             Dictionary<string, int> modelIntAnalysis = new Dictionary<string, int>
             {
+                { nameof(model.UserId), model.UserId },
                 { nameof(model.StorageId), model.StorageId },
                 { nameof(model.ProductId), model.ProductId },
                 { nameof(model.Stock), model.Stock }
@@ -123,6 +164,10 @@ namespace API.Controllers
 
                 if (check2.Code == Status.Success)
                 {
+                    var isUserIsWhoHeSaidHeWas =
+                        AuthCheckService.CheckCurrentUserIdentity(HttpContext, model.UserId);
+                    if (isUserIsWhoHeSaidHeWas.Code == Status.Failure) return Forbid();
+
                     var result = await SLPService.GuardedCreate(model);
                     if (result.Code == Status.Failure) return BadRequest(result.Info);
 
@@ -136,6 +181,10 @@ namespace API.Controllers
         [HttpPut("products/update")]
         public async Task<IActionResult> UpdateStorageLinkedProduct([FromBody] UpdateViewModel model)
         {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
             if (model == null) return BadRequest();
 
             var check1 =
@@ -145,6 +194,7 @@ namespace API.Controllers
             {
                 Dictionary<string, int> intAnalysis = new Dictionary<string, int>
                 {
+                    { nameof(model.UserId), model.UserId },
                     { nameof(model.StorageLinkedProductId), model.StorageLinkedProductId },
                     { nameof(model.Stock), model.Stock }
                 };
@@ -153,6 +203,10 @@ namespace API.Controllers
 
                 if (check2.Code == Status.Success)
                 {
+                    var isUserIsWhoHeSaidHeWas =
+                        AuthCheckService.CheckCurrentUserIdentity(HttpContext, model.UserId);
+                    if (isUserIsWhoHeSaidHeWas.Code == Status.Failure) return Forbid();
+
                     var result = await SLPService.GuardedUpdate(model);
                     if (result.Code == Status.Failure) return BadRequest(result.Info);
 

@@ -168,11 +168,12 @@ namespace API.Services.Order
         /// <summary>
         /// Deletes all Order Payments of an Ordered Product.
         /// </summary>
+        /// <param name="actorId">Actor's id.</param>
         /// <param name="orderedProductId">Ordered Product's id.</param>
         /// <returns></returns>
-        public async Task<GuardResult> GuardedDeleteOrderPayments(int orderedProductId)
+        public async Task<GuardResult> GuardedDeleteOrderPayments(int actorId, int orderedProductId)
         {
-            var result = await DeleteOrderPayments(orderedProductId);
+            var result = await DeleteOrderPayments(actorId, orderedProductId);
             if (!result) return Failure("No deletion was proceeded.");
 
             return Success(result);
@@ -181,17 +182,19 @@ namespace API.Services.Order
         /// <summary>
         /// Creates a new Order Credit.
         /// </summary>
+        /// <param name="actorId">Actor's id.</param>
         /// <param name="projectId">Project's id.</param>
+        /// <param name="userId">User's id.</param>
         /// <param name="amount">Credited amount.</param>
         /// <returns></returns>
-        public async Task<GuardResult> GuardedCreateOrderCredit(int projectId, int userId, int amount)
+        public async Task<GuardResult> GuardedCreateOrderCredit(int actorId, int projectId, int userId, int amount)
         {
             var doesProjectExist =
                 await ProjectService.GuardedGet(projectId);
 
             if (doesProjectExist.Code == Status.Failure) return Failure(doesProjectExist.Info);
 
-            var result = await CreateOrderCredit(projectId, userId, amount, DateTime.UtcNow);
+            var result = await CreateOrderCredit(actorId, projectId, userId, amount, DateTime.UtcNow);
             if (result == 0) return Failure("Error in creation process.");
 
             return Success(result);
@@ -311,19 +314,19 @@ namespace API.Services.Order
             }
         }
 
-        private async Task<bool> DeleteOrderPayments(int orderedProductId)
+        private async Task<bool> DeleteOrderPayments(int userId, int orderedProductId)
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                return await OrderPaymentTable.Delete(ctx, 0, orderedProductId);
+                return await OrderPaymentTable.Delete(ctx, userId, orderedProductId);
             }
         }
 
-        private async Task<int> CreateOrderCredit(int projectId, int userId, int amount, DateTime moment)
+        private async Task<int> CreateOrderCredit(int actorId, int projectId, int userId, int amount, DateTime moment)
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                return await OrderCreditTable.Create(ctx, 0, projectId, userId, amount, moment);
+                return await OrderCreditTable.Create(ctx, actorId, projectId, userId, amount, moment);
             }
         }
 

@@ -212,7 +212,7 @@ namespace API.Services.Storage
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                return await StorageTable.Create(ctx, 0, model.ProjectId);
+                return await StorageTable.Create(ctx, model.UserId, model.ProjectId);
             }
         }
     }

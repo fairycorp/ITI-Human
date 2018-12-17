@@ -32,7 +32,7 @@ namespace API.Services.Auth
         /// <param name="context">Current context.</param>
         /// <param name="userId">Supposed user's id.</param>
         /// <returns></returns>
-        public GuardResult CheckUserAuthenticity(HttpContext context, int userId)
+        public GuardResult CheckCurrentUserIdentity(HttpContext context, int userId)
         {
             return (context.WebFrontAuthenticate().User.UserId == userId)
                 ? Success(null) : Failure("User is not who he said he was.");
