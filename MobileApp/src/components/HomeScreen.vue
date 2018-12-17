@@ -13,7 +13,7 @@ import Api from '../helpers/Api.js'
 import OrderScreen from './OrderScreen'
 
 export default {
-
+  
   async mounted() {
     await this.getProjectInfos("project");
   },

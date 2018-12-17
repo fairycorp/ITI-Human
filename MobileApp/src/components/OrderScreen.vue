@@ -1,21 +1,23 @@
 <template>
   <f7-page>
-    <f7-block>
+    <f7-list>
       <f7-list-item title="Ta Salle" smart-select>
-        <select name="salles">
+        <select name="salle" v-model="selectValue">
           <option v-for="classrooms in Classrooms" 
-          :key="classrooms.classroomId">
-            {{classrooms.classroomName}}
+          :key="classrooms.classroomId" :value="classrooms.name">
+            <span v-if="classrooms.classroomId > 0">{{classrooms.name}}</span>
+            <span v-else>À emporter</span>
           </option>
         </select>
       </f7-list-item>
       <br/>
       <br/>
       <button
+        v-if="selectValue != ''"
         @click="Continue()"> 
         Continue
       </button>
-    </f7-block>
+    </f7-list>
   </f7-page>
 </template>
 
@@ -24,6 +26,16 @@ import Api from '../helpers/Api.js'
 
 export default {
   props: { projectinfos: Object },
+    
+  data() {
+    return {
+      Projects: '',
+      StorageProducts: '',
+      ProductName: '',
+      Classrooms: [],
+      selectValue: ''
+    };
+  },
   
   mounted() {
     this.Projects = this.projectinfos;
@@ -51,20 +63,15 @@ export default {
       let order = {
         storageId: this.Projects.storageId,
         userId: 1,
-        //ClassroomId: document.getElementById("ClassroomId").value,
+        ClassroomId: this.selectValue,
         products: []
-      } 
+      }
+      console.log(this.selectValue);
+      this.$f7router.navigate({ name: 'chooseproducts' }, {
+        props: { projectinfos: order }
+      });
     }
   },
-
-  data() {
-    return {
-      Projects: '',
-      StorageProducts: '',
-      ProductName: '',
-      Classrooms: [],
-    };
-  }
         //new OrderViewModel(0, 1739, 0, {StorageLinkedProductId: 2147, Quantity: 2369})
 };
 </script>

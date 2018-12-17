@@ -1,12 +1,7 @@
 <template>
-  <scroll-view>
-    <view>
-        <button v-for="projectInfos in ProjectInfos" :key="projectInfos.projectId"
-          :on-press="() => GetStorage(projectInfos)"
-          :title="projectInfos.projectName"
-        />
-    </view>
-  </scroll-view>
+  <f7-page>
+  <p>{{Projects}}</p>
+  </f7-page>
 </template>
 
 <script>
@@ -14,14 +9,11 @@ import Api from '../helpers/Api.js'
 import OrderScreen from './OrderScreen'
 
 export default {
-  props: {
-    navigation: {
-      type: Object
-    }
-  },
+  props: { projectinfos: Object },
 
   mounted() {
-    this.getProjectInfos("project");
+    this.Projects = this.projectinfos;
+    console.log('i am on the chooseproductscreen');
   },
 
   methods: {
@@ -30,24 +22,11 @@ export default {
         this.ProjectInfos = response.data;
       })
     },
-
-    getStorageInfos(endpoint){
-      Api.get(endpoint).then(response => {
-        this.StorageInfos = response.data;
-        this.navigation.navigate("Orderscreen", {
-          projectinfos: this.StorageInfos
-        });
-      })
-    },
-
-    GetStorage(project) {
-      this.StorageId = project.projectId
-      this.getStorageInfos("storage/project/"+ this.StorageId)
-    }
   },
 
   data() {
     return {
+      Projects: [],
       ProjectInfos: '',
       StorageId: '',
       StorageInfos: '',
