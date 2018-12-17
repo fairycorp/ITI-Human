@@ -25,6 +25,8 @@ namespace API.Services.Auth
         private GithubService GithubService { get; }
         private UserTable UserTable { get; }
         private UserAvatarsTable UserAvatarsTable { get; }
+        private UserDetailsTable UserDetailsTable { get; }
+        private SchoolMemberTable SchoolMemberTable { get; }
         private IAuthenticationDatabaseService DbAuth { get; }
         private IAuthenticationTypeSystem TypeSystem { get; }
 
@@ -32,12 +34,16 @@ namespace API.Services.Auth
            GithubService gService,
            UserTable userTable,
            UserAvatarsTable uATable,
+           UserDetailsTable uDTable,
+           SchoolMemberTable sMTable,
            IAuthenticationDatabaseService dbAuth,
            IAuthenticationTypeSystem typeSystem)
         {
             GithubService = gService;
             UserTable = userTable;
             UserAvatarsTable = uATable;
+            UserDetailsTable = uDTable;
+            SchoolMemberTable = sMTable;
             DbAuth = dbAuth;
             TypeSystem = typeSystem;
         }
@@ -56,7 +62,8 @@ namespace API.Services.Auth
             const string UserFullNamePropName = "Name";
             const string AvatarUrlPropName = "AvatarUrl";
             object accountId = null;
-            object userName = Guid.NewGuid();
+            object tmpUserName = null;
+            object finalUserName = Guid.NewGuid();
             byte[] userAvatar = null;
 
             var payloadType = context.Payload.GetType();
@@ -67,7 +74,10 @@ namespace API.Services.Auth
                     accountId = prop.GetValue(context.Payload, null);
 
                 if (prop.Name == UserFullNamePropName)
-                    userName = BuildUserName(prop.GetValue(context.Payload, null).ToString());
+                {
+                    tmpUserName = prop.GetValue(context.Payload, null).ToString();
+                    finalUserName = BuildUserName(prop.GetValue(context.Payload, null).ToString());
+                }
 
                 if (prop.Name == AvatarUrlPropName)
                 {
@@ -85,10 +95,12 @@ namespace API.Services.Auth
             var ctx = context.HttpContext.RequestServices.GetService<ISqlCallContext>();
             var result = ValidateLoginContext(ctx, monitor, context);
 
-            int idUser = await UserTable.CreateUserAsync(ctx, 1, userName.ToString());
+            int idUser = await UserTable.CreateUserAsync(ctx, 1, finalUserName.ToString());
             UCLResult dbResult = await result.Provider.CreateOrUpdateUserAsync(ctx, 1, idUser, context.Payload, UCLMode.CreateOnly | UCLMode.WithActualLogin);
             if (dbResult.OperationResult != UCResult.Created) return null;
             int idAvatarUser = await CreateAvatar(idUser, userAvatar);
+            int idDetails = await CreateDetails(idUser, tmpUserName.ToString());
+            int idSMember = await CreateStudent(idUser);
             return await DbAuth.CreateUserLoginResultFromDatabase(ctx, TypeSystem, dbResult.LoginResult);
         }
 
@@ -97,6 +109,26 @@ namespace API.Services.Auth
             using (var ctx = new SqlStandardCallContext())
             {
                 return await UserAvatarsTable.Create(ctx, 1, userId, img);
+            }
+        }
+
+        private async Task<int> CreateDetails(int userId, string fullname)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                var difference = fullname.Split(" ");
+                var firstName = difference[0];
+                var lastName = difference[1];
+                return await UserDetailsTable.Create(ctx, 1, userId, firstName, lastName, DateTime.Now);
+            }
+        }
+
+        private async Task<int> CreateStudent(int userId)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                // schoolStatusId 5 being "Etudiant".
+                return await SchoolMemberTable.Create(ctx, 1, userId, 5);
             }
         }
 

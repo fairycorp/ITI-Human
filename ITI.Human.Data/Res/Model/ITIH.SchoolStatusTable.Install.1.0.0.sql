@@ -10,5 +10,5 @@ insert into ITIH.tSchoolStatus (SchoolStatusName) values ('Directeur');
 insert into ITIH.tSchoolStatus (SchoolStatusName) values ('Professeur');
 insert into ITIH.tSchoolStatus (SchoolStatusName) values ('Administrant');
 insert into ITIH.tSchoolStatus (SchoolStatusName) values ('Intervenant');
-insert into ITIH.tSchoolStatus (SchoolStatusName) values ('Élève');
+insert into ITIH.tSchoolStatus (SchoolStatusName) values ('Étudiant');
 insert into ITIH.tSchoolStatus (SchoolStatusName) values ('Tiers');
