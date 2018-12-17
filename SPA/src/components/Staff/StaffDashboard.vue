@@ -116,6 +116,10 @@ export default class StaffDashboard extends Vue {
 </script>
 
 <style>
+    .main {
+        margin: 0;
+    }
+    
     .under-bar {
         height: 30px;
         padding-top: 5px;

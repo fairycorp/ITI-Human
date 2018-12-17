@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace ITI.Human.ViewModels.User.SchoolMember
 {
@@ -16,6 +17,11 @@ namespace ITI.Human.ViewModels.User.SchoolMember
         /// See <see cref="BasicDataUser.UserName"/>
         /// </summary>
         public string UserName { get; set; }
+
+        /// <summary>
+        /// User's avatar.
+        /// </summary>
+        public Image Avatar { get; set; }
 
         /// <summary>
         /// User's FirstName.
