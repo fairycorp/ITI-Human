@@ -200,8 +200,6 @@ namespace API.Services.Order
             return Success(result);
         }
 
-        
-
         // --------------------------------------------------------------------------------------------
 
         private async Task<BasicDataOrderFinalDue> GetOrderFinalDue(int orderFinalDue)

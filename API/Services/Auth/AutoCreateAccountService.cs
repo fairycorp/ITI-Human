@@ -1,11 +1,15 @@
-﻿using CK.AspNet.Auth;
+﻿using API.Services.Github;
+using CK.AspNet.Auth;
 using CK.Auth;
 using CK.Core;
 using CK.DB.Actor;
 using CK.DB.Auth;
 using CK.SqlServer;
+using ITI.Human.Data;
+using Stall.Guard.System;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -18,16 +22,22 @@ namespace API.Services.Auth
     /// </summary>
     public class AutoCreateAccountService : IWebFrontAuthAutoCreateAccountService
     {
+        private GithubService GithubService { get; }
         private UserTable UserTable { get; }
+        private UserAvatarsTable UserAvatarsTable { get; }
         private IAuthenticationDatabaseService DbAuth { get; }
         private IAuthenticationTypeSystem TypeSystem { get; }
 
         public AutoCreateAccountService(
+           GithubService gService,
            UserTable userTable,
+           UserAvatarsTable uATable,
            IAuthenticationDatabaseService dbAuth,
            IAuthenticationTypeSystem typeSystem)
         {
+            GithubService = gService;
             UserTable = userTable;
+            UserAvatarsTable = uATable;
             DbAuth = dbAuth;
             TypeSystem = typeSystem;
         }
@@ -44,8 +54,10 @@ namespace API.Services.Auth
         {
             const string GitHubAccountIdPropName = "GitHubAccountId";
             const string UserFullNamePropName = "Name";
+            const string AvatarUrlPropName = "AvatarUrl";
             object accountId = null;
             object userName = Guid.NewGuid();
+            byte[] userAvatar = null;
 
             var payloadType = context.Payload.GetType();
             var props = new List<PropertyInfo>(payloadType.GetProperties());
@@ -56,6 +68,17 @@ namespace API.Services.Auth
 
                 if (prop.Name == UserFullNamePropName)
                     userName = BuildUserName(prop.GetValue(context.Payload, null).ToString());
+
+                if (prop.Name == AvatarUrlPropName)
+                {
+                    var imgFetched = GithubService.GuardedGetUserGithubAvatar(
+                        (string)prop.GetValue(context.Payload, null)
+                    );
+                    if (imgFetched.Code == Status.Failure) return null;
+
+                    userAvatar = (byte[])imgFetched.Content;
+                }
+
             }
             if (accountId == null) return null;
 
@@ -65,7 +88,16 @@ namespace API.Services.Auth
             int idUser = await UserTable.CreateUserAsync(ctx, 1, userName.ToString());
             UCLResult dbResult = await result.Provider.CreateOrUpdateUserAsync(ctx, 1, idUser, context.Payload, UCLMode.CreateOnly | UCLMode.WithActualLogin);
             if (dbResult.OperationResult != UCResult.Created) return null;
+            int idAvatarUser = await CreateAvatar(idUser, userAvatar);
             return await DbAuth.CreateUserLoginResultFromDatabase(ctx, TypeSystem, dbResult.LoginResult);
+        }
+
+        private async Task<int> CreateAvatar(int userId, byte[] img)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await UserAvatarsTable.Create(ctx, 1, userId, img);
+            }
         }
 
         private string BuildUserName(string fullname)

@@ -1,5 +1,6 @@
 ﻿using API.Services.Auth;
 using API.Services.Classroom;
+using API.Services.Github;
 using API.Services.Order;
 using API.Services.Product;
 using API.Services.Project;
@@ -102,6 +103,8 @@ namespace API
             services.AddSingleton<IWebFrontAuthAutoCreateAccountService, AutoCreateAccountService>();
             services.AddSingleton<AuthCheckService>();
             services.AddSingleton<ClassroomService>();
+            services.AddSingleton<GithubClient>();
+            services.AddSingleton<GithubService>();
             services.AddSingleton<OrderDueServices>();
             services.AddSingleton<OrderService>();
             services.AddSingleton<OrderedProductService>();
@@ -136,6 +139,7 @@ namespace API
             {
                 payload.GitHubAccountId = c.Principal.FindFirst(ClaimTypes.NameIdentifier).Value;
                 payload.Name = c.Principal.FindFirst(ClaimTypes.Name).Value;
+                payload.AvatarUrl = c.Principal.FindFirst("urn:github:avatar").Value;
             });
         }
     }
