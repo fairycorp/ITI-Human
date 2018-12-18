@@ -19,12 +19,15 @@ class API {
 
     post(endpoint, data) {
         const checked = this.routineCheck(endpoint);
-        return Axios.post(`${this.Path}${checked}`, data);
+        let url = `${this.Path}${checked}`;
+        console.log('URL : ' + url);
+        return Axios.post(url, data);
     }
 
     put(endpoint, data) {
         const checked = this.routineCheck(endpoint);
-        return Axios.put(`${this.Path}${checked}`, data);
+        let url = `${this.Path}${checked}`;
+        return Axios.put(url, data);
     }
 
     deleteT(endpoint) {

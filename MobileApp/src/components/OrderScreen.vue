@@ -59,14 +59,26 @@ export default {
       this.Classrooms = response.data;
     },
 
+    GetClassRoomId(classromName){
+      for (let index = 0; index < this.Classrooms.length; index++) {
+        if (this.Classrooms[index].name == classromName) {
+          return this.Classrooms[index].classroomId
+
+        }
+      }
+    },
+
     Continue() {
+
+      let ClassroomId = this.GetClassRoomId(this.selectValue);
+
       let order = {
         storageId: this.Projects.storageId,
         userId: 1,
-        ClassroomId: this.selectValue,
+        classroomId: ClassroomId,
         products: []
       }
-      console.log(this.selectValue);
+
       this.$f7router.navigate({ name: 'chooseproducts' }, {
         props: { projectinfos: order }
       });
