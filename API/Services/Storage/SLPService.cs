@@ -175,7 +175,7 @@ namespace API.Services.Storage
                         @"SELECT
                             *
                         FROM
-                            ITIH.tStorageLinkedProduct;"
+                            ITIH.vStorageLinkedProducts;"
                     )).ToArray();
             }
         }
@@ -189,7 +189,7 @@ namespace API.Services.Storage
                         @"SELECT
                             *
                         FROM
-                            ITIH.tStorageLinkedProduct
+                            ITIH.vStorageLinkedProducts
                         WHERE
                             StorageLinkedProductId = @id;",
                         new { id = slpId }
@@ -206,7 +206,7 @@ namespace API.Services.Storage
                         @"SELECT
                             *
                         FROM
-                            ITIH.tStorageLinkedProduct
+                            ITIH.vStorageLinkedProducts
                         WHERE
                             StorageId = @Id;",
                         new { Id = storageId }
@@ -223,7 +223,7 @@ namespace API.Services.Storage
                         @"SELECT
                             *
                         FROM
-                            ITIH.tStorageLinkedProduct
+                            ITIH.vStorageLinkedProducts
                         WHERE
                             StorageLinkedProductId = @firstId
                             AND
@@ -237,7 +237,7 @@ namespace API.Services.Storage
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                return await SLPTable.Create(ctx, 0, model.StorageId, model.ProductId, model.UnitPrice, model.Stock);
+                return await SLPTable.Create(ctx, model.UserId, model.StorageId, model.ProductId, model.UnitPrice, model.Stock);
             }
         }
 
@@ -248,10 +248,10 @@ namespace API.Services.Storage
                 var now = DateTime.UtcNow;
 
                 var result1 =
-                    await SLPTable.UpdateUnitPrice(ctx, 0, now, model.StorageLinkedProductId, model.UnitPrice);
+                    await SLPTable.UpdateUnitPrice(ctx, model.UserId, now, model.StorageLinkedProductId, model.UnitPrice);
 
                 var result2 =
-                    await SLPTable.UpdateStock(ctx, 0, now, model.StorageLinkedProductId, model.Stock);
+                    await SLPTable.UpdateStock(ctx, model.UserId, now, model.StorageLinkedProductId, model.Stock);
 
                 return new bool[2] { result1, result2 };
             }

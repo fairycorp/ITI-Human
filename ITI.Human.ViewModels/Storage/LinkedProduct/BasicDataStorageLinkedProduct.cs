@@ -1,4 +1,6 @@
-﻿namespace ITI.Human.ViewModels.Storage.LinkedProduct
+﻿using ITI.Human.ViewModels.Product;
+
+namespace ITI.Human.ViewModels.Storage.LinkedProduct
 {
     public class BasicDataStorageSLP
     {
@@ -16,6 +18,16 @@
         /// Matching Product id.
         /// </summary>
         public int ProductId { get; set; }
+
+        /// <summary>
+        /// See <see cref="BasicDataProduct.Name"/>.
+        /// </summary>
+        public string ProductName { get; set; }
+
+        /// <summary>
+        /// See <see cref="BasicDataProduct.Desc"/>.
+        /// </summary>
+        public string ProductDesc { get; set; }
 
         /// <summary>
         /// Current Storage Linked Product unit price.

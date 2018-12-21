@@ -8,6 +8,7 @@ namespace ITI.Human.Data
 {
     [SqlTable("tStorageLinkedProduct", Package = typeof(Package))]
     [Versions("1.0.0")]
+    [SqlObjectItem("vStorageLinkedProducts")]
     public abstract class StorageLinkedProductTable : SqlTable
     {
         void StObjConstruct(StorageTable sTable, ProductTable pTable)
