@@ -19,9 +19,9 @@ namespace ITI.Human.ViewModels.User.SchoolMember
         public string UserName { get; set; }
 
         /// <summary>
-        /// User's avatar.
+        /// User's avatar URL.
         /// </summary>
-        public Image Avatar { get; set; }
+        public string AvatarUrl { get; set; }
 
         /// <summary>
         /// User's FirstName.

@@ -4,7 +4,7 @@
 	[Url] varchar(max) not null
 
 	constraint PK_tUserAvatars_UserAvatarId primary key (UserAvatarId),
-	constraint FK_tUserAvatars_UserId foreign key (UserId) references CK.tUser
+	constraint FK_tUserAvatars_UserId foreign key (UserId) references CK.tUser (UserId)
 );
 
 insert into ITIH.tUserAvatars (UserId, [Url]) values (0, N'');

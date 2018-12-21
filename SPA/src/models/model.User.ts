@@ -6,6 +6,7 @@ interface IUserBasicData {
 
 interface IDetailedDataUser {
     userId: number;
+    avatarUrl: string;
     userName: string;
     firstName: string;
     lastName: string;

@@ -3,8 +3,13 @@
         <div v-if="info" class="tooltip">
             {{ info.userName }}
             <div class="tooltiptext">
-                {{ info.firstName }} {{ info.lastName }},
-                <span class="bold">{{ info.schoolStatusName }}</span>
+                <div class="image">
+                    <img :src="info.avatarUrl" width="30%" class="avatar" />
+                </div>
+                <div class="subinfo">
+                    {{ info.firstName }} {{ info.lastName }},<br />
+                    <span class="bold">{{ info.schoolStatusName }}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -31,6 +36,9 @@ export default class UserTooltip extends Vue {
         const response =
             await API.get(`${Endpoint.User}/tooltip/${this.userId}`);
         this.info = response.data;
+
+        if (this.info!.avatarUrl == null) this.info!.avatarUrl = 
+            "https://image.noelshack.com/fichiers/2018/51/5/1545400783-hd-avatar2.png"
     }
 }
 </script>
@@ -43,10 +51,14 @@ export default class UserTooltip extends Vue {
         border-bottom: 1px dotted lightgrey;
     }
 
+    .avatar {
+        border-radius: 3px;
+    }
+
     /* Tooltip text */
     .tooltip .tooltiptext {
         visibility: hidden;
-        width: 140px;
+        width: 150px;
         background-color: white;
         color: grey;
         text-align: left;
@@ -84,5 +96,18 @@ export default class UserTooltip extends Vue {
     .tooltip:hover .tooltiptext {
         visibility: visible;
         opacity: 1;
+    }
+
+    div.image {
+        position: relative;
+        top: 0;
+        left: 0;
+    }
+
+    div.subinfo {
+        position: absolute;
+        top: 0;
+        right: 17%;
+        margin-top: 2px;
     }
 </style>

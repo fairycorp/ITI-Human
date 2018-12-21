@@ -15,6 +15,6 @@ namespace ITI.Human.Data
         }
 
         [SqlProcedure("sUserAvatarCreate")]
-        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int userId, string image);
+        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int userId, string url);
     }
 }
