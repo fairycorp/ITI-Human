@@ -175,7 +175,7 @@ namespace API.Services.Storage
                         @"SELECT
                             *
                         FROM
-                            ITIH.tStorageLinkedProduct;"
+                            ITIH.vStorageLinkedProducts;"
                     )).ToArray();
             }
         }
@@ -189,7 +189,7 @@ namespace API.Services.Storage
                         @"SELECT
                             *
                         FROM
-                            ITIH.tStorageLinkedProduct
+                            ITIH.vStorageLinkedProducts
                         WHERE
                             StorageLinkedProductId = @id;",
                         new { id = slpId }
@@ -206,7 +206,7 @@ namespace API.Services.Storage
                         @"SELECT
                             *
                         FROM
-                            ITIH.tStorageLinkedProduct
+                            ITIH.vStorageLinkedProducts
                         WHERE
                             StorageId = @Id;",
                         new { Id = storageId }
@@ -223,7 +223,7 @@ namespace API.Services.Storage
                         @"SELECT
                             *
                         FROM
-                            ITIH.tStorageLinkedProduct
+                            ITIH.vStorageLinkedProducts
                         WHERE
                             StorageLinkedProductId = @firstId
                             AND

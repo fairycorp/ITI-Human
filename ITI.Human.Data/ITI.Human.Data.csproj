@@ -25,6 +25,7 @@
     <None Remove="Res\sUserAvatarCreate.sql" />
     <None Remove="Res\sUserDetailsCreate.sql" />
     <None Remove="Res\vSchoolMembers.sql" />
+    <None Remove="Res\vStorageLinkedProducts.sql" />
   </ItemGroup>
 
   <ItemGroup>
