@@ -5,6 +5,7 @@ using CK.Core;
 using CK.DB.Actor;
 using CK.DB.Auth;
 using CK.SqlServer;
+using Dapper;
 using ITI.Human.Data;
 using Stall.Guard.System;
 using System;
@@ -133,7 +134,24 @@ namespace API.Services.Auth
             var firstName = difference[0].ToCharArray();
             var lastName = difference[1];
 
-            return string.Format("{0}.{1}", firstName[0].ToString().ToLower(), lastName.ToLower());
+            string createIdentifier()
+            {
+                Random rdm = new Random();
+                return string.Format(
+                    "{0}{1}{2}{3}",
+                    rdm.Next(0, 9),
+                    rdm.Next(0, 9),
+                    rdm.Next(0, 9),
+                    rdm.Next(0, 9)
+                );
+            }
+
+            return string.Format(
+                "{0}.{1}#{2}",
+                firstName[0].ToString().ToLower(),
+                lastName.ToLower(),
+                createIdentifier()
+            );
         }
 
         private struct ValidateResult
