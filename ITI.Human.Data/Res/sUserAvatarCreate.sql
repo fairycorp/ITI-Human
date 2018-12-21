@@ -2,7 +2,7 @@
 create proc ITIH.sUserAvatarCreate (
 	@ActorId int,
 	@UserId int,
-	@Image varbinary(8000),
+	@Url nvarchar(max),
 	@UserAvatarIdResult int output
 )
 as
@@ -11,8 +11,8 @@ begin
 
 	--<PreCreate revert />
 
-	insert into ITIH.tUserAvatars (UserId, [Image])
-		values (@UserId, @Image);
+	insert into ITIH.tUserAvatars (UserId, [Url])
+		values (@UserId, @Url);
 
 	set @UserAvatarIdResult = scope_identity();
 

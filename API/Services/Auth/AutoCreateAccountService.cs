@@ -64,7 +64,7 @@ namespace API.Services.Auth
             object accountId = null;
             object tmpUserName = null;
             object finalUserName = Guid.NewGuid();
-            byte[] userAvatar = null;
+            string userAvatar = null;
 
             var payloadType = context.Payload.GetType();
             var props = new List<PropertyInfo>(payloadType.GetProperties());
@@ -81,12 +81,7 @@ namespace API.Services.Auth
 
                 if (prop.Name == AvatarUrlPropName)
                 {
-                    var imgFetched = GithubService.GuardedGetUserGithubAvatar(
-                        (string)prop.GetValue(context.Payload, null)
-                    );
-                    if (imgFetched.Code == Status.Failure) return null;
-
-                    userAvatar = (byte[])imgFetched.Content;
+                    userAvatar = prop.GetValue(context.Payload, null).ToString();
                 }
 
             }
@@ -104,11 +99,11 @@ namespace API.Services.Auth
             return await DbAuth.CreateUserLoginResultFromDatabase(ctx, TypeSystem, dbResult.LoginResult);
         }
 
-        private async Task<int> CreateAvatar(int userId, byte[] img)
+        private async Task<int> CreateAvatar(int userId, string url)
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                return await UserAvatarsTable.Create(ctx, 1, userId, img);
+                return await UserAvatarsTable.Create(ctx, 1, userId, url);
             }
         }
 
