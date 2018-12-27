@@ -130,6 +130,10 @@ input.textual:focus::placeholder {
   opacity: 0; 
 }
 
+input.textual.error {
+  border-bottom: 1px solid red;
+}
+
 button.standard {
   width: 166px;
   height: 45px;
