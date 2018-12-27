@@ -37,8 +37,9 @@ export default class UserTooltip extends Vue {
             await API.get(`${Endpoint.User}/tooltip/${this.userId}`);
         this.info = response.data;
 
-        if (this.info!.avatarUrl == null) this.info!.avatarUrl = 
-            "https://image.noelshack.com/fichiers/2018/51/5/1545400783-hd-avatar2.png"
+        if (this.info!.avatarUrl == null) {
+            this.info!.avatarUrl = "https://image.noelshack.com/fichiers/2018/51/5/1545400783-hd-avatar2.png";
+        }
     }
 }
 </script>

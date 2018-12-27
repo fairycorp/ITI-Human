@@ -1,135 +1,246 @@
 <template>
-  <div id="app">
-    <div v-if="$route.name !== 'authenticate'" class="bar">
-      <div class="bar-logo">
-        <img src="https://image.noelshack.com/fichiers/2018/48/1/1543227353-bar-logo.png" />
-      </div>
-      <div class="menu">
-        <div class="menu-element">
-          <router-link to="/home"
-          v-bind:class="{ current: $route.name == 'home' }">
-            Home
-          </router-link>
-        </div>
-        <div class="menu-element">
-          <router-link to="/staff-dashboard"
-          v-bind:class="{ current: $route.name == 'staffDashboard' }">
-            Staff Dashboard
-          </router-link>
-        </div>
-      </div>
+    <div id="global-view">
+      <router-view />
     </div>
-    <router-view />
-  </div>
 </template>
 
 <style lang="scss">
-  html {
-    margin: 0;
-    background: radial-gradient(circle at top, #ffffff, #d7d7d7);
-    background-attachment: fixed;
-  }
+$font-dir: "../src/assets/fonts";
+$image-dir: "../src/assets/images";
 
-  body {
-    margin: 0;
-  }
+/* Imports several fonts. */
+@font-face {
+  font-family: "gotham-bold";
+  src: url("#{$font-dir}/gotham-bold.otf");
+  font-weight: normal;
+}
 
-  a {
-    color: #5c5c5c;
-    text-decoration: none;
-    transition-property: color;
-    transition-duration: 0.2s;
-  }
+@font-face {
+  font-family: "OpenSans-light";
+  src: url("#{$font-dir}/openSans-light.ttf");
+  font-weight: normal;
+}
 
-  a:hover {
-    color: #01b04b;
-  }
+@font-face {
+  font-family: "OpenSans-litalic";
+  src: url("#{$font-dir}/openSans-litalic.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "OpenSans-regular";
+  src: url("#{$font-dir}/openSans-regular.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "OpenSans-italic";
+  src: url("#{$font-dir}/openSans-italic.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "OpenSans-semiBold";
+  src: url("#{$font-dir}/openSans-semiBold.ttf");
+  font-weight: normal;
+}
+
+/* Defines different animation styles. */
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Sets default background with default page properties. */
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-image: url("#{$image-dir}/page-background.jpg");
+  background-attachment: fixed;
+
+  -webkit-animation: fadein 1s;
+  -moz-animation: fadein 1s;
+  -ms-animation: fadein 1s;
+  -o-animation: fadein 1s;
+  animation: fadein 1s;
+}
+
+
+/* Sets default font as Open Sans (regular shape). */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "OpenSans-regular"
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  font-family: "gotham-bold";
+  font-size: 130%;
+  letter-spacing: 5px;
+  color: #3e4b5f;
+}
+
+h3 {
+  font-family: "gotham-bold";
+  font-size: 110%;
+  letter-spacing: 3px;
+  color: #3e4b5f;
+}
+
+p {
+  font-size: 102%;
+  text-align: justify;
+  color: #6c6c6c;
+}
+
+input.textual {
+  width: 97%;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid #c8c7c8;
+  font-family: "OpenSans-light";
+  font-size: 105%;
+
+  transition-property: border-bottom;
+  transition-duration: 0.2s;
+}
+
+input.textual::placeholder { 
+  color: #c8c7c8;
+  transition-property: opacity;
+  transition-duration: 0.2s;
+}
+
+input.textual:hover { 
+  border-bottom: 1px solid #a7a7a7; 
+}
+
+input.textual:focus {
+  outline-width: 0;
+  border-bottom: 1px solid #a7a7a7;
+}
+
+input.textual:focus::placeholder { 
+  opacity: 0; 
+}
+
+button.standard {
+  width: 166px;
+  height: 45px;
+  border-radius: 25px;
+  background-color: white;
+  border: 1px solid black;
+  font-family: "gotham-bold";
+  color: black;
   
+  transition-duration: 0.2s;
+  transition-property: background-color, color;
+}
 
-  #app {
-    font-family: "Yu Gothic UI";
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #313538;
-  }
+button.standard:hover {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
 
-  .current {
-    color: #01b04b;
-  }
+#global-view {
+  width: 100%;
+  height: 100%;
+}
 
-  .bar {
-    height: 60px;
-    background-color: white;
-    box-shadow: 0px 3px 30px rgb(218, 218, 218);
-  }
+.left-page {
+  position: fixed;
+  top: 3%;
+  left: 4%;
+  width: 44%;
+  height: 94.3%;
+  background-color: white;
+}
 
-  .bar-logo {
-    padding-top: 8px;
-    padding-left: 15px;
-  }
+.light-left-page {
+  position: fixed;
+  top: 3%;
+  left: 4%;
+  width: 37%;
+  height: 41%;
+  padding: 70px;
+  background-color: white;
+}
 
-  .menu {
-    position: absolute;
-    top: 16px;
-    left: 60px;
-    font-size: 120%;
-  }
+.right-page {
+  position: fixed;
+  top: 3%;
+  right: 4%;
+  width: 36.85%;
+  height: 81.5%;
+  padding: 70px;
+  background-color: white;
+}
 
-  .menu-element {
-    display: inline;
-    margin-left: 15px;
-  }
+.submit-button {
+  width: 97.7%;
+  padding: 8px;
+  background-color: black;
+  color: white;
+  cursor: pointer;
 
-  .bold {
-    font-weight: bold;
-  }
+  transition-property: background-color, color;
+  transition-duration: 0.1s;
+}
 
-  .small-title {
-    display: block;
-    font-size: 120%;
-    font-weight: bold;
-  }
+.submit-button:active {
+  background-color: white;
+  color: black;
+}
 
-  .informative {
-    display: block;
-    font-size: 90%;
-    color: #5d6063;
-  }
+.submit-button .submit-button-text {
+  font-family: "OpenSans-semiBold";
+  text-align: right;
+}
 
-  .subinformative {
-    display: block;
-    margin-top: 10px;
-    font-size: 75%;
-    color: #828588;
-  }
+.lightly-reduced-bottom-margin {
+  margin-bottom: -10px;
+}
 
-  .basic-button {
-      margin: 10px;
-      padding-top: 0.5em;
-      padding-bottom: 0.5em;
-      padding-left: 0.8em;
-      padding-right: 0.8em;
-      border: none;
-      border-radius: 3px;
-      background-color: #ffffff;
-      box-shadow: 0px 4px 6px rgb(204, 204, 204);
-      font-family: "Yu Gothic UI";
-      font-size: 100%;
-      font-weight: bold;
-      color: #01b04b;
+.light-top-margin {
+  margin-top: 15px;
+}
 
-      transition-property: background-color, color, box-shadow;
-      transition-duration: 0.18s;
-  }
+.medium-top-margin {
+  margin-top: 30px;
+}
 
-  .basic-button:hover {
-      background-color: #01b04b;
-      color: white;
-      cursor: pointer;
-  }
+.high-top-margin {
+  margin-top: 60px;
+}
 
-  .basic-button:focus {
-      background-color: #096e33;
-      color: white;
-  }
+.light-right-margin {
+  margin-right: 15px;
+}
+
+.medium-right-margin {
+  margin-right: 30px;
+}
+
+.high-right-margin {
+  margin-right: 60px;
+}
+
+.openSans-bold {
+  font-family: "OpenSans-semiBold";
+}
+
+.openSans-litalic {
+  font-family: "OpenSans-litalic";
+}
+
+.unselectable-text {
+  user-select: none;
+}
 </style>

@@ -27,64 +27,64 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import API from "@/services/API";
-import UserInfoBox from "@/components/auth-related/UserInfoBox.vue";
-import SchemeDisplay from "@/components/auth-related/SchemeDisplay.vue";
-import {
-  SchemeDisplayParameter,
-  SchemeDisplayReducedModeParameter
-} from "@/components/auth-related/SchemeDisplay.vue";
+// import { Component, Vue } from "vue-property-decorator";
+// import API from "@/services/API";
+// import UserInfoBox from "@/components/auth-related/UserInfoBox.vue";
+// import SchemeDisplay from "@/components/auth-related/SchemeDisplay.vue";
+// import {
+//   SchemeDisplayParameter,
+//   SchemeDisplayReducedModeParameter
+// } from "@/components/auth-related/SchemeDisplay.vue";
 
-import { appSettings } from "@/config/appSettings";
-import {
-  AuthService,
-  IAuthServiceConfiguration
-} from "@signature/webfrontauth";
-import ElementUI from "element-ui";
-import Axios from "axios";
+// import { appSettings } from "@/config/appSettings";
+// import {
+//   AuthService,
+//   IAuthServiceConfiguration
+// } from "@signature/webfrontauth";
+// import ElementUI from "element-ui";
+// import Axios from "axios";
 
-@Component({
-  components: {
-    SchemeDisplay,
-    UserInfoBox
-  }
-})
-export default class Authenticate extends Vue {
-  public authService: AuthService;
-  private schemeDisplayParemeter: SchemeDisplayParameter;
-  private schemeDisplayReducedModeParameter: SchemeDisplayReducedModeParameter;
-  private displayLoginBox: boolean = false;
+// @Component({
+//   components: {
+//     SchemeDisplay,
+//     UserInfoBox
+//   }
+// })
+// export default class Authenticate extends Vue {
+//   public authService: AuthService;
+//   private schemeDisplayParemeter: SchemeDisplayParameter;
+//   private schemeDisplayReducedModeParameter: SchemeDisplayReducedModeParameter;
+//   private displayLoginBox: boolean = false;
 
-  constructor() {
-    super();
-    if (this.$slots.None) throw new Error("No slot provided");
-    const configuration: IAuthServiceConfiguration = appSettings;
-    this.authService = new AuthService(configuration, Axios);
-    this.authService.refresh(true, true, true);
-    this.schemeDisplayParemeter = new SchemeDisplayParameter(
-      this.authService,
-      "localhost:8081/assets/"
-    );
-    this.schemeDisplayReducedModeParameter = new SchemeDisplayReducedModeParameter(
-      this.authService,
-      "localhost:8081/assets/",
-      2,
-      () => {
-        console.log("ah");
-      }
-    );
-  }
+//   constructor() {
+//     super();
+//     if (this.$slots.None) throw new Error("No slot provided");
+//     const configuration: IAuthServiceConfiguration = appSettings;
+//     this.authService = new AuthService(configuration, Axios);
+//     this.authService.refresh(true, true, true);
+//     this.schemeDisplayParemeter = new SchemeDisplayParameter(
+//       this.authService,
+//       "localhost:8081/assets/"
+//     );
+//     this.schemeDisplayReducedModeParameter = new SchemeDisplayReducedModeParameter(
+//       this.authService,
+//       "localhost:8081/assets/",
+//       2,
+//       () => {
+//         console.log("ah");
+//       }
+//     );
+//   }
 
-  private switchLoginBox(state: boolean) {
-    this.displayLoginBox = !this.displayLoginBox;
-  }
+//   private switchLoginBox(state: boolean) {
+//     this.displayLoginBox = !this.displayLoginBox;
+//   }
 
-  private async logOut() {
-    await this.authService.logout(true);
-    this.displayLoginBox = false;
-  }
-}
+//   private async logOut() {
+//     await this.authService.logout(true);
+//     this.displayLoginBox = false;
+//   }
+// }
 </script>
 
 <style>

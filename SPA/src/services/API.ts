@@ -14,7 +14,6 @@ class API {
         this.requestConfig = {
             headers: {
                 "Access-Control-Allow-Origin": "*",
-                "Authorization": "Bearer CfDJ8I4393VoVCJBgJ_CPZXSn1o3WiS0NvnEYDEhfcjBvBEmTreyUPEa3DnR-oorFDRsOk-iNch1x4BaK7hkzEMonb1FSnGr0I63pX9zpFaMojtdnleE9Lq__hH1DudN8hRvjDuSWVt001YLJJOGHS0jzWHLIpidfbtMu726NDPsrDo3mP2lc5gv9iOSXAc5nm-Waw"
             },
         };
     }
