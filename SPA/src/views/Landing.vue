@@ -1,6 +1,6 @@
 <template>
     <div class="global-content">
-        <button @click="logout()">Logout</button>
+        <button @click="logout()">logout</button>
     </div>
 </template>
 
@@ -13,6 +13,8 @@ import {
 AuthLevel
 } from "@signature/webfrontauth";
 import Axios from "axios";
+import API from "@/services/API";
+import Endpoint from "@/helpers/Endpoint";
 
 @Component({})
 export default class Landing extends Vue {
@@ -20,11 +22,6 @@ export default class Landing extends Vue {
 
     constructor() {
         super();
-        console.log(Vue.prototype.$authService);
-        if (Vue.prototype.$authService !== undefined) {
-            this.authService = Vue.prototype.$authService;
-            this.authService.refresh(true, true, true);
-        }
         this.isAccessible();
     }
     /** Watches authService instance information. */
@@ -35,16 +32,28 @@ export default class Landing extends Vue {
             this.$router.push("/");
         }
     }
-    // ROUTE CHECKING METHODS.
+    // DATACHECKING METHODS.
     /** Checks if the current view route can be accessed. */
     private isAccessible() {
+        //TODO: TEMPORARY
+
         if (Vue.prototype.$authService === undefined) {
             this.$router.push("/");
         } else {
+            this.authService = Vue.prototype.$authService;
+            this.authService.refresh(true, true, true);
+            this.checkUserProfileSetupLevel();
+
             if (this.authService.authenticationInfo.level === 0) {
                 this.$router.push("/");
             }
         }
+    }
+
+    /** Checks if user needs to setup his profile. */
+    private async checkUserProfileSetupLevel() {
+        const response = await API.get(`${Endpoint.User}/setup/${this.authService.authenticationInfo.user.userId}`);
+        if (!response.data as boolean) this.$router.push("/firstime");
     }
 
     private async logout() {

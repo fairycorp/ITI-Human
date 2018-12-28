@@ -11,7 +11,6 @@ namespace ITI.Human.Data.Tests
     [TestFixture]
     public class ACSetup
     {
-        [Explicit]
         [Test]
         public async System.Threading.Tasks.Task CreateAdminAsync()
         {
@@ -20,10 +19,18 @@ namespace ITI.Human.Data.Tests
 
             using (var ctx = new SqlStandardCallContext())
             {
-                var userId = await uTable.CreateUserAsync(ctx, 1, "fairyfingers");
-                Assert.Greater(userId, 0);
+                var doesUserExist = await ctx[uTable].Connection
+                    .QueryFirstOrDefaultAsync<int>(
+                        "SELECT UserId FROM CK.tUser WHERE UserName = @name",
+                        new { name = "fairyfingers" }
+                    );
+                if (doesUserExist == 0)
+                {
+                    var userId = await uTable.CreateUserAsync(ctx, 1, "fairyfingers");
+                    Assert.Greater(userId, 0);
 
-                var passwordResponse = await uPTable.CreateOrUpdatePasswordUserAsync(ctx, 1, userId, "access");
+                    var passwordResponse = await uPTable.CreateOrUpdatePasswordUserAsync(ctx, 1, userId, "access");
+                }
             }
         }
     }

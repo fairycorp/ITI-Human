@@ -27,7 +27,6 @@ namespace API.Services.Auth
         private UserTable UserTable { get; }
         private UserAvatarsTable UserAvatarsTable { get; }
         private UserDetailsTable UserDetailsTable { get; }
-        private SchoolMemberTable SchoolMemberTable { get; }
         private IAuthenticationDatabaseService DbAuth { get; }
         private IAuthenticationTypeSystem TypeSystem { get; }
 
@@ -36,7 +35,6 @@ namespace API.Services.Auth
            UserTable userTable,
            UserAvatarsTable uATable,
            UserDetailsTable uDTable,
-           SchoolMemberTable sMTable,
            IAuthenticationDatabaseService dbAuth,
            IAuthenticationTypeSystem typeSystem)
         {
@@ -44,7 +42,6 @@ namespace API.Services.Auth
             UserTable = userTable;
             UserAvatarsTable = uATable;
             UserDetailsTable = uDTable;
-            SchoolMemberTable = sMTable;
             DbAuth = dbAuth;
             TypeSystem = typeSystem;
         }
@@ -96,7 +93,6 @@ namespace API.Services.Auth
             if (dbResult.OperationResult != UCResult.Created) return null;
             int idAvatarUser = await CreateAvatar(idUser, userAvatar);
             int idDetails = await CreateDetails(idUser, tmpUserName.ToString());
-            int idSMember = await CreateStudent(idUser);
             return await DbAuth.CreateUserLoginResultFromDatabase(ctx, TypeSystem, dbResult.LoginResult);
         }
 
@@ -116,15 +112,6 @@ namespace API.Services.Auth
                 var firstName = difference[0];
                 var lastName = difference[1];
                 return await UserDetailsTable.Create(ctx, 1, userId, firstName, lastName, DateTime.Now);
-            }
-        }
-
-        private async Task<int> CreateStudent(int userId)
-        {
-            using (var ctx = new SqlStandardCallContext())
-            {
-                // schoolStatusId 5 being "Etudiant".
-                return await SchoolMemberTable.Create(ctx, 1, userId, 5);
             }
         }
 

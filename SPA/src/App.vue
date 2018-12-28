@@ -131,7 +131,7 @@ input.textual:focus::placeholder {
 }
 
 input.textual.error {
-  border-bottom: 1px solid red;
+  border-bottom: 1px solid #b86565;
 }
 
 button.standard {
@@ -148,10 +148,33 @@ button.standard {
   transition-property: background-color, color;
 }
 
-button.standard:hover {
+button.selection {
+  outline-width: 0;
+  width: 80px;
+  height: 50px;
+  border-radius: 25px;
+  background-color: white;
+  border: 1px solid black;
+  font-family: "gotham-bold";
+  color: black;
+  
+  transition-duration: 0.2s;
+  transition-property: background-color, color;
+}
+
+button.selection.error {
+  border: 1px solid #b86565;
+}
+
+button.standard:hover, button.selection:hover, button.selection.error:hover {
   background-color: black;
   color: white;
   cursor: pointer;
+}
+
+button.selectedButton {
+  background-color: black;
+  color: white;
 }
 
 #global-view {
@@ -163,8 +186,9 @@ button.standard:hover {
   position: fixed;
   top: 3%;
   left: 4%;
-  width: 44%;
-  height: 94.3%;
+  width: 36.8%;
+  height: 81.3%;
+  padding: 70px;
   background-color: white;
 }
 

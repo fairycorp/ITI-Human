@@ -8,6 +8,7 @@ import Router from "vue-router";
 // import StaffDashboard from "@/components/Staff/StaffDashboard.vue";
 import Homepage from "@/views/Homepage.vue";
 import Landing from "@/views/Landing.vue";
+import ProfileSetup from "@/views/ProfileSetup.vue";
 
 Vue.use(Router);
 
@@ -24,6 +25,12 @@ export default new Router({
       path: "/landing",
       name: "landing",
       component: Landing
+    },
+
+    {
+      path: "/firstime",
+      name: "profileSetup",
+      component: ProfileSetup
     }
     // {
     //   path: "/",

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace ITI.Human.ViewModels.User.SchoolMember
+namespace ITI.Human.ViewModels.User
 {
     /// <summary>
     /// Defines what a School Member is.

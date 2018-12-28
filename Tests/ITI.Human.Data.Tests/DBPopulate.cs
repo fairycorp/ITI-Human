@@ -108,9 +108,9 @@ namespace ITI.Human.Data.Tests
                 var userId2 = await uTable.CreateUserAsync(ctx, 1, userName2);
                 var userId3 = await uTable.CreateUserAsync(ctx, 1, userName3);
 
-                var schoolMember1 = await sMTable.Create(ctx, 0, userId1, 5);
-                var schoolMember2 = await sMTable.Create(ctx, 0, userId2, 5);
-                var schoolMember3 = await sMTable.Create(ctx, 0, userId3, 5);
+                var schoolMember1 = await sMTable.Create(ctx, 0, userId1, 3);
+                var schoolMember2 = await sMTable.Create(ctx, 0, userId2, 3);
+                var schoolMember3 = await sMTable.Create(ctx, 0, userId3, 3);
 
                 var userDetails1 = await uDTable.Create(ctx, 0, userId1, "Charles", "Resini", new DateTime(1997, 10, 12));
                 var userDetails2 = await uDTable.Create(ctx, 0, userId2, "Pierre", "Loderin", new DateTime(1995, 04, 19));

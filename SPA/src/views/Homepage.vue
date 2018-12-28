@@ -114,7 +114,6 @@ export default class Homepage extends Vue {
     constructor() {
         super();
         this.authSerConf = appSettings;
-        console.log(Vue.prototype.$authService);
         if (Vue.prototype.$authService !== undefined) {
             this.authService = Vue.prototype.$authService;
         } else {
