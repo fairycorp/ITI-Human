@@ -71,6 +71,22 @@ namespace API.Controllers
             return BadRequest(check.Info);
         }
 
+        [HttpGet("profile/{userId}")]
+        public async Task<IActionResult> GetProfile(int userId)
+        {
+            var check =
+                Guard.IsAdmissible(nameof(userId), userId);
+
+            if (check.Code == Status.Success)
+            {
+                var result = await UserService.GuardedGetProfile(userId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
+            return BadRequest(check.Info);
+        }
+
         [HttpGet("setup/{userId}")]
         public async Task<IActionResult> GetProfileSetupCompletedState(int userId)
         {
@@ -106,7 +122,7 @@ namespace API.Controllers
             {
                 { nameof(model.UserId), model.UserId },
                 { nameof(model.SchoolStatusId), model.SchoolStatusId },
-                { nameof(model.SemesterId), model.SemesterId }
+                { nameof(model.SemesterId), model.SemesterId },
             };
             var check1 =
                 Guard.IsAdmissible(intAnalysis);
@@ -130,7 +146,10 @@ namespace API.Controllers
                     var result = await UserService.GuardedSetupProfile(model);
                     if (result.Code == Status.Failure) return BadRequest(result.Info);
 
-                    return Ok(result.Content);
+                    var finalResult = await UserService.GuardedGetProfileSetupCompletedState(model.UserId);
+                    if ((bool)finalResult.Content == false) return BadRequest();
+
+                    return Ok(finalResult.Content);
                 }
                 return BadRequest(check2.Info);
             }

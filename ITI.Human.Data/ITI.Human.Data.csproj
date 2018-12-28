@@ -26,8 +26,10 @@
     <None Remove="Res\sStudentCreate.sql" />
     <None Remove="Res\sUserAvatarCreate.sql" />
     <None Remove="Res\sUserDetailsCreate.sql" />
+    <None Remove="Res\sUserDetailsUpdate.sql" />
     <None Remove="Res\vSchoolMembers.sql" />
     <None Remove="Res\vStorageLinkedProducts.sql" />
+    <None Remove="Res\vUserProfile.sql" />
   </ItemGroup>
 
   <ItemGroup>

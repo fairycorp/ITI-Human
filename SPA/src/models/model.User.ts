@@ -20,18 +20,13 @@ interface IDetailedDataUser {
 }
 
 interface IStandardProfileSetup {
-    firstname: string;
-    lastname: string;
-    desc: string;
-}
-
-interface IStudentProfileSetup {
     userId: number;
     firstname: string;
     lastname: string;
     desc: string;
     schoolStatusId: ESStatus;
+    secretCode: string;
     semesterId: ESemester;
 }
 
-export { IUserBasicData, IDetailedDataUser, IStandardProfileSetup, IStudentProfileSetup };
+export { IUserBasicData, IDetailedDataUser, IStandardProfileSetup };

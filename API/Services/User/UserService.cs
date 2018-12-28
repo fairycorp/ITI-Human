@@ -68,6 +68,21 @@ namespace API.Services.User
         }
 
         /// <summary>
+        /// Gets a User's profile.
+        /// </summary>
+        /// <param name="userId">User's id.</param>
+        /// <returns></returns>
+        public async Task<GuardResult> GuardedGetProfile(int userId)
+        {
+            var result = await GetProfile(userId);
+
+            if (result == null) return Failure(
+                string.Format("No Profile with userId {0} was found.", userId)
+            );
+            return Success(result);
+        }
+
+        /// <summary>
         /// Gets user's current profile setup completed state.
         /// </summary>
         /// <param name="userId"></param>
@@ -128,6 +143,18 @@ namespace API.Services.User
             }
         }
 
+        private async Task<BasicDataUserProfile> GetProfile(int userId)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await ctx[UserTable].Connection
+                    .QueryFirstOrDefaultAsync<BasicDataUserProfile>(
+                        "SELECT * FROM ITIH.vUserProfile WHERE UserId = @id;",
+                        new { id = userId }
+                    );
+            }
+        }
+
         private async Task<bool> GetProfileSetupCompletedState(int userId)
         {
             using (var ctx = new SqlStandardCallContext())
@@ -160,12 +187,41 @@ namespace API.Services.User
                     );
 
                 int result1 = 0, result2 = 0;
-                if (doesDetailsExist == 0)
-                    result1 = await UserDetailsTable.Create(ctx, model.UserId, model.UserId, model.Firstname, model.Lastname, DateTime.Now);
-
                 if (doesMemberExist == 0)
-                    result2 = await SchoolMemberTable.Create(ctx, model.UserId, model.UserId, model.SchoolStatusId);
+                {
+                    bool launchCreationProcess = false;
+                    switch (model.SchoolStatusId)
+                    {
+                        case 0:
+                            launchCreationProcess = false;
+                            break;
 
+                        case 1:
+                            if (model.SecretCode == "A8191?KS#QL?QM°&S+=QJN61I4P0QI1S&&3840#-2DK")
+                                launchCreationProcess = true;
+                            break;
+
+                        case 2:
+                            if (model.SecretCode == "A8191?KS#QL?QM°&S+=QJN61I4P0QI1S&&3840#-2DK")
+                                launchCreationProcess = true;
+                            break;
+
+                        case 3:
+                            launchCreationProcess = true;
+                            break;
+                    }
+                    if (launchCreationProcess && doesDetailsExist == 0)
+                    {
+                        result1 = await UserDetailsTable.Create(ctx, model.UserId, model.UserId, model.Firstname, model.Lastname, DateTime.Now);
+                        result2 = await SchoolMemberTable.Create(ctx, model.UserId, model.UserId, model.SchoolStatusId);
+                    }
+                    if (launchCreationProcess && doesDetailsExist > 0)
+                    {
+                        result1 = -1;
+                        await UserDetailsTable.Update(ctx, model.UserId, model.UserId, model.Firstname, model.Lastname, DateTime.Now);
+                        result2 = await SchoolMemberTable.Create(ctx, model.UserId, model.UserId, model.SchoolStatusId);
+                    }
+                }
                 return new int[] { result1, result2 };
             }
         }

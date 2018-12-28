@@ -28,6 +28,11 @@
         public int SchoolStatusId { get; set; }
 
         /// <summary>
+        /// Necessary secret code for specific status.
+        /// </summary>
+        public string SecretCode { get; set; }
+
+        /// <summary>
         /// Student's current semester (> 0 if student).
         /// </summary>
         public int SemesterId { get; set; }

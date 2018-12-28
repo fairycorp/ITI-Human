@@ -1,5 +1,6 @@
 <template>
     <div class="global-content">
+      <button @click="logout()">logout</button>
         <div 
             class="left-page">
             <h1>Setup de votre profil</h1>
@@ -96,6 +97,7 @@
                     </span>
                     <input
                         v-model="secretCode"
+                        :class="{ error : FIELD_SECRETCODE_ERROR }"
                         class="textual"
                         placeholder="Insérez ici le code secret" />
                 </div>
@@ -145,19 +147,20 @@ import Endpoint from "@/helpers/Endpoint";
 
 import { ESStatus } from "@/models/model.SchoolStatus";
 import { ESemester } from "@/models/model.Semester";
-import { IStudentProfileSetup } from "@/models/model.User";
+import { IStandardProfileSetup } from "@/models/model.User";
 
 @Component({})
 export default class ProfileSetup extends Vue {
     @Prop() private authService!: AuthService;
-    private frstname!: string;
-    private lastname!: string;
+    private frstname: string = "";
+    private lastname: string = "";
     private biography!: string;
     private secretCode!: string;
     private selectedSemester: number = 0;
     private FIELD_SEMESTER_ERROR: boolean = false;
     private FIELD_FRSTNAME_ERROR: boolean = false;
     private FIELD_LASTNAME_ERROR: boolean = false;
+    private FIELD_SECRETCODE_ERROR: boolean = false;
     private SECTION_INTECH: boolean = false;
     private SECTION_ESIEA: boolean = false;
     private SECTION_TEACH: boolean = false;
@@ -166,6 +169,7 @@ export default class ProfileSetup extends Vue {
     constructor() {
         super();
         this.isAccessible();
+        this.getExistingUserInfo();
     }
     /** Watches authService instance information. */
     @Watch("authService.authenticationInfo.level")
@@ -299,6 +303,15 @@ export default class ProfileSetup extends Vue {
         }
     }
 
+    // GETTER METHODS.
+    private async getExistingUserInfo() {
+        API.get(`${Endpoint.User}/profile/${this.authService.authenticationInfo.user.userId}`)
+            .then( (response) => {
+                this.frstname = response.data.firstName;
+                this.lastname = response.data.lastName;
+            });
+    }
+
     // SUBMIT METHODS.
     /** Submits main form. */
     private async submit() {
@@ -309,28 +322,43 @@ export default class ProfileSetup extends Vue {
             if (!lastnameCheck) this.FIELD_LASTNAME_ERROR = true;
         }
 
+        let schoolStatusId: ESStatus = ESStatus.None;
         if (this.SECTION_INTECH) {
             if (this.selectedSemester === ESemester.None) {
                 this.FIELD_SEMESTER_ERROR = true;
                 return;
             }
-
-            const payload: IStudentProfileSetup = {
-                userId: this.authService.authenticationInfo.user.userId,
-                firstname: this.frstname,
-                lastname: this.lastname,
-                desc: this.biography,
-                schoolStatusId: ESStatus.Student as number,
-                semesterId: this.selectedSemester
-            };
-
-            const response = await API.post(`${Endpoint.User}/setup`, payload);
-            if (response.status === 200) this.$router.push("/landing");
-
+            schoolStatusId = ESStatus.Student;
         } else if (this.SECTION_TEACH) {
+            if (this.secretCode.length === 0) {
+                this.FIELD_SECRETCODE_ERROR = true;
+                return;
+            }
+            schoolStatusId = ESStatus.Teacher;
         } else if (this.SECTION_ADMIN) {
-        } else {
+            if (this.secretCode.length === 0) {
+                this.FIELD_SECRETCODE_ERROR = true;
+                return;
+            }
+            schoolStatusId = ESStatus.Administration;
         }
+
+        const payload: IStandardProfileSetup = {
+            userId: this.authService.authenticationInfo.user.userId,
+            firstname: this.frstname,
+            lastname: this.lastname,
+            desc: this.biography,
+            schoolStatusId: schoolStatusId as number,
+            secretCode: this.secretCode,
+            semesterId: this.selectedSemester
+        };
+
+        const response = await API.post(`${Endpoint.User}/setup`, payload);
+        if (response.data === true) this.$router.push("/landing");
+    }
+
+    private async logout() {
+        await this.authService.logout(true);
     }
 }
 </script>
