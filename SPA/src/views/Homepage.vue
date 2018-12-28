@@ -49,7 +49,7 @@
             <h1>Envie d'un cookie ?</h1><div class="cookie-image"></div>
             <div class="choice">
                 <button @click="startGithub()" class="standard light-top-margin light-right-margin">OOOH, OUI !</button>
-                <button class="standard light-top-margin">EUH, NON.</button>
+                <button @click="fart()" class="standard light-top-margin">EUH, NON.</button>
                 <div class="nota-bene">
                     * Alors là, attention parce que le <span class="openSans-bold">bouton de gauche</span> lance une connexion avec Github.
                 </div>
@@ -92,17 +92,18 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { appSettings } from "@/config/appSettings";
 import {
   AuthService,
-  IAuthServiceConfiguration
+  IAuthServiceConfiguration,
+AuthLevel
 } from "@signature/webfrontauth";
 import Axios from "axios";
 
 @Component({})
 export default class Homepage extends Vue {
-    private authService!: AuthService;
+    @Prop() private authService!: AuthService;
     private authSerConf!: IAuthServiceConfiguration;
     private username: string = "";
     private password: string = "";
@@ -113,8 +114,21 @@ export default class Homepage extends Vue {
     constructor() {
         super();
         this.authSerConf = appSettings;
-        this.authService = new AuthService(this.authSerConf, Axios);
+        console.log(Vue.prototype.$authService);
+        if (Vue.prototype.$authService !== undefined) {
+            this.authService = Vue.prototype.$authService;
+        } else {
+            this.authService = new AuthService(this.authSerConf, Axios);
+        }
         this.authService.refresh(true, true, true);
+    }
+    /** Watches authService instance information. */
+    @Watch("authService.authenticationInfo.level")
+    private onAuthLevelChange() {
+        if (this.authService.authenticationInfo.level >= 2) {
+            Vue.prototype.$authService = this.authService;
+            this.$router.push("/landing");
+        }
     }
     // DATACHECKING METHODS.
     /** Checks argument admissibility.
@@ -153,11 +167,17 @@ export default class Homepage extends Vue {
             = false;
 
         // TODO: Start basic authentication...
+        return await this.authService.basicLogin(username, password);
     }
     // WINDOW TOGGLING METHODS.
     /** Displays or undisplays "About" window. */
     private toggleWindowAbout() {
         return this.WINDOW_ABOUT = !this.WINDOW_ABOUT;
+    }
+    // SPECIAL METHODS.
+    private fart() {
+        const fartsound = document.getElementById("fart") as HTMLAudioElement;
+        fartsound.play();
     }
 }
 </script>

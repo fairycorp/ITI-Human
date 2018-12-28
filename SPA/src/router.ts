@@ -7,6 +7,7 @@ import Router from "vue-router";
 // import Authenticate from "@/components/auth-related/Authenticate.vue";
 // import StaffDashboard from "@/components/Staff/StaffDashboard.vue";
 import Homepage from "@/views/Homepage.vue";
+import Landing from "@/views/Landing.vue";
 
 Vue.use(Router);
 
@@ -18,6 +19,12 @@ export default new Router({
       name: "homepage",
       component: Homepage
     },
+
+    {
+      path: "/landing",
+      name: "landing",
+      component: Landing
+    }
     // {
     //   path: "/",
     //   name: "authenticate",

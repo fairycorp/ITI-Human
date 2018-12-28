@@ -135,6 +135,7 @@ input.textual.error {
 }
 
 button.standard {
+  outline-width: 0;
   width: 166px;
   height: 45px;
   border-radius: 25px;
