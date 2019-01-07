@@ -1,4 +1,4 @@
-interface IProject {
+interface IBasicDataProject {
     projectId: number;
     projectTypeId: number;
     projectTypeName: string;
@@ -8,6 +8,16 @@ interface IProject {
     semesterId: number;
     semesterName: string;
     storageId: number;
+    members: IBasicDataProjectMember[];
 }
 
-export { IProject };
+interface IBasicDataProjectMember {
+    projectMemberId: number;
+    projectId: number;
+    projectRankId: number;
+    projectRankName: string;
+    userId: number;
+    userName: string;
+}
+
+export { IBasicDataProject };

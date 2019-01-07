@@ -42,9 +42,9 @@ namespace API.Controllers
         [HttpGet("u/{userId}")]
         public async Task<IActionResult> GetAllFromUser(int userId)
         {
-            var isAuthenticated =
-               AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
-            if (isAuthenticated.Code == Status.Failure) return Forbid();
+            //var isAuthenticated =
+            //   AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            //if (isAuthenticated.Code == Status.Failure) return Forbid();
 
             var result = await Service.GuardedGetAllFromUser(userId);
             if (result.Code == Status.Failure) return BadRequest(result.Info);
