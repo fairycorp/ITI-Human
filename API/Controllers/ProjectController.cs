@@ -107,7 +107,7 @@ namespace API.Controllers
                 var result = await Service.GuardedAddMember(model);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
-                return Ok(result);
+                return Ok(result.Content);
             }
             return BadRequest(check.Info);
         }

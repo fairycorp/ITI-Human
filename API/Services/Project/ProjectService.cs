@@ -1,4 +1,5 @@
-﻿using CK.SqlServer;
+﻿using API.Services.Storage;
+using CK.SqlServer;
 using Dapper;
 using ITI.Human.Data;
 using ITI.Human.ViewModels.Project;
@@ -21,10 +22,14 @@ namespace API.Services.Project
 
         public ProjectMemberTable ProjectMemberTable { get; set; }
 
-        public ProjectService(ProjectTable pTable, ProjectMemberTable pMTable)
+        public StorageTable StorageTable { get; set; }
+
+        public ProjectService(ProjectTable pTable, ProjectMemberTable pMTable,
+            StorageTable storageTable)
         {
             ProjectTable = pTable;
             ProjectMemberTable = pMTable;
+            StorageTable = storageTable;
         }
 
         /// <summary>
@@ -120,6 +125,18 @@ namespace API.Services.Project
                 string.Format("No Project with id {0} was found.", model.ProjectId)
             );
 
+            using (var ctx = new SqlStandardCallContext())
+            {
+                var doesMemberAlreadyRegistered = await ctx[ProjectMemberTable].Connection
+                    .QueryFirstOrDefaultAsync<int>(
+                        "SELECT ProjectMemberId FROM ITIH.tProjectMember WHERE UserId = @id;",
+                        new { id = model.UserId }
+                    );
+                if (doesMemberAlreadyRegistered > 0) return Failure(
+                    string.Format("Project Member with userId {0} is already registered in project.", model.UserId)
+                );
+            }
+
             var result = await AddMember(model);
             if (result == 0) return Failure("Error in creation process.");
 
@@ -164,6 +181,8 @@ namespace API.Services.Project
                         FROM 
                             ITIH.vProjects;"
                     );
+                if (projects == null) return null;
+
                 foreach (var project in projects)
                 {
                     project.Members = await ctx[ProjectMemberTable].Connection
@@ -191,6 +210,8 @@ namespace API.Services.Project
                         ProjectId = @Id;",
                         new { Id = projectId }
                     );
+                if (project == null) return null;
+
                 project.Members = await ctx[ProjectMemberTable].Connection
                     .QueryAsync<DetailedDataProjectMember>(
                         "SELECT * FROM ITIH.vProjectMembers WHERE ProjectId = @id;",
@@ -228,6 +249,17 @@ namespace API.Services.Project
             {
                 var projectId = await ProjectTable.Create(ctx, model.ActorId, 1, model.SemesterId, model.Name, model.Headline, model.Pitch);
                 await ProjectMemberTable.Create(ctx, model.ActorId, projectId, 1, model.ActorId);
+
+                if (model.SemesterId == 4)
+                {
+                    ITI.Human.ViewModels.Storage.CreationViewModel storageModel = new ITI.Human.ViewModels.Storage.CreationViewModel
+                    {
+                        UserId = model.ActorId,
+                        ProjectId = projectId
+                    };
+                    await StorageTable.Create(ctx, storageModel.UserId, storageModel.ProjectId);
+                }
+
                 return projectId;
             }
         }
