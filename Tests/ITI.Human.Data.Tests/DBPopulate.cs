@@ -49,6 +49,9 @@ namespace ITI.Human.Data.Tests
             var pJTable = (ProjectTable)
                 Initialize(Element.Project);
 
+            var pMTable = (ProjectMemberTable)
+                Initialize(Element.ProjectMember);
+
             var sTable = (StorageTable)
                 Initialize(Element.Storage);
 
@@ -148,6 +151,12 @@ namespace ITI.Human.Data.Tests
                 var storageLinkedProductId11 = await sLTable.Create(ctx, 0, storageId2, productId7, 180, 40);
 
 
+                // Creates project members.
+                var projectMember1 = await pMTable.Create(ctx, 0, projectId1, 2, userId1);
+                var projectMember2 = await pMTable.Create(ctx, 0, projectId1, 1, userId2);
+                var projectMember3 = await pMTable.Create(ctx, 0, projectId1, 2, userId3);
+
+
                 // Creates orders.
                 var orderId1 = await oTable.Create(ctx, 0, storageId1, userId1, 3, DateTime.Now);
                 var orderId2 = await oTable.Create(ctx, 0, storageId2, userId2, 5, DateTime.Now);
@@ -227,6 +236,7 @@ namespace ITI.Human.Data.Tests
             OrderedProduct,
             Product,
             Project,
+            ProjectMember,
             Storage,
             StorageLinkedProduct,
             User,
@@ -280,6 +290,11 @@ namespace ITI.Human.Data.Tests
                     case (Element.Project):
                         table = (ProjectTable)Initialize(Element.Project);
                         tableName = "ITIH.tProject"; fieldName = "[Name]";
+                        break;
+
+                    case (Element.ProjectMember):
+                        table = (ProjectMemberTable)Initialize(Element.ProjectMember);
+                        tableName = "ITIH.tProjectMember"; fieldName = "ProjectMemberId";
                         break;
 
                     case (Element.Storage):
@@ -361,6 +376,9 @@ namespace ITI.Human.Data.Tests
 
                 case (Element.Project):
                     return CK.Core.StObjModelExtension.Obtain<ProjectTable>(TestHelper.StObjMap.StObjs);
+
+                case (Element.ProjectMember):
+                    return CK.Core.StObjModelExtension.Obtain<ProjectMemberTable>(TestHelper.StObjMap.StObjs);
 
                 case (Element.Storage):
                     return CK.Core.StObjModelExtension.Obtain<StorageTable>(TestHelper.StObjMap.StObjs);
