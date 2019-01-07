@@ -17,7 +17,7 @@
         </div>
 
         <div v-if="accessibility">
-            <div class="menu projects">
+            <div @click="changeRoute('projects')" class="menu projects">
                 <div class="illustration-projects"></div>
                 <div class="main-menu-title">
                     PROJETS
@@ -103,8 +103,7 @@ export default class Landing extends Vue {
     /** Checks if user needs to setup his profile. */
     private async checkUserProfileSetupLevel() {
         const response = await API.get(`${Endpoint.User}/setup/${this.authService.authenticationInfo.user.userId}`);
-        if (!response.data as boolean) return this.$router.push("/firstime");
-        
+        if (!response.data as boolean) return this.$router.push("/profile/setup");
         this.accessibility = true;
     }
 
@@ -118,6 +117,11 @@ export default class Landing extends Vue {
 
     private async logout() {
         await this.authService.logout(true);
+    }
+
+    // ROUTING METHODS.
+    private changeRoute(route: string) {
+        this.$router.push(route);
     }
 }
 </script>
