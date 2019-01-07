@@ -31,5 +31,18 @@ namespace API.Controllers
 
             return Ok(result.Content);
         }
+
+        [HttpGet("u/{userId}")]
+        public async Task<IActionResult> GetAllFromUser(int userId)
+        {
+            var isAuthenticated =
+               AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
+            var result = await Service.GuardedGetAllFromUser(userId);
+            if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+            return Ok(result.Content);
+        }
     }
 }
