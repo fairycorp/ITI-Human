@@ -60,12 +60,39 @@ namespace API.Services.Project
             return Success(result);
         }
 
+        /// <summary>
+        /// Gets all Projects from a specific User.
+        /// </summary>
+        /// <param name="userId">User's id.</param>
+        /// <returns>
+        /// Success result where result content is a list of <see cref="BasicDataProject"/>
+        /// or Failure result if no element exists in db.
+        /// </returns>
         public async Task<GuardResult> GuardedGetAllFromUser(int userId)
         {
             var result = await GetAllFromUser(userId);
             if (result == null) return Failure(
                 string.Format("No Project with userIid {0} was found.", userId)
             );
+
+            return Success(result);
+        }
+
+        public async Task<GuardResult> GuardedCreate(CreationViewModel model)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                var doesProjectAlreadyExist =
+                    await ctx[ProjectTable].Connection
+                        .QueryFirstOrDefaultAsync<int>(
+                            "SELECT ProjectId FROM ITIH.tProject WHERE Name = @nm",
+                            new { nm = model.Name }
+                        );
+                if (doesProjectAlreadyExist > 0) return Failure("A project with this name already exists.");
+
+            }
+            var result = await Create(model);
+            if (result == 0) return Failure("Error in creation process.");
 
             return Success(result);
         }
@@ -138,6 +165,14 @@ namespace API.Services.Project
                 }
 
                 return projects;
+            }
+        }
+        
+        private async Task<int> Create(CreationViewModel model)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await ProjectTable.Create(ctx, model.ActorId, 1, model.SemesterId, model.Name, model.Headline, model.Pitch);
             }
         }
     }
