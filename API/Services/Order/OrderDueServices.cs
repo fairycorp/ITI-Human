@@ -63,7 +63,6 @@ namespace API.Services.Order
         /// </summary>
         /// <param name="order">Matching order.</param>
         /// <returns>
-        /// <returns>
         /// Success result where result content is a <see cref="BasicDataOrderFinalDue.OrderFinalDueId"/>
         /// or Failure result if element has not been created.
         /// </returns>

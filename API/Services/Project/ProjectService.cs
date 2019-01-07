@@ -72,20 +72,28 @@ namespace API.Services.Project
         {
             var result = await GetAllFromUser(userId);
             if (result == null) return Failure(
-                string.Format("No Project with userIid {0} was found.", userId)
+                string.Format("No Project with userId {0} was found.", userId)
             );
 
             return Success(result);
         }
 
-        public async Task<GuardResult> GuardedCreate(CreationViewModel model)
+        /// <summary>
+        /// Creates a new Project.
+        /// </summary>
+        /// <param name="model">Matching model.</param>
+        /// <returns>
+        /// Success result where result content is a <see cref="BasicDataProject.ProjectId"/>
+        /// or Failure result if element has not been created.
+        /// </returns>
+        public async Task<GuardResult> GuardedCreate(ITI.Human.ViewModels.Project.CreationViewModel model)
         {
             using (var ctx = new SqlStandardCallContext())
             {
                 var doesProjectAlreadyExist =
                     await ctx[ProjectTable].Connection
                         .QueryFirstOrDefaultAsync<int>(
-                            "SELECT ProjectId FROM ITIH.tProject WHERE Name = @nm",
+                            "SELECT ProjectId FROM ITIH.tProject WHERE Name = @nm;",
                             new { nm = model.Name }
                         );
                 if (doesProjectAlreadyExist > 0) return Failure("A project with this name already exists.");
@@ -93,6 +101,52 @@ namespace API.Services.Project
             }
             var result = await Create(model);
             if (result == 0) return Failure("Error in creation process.");
+
+            return Success(result);
+        }
+
+        /// <summary>
+        /// Adds a new Project Member to a Project.
+        /// </summary>
+        /// <param name="model">Matching model.</param>
+        /// <returns>
+        /// Success result where result content is a <see cref="DetailedDataProjectMember.ProjectMemberId"/>
+        /// or Failure result if element has not been created.
+        /// </returns>
+        public async Task<GuardResult> GuardedAddMember(ITI.Human.ViewModels.Project.Member.CreationViewModel model)
+        {
+            var doesProjectExist = await Get(model.ProjectId);
+            if (doesProjectExist == null) return Failure(
+                string.Format("No Project with id {0} was found.", model.ProjectId)
+            );
+
+            var result = await AddMember(model);
+            if (result == 0) return Failure("Error in creation process.");
+
+            return Success(result);
+        }
+
+        /// <summary>
+        /// Removes a Project Member from a Project.
+        /// </summary>
+        /// <param name="model">Matching model.</param>
+        /// <returns>Success result where result is a <see cref="bool"/> that is set to <see cref="true"/>,
+        /// or Failure result if element has not been removed.</returns>
+        public async Task<GuardResult> GuardedRemoveMember(DeletionViewModel model)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                var doesProjectMemberExist = await ctx[ProjectMemberTable].Connection
+                    .QueryFirstOrDefaultAsync(
+                        "SELECT * FROM ITIH.tProjectMember WHERE ProjectMemberId = @id;",
+                        new { id = model.ProjectMemberId }
+                    );
+                if (doesProjectMemberExist == null) return Failure(
+                    string.Format("No Project Member with id {0} was found.", model.ProjectMemberId)
+                );
+            }
+            var result = await RemoveMember(model);
+            if (result == false) return Failure("Error in deletion process.");
 
             return Success(result);
         }
@@ -168,11 +222,29 @@ namespace API.Services.Project
             }
         }
         
-        private async Task<int> Create(CreationViewModel model)
+        private async Task<int> Create(ITI.Human.ViewModels.Project.CreationViewModel model)
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                return await ProjectTable.Create(ctx, model.ActorId, 1, model.SemesterId, model.Name, model.Headline, model.Pitch);
+                var projectId = await ProjectTable.Create(ctx, model.ActorId, 1, model.SemesterId, model.Name, model.Headline, model.Pitch);
+                await ProjectMemberTable.Create(ctx, model.ActorId, projectId, 1, model.ActorId);
+                return projectId;
+            }
+        }
+
+        private async Task<int> AddMember(ITI.Human.ViewModels.Project.Member.CreationViewModel model)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await ProjectMemberTable.Create(ctx, model.UserId, model.ProjectId, 2, model.UserId);
+            }
+        }
+
+        private async Task<bool> RemoveMember(DeletionViewModel model)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await ProjectMemberTable.Delete(ctx, model.ActorId, model.ProjectMemberId);
             }
         }
     }
