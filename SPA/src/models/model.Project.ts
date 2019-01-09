@@ -20,4 +20,13 @@ interface IBasicDataProjectMember {
     userName: string;
 }
 
-export { IBasicDataProject };
+interface ProjectCreationViewModel {
+    actorId: number;
+    semesterId: number;
+    name: string;
+    headline: string;
+    pitch: string;
+    members: number[];
+}
+
+export { IBasicDataProject, ProjectCreationViewModel };

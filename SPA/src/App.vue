@@ -207,7 +207,7 @@ button.selectedButton {
   top: 3%;
   right: 4%;
   width: 36.85%;
-  height: 81.5%;
+  height: 81.3%;
   padding: 70px;
   background-color: white;
 }

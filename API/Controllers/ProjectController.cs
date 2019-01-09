@@ -42,9 +42,9 @@ namespace API.Controllers
         [HttpGet("u/{userId}")]
         public async Task<IActionResult> GetAllFromUser(int userId)
         {
-            //var isAuthenticated =
-            //   AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
-            //if (isAuthenticated.Code == Status.Failure) return Forbid();
+            var isAuthenticated =
+               AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
 
             var result = await Service.GuardedGetAllFromUser(userId);
             if (result.Code == Status.Failure) return BadRequest(result.Info);
@@ -68,22 +68,10 @@ namespace API.Controllers
 
             if (check1.Code == Status.Success)
             {
-                var strAnalysis = new Dictionary<string, string>
-                {
-                    { nameof(model.Name), model.Name },
-                    { nameof(model.Headline), model.Headline },
-                    { nameof(model.Pitch), model.Pitch }
-                };
-                var check2 = Guard.IsAdmissible(strAnalysis);
+                var result = await Service.GuardedCreate(model);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
 
-                if (check2.Code == Status.Success)
-                {
-                    var result = await Service.GuardedCreate(model);
-                    if (result.Code == Status.Failure) return BadRequest(result.Info);
-
-                    return Ok(result.Content);
-                }
-                return BadRequest(check2.Info);
+                return Ok(result.Content);
             }
             return BadRequest(check1.Info);
         }

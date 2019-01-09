@@ -128,8 +128,8 @@ namespace ITI.Human.Data.Tests
                 if (doesExist != null) return;
 
                 // Creates projects.
-                var projectId1 = await pJTable.Create(ctx, 0, 1, 2, projectName1, "Project about something.", "Sample pitch.");
-                var projectId2 = await pJTable.Create(ctx, 0, 1, 3, projectName2, "Loving great projecters.", "Greats pitch.");
+                var projectId1 = await pJTable.Create(ctx, 0, 1, 4, projectName1, "Project about something.", "Sample pitch.");
+                var projectId2 = await pJTable.Create(ctx, 0, 1, 4, projectName2, "Loving great projecters.", "Greats pitch.");
 
 
                 // Creates storages.

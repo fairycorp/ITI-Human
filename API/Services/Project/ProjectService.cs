@@ -1,4 +1,5 @@
 ﻿using API.Services.Storage;
+using API.Services.User;
 using CK.SqlServer;
 using Dapper;
 using ITI.Human.Data;
@@ -18,15 +19,18 @@ namespace API.Services.Project
     /// </summary>
     public class ProjectService
     {
+        public UserService UserService { get; set; }
+
         public ProjectTable ProjectTable { get; set; }
 
         public ProjectMemberTable ProjectMemberTable { get; set; }
 
         public StorageTable StorageTable { get; set; }
 
-        public ProjectService(ProjectTable pTable, ProjectMemberTable pMTable,
-            StorageTable storageTable)
+        public ProjectService(UserService uService, ProjectTable pTable,
+            ProjectMemberTable pMTable, StorageTable storageTable)
         {
+            UserService = uService;
             ProjectTable = pTable;
             ProjectMemberTable = pMTable;
             StorageTable = storageTable;
@@ -103,9 +107,26 @@ namespace API.Services.Project
                         );
                 if (doesProjectAlreadyExist > 0) return Failure("A project with this name already exists.");
 
+                foreach (var userId in model.Members)
+                {
+                    var doUsersExist = await UserService.GuardedGet(userId);
+                    if (doUsersExist.Code == Status.Failure) return Failure(doUsersExist.Info);
+                }
             }
             var result = await Create(model);
             if (result == 0) return Failure("Error in creation process.");
+
+            ITI.Human.ViewModels.Project.Member.CreationViewModel memberAddModel =
+                new ITI.Human.ViewModels.Project.Member.CreationViewModel
+                {
+                    ProjectId = result,
+                    UserId = 0
+                };
+            foreach (var userId in model.Members)
+            {
+                memberAddModel.UserId = userId;
+                await AddMember(memberAddModel);
+            }
 
             return Success(result);
         }

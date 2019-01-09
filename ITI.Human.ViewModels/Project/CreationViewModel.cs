@@ -1,4 +1,6 @@
-﻿namespace ITI.Human.ViewModels.Project
+﻿using System.Collections.Generic;
+
+namespace ITI.Human.ViewModels.Project
 {
     public class CreationViewModel
     {
@@ -26,5 +28,10 @@
         /// See <see cref="BasicDataProject.ProjectPitch"/>.
         /// </summary>
         public string Pitch { get; set; }
+
+        /// <summary>
+        /// See <see cref="BasicDataProject.Members"/>.
+        /// </summary>
+        public IEnumerable<int> Members { get; set; }
     }
 }

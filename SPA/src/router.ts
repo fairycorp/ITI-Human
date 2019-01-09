@@ -5,7 +5,7 @@ import Router from "vue-router";
 import Homepage from "@/views/Homepage.vue";
 import Landing from "@/views/Landing.vue";
 import ProfileSetup from "@/views/ProfileSetup.vue";
-import Projects from "@/views/Projects.vue";
+import ProjectsDB from "@/views/ProjectsDB.vue";
 
 Vue.use(Router);
 
@@ -33,7 +33,7 @@ export default new Router({
     {
       path: "/projects",
       name: "projects",
-      component: Projects
+      component: ProjectsDB
     }
   ],
 });

@@ -55,6 +55,15 @@ namespace API.Controllers
             return BadRequest(check.Info);
         }
 
+        [HttpGet("tooltip")]
+        public async Task<IActionResult> GetAllReferenceTooltips()
+        {
+            var result = await TooltipService.GuardedGetAll();
+            if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+            return Ok(result.Content);
+        }
+
         [HttpGet("tooltip/{userId}")]
         public async Task<IActionResult> GetReferenceTooltip(int userId)
         {
