@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <div class="left-page" :class="{ invisible : WINDOW_PROJECT_SETUP }">
+        <div class="left-page" :class="{ invisible : WINDOW_PROJECT_SETUP || WINDOW_PROJECT_ADD_MEMBER }">
             <h1>Liste de vos projets</h1>
             <div class="cover-photo"></div>
 
@@ -10,19 +10,43 @@
                     <div class="project-title">{{ displayedProject.projectName }}</div>
 
                     <div v-if="displayedProject.members.length > 0" class="memberlist">
-                        <div v-for="(member, index) in displayedProject.members" :key="member.projectMemberId" class="member">
-                            {{ member.userName }}<span v-if="index < displayedProject.members.length - 1">, </span><span v-else>.</span>
+                        <div v-for="member in displayedProject.members" :key="member.projectMemberId" class="member">
+                            <img 
+                                v-if="member.avatarUrl !== null"
+                                :src="member.avatarUrl" class="member-avatar"
+                                :class="{ chief : member.projectRankId === 1 }" />
+                            <img
+                                v-else
+                                src="../assets/images/unknown-user.png"
+                                class="member-avatar"
+                                :class="{ chief : member.projectRankId === 1 }" />
                         </div>
+                        <img
+                            v-if="currentUserSchoolProfile.projectRankId === 1"
+                            @click="launchProjectAddMember()"
+                            class="member-avatar add-member-button"
+                            src="../assets/images/add-button.png" />
                     </div>
 
                     <div class="medium-top-margin headline">
                         <div class="subtitle"><span class="openSans-bold">SLOGAN</span> DU PROJET</div>
-                        {{ displayedProject.projectHeadline }}
+                        <div class="headline-content">"{{ displayedProject.projectHeadline }}"</div>
                     </div>
 
                     <div class="medium-top-margin pitch">
                         <div class="subtitle"><span class="openSans-bold">PITCH</span> DU PROJET</div>
-                        {{ displayedProject.projectPitch }}
+                        "{{ displayedProject.projectPitch }}"
+                    </div>
+
+                    <div v-if="userProjects.length > 1" class="nav">
+                        <button
+                            v-if="displayedProject !== userProjects[0]"
+                            @click="changeCurrentDisplayedProject(-1)"
+                            class="light-right-margin navigation"> < </button>
+                        <button
+                            v-if="displayedProject !== userProjects[userProjects.length - 1]"
+                            @click="changeCurrentDisplayedProject(1)"
+                            class="navigation"> > </button>
                     </div>
                 </div>
                 <div v-else>
@@ -111,6 +135,9 @@
                 </div>
             </div>
         </div>
+        <div v-if="displayedProject !== null && displayedProject !== undefined && WINDOW_PROJECT_ADD_MEMBER" class="right-page">
+            <div @click="closeProjectAddMemberWindow()" class="cross">x</div>
+        </div>
     </div>
 </template>
 
@@ -126,7 +153,7 @@ import Axios from "axios";
 import API from "@/services/API";
 import Endpoint from "@/helpers/Endpoint";
 
-import { IBasicDataProject, ProjectCreationViewModel } from "@/models/model.Project";
+import { IBasicDataProject, ProjectCreationViewModel, IBasicDataProjectMember } from "@/models/model.Project";
 import { ESStatus } from "@/models/model.SchoolStatus";
 import { ESemester } from "@/models/model.Semester";
 import { IDetailedDataUser } from "@/models/model.User";
@@ -135,6 +162,7 @@ import { IDetailedDataUser } from "@/models/model.User";
 export default class ProjectsDB extends Vue {
     @Prop() private authService!: AuthService;
     @Prop() private displayedProject!: IBasicDataProject;
+    @Prop() private currentUserSchoolProfile!: IBasicDataProjectMember;
     private userProjects: IBasicDataProject[] = [];
     private userList: IDetailedDataUser[] = [];
     private projectName: string = "";
@@ -145,6 +173,7 @@ export default class ProjectsDB extends Vue {
     private searchResult: IDetailedDataUser | null = null;
     private projectUserList: IDetailedDataUser[] = [];
     private WINDOW_PROJECT_SETUP: boolean = false;
+    private WINDOW_PROJECT_ADD_MEMBER: boolean = false;
     private FIELD_PROJECTNAME_ERROR: boolean = false;
     private FIELD_PROJECTHEADLINE_ERROR: boolean = false;
     private FIELD_PROJECTPITCH_ERROR: boolean = false;
@@ -250,6 +279,12 @@ export default class ProjectsDB extends Vue {
         this.userProjects = response.data;
 
         this.displayedProject = this.userProjects[0];
+
+        this.displayedProject.members.forEach( (member) => {
+            if (member.userId === this.authService.authenticationInfo.user.userId) {
+                this.currentUserSchoolProfile = member;
+            }
+        });
     }
 
     private async fetchUserList() {
@@ -257,13 +292,30 @@ export default class ProjectsDB extends Vue {
         this.userList = response.data;
     }
 
+    private changeCurrentDisplayedProject(newIndex: number) {
+        for (let index: number = 0; index < this.userProjects.length; index++) {
+            if (this.userProjects[index] === this.displayedProject) {
+                this.displayedProject = this.userProjects[index + (newIndex)];
+                return;
+            }
+        }
+    }
+
     // WINDOW METHODS.
     private launchProjectSetup() {
         this.WINDOW_PROJECT_SETUP = true;
     }
 
+    private launchProjectAddMember() {
+        this.WINDOW_PROJECT_ADD_MEMBER = true;
+    }
+
     private closeProjectSetupWindow() {
         this.WINDOW_PROJECT_SETUP = false;
+    }
+
+    private closeProjectAddMemberWindow() {
+        this.WINDOW_PROJECT_ADD_MEMBER = false;
     }
 
     // SUBMITTING METHODS.
@@ -289,8 +341,6 @@ export default class ProjectsDB extends Vue {
             passed = false;
         }
 
-        console.log(passed);
-
         if (passed) {
             const idList: number[] = [];
             this.projectUserList.forEach( (user) => { idList.push(user.userId); });
@@ -314,6 +364,16 @@ export default class ProjectsDB extends Vue {
 </script>
 
 <style lang="scss">
+.nav {
+    position: absolute;
+    top: 15px;
+    left: 160px;
+}
+
+.custom-margin {
+    margin-top: 5px;
+}
+
 .invisible {
     opacity: 0.5;
     user-select: none;
@@ -356,7 +416,7 @@ export default class ProjectsDB extends Vue {
 
 .member {
     display: inline;
-    font-weight: bold;
+    margin-right: 5px;
 }
 
 .subtitle {
@@ -380,6 +440,18 @@ export default class ProjectsDB extends Vue {
 
 .avatar {
     vertical-align: middle;
+    border-radius: 50%;
+}
+
+.member-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid #e2e2e2;
+}
+
+.member-avatar.chief {
+    border: 3px solid #ffbd09;
 }
 
 .add-button {
@@ -391,9 +463,23 @@ export default class ProjectsDB extends Vue {
     color: black;
 }
 
+.add-member-button {
+    cursor: pointer;
+    transition-property: box-shadow;
+    transition-duration: 0.2s;
+}
+
+.add-member-button:hover {
+    box-shadow: 0px 0px 10px #8f8f8f;
+}
+
 .minititle {
     font-size: 110%;
     color: #919191;
+}
+
+.headline-content {
+    font-size: 140%;
 }
 
 .special {

@@ -61,6 +61,9 @@ namespace ITI.Human.Data.Tests
             var uTable = (UserTable)
                 Initialize(Element.User);
 
+            var uATable = (UserAvatarsTable)
+                Initialize(Element.UserAvatars);
+
             var sMTable = (SchoolMemberTable)
                 Initialize(Element.SchoolMember);
 
@@ -118,6 +121,10 @@ namespace ITI.Human.Data.Tests
                 var userDetails1 = await uDTable.Create(ctx, 0, userId1, "Charles", "Resini", new DateTime(1997, 10, 12));
                 var userDetails2 = await uDTable.Create(ctx, 0, userId2, "Pierre", "Loderin", new DateTime(1995, 04, 19));
                 var userDetails3 = await uDTable.Create(ctx, 0, userId3, "Emma", "Ruvol", new DateTime(1996, 07, 02));
+
+                var userAvatar1 = await uATable.Create(ctx, 0, userId1, "https://image.noelshack.com/fichiers/2019/02/4/1547118763-geralt.png");
+                var userAvatar2 = await uATable.Create(ctx, 0, userId2, "https://image.noelshack.com/fichiers/2019/02/4/1547118763-jaskier.png");
+                var userAvatar3 = await uATable.Create(ctx, 0, userId3, "https://image.noelshack.com/fichiers/2019/02/4/1547118763-priscilla.png");
 
 
                 // Checks on projects.
@@ -240,6 +247,7 @@ namespace ITI.Human.Data.Tests
             Storage,
             StorageLinkedProduct,
             User,
+            UserAvatars,
             UserDetails,
             SchoolMember
         }
@@ -310,6 +318,11 @@ namespace ITI.Human.Data.Tests
                     case (Element.User):
                         table = (UserTable)Initialize(Element.User);
                         tableName = "CK.tUser"; fieldName = "UserName";
+                        break;
+
+                    case (Element.UserAvatars):
+                        table = (UserAvatarsTable)Initialize(Element.UserAvatars);
+                        tableName = "ITIH.tUserAvatars"; fieldName = "UserAvatarId";
                         break;
 
                     case (Element.UserDetails):
@@ -388,6 +401,9 @@ namespace ITI.Human.Data.Tests
 
                 case (Element.User):
                     return CK.Core.StObjModelExtension.Obtain<UserTable>(TestHelper.StObjMap.StObjs);
+
+                case (Element.UserAvatars):
+                    return CK.Core.StObjModelExtension.Obtain<UserAvatarsTable>(TestHelper.StObjMap.StObjs);
 
                 case (Element.UserDetails):
                     return CK.Core.StObjModelExtension.Obtain<UserDetailsTable>(TestHelper.StObjMap.StObjs);

@@ -18,6 +18,7 @@ interface IBasicDataProjectMember {
     projectRankName: string;
     userId: number;
     userName: string;
+    avatarUrl: string;
 }
 
 interface ProjectCreationViewModel {
@@ -29,4 +30,4 @@ interface ProjectCreationViewModel {
     members: number[];
 }
 
-export { IBasicDataProject, ProjectCreationViewModel };
+export { IBasicDataProject, ProjectCreationViewModel, IBasicDataProjectMember };

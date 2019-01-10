@@ -41,5 +41,10 @@ namespace ITI.Human.ViewModels.Project.Member
         /// See <see cref="BasicDataUser.UserName"/>.
         /// </summary>
         public string UserName { get; set; }
+
+        /// <summary>
+        /// User's avatar url.
+        /// </summary>
+        public string AvatarUrl { get; set; }
     }
 }

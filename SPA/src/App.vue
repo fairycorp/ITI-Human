@@ -166,7 +166,22 @@ button.selection.error {
   border: 1px solid #b86565;
 }
 
-button.standard:hover, button.selection:hover, button.selection.error:hover {
+button.navigation {
+  outline-width: 0;
+  width: 25px;
+  height: 25px;
+  border-radius: 25px;
+  background-color: white;
+  border: 1px solid black;
+  font-family: "gotham-bold";
+  font-size: 80%;
+  color: black;
+  
+  transition-duration: 0.2s;
+  transition-property: background-color, color;
+}
+
+button.standard:hover, button.selection:hover, button.selection.error:hover, button.navigation:hover {
   background-color: black;
   color: white;
   cursor: pointer;
