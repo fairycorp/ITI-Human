@@ -150,8 +150,8 @@ namespace API.Services.Project
             {
                 var doesMemberAlreadyRegistered = await ctx[ProjectMemberTable].Connection
                     .QueryFirstOrDefaultAsync<int>(
-                        "SELECT ProjectMemberId FROM ITIH.tProjectMember WHERE UserId = @id;",
-                        new { id = model.UserId }
+                        "SELECT ProjectMemberId FROM ITIH.tProjectMember WHERE UserId = @uId AND ProjectId = @pId;",
+                        new { uId = model.UserId, pId = model.ProjectId }
                     );
                 if (doesMemberAlreadyRegistered > 0) return Failure(
                     string.Format("Project Member with userId {0} is already registered in project.", model.UserId)

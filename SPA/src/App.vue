@@ -227,6 +227,16 @@ button.selectedButton {
   background-color: white;
 }
 
+.light-right-page {
+  position: fixed;
+  top: 3%;
+  right: 4%;
+  width: 37%;
+  height: 41%;
+  padding: 70px;
+  background-color: white;
+}
+
 .submit-button {
   width: 97.7%;
   padding: 8px;
@@ -286,5 +296,9 @@ button.selectedButton {
 
 .unselectable-text {
   user-select: none;
+}
+
+.infotext {
+    color: #b86565;
 }
 </style>

@@ -129,14 +129,30 @@
             <div
                 class="special submit-button">
                 <div
-                    @click="submit()"
+                    @click="submitProjectSetup()"
                     class="submit-button-text unselectable-text">
                     ALLEZ-Y LES GARS, CREEZ MON PROJET !
                 </div>
             </div>
         </div>
-        <div v-if="displayedProject !== null && displayedProject !== undefined && WINDOW_PROJECT_ADD_MEMBER" class="right-page">
+        <div v-if="displayedProject !== null && displayedProject !== undefined && WINDOW_PROJECT_ADD_MEMBER" class="light-right-page">
             <div @click="closeProjectAddMemberWindow()" class="cross">x</div>
+            <h1>Ajouter un membre</h1>
+            <input
+                v-model="searchBarContent"
+                v-on:keyup="searchUser(searchBarContent)"
+                type="text"
+                :class="{ error: FIELD_SEARCHBARCONTENT_ERROR }"
+                class="light-top-margin textual"
+                placeholder="Pseudo/nom du membre"
+            />
+             <div v-if="searchResult" @click="addNewUserToExistingProject(searchResult)" class="light-top-margin searchResult">
+                <img v-if="searchResult.avatarUrl !== null" width="50" :src="searchResult.avatarUrl" class="avatar light-right-margin" />
+                <img v-else width="50" src="../assets/images/unknown-user.png" class="avatar light-right-margin" />
+                {{ searchResult.firstName }} <span class="openSans-bold">{{ searchResult.lastName }}</span>, {{ searchResult.userName }}
+                <div class="add-button">AJOUTER</div>
+            </div>
+            <div v-if="TEXT_ERROR_SEARCHBARCONTENT" class="light-top-margin infotext">{{ TEXT_ERROR_SEARCHBARCONTENT }}</div>
         </div>
     </div>
 </template>
@@ -153,7 +169,12 @@ import Axios from "axios";
 import API from "@/services/API";
 import Endpoint from "@/helpers/Endpoint";
 
-import { IBasicDataProject, ProjectCreationViewModel, IBasicDataProjectMember } from "@/models/model.Project";
+import {
+    IBasicDataProject,
+    IProjectCreationViewModel,
+    IBasicDataProjectMember,
+    IProjectMemberCreationViewModel
+} from "@/models/model.Project";
 import { ESStatus } from "@/models/model.SchoolStatus";
 import { ESemester } from "@/models/model.Semester";
 import { IDetailedDataUser } from "@/models/model.User";
@@ -179,6 +200,7 @@ export default class ProjectsDB extends Vue {
     private FIELD_PROJECTPITCH_ERROR: boolean = false;
     private FIELD_SEMESTER_ERROR: boolean = false;
     private FIELD_SEARCHBARCONTENT_ERROR: boolean = false;
+    private TEXT_ERROR_SEARCHBARCONTENT: string = "";
 
     constructor() {
         super();
@@ -255,6 +277,27 @@ export default class ProjectsDB extends Vue {
         this.searchBarContent = "";
     }
 
+    private async addNewUserToExistingProject(user: IDetailedDataUser) {
+        this.displayedProject.members.forEach( (member) => {
+            if (member.userId === user.userId) {
+                this.FIELD_SEARCHBARCONTENT_ERROR = true;
+                this.TEXT_ERROR_SEARCHBARCONTENT =
+                    `${member.userName} est déjà dans la liste des membres de ce projet.`;
+                return;
+            }
+        });
+
+        const payload: IProjectMemberCreationViewModel = {
+            projectId: this.displayedProject.projectId,
+            userId: user.userId
+        };
+        const response = await API.post(`${Endpoint.Project}/member/add`, payload);
+        if (response.data) {
+            this.closeProjectAddMemberWindow();
+            this.fetchUserProjects();
+        }
+    }
+
     // SEARCHING METHODS.
     private searchUser(username: string) {
         if (username.length > 0) {
@@ -312,14 +355,25 @@ export default class ProjectsDB extends Vue {
 
     private closeProjectSetupWindow() {
         this.WINDOW_PROJECT_SETUP = false;
+        this.searchResult = null;
+        this.searchBarContent = "";
+        this.projectName = "";
+        this.projectHeadline = "";
+        this.projectPitch = "";
+        this.projectUserList = [];
+        this.selectedSemester = 0;
     }
 
     private closeProjectAddMemberWindow() {
         this.WINDOW_PROJECT_ADD_MEMBER = false;
+        this.searchResult = null;
+        this.searchBarContent = "";
+        this.FIELD_SEARCHBARCONTENT_ERROR = false;
+        this.TEXT_ERROR_SEARCHBARCONTENT = "";
     }
 
     // SUBMITTING METHODS.
-    private async submit() {
+    private async submitProjectSetup() {
         let passed: boolean = true;
         const projectNameCheck = this.inputDataCheck(this.projectName, 2);
         const projectHeadlineCheck = this.inputDataCheck(this.projectHeadline, 5);
@@ -344,7 +398,7 @@ export default class ProjectsDB extends Vue {
         if (passed) {
             const idList: number[] = [];
             this.projectUserList.forEach( (user) => { idList.push(user.userId); });
-            const payload: ProjectCreationViewModel = {
+            const payload: IProjectCreationViewModel = {
                 actorId: this.authService.authenticationInfo.user.userId,
                 semesterId: this.selectedSemester,
                 name: this.projectName,
@@ -353,11 +407,11 @@ export default class ProjectsDB extends Vue {
                 members: idList
             };
 
-            const response = API.post(`${Endpoint.Project}/create`, payload)
-            .then( (response) => {
-                this.WINDOW_PROJECT_SETUP = false;
+            const response = await API.post(`${Endpoint.Project}/create`, payload);
+            if (response.data) {
+                this.closeProjectSetupWindow();
                 this.fetchUserProjects();
-            });
+            }
         }
     }
 }

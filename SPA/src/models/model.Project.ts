@@ -21,7 +21,12 @@ interface IBasicDataProjectMember {
     avatarUrl: string;
 }
 
-interface ProjectCreationViewModel {
+interface IProjectMemberCreationViewModel {
+    projectId: number;
+    userId: number;
+}
+
+interface IProjectCreationViewModel {
     actorId: number;
     semesterId: number;
     name: string;
@@ -30,4 +35,4 @@ interface ProjectCreationViewModel {
     members: number[];
 }
 
-export { IBasicDataProject, ProjectCreationViewModel, IBasicDataProjectMember };
+export { IBasicDataProject, IProjectCreationViewModel, IBasicDataProjectMember, IProjectMemberCreationViewModel };

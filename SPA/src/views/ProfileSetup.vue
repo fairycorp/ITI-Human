@@ -404,10 +404,6 @@ export default class ProfileSetup extends Vue {
     color: #bdbdbd;
 }
 
-.infotext {
-    color: #b86565;
-}
-
 .take-note-text {
     font-size: 80%;
     text-align: justify;
