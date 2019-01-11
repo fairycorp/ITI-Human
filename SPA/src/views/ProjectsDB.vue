@@ -3,7 +3,10 @@
         <div class="left-page" :class="{ invisible : WINDOW_PROJECT_SETUP || WINDOW_PROJECT_ADD_MEMBER }">
             <h1>Liste de vos projets</h1>
             <div class="cover-photo"></div>
-
+            
+            <div class="create-after">
+                <button @click="launchProjectSetup()" class="standard">CREER UN PROJET</button>
+            </div>
             <div class="content">
                 <h3 class="pretitle">À L'AFFICHE</h3>
                 <div v-if="displayedProject !== null && displayedProject !== undefined">
@@ -48,10 +51,14 @@
                             @click="changeCurrentDisplayedProject(1)"
                             class="navigation"> > </button>
                     </div>
+
+                    <div class="action-buttons">
+                        <button v-if="displayedProject.semesterId === 4">INVENTAIRE</button>
+                        <button v-if="displayedProject.semesterId === 4">COMPTES</button>
+                    </div>
                 </div>
                 <div v-else>
                     <div class="project-title">Absolument rien.</div>
-                    <button @click="launchProjectSetup()" class="light-top-margin standard">CREER UN PROJET</button>
                 </div>
             </div>
         </div>
@@ -205,7 +212,7 @@ export default class ProjectsDB extends Vue {
     constructor() {
         super();
         this.isAccessible();
-        this.fetchUserProjects();
+        this.fetchUserProjects(0);
         this.fetchUserList();
     }
 
@@ -294,7 +301,7 @@ export default class ProjectsDB extends Vue {
         const response = await API.post(`${Endpoint.Project}/member/add`, payload);
         if (response.data) {
             this.closeProjectAddMemberWindow();
-            this.fetchUserProjects();
+            this.fetchUserProjects(this.displayedProject.projectId);
         }
     }
 
@@ -316,12 +323,12 @@ export default class ProjectsDB extends Vue {
     }
 
     // GETTERS METHODS.
-    private async fetchUserProjects() {
+    private async fetchUserProjects(displayedProject: number) {
         const response = await API
             .get(`${Endpoint.Project}/u/${this.authService.authenticationInfo.user.userId}`);
-        this.userProjects = response.data;
+        this.userProjects = response.data
 
-        this.displayedProject = this.userProjects[0];
+        this.changeCurrentDisplayedProjectByProjectId(displayedProject);
 
         this.displayedProject.members.forEach( (member) => {
             if (member.userId === this.authService.authenticationInfo.user.userId) {
@@ -333,6 +340,16 @@ export default class ProjectsDB extends Vue {
     private async fetchUserList() {
         const response = await API.get(`${Endpoint.User}/tooltip`);
         this.userList = response.data;
+    }
+
+    private changeCurrentDisplayedProjectByProjectId(projectId: number) {
+        for (let index: number = 0; index < this.userProjects.length; index++) {
+            if (this.userProjects[index].projectId === projectId) {
+                this.displayedProject = this.userProjects[index];
+                return;
+            }
+        }
+        this.displayedProject = this.userProjects[0];
     }
 
     private changeCurrentDisplayedProject(newIndex: number) {
@@ -410,7 +427,7 @@ export default class ProjectsDB extends Vue {
             const response = await API.post(`${Endpoint.Project}/create`, payload);
             if (response.data) {
                 this.closeProjectSetupWindow();
-                this.fetchUserProjects();
+                this.fetchUserProjects(response.data);
             }
         }
     }
@@ -442,6 +459,12 @@ export default class ProjectsDB extends Vue {
     color: #919191;
     user-select: none;
     cursor: pointer;
+}
+
+.create-after {
+    position: absolute;
+    top: 70px;
+    right: 55px;
 }
 
 .cover-photo {

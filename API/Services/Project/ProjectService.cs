@@ -88,6 +88,24 @@ namespace API.Services.Project
         }
 
         /// <summary>
+        /// Gets the Project from a ProjectMemberId.
+        /// </summary>
+        /// <param name="projectMemberId">Project member's id.</param>
+        /// <returns>
+        /// Success result where result content is a single <see cref="BasicDataProject"/>
+        /// or Failure result if no element exists in db.
+        /// </returns>
+        public async Task<GuardResult> GuardedGetFromMember(int projectMemberId)
+        {
+            var result = await GetFromMember(projectMemberId);
+            if (result == null) return Failure(
+                string.Format("No Project from projectMemberId {0} was found.", projectMemberId)
+            );
+
+            return Success(result);
+        }
+
+        /// <summary>
         /// Creates a new Project.
         /// </summary>
         /// <param name="model">Matching model.</param>
@@ -261,6 +279,19 @@ namespace API.Services.Project
                 }
 
                 return projects;
+            }
+        }
+
+        private async Task<BasicDataProject> GetFromMember(int projectMemberId)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                var projectId = await ctx[ProjectMemberTable].Connection
+                    .QueryFirstOrDefaultAsync<int>(
+                        "SELECT ProjectId FROM ITIH.vProjectMembers WHERE ProjectMemberId = @id;",
+                        new { id = projectMemberId }
+                    );
+                return await Get(projectId);
             }
         }
         

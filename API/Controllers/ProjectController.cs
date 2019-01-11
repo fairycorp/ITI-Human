@@ -52,6 +52,19 @@ namespace API.Controllers
             return Ok(result.Content);
         }
 
+        [HttpGet("m/{projectMemberId}")]
+        public async Task<IActionResult> GetFromMember(int projectMemberId)
+        {
+            var isAuthenticated =
+               AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
+            var result = await Service.GuardedGetFromMember(projectMemberId);
+            if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+            return Ok(result.Content);
+        }
+
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] ITI.Human.ViewModels.Project.CreationViewModel model)
         {
