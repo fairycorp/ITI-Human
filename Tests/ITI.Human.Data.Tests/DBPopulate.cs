@@ -28,6 +28,14 @@ namespace ITI.Human.Data.Tests
         const string userName1 = "Geralt";
         const string userName2 = "Jasquier";
         const string userName3 = "Priscilla";
+        const string userName4 = "BobbyCarotte";
+        const string userName5 = "Azsher";
+        const string userName6 = "Legann";
+        const string userName7 = "Fixesuarez";
+        const string userName8 = "TheAmazing";
+        const string userName9 = "Luthys";
+        const string userName10 = "Surface";
+        const string userName11 = "TakiTaki";
         const string projectName1 = "Stall";
         const string projectName2 = "Atome";
 
@@ -103,28 +111,54 @@ namespace ITI.Human.Data.Tests
                 doesExist = await GetElement(Element.User, strIdentifier: userName1);
                 if (doesExist != null) return;
 
-                doesExist = await GetElement(Element.User, strIdentifier: userName2);
-                if (doesExist != null) return;
-
-                doesExist = await GetElement(Element.User, strIdentifier: userName3);
-                if (doesExist != null) return;
-
                 // Creates users (considered as school members) and their details.
                 var userId1 = await uTable.CreateUserAsync(ctx, 1, userName1);
                 var userId2 = await uTable.CreateUserAsync(ctx, 1, userName2);
                 var userId3 = await uTable.CreateUserAsync(ctx, 1, userName3);
+                var userId4 = await uTable.CreateUserAsync(ctx, 1, userName4);
+                var userId5 = await uTable.CreateUserAsync(ctx, 1, userName5);
+                var userId6 = await uTable.CreateUserAsync(ctx, 1, userName6);
+                var userId7 = await uTable.CreateUserAsync(ctx, 1, userName7);
+                var userId8 = await uTable.CreateUserAsync(ctx, 1, userName8);
+                var userId9 = await uTable.CreateUserAsync(ctx, 1, userName9);
+                var userId10 = await uTable.CreateUserAsync(ctx, 1, userName10);
+                var userId11 = await uTable.CreateUserAsync(ctx, 1, userName11);
 
                 var schoolMember1 = await sMTable.Create(ctx, 0, userId1, 3);
                 var schoolMember2 = await sMTable.Create(ctx, 0, userId2, 3);
                 var schoolMember3 = await sMTable.Create(ctx, 0, userId3, 3);
+                var schoolMember4 = await sMTable.Create(ctx, 0, userId4, 3);
+                var schoolMember5 = await sMTable.Create(ctx, 0, userId5, 3);
+                var schoolMember6 = await sMTable.Create(ctx, 0, userId6, 3);
+                var schoolMember7 = await sMTable.Create(ctx, 0, userId7, 3);
+                var schoolMember8 = await sMTable.Create(ctx, 0, userId8, 3);
+                var schoolMember9 = await sMTable.Create(ctx, 0, userId9, 3);
+                var schoolMember10 = await sMTable.Create(ctx, 0, userId10, 3);
+                var schoolMember11 = await sMTable.Create(ctx, 0, userId11, 3);
 
                 var userDetails1 = await uDTable.Create(ctx, 0, userId1, "Charles", "Resini", new DateTime(1997, 10, 12));
                 var userDetails2 = await uDTable.Create(ctx, 0, userId2, "Pierre", "Loderin", new DateTime(1995, 04, 19));
                 var userDetails3 = await uDTable.Create(ctx, 0, userId3, "Emma", "Ruvol", new DateTime(1996, 07, 02));
+                var userDetails4 = await uDTable.Create(ctx, 0, userId4, "Loïc", "Monard", new DateTime(1996, 07, 02));
+                var userDetails5 = await uDTable.Create(ctx, 0, userId5, "Damien", "Gidon", new DateTime(1996, 07, 02));
+                var userDetails6 = await uDTable.Create(ctx, 0, userId6, "Thibault", "Cam", new DateTime(1996, 07, 02));
+                var userDetails7 = await uDTable.Create(ctx, 0, userId7, "François-Xavier", "Suarez", new DateTime(1996, 07, 02));
+                var userDetails8 = await uDTable.Create(ctx, 0, userId8, "Hugo", "Thomas", new DateTime(1996, 07, 02));
+                var userDetails9 = await uDTable.Create(ctx, 0, userId9, "Sébastien", "Martins", new DateTime(1996, 07, 02));
+                var userDetails10 = await uDTable.Create(ctx, 0, userId10, "Hugo", "Loiseau", new DateTime(1996, 07, 02));
+                var userDetails11 = await uDTable.Create(ctx, 0, userId11, "Abdelmadjid", "Sahki", new DateTime(1996, 07, 02));
 
                 var userAvatar1 = await uATable.Create(ctx, 0, userId1, "https://image.noelshack.com/fichiers/2019/02/4/1547118763-geralt.png");
                 var userAvatar2 = await uATable.Create(ctx, 0, userId2, "https://image.noelshack.com/fichiers/2019/02/4/1547118763-jaskier.png");
                 var userAvatar3 = await uATable.Create(ctx, 0, userId3, "https://image.noelshack.com/fichiers/2019/02/4/1547118763-priscilla.png");
+                var userAvatar4 = await uATable.Create(ctx, 0, userId4, "https://image.noelshack.com/fichiers/2019/02/4/1547126824-loic.jpg");
+                var userAvatar5 = await uATable.Create(ctx, 0, userId5, "https://image.noelshack.com/fichiers/2019/02/4/1547126824-damien.jpg");
+                var userAvatar6 = await uATable.Create(ctx, 0, userId6, "https://image.noelshack.com/fichiers/2019/02/4/1547126900-thibault.jpg");
+                var userAvatar7 = await uATable.Create(ctx, 0, userId7, "https://image.noelshack.com/fichiers/2019/02/4/1547126910-suarez.jpg");
+                var userAvatar8 = await uATable.Create(ctx, 0, userId8, "https://image.noelshack.com/fichiers/2019/02/4/1547126824-hugot.jpg");
+                var userAvatar9 = await uATable.Create(ctx, 0, userId9, "https://image.noelshack.com/fichiers/2019/02/4/1547126945-seb.jpg");
+                var userAvatar10 = await uATable.Create(ctx, 0, userId10, "https://image.noelshack.com/fichiers/2019/02/4/1547126824-hugo.jpg");
+                var userAvatar11 = await uATable.Create(ctx, 0, userId11, "https://image.noelshack.com/fichiers/2019/02/4/1547126824-madjid.jpg");
 
 
                 // Checks on projects.
