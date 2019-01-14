@@ -164,31 +164,58 @@
         <div v-if="displayedProject !== null && displayedProject !== undefined && WINDOW_PROJECT_INVENTORY" class="right-page">
             <div @click="closeProjectInventoryWindow()" class="cross">x</div>
             <h1>Inventaire du projet</h1>
-            <h3 class="medium-top-margin">AJOUTER UN PRODUIT</h3>
+            <div v-if="currentUserSchoolProfile.projectRankId === 1">
+                <h3 class="medium-top-margin">AJOUTER UN PRODUIT</h3>
 
-            <input
-                v-model="productSearchBarContent"
-                v-on:keyup="searchProduct(productSearchBarContent)"
-                type="text"
-                class="textual short"
-                placeholder="Nom du produit"
-            />
-            <input
-                v-model="productPrice"
-                type="text"
-                class="textual extra-short"
-                placeholder="Prix"
-            />
-            <input
-                v-model="productQuantity"
-                type="text"
-                class="textual extra-short"
-                placeholder="Qté"
-            />
-            <div v-if="productSearchResult" @click="addNewProductToExistingInventory(productSearchResult)" class="light-top-margin searchResult">
-                <img width="50" :src="productSearchResult.url" class="avatar light-right-margin" />
-                <span class="openSans-bold">{{ productSearchResult.name }}</span>
-                <div class="add-button">AJOUTER</div>
+                <input
+                    v-model="productSearchBarContent"
+                    v-on:keyup="searchProduct(productSearchBarContent)"
+                    type="text"
+                    class="textual short"
+                    placeholder="Nom du produit"
+                />
+                <input
+                    @keyup.enter="addNewProductToExistingInventory(productSearchResult)"
+                    v-model="productPrice"
+                    type="number"
+                    min="0"
+                    step="0.1"
+                    :class="{ error : FIELD_PRODUCTPRICE_ERROR }"
+                    class="textual extra-short"
+                    placeholder="Prix"
+                />
+                <input
+                    @keyup.enter="addNewProductToExistingInventory(productSearchResult)"
+                    v-model="productQuantity"
+                    type="number"
+                    min="0"
+                    step="0.1"
+                    :class="{ error : FIELD_PRODUCTQUANTITY_ERROR }"
+                    class="textual extra-short"
+                    placeholder="Qté"
+                />
+                <div v-if="productSearchResult" @click="addNewProductToExistingInventory(productSearchResult)" class="light-top-margin searchResult">
+                    <img width="60" :src="productSearchResult.url" class="avatar light-right-margin" />
+                    <span class="openSans-bold">{{ productSearchResult.name }}</span>
+                    <div class="add-button">AJOUTER
+                        <span v-if="productQuantity !== null || productQuantity !== undefined || productQuantity !== ''">(</span>
+                        <span v-if="productQuantity !== null && productQuantity !== undefined && productQuantity !== ''">{{ productQuantity }} {{ productSearchResult.productName }}</span>
+                        <span v-if="productPrice !== null && productPrice !== undefined && productPrice !== ''">à {{ productPrice }}€/unité</span>
+                        <span v-if="productQuantity !== null || productQuantity !== undefined || productQuantity !== ''">)</span>
+                    </div>
+                </div>
+                <div v-if="TEXT_ERROR_PRODUCTSEARCHBAR" class="light-top-margin infotext">{{ TEXT_ERROR_PRODUCTSEARCHBAR }}</div>
+            </div>
+
+            <h3
+                :class="{ lightmargintop : currentUserSchoolProfile.projectRankId === 0, highmargintop : currentUserSchoolProfile.projectRankId === 1 }">
+                LISTE DES PRODUITS
+            </h3>
+            <div>
+                <div v-for="slp in slpList" :key="slp.storageLinkedProductId" class="light-top-margin">
+                    <img width="50" class="avatar light-right-margin" :src="slp.productAvatarUrl" />
+                    <span class="openSans-bold">{{ slp.stock }}</span><span class="productname"> {{ slp.productName}}</span> à <span class="openSans-bold">{{ slp.unitPrice / 100 }}</span>€/unité.
+                </div>
             </div>
         </div>
     </div>
@@ -215,7 +242,7 @@ import {
 import { ESStatus } from "@/models/model.SchoolStatus";
 import { ESemester } from "@/models/model.Semester";
 import { IDetailedDataUser } from "@/models/model.User";
-import { IBasicDataStorageLinkedProduct } from "@/models/model.Storage";
+import { IBasicDataStorageLinkedProduct, IStorageCreationViewModel, ILinkedProductCreationViewModel } from "@/models/model.Storage";
 import { IBasicDataProduct } from "@/models/model.Product";
 
 @Component({})
@@ -226,6 +253,7 @@ export default class ProjectsDB extends Vue {
     private userProjects: IBasicDataProject[] = [];
     private userList: IDetailedDataUser[] = [];
     private productList: IBasicDataProduct[] = [];
+    private slpList: IBasicDataStorageLinkedProduct[] = [];
     private projectName: string = "";
     private projectHeadline: string = "";
     private projectPitch: string = "";
@@ -245,7 +273,10 @@ export default class ProjectsDB extends Vue {
     private FIELD_PROJECTPITCH_ERROR: boolean = false;
     private FIELD_SEMESTER_ERROR: boolean = false;
     private FIELD_SEARCHBARCONTENT_ERROR: boolean = false;
+    private FIELD_PRODUCTPRICE_ERROR: boolean = false;
+    private FIELD_PRODUCTQUANTITY_ERROR: boolean = false;
     private TEXT_ERROR_SEARCHBARCONTENT: string = "";
+    private TEXT_ERROR_PRODUCTSEARCHBAR: string = "";
 
     constructor() {
         super();
@@ -343,6 +374,64 @@ export default class ProjectsDB extends Vue {
         }
     }
 
+    private async addNewProductToExistingInventory(product: IBasicDataProduct) {
+        if (this.productQuantity === null
+        || this.productQuantity === undefined
+        || this.productPrice === null
+        || this.productPrice === undefined
+        || typeof this.productQuantity === "number"
+        || typeof this.productPrice === "number"
+        || this.productQuantity == 0
+        || this.productPrice == 0
+        || this.productQuantity < 0
+        || this.productPrice < 0) {
+            if (this.productPrice === null || this.productPrice === undefined) {
+                this.FIELD_PRODUCTPRICE_ERROR = true;
+            }
+
+            if (this.productQuantity === null || this.productQuantity === undefined) {
+                this.FIELD_PRODUCTQUANTITY_ERROR = true;
+            }
+
+            if (this.productQuantity == 0) {
+                this.FIELD_PRODUCTQUANTITY_ERROR = true;
+            }
+
+            if (this.productPrice == 0) {
+                this.FIELD_PRODUCTPRICE_ERROR = true;
+            }
+
+            this.TEXT_ERROR_PRODUCTSEARCHBAR = "Merci d'ajouter un prix et/ou une quantité.";
+            return;
+        } else {
+            this.slpList.forEach( (slp) => {
+                if (slp.productName === product.name) {
+                    this.TEXT_ERROR_PRODUCTSEARCHBAR = "Ce produit existe déjà dans votre inventaire.";
+                }
+            });
+
+            const payload: ILinkedProductCreationViewModel = {
+                userId: this.authService.authenticationInfo.user.userId,
+                storageId: this.displayedProject.storageId,
+                productId: this.productSearchResult!.productId,
+                unitPrice: this.productPrice * 100,
+                stock: this.productQuantity
+            };
+            const response = await API.post(`${Endpoint.Storage}/products/create`, payload);
+            if (response.data) {
+                this.productSearchBarContent = "";
+                this.productPrice = null;
+                this.productQuantity = null;
+                this.productSearchResult = null;
+                this.FIELD_PRODUCTPRICE_ERROR = false;
+                this.FIELD_PRODUCTQUANTITY_ERROR = false;
+                this.TEXT_ERROR_PRODUCTSEARCHBAR = "";
+                this.fetchSLPlist();
+                return;
+            }
+        }
+    }
+
     // SEARCHING METHODS.
     private searchUser(username: string) {
         if (username.length > 0) {
@@ -404,6 +493,11 @@ export default class ProjectsDB extends Vue {
         this.productList = response.data;
     }
 
+    private async fetchSLPlist() {
+        const response = await API.get(`${Endpoint.Storage}/products/from/${this.displayedProject.storageId}`);
+        this.slpList = response.data;
+    }
+
     private changeCurrentDisplayedProjectByProjectId(projectId: number) {
         for (let index: number = 0; index < this.userProjects.length; index++) {
             if (this.userProjects[index].projectId === projectId) {
@@ -412,12 +506,15 @@ export default class ProjectsDB extends Vue {
             }
         }
         this.displayedProject = this.userProjects[0];
+        console.log(this.slpList);
+        this.fetchSLPlist();
     }
 
     private changeCurrentDisplayedProject(newIndex: number) {
         for (let index: number = 0; index < this.userProjects.length; index++) {
             if (this.userProjects[index] === this.displayedProject) {
                 this.displayedProject = this.userProjects[index + (newIndex)];
+                this.fetchSLPlist();
                 return;
             }
         }
@@ -434,6 +531,8 @@ export default class ProjectsDB extends Vue {
 
     private launchProjectInventory() {
         this.WINDOW_PROJECT_INVENTORY = true;
+        console.log(this.displayedProject.projectName);
+        this.fetchSLPlist();
     }
 
     private closeProjectSetupWindow() {
@@ -633,5 +732,9 @@ export default class ProjectsDB extends Vue {
     position: absolute;
     bottom: 75px;
     width: 81.5%;
+}
+
+.productname {
+    color: #4b80ac;
 }
 </style>

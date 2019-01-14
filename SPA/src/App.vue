@@ -276,11 +276,19 @@ button.selectedButton {
   margin-top: 15px;
 }
 
+.lightmargintop {
+  margin-top: 15px;
+}
+
 .medium-top-margin {
   margin-top: 30px;
 }
 
 .high-top-margin {
+  margin-top: 60px;
+}
+
+.highmargintop {
   margin-top: 60px;
 }
 

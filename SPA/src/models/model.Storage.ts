@@ -11,12 +11,16 @@ interface IBasicDataStorageLinkedProduct {
     storageLinkedProductId: number;
     storageId: number;
     productId: number;
+    productName: string;
+    productDesc: string;
+    productAvatarUrl: string;
     unitPrice: number;
     stock: number;
     creditState: boolean;
 }
 
 interface ILinkedProductCreationViewModel {
+    userId: number;
     storageId: number;
     productId: number;
     unitPrice: number;
