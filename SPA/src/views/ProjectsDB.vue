@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <div class="left-page" :class="{ invisible : WINDOW_PROJECT_SETUP || WINDOW_PROJECT_ADD_MEMBER }">
+        <div class="left-page" :class="{ invisible : WINDOW_PROJECT_SETUP || WINDOW_PROJECT_ADD_MEMBER || WINDOW_PROJECT_INVENTORY }">
             <h1>Liste de vos projets</h1>
             <div class="cover-photo"></div>
             
@@ -53,7 +53,7 @@
                     </div>
 
                     <div class="action-buttons">
-                        <button v-if="displayedProject.semesterId === 4">INVENTAIRE</button>
+                        <button @click="launchProjectInventory()" v-if="displayedProject.semesterId === 4">INVENTAIRE</button>
                         <button v-if="displayedProject.semesterId === 4">COMPTES</button>
                     </div>
                 </div>
@@ -153,13 +153,43 @@
                 class="light-top-margin textual"
                 placeholder="Pseudo/nom du membre"
             />
-             <div v-if="searchResult" @click="addNewUserToExistingProject(searchResult)" class="light-top-margin searchResult">
+            <div v-if="searchResult" @click="addNewUserToExistingProject(searchResult)" class="light-top-margin searchResult">
                 <img v-if="searchResult.avatarUrl !== null" width="50" :src="searchResult.avatarUrl" class="avatar light-right-margin" />
                 <img v-else width="50" src="../assets/images/unknown-user.png" class="avatar light-right-margin" />
                 {{ searchResult.firstName }} <span class="openSans-bold">{{ searchResult.lastName }}</span>, {{ searchResult.userName }}
                 <div class="add-button">AJOUTER</div>
             </div>
             <div v-if="TEXT_ERROR_SEARCHBARCONTENT" class="light-top-margin infotext">{{ TEXT_ERROR_SEARCHBARCONTENT }}</div>
+        </div>
+        <div v-if="displayedProject !== null && displayedProject !== undefined && WINDOW_PROJECT_INVENTORY" class="right-page">
+            <div @click="closeProjectInventoryWindow()" class="cross">x</div>
+            <h1>Inventaire du projet</h1>
+            <h3 class="medium-top-margin">AJOUTER UN PRODUIT</h3>
+
+            <input
+                v-model="productSearchBarContent"
+                v-on:keyup="searchProduct(productSearchBarContent)"
+                type="text"
+                class="textual short"
+                placeholder="Nom du produit"
+            />
+            <input
+                v-model="productPrice"
+                type="text"
+                class="textual extra-short"
+                placeholder="Prix"
+            />
+            <input
+                v-model="productQuantity"
+                type="text"
+                class="textual extra-short"
+                placeholder="Qté"
+            />
+            <div v-if="productSearchResult" @click="addNewProductToExistingInventory(productSearchResult)" class="light-top-margin searchResult">
+                <img width="50" :src="productSearchResult.url" class="avatar light-right-margin" />
+                <span class="openSans-bold">{{ productSearchResult.name }}</span>
+                <div class="add-button">AJOUTER</div>
+            </div>
         </div>
     </div>
 </template>
@@ -185,6 +215,8 @@ import {
 import { ESStatus } from "@/models/model.SchoolStatus";
 import { ESemester } from "@/models/model.Semester";
 import { IDetailedDataUser } from "@/models/model.User";
+import { IBasicDataStorageLinkedProduct } from "@/models/model.Storage";
+import { IBasicDataProduct } from "@/models/model.Product";
 
 @Component({})
 export default class ProjectsDB extends Vue {
@@ -193,15 +225,21 @@ export default class ProjectsDB extends Vue {
     @Prop() private currentUserSchoolProfile!: IBasicDataProjectMember;
     private userProjects: IBasicDataProject[] = [];
     private userList: IDetailedDataUser[] = [];
+    private productList: IBasicDataProduct[] = [];
     private projectName: string = "";
     private projectHeadline: string = "";
     private projectPitch: string = "";
     private selectedSemester: number = 0;
     private searchBarContent: string = "";
     private searchResult: IDetailedDataUser | null = null;
+    private productSearchBarContent: string = "";
+    private productSearchResult: IBasicDataProduct | null = null;
+    private productPrice: number | null = null;
+    private productQuantity: number | null = null;
     private projectUserList: IDetailedDataUser[] = [];
     private WINDOW_PROJECT_SETUP: boolean = false;
     private WINDOW_PROJECT_ADD_MEMBER: boolean = false;
+    private WINDOW_PROJECT_INVENTORY: boolean = false;
     private FIELD_PROJECTNAME_ERROR: boolean = false;
     private FIELD_PROJECTHEADLINE_ERROR: boolean = false;
     private FIELD_PROJECTPITCH_ERROR: boolean = false;
@@ -322,11 +360,30 @@ export default class ProjectsDB extends Vue {
         }
     }
 
+    private searchProduct(productname: string) {
+        if (productname.length > 0) {
+            this.productList.forEach( (product) => {
+                    if (product.name.toLowerCase().startsWith(productname.toLowerCase())
+                    || product.name.toLowerCase().endsWith(productname.toLowerCase())) {
+                        this.productSearchResult = product;
+                }
+            });
+        } else {
+            this.productSearchResult = null;
+        }
+    }
+
     // GETTERS METHODS.
     private async fetchUserProjects(displayedProject: number) {
         const response = await API
             .get(`${Endpoint.Project}/u/${this.authService.authenticationInfo.user.userId}`);
-        this.userProjects = response.data
+        this.userProjects = response.data;
+
+        this.userProjects.forEach( (project) => {
+            if (project.semesterId === 4) {
+                this.fetchProductList();
+            }
+        });
 
         this.changeCurrentDisplayedProjectByProjectId(displayedProject);
 
@@ -340,6 +397,11 @@ export default class ProjectsDB extends Vue {
     private async fetchUserList() {
         const response = await API.get(`${Endpoint.User}/tooltip`);
         this.userList = response.data;
+    }
+
+    private async fetchProductList() {
+        const response = await API.get(`${Endpoint.Product}`);
+        this.productList = response.data;
     }
 
     private changeCurrentDisplayedProjectByProjectId(projectId: number) {
@@ -370,6 +432,10 @@ export default class ProjectsDB extends Vue {
         this.WINDOW_PROJECT_ADD_MEMBER = true;
     }
 
+    private launchProjectInventory() {
+        this.WINDOW_PROJECT_INVENTORY = true;
+    }
+
     private closeProjectSetupWindow() {
         this.WINDOW_PROJECT_SETUP = false;
         this.searchResult = null;
@@ -387,6 +453,10 @@ export default class ProjectsDB extends Vue {
         this.searchBarContent = "";
         this.FIELD_SEARCHBARCONTENT_ERROR = false;
         this.TEXT_ERROR_SEARCHBARCONTENT = "";
+    }
+
+    private closeProjectInventoryWindow() {
+        this.WINDOW_PROJECT_INVENTORY = false;
     }
 
     // SUBMITTING METHODS.

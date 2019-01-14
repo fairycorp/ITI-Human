@@ -96,15 +96,24 @@ namespace ITI.Human.Data.Tests
                 }
 
                 // Creates products.
-                var productId1 = await pTable.Create(ctx, 0, productName1, string.Empty);
-                var productId2 = await pTable.Create(ctx, 0, productName2, string.Empty);
-                var productId3 = await pTable.Create(ctx, 0, productName3, string.Empty);
-                var productId4 = await pTable.Create(ctx, 0, productName4, string.Empty);
-                var productId5 = await pTable.Create(ctx, 0, productName5, string.Empty);
-                var productId6 = await pTable.Create(ctx, 0, productName6, string.Empty);
-                var productId7 = await pTable.Create(ctx, 0, productName7, string.Empty);
-                var productId8 = await pTable.Create(ctx, 0, productName8, string.Empty);
-                var productId9 = await pTable.Create(ctx, 0, productName9, string.Empty);
+                var productId1 = await pTable.Create(ctx, 0, productName1, "Deux délicieuses barres chocolatées pralinées.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463367-kbueno.png");
+                var productId2 = await pTable.Create(ctx, 0, productName2, "L'original Kinder. Prêt à être dévoré.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463387-kmaxi.png");
+                var productId3 = await pTable.Create(ctx, 0, productName3, "Certain(e)s disent qu'il est le meilleur en bouche.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463367-kcountry.png");
+                var productId4 = await pTable.Create(ctx, 0, productName4, "Cannette au format standard.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463367-coca-33.png");
+                var productId5 = await pTable.Create(ctx, 0, productName5, "Bouteille au format standard.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463367-coca-50.png");
+                var productId6 = await pTable.Create(ctx, 0, productName6, "Canette au format standard.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463472-redbull-33.png");
+                var productId7 = await pTable.Create(ctx, 0, productName7, "Canette au grand format.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463387-redbull-50.png");
+                var productId8 = await pTable.Create(ctx, 0, productName8, "Canette au format standard.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463367-fanta-33.png");
+                var productId9 = await pTable.Create(ctx, 0, productName9, "Bouteille au format standard.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463367-fanta-50.png");
 
 
                 // Checks on users.

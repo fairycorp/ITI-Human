@@ -111,6 +111,16 @@ input.textual {
   transition-duration: 0.2s;
 }
 
+input.textual.short {
+  width: 70%;
+  margin-right: 15px;
+}
+
+input.textual.extra-short {
+  width: 7%;
+  margin-right: 15px;
+}
+
 input.textual::placeholder { 
   color: #c8c7c8;
   transition-property: opacity;

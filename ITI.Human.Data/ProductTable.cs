@@ -14,9 +14,9 @@ namespace ITI.Human.Data
         }
 
         [SqlProcedure("sProductCreate")]
-        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, string name, string desc);
+        public abstract Task<int> Create(ISqlCallContext ctx, int actorId, string name, string desc, string url = null);
 
         [SqlProcedure("sProductUpdate")]
-        public abstract Task<bool> Update(ISqlCallContext ctx, int actorId, int productId, string name, string desc);
+        public abstract Task<bool> Update(ISqlCallContext ctx, int actorId, int productId, string name, string desc, string url);
     }
 }

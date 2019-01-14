@@ -18,5 +18,10 @@ namespace ITI.Human.ViewModels.Product
         /// See <see cref="BasicDataProduct.Desc"/>.
         /// </summary>
         public string Desc { get; set; }
+
+        /// <summary>
+        /// See <see cref="BasicDataProduct.Url"/>.
+        /// </summary>
+        public string Url { get; set; }
     }
 }

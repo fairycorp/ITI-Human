@@ -2,6 +2,7 @@ interface IBasicDataProduct {
     productId: number;
     name: string;
     desc: string;
+    url: string;
 }
 
 interface ICreationViewModel {

@@ -7,4 +7,5 @@
 	constraint FK_tUserAvatars_UserId foreign key (UserId) references CK.tUser (UserId)
 );
 
-insert into ITIH.tUserAvatars (UserId, [Url]) values (0, N'');
+insert into ITIH.tUserAvatars (UserId, [Url])
+	values (0, 'https://image.noelshack.com/fichiers/2019/03/1/1547459724-unknown-user.png');

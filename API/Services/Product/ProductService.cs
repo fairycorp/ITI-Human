@@ -178,7 +178,7 @@ namespace API.Services.Product
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                return await ProductTable.Create(ctx, 0, model.Name, model.Desc);
+                return await ProductTable.Create(ctx, 0, model.Name, model.Desc, model.Url);
             }
         }
 
@@ -186,7 +186,7 @@ namespace API.Services.Product
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                return await ProductTable.Update(ctx, 0, model.ProductId, model.Name, model.Desc);
+                return await ProductTable.Update(ctx, 0, model.ProductId, model.Name, model.Desc, model.Url);
             }
         }
     }
