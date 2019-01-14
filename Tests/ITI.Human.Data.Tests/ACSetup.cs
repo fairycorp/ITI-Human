@@ -16,6 +16,7 @@ namespace ITI.Human.Data.Tests
         {
             var uTable = CK.Core.StObjModelExtension.Obtain<UserTable>(TestHelper.StObjMap.StObjs);
             var uPTable = CK.Core.StObjModelExtension.Obtain<UserPasswordTable>(TestHelper.StObjMap.StObjs);
+            var uATable = CK.Core.StObjModelExtension.Obtain<UserAvatarsTable>(TestHelper.StObjMap.StObjs);
 
             using (var ctx = new SqlStandardCallContext())
             {
@@ -29,6 +30,7 @@ namespace ITI.Human.Data.Tests
                     var userId = await uTable.CreateUserAsync(ctx, 1, "fairyfingers");
                     Assert.Greater(userId, 0);
 
+                    var avatarReponse = await uATable.Create(ctx, 1, userId, "https://image.noelshack.com/fichiers/2019/03/1/1547482142-26920011.jpg");
                     var passwordResponse = await uPTable.CreateOrUpdatePasswordUserAsync(ctx, 1, userId, "access");
                 }
             }

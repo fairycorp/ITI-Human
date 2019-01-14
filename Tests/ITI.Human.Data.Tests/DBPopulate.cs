@@ -60,6 +60,9 @@ namespace ITI.Human.Data.Tests
             var pMTable = (ProjectMemberTable)
                 Initialize(Element.ProjectMember);
 
+            var sMTable = (SchoolMemberTable)
+                Initialize(Element.SchoolMember);
+
             var sTable = (StorageTable)
                 Initialize(Element.Storage);
 
@@ -72,8 +75,8 @@ namespace ITI.Human.Data.Tests
             var uATable = (UserAvatarsTable)
                 Initialize(Element.UserAvatars);
 
-            var sMTable = (SchoolMemberTable)
-                Initialize(Element.SchoolMember);
+            var uBTable = (UserBalanceTable)
+                Initialize(Element.UserBalance);
 
             var uDTable = (UserDetailsTable)
                 Initialize(Element.UserDetails);
@@ -266,6 +269,67 @@ namespace ITI.Human.Data.Tests
             }
         }
 
+        [Test]
+        public async Task CreateUserBalances()
+        {
+            var uTable = (UserTable)
+                Initialize(Element.User);
+
+            var uBTable = (UserBalanceTable)
+                Initialize(Element.UserBalance);
+
+            async Task<int> GetUser(ISqlCallContext ctx, string userName)
+            {
+                return await ctx[uTable].Connection
+                .QueryFirstOrDefaultAsync<int>(
+                    "SELECT UserId FROM CK.tUser WHERE UserName = @nm;",
+                    new { nm = userName }
+                );
+            };
+
+            async Task<int> GetProject(ISqlCallContext ctx, string projectName)
+            {
+                return await ctx[uTable].Connection
+                .QueryFirstOrDefaultAsync<int>(
+                    "SELECT ProjectId FROM ITIH.tProject WHERE [Name] = @nm;",
+                    new { nm = projectName }
+                );
+            };
+
+            async Task<int> GetBalance(ISqlCallContext ctx, int projectId)
+            {
+                return await ctx[uBTable].Connection
+                .QueryFirstOrDefaultAsync<int>(
+                    "SELECT UserBalanceId FROM ITIH.tUserBalance WHERE ProjectId = @id;",
+                    new { id = projectId }
+                );
+            }
+
+            using (var ctx = new SqlStandardCallContext())
+            {
+                var doesProjectExist = await GetProject(ctx, "Poney");
+                if (doesProjectExist == 0) return;
+
+                var hasCreationAlreadyBeenMade =
+                    await GetBalance(ctx, doesProjectExist);
+                if (hasCreationAlreadyBeenMade > 0) return;
+
+                var userId1 = await GetUser(ctx, "fairyfingers");
+                var userId2 = await GetUser(ctx, "BobbyCarotte");
+                var userId3 = await GetUser(ctx, "Azsher");
+                var userId4 = await GetUser(ctx, "Legann");
+                var projectId = await GetProject(ctx, "Poney");
+
+                var uBalanceId1 = await uBTable.Create(ctx, 0, userId1, projectId);
+                var uBalanceId2 = await uBTable.Create(ctx, 0, userId2, projectId);
+                var uBalanceId3 = await uBTable.Create(ctx, 0, userId3, projectId);
+
+                await uBTable.Update(ctx, 0, uBalanceId1, -350);
+                await uBTable.Update(ctx, 0, uBalanceId2, -230);
+                await uBTable.Update(ctx, 0, uBalanceId3, 410);
+            }
+        }
+
         static int CalculateOrderTotal(IEnumerable<DetailedDataOrderedProduct> products)
         {
             int total = 0;
@@ -287,12 +351,13 @@ namespace ITI.Human.Data.Tests
             Product,
             Project,
             ProjectMember,
+            SchoolMember,
             Storage,
             StorageLinkedProduct,
             User,
             UserAvatars,
-            UserDetails,
-            SchoolMember
+            UserBalance,
+            UserDetails
         }
 
         /// <summary>
@@ -348,6 +413,11 @@ namespace ITI.Human.Data.Tests
                         tableName = "ITIH.tProjectMember"; fieldName = "ProjectMemberId";
                         break;
 
+                    case (Element.SchoolMember):
+                        table = (SchoolMemberTable)Initialize(Element.SchoolMember);
+                        tableName = "ITIH.tSchoolMember"; fieldName = "SchoolMemberId";
+                        break;
+
                     case (Element.Storage):
                         table = (StorageTable)Initialize(Element.Storage);
                         tableName = "ITIH.tStorage"; fieldName = "StorageId";
@@ -363,6 +433,11 @@ namespace ITI.Human.Data.Tests
                         tableName = "CK.tUser"; fieldName = "UserName";
                         break;
 
+                    case (Element.UserBalance):
+                        table = (UserBalanceTable)Initialize(Element.UserBalance);
+                        tableName = "ITIH.tUserBalance"; fieldName = "UserBalanceId";
+                        break;
+
                     case (Element.UserAvatars):
                         table = (UserAvatarsTable)Initialize(Element.UserAvatars);
                         tableName = "ITIH.tUserAvatars"; fieldName = "UserAvatarId";
@@ -371,11 +446,6 @@ namespace ITI.Human.Data.Tests
                     case (Element.UserDetails):
                         table = (UserDetailsTable)Initialize(Element.UserDetails);
                         tableName = "ITIH.tUserDetails"; fieldName = "UserDetailsId";
-                        break;
-
-                    case (Element.SchoolMember):
-                        table = (SchoolMemberTable)Initialize(Element.SchoolMember);
-                        tableName = "ITIH.tSchoolMember"; fieldName = "SchoolMemberId";
                         break;
                 }
 
@@ -436,6 +506,9 @@ namespace ITI.Human.Data.Tests
                 case (Element.ProjectMember):
                     return CK.Core.StObjModelExtension.Obtain<ProjectMemberTable>(TestHelper.StObjMap.StObjs);
 
+                case (Element.SchoolMember):
+                    return CK.Core.StObjModelExtension.Obtain<SchoolMemberTable>(TestHelper.StObjMap.StObjs);
+
                 case (Element.Storage):
                     return CK.Core.StObjModelExtension.Obtain<StorageTable>(TestHelper.StObjMap.StObjs);
 
@@ -445,14 +518,14 @@ namespace ITI.Human.Data.Tests
                 case (Element.User):
                     return CK.Core.StObjModelExtension.Obtain<UserTable>(TestHelper.StObjMap.StObjs);
 
+                case (Element.UserBalance):
+                    return CK.Core.StObjModelExtension.Obtain<UserBalanceTable>(TestHelper.StObjMap.StObjs);
+
                 case (Element.UserAvatars):
                     return CK.Core.StObjModelExtension.Obtain<UserAvatarsTable>(TestHelper.StObjMap.StObjs);
 
                 case (Element.UserDetails):
                     return CK.Core.StObjModelExtension.Obtain<UserDetailsTable>(TestHelper.StObjMap.StObjs);
-
-                case (Element.SchoolMember):
-                    return CK.Core.StObjModelExtension.Obtain<SchoolMemberTable>(TestHelper.StObjMap.StObjs);
 
                 default:
                     return new object();

@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <div class="left-page" :class="{ invisible : WINDOW_PROJECT_SETUP || WINDOW_PROJECT_ADD_MEMBER || WINDOW_PROJECT_INVENTORY }">
+        <div class="left-page" :class="{ invisible : WINDOW_PROJECT_SETUP || WINDOW_PROJECT_ADD_MEMBER || WINDOW_PROJECT_INVENTORY || WINDOW_PROJECT_ACCOUNTS }">
             <h1>Liste de vos projets</h1>
             <div class="cover-photo"></div>
             
@@ -53,8 +53,18 @@
                     </div>
 
                     <div class="action-buttons">
-                        <button @click="launchProjectInventory()" v-if="displayedProject.semesterId === 4">INVENTAIRE</button>
-                        <button v-if="displayedProject.semesterId === 4">COMPTES</button>
+                        <div :class="{ inventorysidetext : WINDOW_PROJECT_INVENTORY, hidden : !WINDOW_PROJECT_INVENTORY }"></div>
+                        <button
+                            v-if="displayedProject.semesterId === 4"
+                            @click="launchProjectInventory()"
+                            :class="{ inventoryselected : WINDOW_PROJECT_INVENTORY }"
+                            class="bottom-button inventory"></button>
+                        <button
+                            v-if="displayedProject.semesterId === 4"
+                            @click="launchProjectAccounts()"
+                            :class="{ accountsselected : WINDOW_PROJECT_ACCOUNTS }"
+                            class="bottom-button accounts"></button>
+                        <div :class="{ accountssidetext : WINDOW_PROJECT_ACCOUNTS, hidden : !WINDOW_PROJECT_ACCOUNTS }"></div>
                     </div>
                 </div>
                 <div v-else>
@@ -218,6 +228,15 @@
                 </div>
             </div>
         </div>
+
+        <div v-if="displayedProject !== null && displayedProject !== undefined && WINDOW_PROJECT_ACCOUNTS" class="right-page">
+            <div @click="closeProjectAccountsWindow()" class="cross">x</div>
+            <h1>Consultation des comptes</h1>
+            <div class="info-account-title">
+                <span v-if="totalBalance > 0">Vous devez</span><span v-else>On vous doit</span>
+                à ce jour <span :class="{ badBalance: totalBalance > 0, goodBalance: totalBalance < 0 }" class="openSans-bold">{{ displayedTotalBalance / 100 }} €</span>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -242,8 +261,13 @@ import {
 import { ESStatus } from "@/models/model.SchoolStatus";
 import { ESemester } from "@/models/model.Semester";
 import { IDetailedDataUser } from "@/models/model.User";
-import { IBasicDataStorageLinkedProduct, IStorageCreationViewModel, ILinkedProductCreationViewModel } from "@/models/model.Storage";
+import {
+    IBasicDataStorageLinkedProduct,
+    IStorageCreationViewModel,
+    ILinkedProductCreationViewModel
+} from "@/models/model.Storage";
 import { IBasicDataProduct } from "@/models/model.Product";
+import { IUserBalance } from "@/models/model.Order";
 
 @Component({})
 export default class ProjectsDB extends Vue {
@@ -254,6 +278,9 @@ export default class ProjectsDB extends Vue {
     private userList: IDetailedDataUser[] = [];
     private productList: IBasicDataProduct[] = [];
     private slpList: IBasicDataStorageLinkedProduct[] = [];
+    private balanceList: IUserBalance[] = [];
+    private totalBalance: number = 0;
+    private displayedTotalBalance: string = "";
     private projectName: string = "";
     private projectHeadline: string = "";
     private projectPitch: string = "";
@@ -268,6 +295,7 @@ export default class ProjectsDB extends Vue {
     private WINDOW_PROJECT_SETUP: boolean = false;
     private WINDOW_PROJECT_ADD_MEMBER: boolean = false;
     private WINDOW_PROJECT_INVENTORY: boolean = false;
+    private WINDOW_PROJECT_ACCOUNTS: boolean = false;
     private FIELD_PROJECTNAME_ERROR: boolean = false;
     private FIELD_PROJECTHEADLINE_ERROR: boolean = false;
     private FIELD_PROJECTPITCH_ERROR: boolean = false;
@@ -498,6 +526,20 @@ export default class ProjectsDB extends Vue {
         this.slpList = response.data;
     }
 
+    private async fetchBalanceList() {
+        const response = await API.get(`${Endpoint.Order}/project/${this.displayedProject.projectId}/balances`);
+        this.balanceList = response.data;
+
+        this.totalBalance = 0;
+        this.displayedTotalBalance = "";
+        this.balanceList.forEach( (balance) => {
+            this.totalBalance += balance.balance;
+        });
+        if (this.totalBalance.toString().startsWith("-")) {
+            this.displayedTotalBalance = this.totalBalance.toString().split("-")[1];
+        }
+    }
+
     private changeCurrentDisplayedProjectByProjectId(projectId: number) {
         for (let index: number = 0; index < this.userProjects.length; index++) {
             if (this.userProjects[index].projectId === projectId) {
@@ -506,8 +548,8 @@ export default class ProjectsDB extends Vue {
             }
         }
         this.displayedProject = this.userProjects[0];
-        console.log(this.slpList);
         this.fetchSLPlist();
+        this.fetchBalanceList();
     }
 
     private changeCurrentDisplayedProject(newIndex: number) {
@@ -515,6 +557,7 @@ export default class ProjectsDB extends Vue {
             if (this.userProjects[index] === this.displayedProject) {
                 this.displayedProject = this.userProjects[index + (newIndex)];
                 this.fetchSLPlist();
+                this.fetchBalanceList();
                 return;
             }
         }
@@ -531,8 +574,12 @@ export default class ProjectsDB extends Vue {
 
     private launchProjectInventory() {
         this.WINDOW_PROJECT_INVENTORY = true;
-        console.log(this.displayedProject.projectName);
         this.fetchSLPlist();
+    }
+
+    private launchProjectAccounts() {
+        this.WINDOW_PROJECT_ACCOUNTS = true;
+        this.fetchBalanceList();
     }
 
     private closeProjectSetupWindow() {
@@ -556,6 +603,17 @@ export default class ProjectsDB extends Vue {
 
     private closeProjectInventoryWindow() {
         this.WINDOW_PROJECT_INVENTORY = false;
+        this.productSearchBarContent = "";
+        this.productSearchResult = null;
+        this.productPrice = null;
+        this.productQuantity = null;
+        this.TEXT_ERROR_PRODUCTSEARCHBAR = "";
+        this.FIELD_PRODUCTPRICE_ERROR = false;
+        this.FIELD_PRODUCTQUANTITY_ERROR = false;
+    }
+
+    private closeProjectAccountsWindow() {
+        this.WINDOW_PROJECT_ACCOUNTS = false;
     }
 
     // SUBMITTING METHODS.
@@ -736,5 +794,86 @@ export default class ProjectsDB extends Vue {
 
 .productname {
     color: #4b80ac;
+}
+
+.action-buttons {
+    position: relative;
+    bottom: -40px;
+    left: 220px;
+}
+
+.bottom-button {
+    outline-width: 0;
+    width: 133px;
+    height: 133px;
+    margin-right: 20px;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.inventory {
+    background-image: url("../assets/images/button-inventory.png");
+    
+    transition-property: background-image;
+    transition-duration: 0.2s;
+}
+
+.hidden {
+    display: none;
+}
+
+.inventorysidetext {
+    position: absolute;
+    bottom: 45px;
+    left: -230px;
+    width: 200px;
+    height: 68px;
+    background-image: url("../assets/images/client-pleasure.png");
+}
+
+.accountssidetext {
+    position: absolute;
+    bottom: 55px;
+    left: 310px;
+    width: 199px;
+    height: 52px;
+    background-image: url("../assets/images/who-own-you.png");
+}
+
+.inventory:hover {
+    background-image: url("../assets/images/button-inventory-hovered.png");
+}
+
+.inventoryselected {
+    background-image: url("../assets/images/button-inventory-hovered.png");
+}
+
+.accounts {
+    background-image: url("../assets/images/button-accounts.png");
+    
+    transition-property: background-image;
+    transition-duration: 0.2s;
+}
+
+.accounts:hover {
+    background-image: url("../assets/images/button-accounts-hovered.png");
+}
+
+.accountsselected {
+    background-image: url("../assets/images/button-accounts-hovered.png");
+}
+
+.info-account-title {
+    font-size: 140%;
+    color: #888888;
+}
+
+.badBalance {
+    color: #d12027;
+}
+
+.goodBalance {
+    color: #4eb748;
 }
 </style>

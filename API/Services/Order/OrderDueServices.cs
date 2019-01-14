@@ -41,6 +41,42 @@ namespace API.Services.Order
         }
 
         /// <summary>
+        /// Gets a User Balance from a User's id and a Project id.
+        /// </summary>
+        /// <param name="model">Matching model.</param>
+        /// <returns>
+        /// Success result where result content is a single <see cref="BasicDataUserBalance"/> 
+        /// or Failure result if element does not exist in db.
+        /// </returns>
+        public async Task<GuardResult> GuardedGetUserBalance(UserBalanceGettingViewModel model)
+        {
+            var result = await GetUserBalance(model);
+            if (result == null) return Failure(
+                string.Format("No Balance with userId {0} and projectId {1} was found.", model.UserId, model.ProjectId)
+            );
+
+            return Success(result);
+        }
+
+        /// <summary>
+        /// Gets all User Balances from a project.
+        /// </summary>
+        /// <param name="projectId">Project id.</param>
+        /// <returns>
+        /// Success result where result content is a list of <see cref="BasicDataUserBalance"/> 
+        /// or Failure result if element does not exist in db.
+        /// </returns>
+        public async Task<GuardResult> GuardedGetAllUserBalanceFromProject(int projectId)
+        {
+            var result = await GetAllUserBalanceFromProject(projectId);
+            if (result == null) return Failure(
+                string.Format("No Balance with projectId {0} was found.", projectId)
+            );
+
+            return Success(result);
+        }
+
+        /// <summary>
         /// Gets a detailed Order Final Due.
         /// </summary>
         /// <param name="orderId">Order's id.</param>
@@ -335,6 +371,30 @@ namespace API.Services.Order
                     .QueryFirstOrDefaultAsync<BasicDataUserBalance>(
                         "SELECT * FROM ITIH.tUserBalance WHERE UserBalanceId = @id",
                         new { id = userBalanceId }
+                    );
+            }
+        }
+
+        private async Task<IEnumerable<BasicDataUserBalance>> GetAllUserBalanceFromProject(int projectId)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await ctx[UserBalanceTable].Connection
+                    .QueryAsync<BasicDataUserBalance>(
+                        "SELECT * FROM ITIH.vUserBalance WHERE ProjectId = @id;",
+                        new { id = projectId }
+                    );
+            }
+        }
+
+        private async Task<BasicDataUserBalance> GetUserBalance(UserBalanceGettingViewModel model)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await ctx[UserBalanceTable].Connection
+                    .QueryFirstOrDefaultAsync<BasicDataUserBalance>(
+                        "SELECT * FROM ITIH.vUserBalance WHERE UserId = @uId AND ProjectId = @pId;",
+                        new { uId = model.UserId, pId = model.ProjectId }
                     );
             }
         }

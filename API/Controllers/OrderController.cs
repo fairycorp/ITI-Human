@@ -88,6 +88,27 @@ namespace API.Controllers
             return BadRequest(check.Info);
         }
 
+        [HttpGet("project/{projectId}/balances")]
+        public async Task<IActionResult> GetAllUserBalanceFromProject(int projectId)
+        {
+            var isAuthenticated =
+               AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
+            var check =
+                Guard.IsAdmissible(nameof(projectId), projectId);
+
+            if (check.Code == Status.Success)
+            {
+                var result = await OrderDueServices.GuardedGetAllUserBalanceFromProject(projectId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
+
+            return BadRequest(check.Info);
+        }
+
         [HttpGet("i/{orderId}")]
         public async Task<IActionResult> Get(int orderId)
         {

@@ -34,6 +34,7 @@
     <None Remove="Res\vProjectMembers.sql" />
     <None Remove="Res\vSchoolMembers.sql" />
     <None Remove="Res\vStorageLinkedProducts.sql" />
+    <None Remove="Res\vUserBalance.sql" />
     <None Remove="Res\vUserProfile.sql" />
   </ItemGroup>
 

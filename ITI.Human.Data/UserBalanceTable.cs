@@ -8,6 +8,7 @@ namespace ITI.Human.Data
 {
     [SqlTable("tUserBalance", Package = typeof(Package))]
     [Versions("1.0.0")]
+    [SqlObjectItem("vUserBalance")]
     public abstract class UserBalanceTable : SqlTable
     {
         void StObjConstruct(UserTable uTable, ProjectTable pTable)

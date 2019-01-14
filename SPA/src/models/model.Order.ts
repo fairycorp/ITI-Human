@@ -45,6 +45,12 @@ interface IDetailedDataOrder {
     info: IBasicDataOrder;
     products: IBasicDataOrderedProduct[];
 }
+interface IUserBalance {
+    userBalanceId: number;
+    projectId: number;
+    userId: number;
+    balance: number;
+}
 
 interface PaymentState {
     state: Payment;
@@ -58,5 +64,6 @@ export {
     IBasicDataOrderedProduct,
     ICreationViewModel,
     IDetailedDataOrder,
+    IUserBalance,
     PaymentState,
 };
