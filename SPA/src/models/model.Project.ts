@@ -9,6 +9,9 @@ interface IBasicDataProject {
     semesterName: string;
     storageId: number;
     members: IBasicDataProjectMember[];
+    openedStall: boolean;
+    votes: number[];
+    average: number;
 }
 
 interface IBasicDataProjectMember {

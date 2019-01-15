@@ -270,7 +270,7 @@ namespace ITI.Human.Data.Tests
         }
 
         [Test]
-        public async Task CreateUserBalances()
+        public async Task SetupPoneyProject()
         {
             var oCTable = (OrderCreditTable)
                 Initialize(Element.OrderCredit);
@@ -280,6 +280,9 @@ namespace ITI.Human.Data.Tests
 
             var uBTable = (UserBalanceTable)
                 Initialize(Element.UserBalance);
+
+            var pVTable = (ProjectVotesTable)
+                Initialize(Element.ProjectVotes);
 
             async Task<int> GetUser(ISqlCallContext ctx, string userName)
             {
@@ -323,6 +326,11 @@ namespace ITI.Human.Data.Tests
                 var userId4 = await GetUser(ctx, "Legann");
                 var projectId = await GetProject(ctx, "Poney");
 
+                var projectNoteId1 = await pVTable.Create(ctx, 0, projectId, userId1, 4);
+                var projectNoteId2 = await pVTable.Create(ctx, 0, projectId, userId2, 3);
+                var projectNoteId3 = await pVTable.Create(ctx, 0, projectId, userId3, 3);
+                var projectNoteId4 = await pVTable.Create(ctx, 0, projectId, userId4, 5);
+
                 var uBalanceId1 = await uBTable.Create(ctx, 0, userId1, projectId);
                 var uBalanceId2 = await uBTable.Create(ctx, 0, userId2, projectId);
                 var uBalanceId3 = await uBTable.Create(ctx, 0, userId3, projectId);
@@ -363,6 +371,7 @@ namespace ITI.Human.Data.Tests
             Product,
             Project,
             ProjectMember,
+            ProjectVotes,
             SchoolMember,
             Storage,
             StorageLinkedProduct,
@@ -428,6 +437,11 @@ namespace ITI.Human.Data.Tests
                     case (Element.ProjectMember):
                         table = (ProjectMemberTable)Initialize(Element.ProjectMember);
                         tableName = "ITIH.tProjectMember"; fieldName = "ProjectMemberId";
+                        break;
+
+                    case (Element.ProjectVotes):
+                        table = (ProjectVotesTable)Initialize(Element.ProjectVotes);
+                        tableName = "ITIH.tProjectVotes"; fieldName = "ProjectVoteId";
                         break;
 
                     case (Element.SchoolMember):
@@ -525,6 +539,9 @@ namespace ITI.Human.Data.Tests
 
                 case (Element.ProjectMember):
                     return CK.Core.StObjModelExtension.Obtain<ProjectMemberTable>(TestHelper.StObjMap.StObjs);
+
+                case (Element.ProjectVotes):
+                    return CK.Core.StObjModelExtension.Obtain<ProjectVotesTable>(TestHelper.StObjMap.StObjs);
 
                 case (Element.SchoolMember):
                     return CK.Core.StObjModelExtension.Obtain<SchoolMemberTable>(TestHelper.StObjMap.StObjs);

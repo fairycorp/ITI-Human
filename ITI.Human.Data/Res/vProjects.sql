@@ -9,7 +9,8 @@ as
 		ProjectPitch = p.Pitch,
 		SemesterId = p.SemesterId,
 		SemesterName = sem.[Name],
-		StorageId = case when (p.SemesterId < 4) then 0 else sto.StorageId end
+		StorageId = case when (p.SemesterId < 4) then 0 else sto.StorageId end,
+		OpenedStall = case when (p.SemesterId < 4) then 0 else sto.OpenedStall end
 	from ITIH.tProject p
 		left join ITIH.tProjectType typ on typ.TypeId = p.TypeId
 		left join ITIH.tSemester sem on sem.SemesterId = p.SemesterId

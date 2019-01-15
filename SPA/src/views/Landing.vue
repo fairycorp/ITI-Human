@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="menu order">
+            <div @click="changeRoute('hungry')" class="menu order">
                 <div class="illustration-order"></div>
                 <div class="main-menu-title">
                     J'AI FAIM

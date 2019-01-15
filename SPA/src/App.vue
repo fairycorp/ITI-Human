@@ -45,6 +45,19 @@ $image-dir: "../src/assets/images";
   font-weight: normal;
 }
 
+@font-face {
+  font-family: "Gloria";
+  src: url("#{$font-dir}/GloriaHallelujah.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Script";
+  src: url("#{$font-dir}/ScriptMTBold.ttf");
+  font-weight: normal;
+}
+
+
 /* Defines different animation styles. */
 @keyframes fadein {
   from { opacity: 0; }
@@ -212,6 +225,13 @@ button.selectedButton {
   height: 100%;
 }
 
+.return-arrow {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  cursor: pointer;
+}
+
 .left-page {
   z-index: 0;
   position: fixed;
@@ -249,6 +269,16 @@ button.selectedButton {
   right: 4%;
   width: 37%;
   height: 41%;
+  padding: 70px;
+  background-color: white;
+}
+
+.little-right-page {
+  position: relative;
+  top: 30px;
+  left: 1000px;
+  width: 37%;
+  height: 25px;
   padding: 70px;
   background-color: white;
 }
@@ -300,6 +330,10 @@ button.selectedButton {
 
 .highmargintop {
   margin-top: 60px;
+}
+
+.heavylight-right-margin {
+  margin-right: 5px;
 }
 
 .light-right-margin {

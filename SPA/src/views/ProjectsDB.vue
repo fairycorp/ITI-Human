@@ -1,5 +1,6 @@
 <template>
     <div class="main">
+        <div @click="changeRoute('landing')" class="return-arrow"><img width="20" src="../assets/images/return-arrow.png" /></div>
         <div class="left-page" :class="{ invisible : WINDOW_PROJECT_SETUP || WINDOW_PROJECT_ADD_MEMBER || WINDOW_PROJECT_INVENTORY || WINDOW_PROJECT_ACCOUNTS }">
             <h1>Liste de vos projets</h1>
             <div class="cover-photo"></div>
@@ -385,6 +386,11 @@ export default class ProjectsDB extends Vue {
         this.isAccessible();
         this.fetchUserProjects(0);
         this.fetchUserList();
+    }
+
+    // ROUTING METHODS.
+    private changeRoute(route: string) {
+        this.$router.push(route);
     }
 
     // DATACHECKING METHODS.

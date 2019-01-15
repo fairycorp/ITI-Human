@@ -57,5 +57,15 @@ namespace ITI.Human.ViewModels.Project
         /// Current project members list.
         /// </summary>
         public IEnumerable<DetailedDataProjectMember> Members { get; set; }
+
+        /// <summary>
+        /// Project Stall state.
+        /// </summary>
+        public bool OpenedStall { get; set; }
+
+        /// <summary>
+        /// Project linked votes.
+        /// </summary>
+        public IEnumerable<int> Votes { get; set; }
     }
 }

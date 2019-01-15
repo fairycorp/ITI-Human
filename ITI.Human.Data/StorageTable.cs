@@ -15,5 +15,8 @@ namespace ITI.Human.Data
 
         [SqlProcedure("sStorageCreate")]
         public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int projectId);
+
+        [SqlProcedure("sStallUpdate")]
+        public abstract Task<bool> UpdateStall(ISqlCallContext ctx, int actorId, int storageId, bool openedStall);
     }
 }

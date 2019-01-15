@@ -27,13 +27,16 @@ namespace API.Services.Project
 
         public StorageTable StorageTable { get; set; }
 
+        public ProjectVotesTable ProjectVotesTable { get; set; }
+
         public ProjectService(UserService uService, ProjectTable pTable,
-            ProjectMemberTable pMTable, StorageTable storageTable)
+            ProjectMemberTable pMTable, StorageTable storageTable, ProjectVotesTable pVTable)
         {
             UserService = uService;
             ProjectTable = pTable;
             ProjectMemberTable = pMTable;
             StorageTable = storageTable;
+            ProjectVotesTable = pVTable;
         }
 
         /// <summary>
@@ -229,6 +232,12 @@ namespace API.Services.Project
                             "SELECT * FROM ITIH.vProjectMembers WHERE ProjectId = @id;",
                             new { id = project.ProjectId }
                         );
+
+                    project.Votes = await ctx[ProjectVotesTable].Connection
+                        .QueryAsync<int>(
+                            "SELECT Note FROM ITIH.tProjectVotes WHERE ProjectId = @id;",
+                            new { id = project.ProjectId }
+                        );
                 }
 
                 return projects;
@@ -254,6 +263,12 @@ namespace API.Services.Project
                 project.Members = await ctx[ProjectMemberTable].Connection
                     .QueryAsync<DetailedDataProjectMember>(
                         "SELECT * FROM ITIH.vProjectMembers WHERE ProjectId = @id;",
+                        new { id = project.ProjectId }
+                    );
+
+                project.Votes = await ctx[ProjectVotesTable].Connection
+                    .QueryAsync<int>(
+                        "SELECT Note FROM ITIH.tProjectVotes WHERE ProjectId = @id;",
                         new { id = project.ProjectId }
                     );
 
