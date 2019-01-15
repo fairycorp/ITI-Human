@@ -88,6 +88,32 @@ namespace API.Controllers
             return BadRequest(check.Info);
         }
 
+        [HttpPost("balance/update")]
+        public async Task<IActionResult> UpdateUserBalance([FromBody] UserBalanceUpdateViewModel model)
+        {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
+            var modelBasicIntAnalyis = new Dictionary<string, int>
+                {
+                    { nameof(model.UserBalanceId), model.UserBalanceId },
+                    { nameof(model.Amount), model.Amount }
+                };
+            var basicCheck =
+                Guard.IsAdmissible(modelBasicIntAnalyis);
+
+            if (basicCheck.Code == Status.Success)
+            {
+                var result = await OrderDueServices.GuardedUpdateUserBalance(model);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
+
+            return BadRequest(basicCheck.Info);
+        }
+
         [HttpGet("project/{projectId}/balances")]
         public async Task<IActionResult> GetAllUserBalanceFromProject(int projectId)
         {
@@ -143,6 +169,27 @@ namespace API.Controllers
             if (check.Code == Status.Success)
             {
                 var result = await OrderDueServices.GuardedGetFinalDueFromOrder(orderId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
+
+            return BadRequest(check.Info);
+        }
+
+        [HttpPost("credit")]
+        public async Task<IActionResult> GetUserCreditFromProject([FromBody] UserCreditGettingViewModel model)
+        {
+            var isAuthenticated =
+               AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
+            var check =
+                Guard.IsAdmissible(nameof(model.ProjectId), model.ProjectId);
+
+            if (check.Code == Status.Success)
+            {
+                var result = await OrderDueServices.GuardedGetUserCreditsFromProject(model);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                 return Ok(result.Content);

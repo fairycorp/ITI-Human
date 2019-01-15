@@ -272,6 +272,9 @@ namespace ITI.Human.Data.Tests
         [Test]
         public async Task CreateUserBalances()
         {
+            var oCTable = (OrderCreditTable)
+                Initialize(Element.OrderCredit);
+
             var uTable = (UserTable)
                 Initialize(Element.User);
 
@@ -324,6 +327,14 @@ namespace ITI.Human.Data.Tests
                 var uBalanceId2 = await uBTable.Create(ctx, 0, userId2, projectId);
                 var uBalanceId3 = await uBTable.Create(ctx, 0, userId3, projectId);
 
+                await oCTable.Create(ctx, 0, projectId, userId1, 40, new DateTime(2018, 12, 12));
+                await oCTable.Create(ctx, 0, projectId, userId1, 120, new DateTime(2019, 01, 4));
+                await oCTable.Create(ctx, 0, projectId, userId1, 100, new DateTime(2018, 01, 7));
+                await oCTable.Create(ctx, 0, projectId, userId1, 90, new DateTime(2018, 01, 14));
+
+                await oCTable.Create(ctx, 0, projectId, userId2, 160, new DateTime(2018, 11, 20));
+                await oCTable.Create(ctx, 0, projectId, userId2, 70, new DateTime(2018, 12, 19));
+
                 await uBTable.Update(ctx, 0, uBalanceId1, -350);
                 await uBTable.Update(ctx, 0, uBalanceId2, -230);
                 await uBTable.Update(ctx, 0, uBalanceId3, 410);
@@ -346,6 +357,7 @@ namespace ITI.Human.Data.Tests
         private enum Element
         {
             Order,
+            OrderCredit,
             OrderFinalDue,
             OrderedProduct,
             Product,
@@ -386,6 +398,11 @@ namespace ITI.Human.Data.Tests
                     case (Element.Order):
                         table = (OrderTable)Initialize(Element.Order);
                         tableName = "ITIH.tOrder"; fieldName = "OrderId";
+                        break;
+
+                    case (Element.OrderCredit):
+                        table = (OrderTable)Initialize(Element.OrderCredit);
+                        tableName = "ITIH.tOrderCredit"; fieldName = "OrderCreditId";
                         break;
 
                     case (Element.OrderFinalDue):
@@ -490,6 +507,9 @@ namespace ITI.Human.Data.Tests
             {
                 case (Element.Order):
                     return CK.Core.StObjModelExtension.Obtain<OrderTable>(TestHelper.StObjMap.StObjs);
+
+                case (Element.OrderCredit):
+                    return CK.Core.StObjModelExtension.Obtain<OrderCreditTable>(TestHelper.StObjMap.StObjs);
 
                 case (Element.OrderFinalDue):
                     return CK.Core.StObjModelExtension.Obtain<OrderFinalDueTable>(TestHelper.StObjMap.StObjs);

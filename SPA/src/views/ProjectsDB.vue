@@ -229,12 +229,79 @@
             </div>
         </div>
 
-        <div v-if="displayedProject !== null && displayedProject !== undefined && WINDOW_PROJECT_ACCOUNTS" class="right-page">
+        <div :class="{ invisible : WINDOW_SPECIFIC_CREDIT }" v-if="displayedProject !== null && displayedProject !== undefined && WINDOW_PROJECT_ACCOUNTS" class="right-page">
             <div @click="closeProjectAccountsWindow()" class="cross">x</div>
             <h1>Consultation des comptes</h1>
             <div class="info-account-title">
+                <img width="40" class="money-icon light-right-margin" src="../assets/images/money.png" />
                 <span v-if="totalBalance > 0">Vous devez</span><span v-else>On vous doit</span>
                 à ce jour <span :class="{ badBalance: totalBalance > 0, goodBalance: totalBalance < 0 }" class="openSans-bold">{{ displayedTotalBalance / 100 }} €</span>
+            </div>
+
+            <h3 class="medium-top-margin">RECHERCHER UN SOLDE</h3>
+            <div>
+                <input
+                    v-model="searchBarCredit"
+                    v-on:keyup="searchCreditUser(searchBarCredit)"
+                    type="text"
+                    class="light-top-margin textual"
+                    placeholder="Rechercher un utilisateur"
+                />
+                <div @click="launchSpecificCredit(searchBarCreditResult)" v-if="searchBarCreditResult" class="light-top-margin searchResult">
+                    <img width="50" :src="searchBarCreditResult.avatarUrl" class="avatar light-right-margin" />
+                    <span :class="{ goodBalance: searchBarCreditResult.balance > 0, badBalance: searchBarCreditResult.balance < 0 }" class="openSans-bold subtitle">
+                        {{ searchBarCreditResult.balance / 100 }} €
+                    </span>
+                    {{ searchBarCreditResult.firstName }} <span class="openSans-bold">{{ searchBarCreditResult.lastName }}</span>, {{ searchBarCreditResult.userName }}
+                    <div class="add-button">CONSULTER</div>
+                </div>
+
+                <h3 :class="{ mediumtopmargin : searchBarCreditResult !== null, highmargintop : searchBarCreditResult === null }">LISTE DES SOLDES</h3>
+                <span class="info" v-if="balanceList.length === 0">Aucun solde à l'heure actuelle.</span>
+                <div v-for="balance in balanceList" :key="balance.userBalanceId" @click="launchSpecificCredit(balance)" class="searchResult">
+                    <img width="50" :src="balance.avatarUrl" class="avatar light-right-margin" />
+                    <span :class="{ goodBalance: balance.balance > 0, badBalance: balance.balance < 0 }" class="openSans-bold subtitle">
+                        {{ balance.balance / 100 }} €
+                    </span>
+                    {{ balance.firstName }} <span class="openSans-bold">{{ balance.lastName }}</span>, {{ balance.userName }}
+                    <div class="add-button">CONSULTER</div>
+                </div>
+            </div>
+        </div>
+        <div v-if="WINDOW_SPECIFIC_CREDIT" class="left-page lvl2">
+            <div @click="closeProjectCreditWindow()" class="cross">x</div>
+            <h1>{{ searchBarCreditResult.firstName }} {{ searchBarCreditResult.lastName }}</h1>
+            <div class="medium-top-margin">
+                <img width="80" :src="searchBarCreditResult.avatarUrl" class="avatar light-right-margin" />
+                <div :class="{ goodBalance: searchBarCreditResult.balance > 0, badBalance: searchBarCreditResult.balance < 0 }" class="subtitle balance-state">
+                    Solde <span v-if="searchBarCreditResult.balance > 0">positif</span><span v-else>négatif</span>
+                </div>
+                <div :class="{ goodBalance: searchBarCreditResult.balance > 0, badBalance: searchBarCreditResult.balance < 0 }" class="openSans-bold bigbalance">
+                    {{ searchBarCreditResult.balance / 100 }} €
+                </div>
+                <div class="pay">
+                    <span class="paytitle">Régler</span>
+                    <div>
+                        <div class="payInput">
+                            <input
+                                v-model="currentPaySum"
+                                type="number"
+                                min="0"
+                                step="0.1"
+                                :class="{ error : FIELD_PAYSUM_ERROR }"
+                                class="textual short"
+                                placeholder="€"
+                            />
+                        </div>
+                    </div>
+                    <div @click="pay(searchBarCreditResult.userBalanceId, parseInt(currentPaySum * 100))" class="paybutton"></div>
+                </div>
+                <div class="info light-top-margin">{{ TEXT_ACTIONDONE_PAY }}</div>
+
+                <h3 class="medium-top-margin">HISTORIQUE</h3>
+                <div v-for="credit in specificCreditList" :key="credit.orderCreditId" class="credit">
+                    Le <span class="openSans-bold">{{ credit.displayedDate }}</span>, pour <span class="openSans-bold">{{ credit.amount / 100 }}</span>€
+                </div>
             </div>
         </div>
     </div>
@@ -267,7 +334,7 @@ import {
     ILinkedProductCreationViewModel
 } from "@/models/model.Storage";
 import { IBasicDataProduct } from "@/models/model.Product";
-import { IUserBalance } from "@/models/model.Order";
+import { IUserBalance, IOrderCreditGettingViewModel, IOrderCredit, IUserBalanceUpdateViewModel } from "@/models/model.Order";
 
 @Component({})
 export default class ProjectsDB extends Vue {
@@ -279,6 +346,7 @@ export default class ProjectsDB extends Vue {
     private productList: IBasicDataProduct[] = [];
     private slpList: IBasicDataStorageLinkedProduct[] = [];
     private balanceList: IUserBalance[] = [];
+    private specificCreditList: IOrderCredit[] = [];
     private totalBalance: number = 0;
     private displayedTotalBalance: string = "";
     private projectName: string = "";
@@ -289,13 +357,17 @@ export default class ProjectsDB extends Vue {
     private searchResult: IDetailedDataUser | null = null;
     private productSearchBarContent: string = "";
     private productSearchResult: IBasicDataProduct | null = null;
+    private searchBarCredit: string = "";
+    private searchBarCreditResult: IUserBalance | null = null;
     private productPrice: number | null = null;
     private productQuantity: number | null = null;
     private projectUserList: IDetailedDataUser[] = [];
+    private currentPaySum: number | null = null;
     private WINDOW_PROJECT_SETUP: boolean = false;
     private WINDOW_PROJECT_ADD_MEMBER: boolean = false;
     private WINDOW_PROJECT_INVENTORY: boolean = false;
     private WINDOW_PROJECT_ACCOUNTS: boolean = false;
+    private WINDOW_SPECIFIC_CREDIT: boolean = false;
     private FIELD_PROJECTNAME_ERROR: boolean = false;
     private FIELD_PROJECTHEADLINE_ERROR: boolean = false;
     private FIELD_PROJECTPITCH_ERROR: boolean = false;
@@ -303,8 +375,10 @@ export default class ProjectsDB extends Vue {
     private FIELD_SEARCHBARCONTENT_ERROR: boolean = false;
     private FIELD_PRODUCTPRICE_ERROR: boolean = false;
     private FIELD_PRODUCTQUANTITY_ERROR: boolean = false;
+    private FIELD_PAYSUM_ERROR: boolean = false;
     private TEXT_ERROR_SEARCHBARCONTENT: string = "";
     private TEXT_ERROR_PRODUCTSEARCHBAR: string = "";
+    private TEXT_ACTIONDONE_PAY: string = "";
 
     constructor() {
         super();
@@ -477,6 +551,20 @@ export default class ProjectsDB extends Vue {
         }
     }
 
+    private searchCreditUser(username: string) {
+        if (username.length > 0) {
+            this.balanceList.forEach( (balance) => {
+                if (balance.userName.toLowerCase().startsWith(username.toLowerCase())
+                || balance.firstName.toLowerCase().startsWith(username.toLowerCase())
+                || balance.lastName.toLowerCase().startsWith(username.toLowerCase())) {
+                    this.searchBarCreditResult = balance;
+                }
+            });
+        } else {
+            this.searchBarCreditResult = null;
+        }
+    }
+
     private searchProduct(productname: string) {
         if (productname.length > 0) {
             this.productList.forEach( (product) => {
@@ -530,6 +618,14 @@ export default class ProjectsDB extends Vue {
         const response = await API.get(`${Endpoint.Order}/project/${this.displayedProject.projectId}/balances`);
         this.balanceList = response.data;
 
+        if (this.searchBarCreditResult != null) {
+            this.balanceList.forEach( (balance) => {
+                if (balance.userId === this.searchBarCreditResult!.userId) {
+                    this.searchBarCreditResult = balance;
+                }
+            });
+        }
+
         this.totalBalance = 0;
         this.displayedTotalBalance = "";
         this.balanceList.forEach( (balance) => {
@@ -537,6 +633,27 @@ export default class ProjectsDB extends Vue {
         });
         if (this.totalBalance.toString().startsWith("-")) {
             this.displayedTotalBalance = this.totalBalance.toString().split("-")[1];
+        } else {
+            this.displayedTotalBalance = this.totalBalance.toString();
+        }
+    }
+
+    private async fetchSpecificCreditList(userId: number) {
+        const payload: IOrderCreditGettingViewModel = {
+            userId: userId,
+            projectId: this.displayedProject.projectId
+        };
+        const response = await API.post(`${Endpoint.Order}/credit`, payload);
+        if (response.data) {
+            this.specificCreditList = response.data;
+
+            let newCreditList: IOrderCredit[] = this.specificCreditList;
+            newCreditList.forEach( (credit) => {
+                const date: Date = new Date(credit.creditTime);
+                credit.displayedDate =
+                    `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+            });
+            this.specificCreditList = newCreditList;
         }
     }
 
@@ -582,6 +699,12 @@ export default class ProjectsDB extends Vue {
         this.fetchBalanceList();
     }
 
+    private launchSpecificCredit(user: IUserBalance) {
+        this.searchBarCreditResult = user;
+        this.WINDOW_SPECIFIC_CREDIT = true;
+        this.fetchSpecificCreditList(user.userId);
+    }
+
     private closeProjectSetupWindow() {
         this.WINDOW_PROJECT_SETUP = false;
         this.searchResult = null;
@@ -613,7 +736,17 @@ export default class ProjectsDB extends Vue {
     }
 
     private closeProjectAccountsWindow() {
+        this.searchBarCredit = "";
+        this.searchBarCreditResult = null;
         this.WINDOW_PROJECT_ACCOUNTS = false;
+    }
+
+    private closeProjectCreditWindow() {
+        this.currentPaySum = null;
+        this.TEXT_ACTIONDONE_PAY = "";
+        this.FIELD_PAYSUM_ERROR = false;
+        this.WINDOW_SPECIFIC_CREDIT = false;
+        this.specificCreditList = [];
     }
 
     // SUBMITTING METHODS.
@@ -656,6 +789,26 @@ export default class ProjectsDB extends Vue {
                 this.closeProjectSetupWindow();
                 this.fetchUserProjects(response.data);
             }
+        }
+    }
+
+    private async pay(userBalanceId: number, amount: number) {
+        if (userBalanceId == 0 || amount == null || amount < 0 || amount == 0) {
+            this.FIELD_PAYSUM_ERROR = true;
+            this.TEXT_ACTIONDONE_PAY = "";
+            return;
+        };
+
+        const payload: IUserBalanceUpdateViewModel = {
+            userBalanceId: userBalanceId,
+            amount: amount as number
+        };
+        const response = await API.post(`${Endpoint.Order}/balance/update`, payload);
+        if (response.data) {
+            this.fetchBalanceList();
+            this.currentPaySum = null;
+            this.FIELD_PAYSUM_ERROR = false;
+            this.TEXT_ACTIONDONE_PAY = "Le règlement a bien été pris en compte.";
         }
     }
 }
@@ -875,5 +1028,75 @@ export default class ProjectsDB extends Vue {
 
 .goodBalance {
     color: #4eb748;
+}
+
+.money-icon {
+    vertical-align: middle;
+}
+
+.lvl2 {
+    z-index: 1;
+}
+
+.bigbalance {
+    position: absolute;
+    top: 170px;
+    left: 165px;
+    font-size: 200%;
+}
+
+.balance-state {
+    position: absolute;
+    top: 150px;
+    left: 165px;
+    font-weight: bold;
+}
+
+.info {
+    color: #9b9b9b;
+}
+
+.pay {
+    position: absolute;
+    top: 150px;
+    left: 340px;
+}
+
+.payInput {
+    position: absolute;
+    top: 26px;
+    left: 0;
+    width: 100%;
+}
+
+.paytitle {
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.paybutton {
+    position: absolute;
+    top: 10px;
+    left: 70px;
+    width: 51px;
+    height: 51px;
+    background-image: url("../assets/images/pay-button.png");
+    cursor: pointer;
+
+    transition-property: background-image;
+    transition-duration: 0.2s;
+}
+
+.paybutton:hover {
+    width: 51px;
+    height: 51px;
+    background-image: url("../assets/images/pay-button-hovered.png");
+}
+
+.credit {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    font-size: 90%;
 }
 </style>

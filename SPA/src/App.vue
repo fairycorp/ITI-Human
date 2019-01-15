@@ -116,6 +116,11 @@ input.textual.short {
   margin-right: 15px;
 }
 
+input.textual.medium-short {
+  width: 15%;
+  margin-right: 15px;
+}
+
 input.textual.extra-short {
   width: 7%;
   margin-right: 15px;
@@ -208,6 +213,7 @@ button.selectedButton {
 }
 
 .left-page {
+  z-index: 0;
   position: fixed;
   top: 3%;
   left: 4%;
@@ -281,6 +287,10 @@ button.selectedButton {
 }
 
 .medium-top-margin {
+  margin-top: 30px;
+}
+
+.mediumtopmargin {
   margin-top: 30px;
 }
 

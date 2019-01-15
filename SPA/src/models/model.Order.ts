@@ -49,7 +49,30 @@ interface IUserBalance {
     userBalanceId: number;
     projectId: number;
     userId: number;
+    userName: string;
+    firstName: string;
+    lastName: string;
+    avatarUrl: string;
     balance: number;
+}
+
+interface IOrderCreditGettingViewModel {
+    userId: number;
+    projectId: number;
+}
+
+interface IOrderCredit {
+    orderCreditId: number;
+    userId: number;
+    projectId: number;
+    amount: number;
+    creditTime: Date;
+    displayedDate: string;
+}
+
+interface IUserBalanceUpdateViewModel {
+    userBalanceId: number;
+    amount: number;
 }
 
 interface PaymentState {
@@ -65,5 +88,8 @@ export {
     ICreationViewModel,
     IDetailedDataOrder,
     IUserBalance,
+    IOrderCredit,
+    IUserBalanceUpdateViewModel,
+    IOrderCreditGettingViewModel,
     PaymentState,
 };

@@ -77,6 +77,37 @@ namespace API.Services.Order
         }
 
         /// <summary>
+        /// Updates a User's Balance.
+        /// </summary>
+        /// <param name="model">Matching model.</param>
+        /// <returns></returns>
+        public async Task<GuardResult> GuardedUpdateUserBalance(UserBalanceUpdateViewModel model)
+        {
+            var result = await UpdateUserBalance(model.UserBalanceId, model.Amount);
+            if (!result) return Failure("Error in update process.");
+
+            return Success(result);
+        }
+
+        /// <summary>
+        /// Gets all Credits from specific User and Project.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>
+        /// Success result where result content is a list of <see cref="BasicDataOrderCredit"/> 
+        /// or Failure result if element does not exist in db.
+        /// </returns>
+        public async Task<GuardResult> GuardedGetUserCreditsFromProject(UserCreditGettingViewModel model)
+        {
+            var result = await GetUserCreditsFromProject(model);
+            if (result == null) return Failure(
+                string.Format("No Credit with userId {0} and projectId {1} was found.", model.UserId, model.ProjectId)
+            );
+
+            return Success(result);
+        }
+
+        /// <summary>
         /// Gets a detailed Order Final Due.
         /// </summary>
         /// <param name="orderId">Order's id.</param>
@@ -394,6 +425,18 @@ namespace API.Services.Order
                 return await ctx[UserBalanceTable].Connection
                     .QueryFirstOrDefaultAsync<BasicDataUserBalance>(
                         "SELECT * FROM ITIH.vUserBalance WHERE UserId = @uId AND ProjectId = @pId;",
+                        new { uId = model.UserId, pId = model.ProjectId }
+                    );
+            }
+        }
+
+        private async Task<IEnumerable<BasicDataOrderCredit>> GetUserCreditsFromProject(UserCreditGettingViewModel model)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await ctx[OrderCreditTable].Connection
+                    .QueryAsync<BasicDataOrderCredit>(
+                        "SELECT * FROM ITIH.tOrderCredit WHERE UserId = @uId AND ProjectId = @pId;",
                         new { uId = model.UserId, pId = model.ProjectId }
                     );
             }
