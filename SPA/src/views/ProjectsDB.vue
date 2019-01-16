@@ -11,7 +11,7 @@
             <div class="content">
                 <h3 class="pretitle">À L'AFFICHE</h3>
                 <div v-if="displayedProject !== null && displayedProject !== undefined">
-                    <div class="project-title">{{ displayedProject.projectName }}</div>
+                    <div class="title">{{ displayedProject.projectName }}</div>
 
                     <div v-if="displayedProject.members.length > 0" class="memberlist">
                         <div v-for="member in displayedProject.members" :key="member.projectMemberId" class="member">
@@ -68,8 +68,8 @@
                         <div :class="{ accountssidetext : WINDOW_PROJECT_ACCOUNTS, hidden : !WINDOW_PROJECT_ACCOUNTS }"></div>
                     </div>
                 </div>
-                <div v-else>
-                    <div class="project-title">Absolument rien.</div>
+                <div v-else class="title">
+                    Absolument rien.
                 </div>
             </div>
         </div>
@@ -871,7 +871,7 @@ export default class ProjectsDB extends Vue {
     color: #808080;
 }
 
-.project-title {
+.title {
     font-family: "gotham-bold";
     font-size: 250%;
     margin-top: -20px;

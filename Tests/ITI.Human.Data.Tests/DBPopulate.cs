@@ -101,7 +101,7 @@ namespace ITI.Human.Data.Tests
                 // Creates products.
                 var productId1 = await pTable.Create(ctx, 0, productName1, "Deux délicieuses barres chocolatées pralinées.",
                     "https://image.noelshack.com/fichiers/2019/03/1/1547463367-kbueno.png");
-                var productId2 = await pTable.Create(ctx, 0, productName2, "L'original Kinder. Prêt à être dévoré.",
+                var productId2 = await pTable.Create(ctx, 0, productName2, "L'original Kinder, prêt à être dévoré.",
                     "https://image.noelshack.com/fichiers/2019/03/1/1547463387-kmaxi.png");
                 var productId3 = await pTable.Create(ctx, 0, productName3, "Certain(e)s disent qu'il est le meilleur en bouche.",
                     "https://image.noelshack.com/fichiers/2019/03/1/1547463367-kcountry.png");

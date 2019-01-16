@@ -3,6 +3,7 @@ enum Endpoint {
     Order = "order",
     Product = "product",
     User = "user",
-    Storage = "storage"
+    Storage = "storage",
+    Classroom = "classroom"
 }
 export default Endpoint;

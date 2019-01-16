@@ -34,11 +34,16 @@ interface IBasicDataOrderedProduct {
 
 }
 
-interface ICreationViewModel {
+interface IOrderCreationViewModel {
     storageId: number;
     userId: number;
     classroomId: number;
-    products: IBasicDataOrderedProduct[];
+    products: IBasicDataProductToOrder[];
+}
+
+interface IBasicDataProductToOrder {
+    storageLinkedProductId: number;
+    quantity: number;
 }
 
 interface IDetailedDataOrder {
@@ -85,7 +90,8 @@ export {
     Payment,
     IBasicDataOrder,
     IBasicDataOrderedProduct,
-    ICreationViewModel,
+    IBasicDataProductToOrder,
+    IOrderCreationViewModel,
     IDetailedDataOrder,
     IUserBalance,
     IOrderCredit,

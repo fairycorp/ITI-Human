@@ -18,9 +18,10 @@
         <div v-if="WINDOW_CARDS">
             <div
                 v-for="(stall, index) in stallList"
+                @click="goToRestaurant(stall.storageId)"
                 :key="stall.projectId"
                 :class="{ highmargintop : index > 0 }"
-                class="little-right-page">
+                class="little-right-page chef-button">
                 <div class="chef-text">Chef</div>
                 <div class="project-title">{{ stall.projectName }}</div>
                 <div class="votes">
@@ -45,6 +46,7 @@
                         :class="{ transparent : stall.average < 1 || stall.average == 0 }"
                         class="heavylight-right-margin" />
                 </div>
+                <div class="thanks"></div>
             </div>
         </div>
     </div>
@@ -66,12 +68,28 @@ import { IBasicDataProject } from "@/models/model.Project";
 
 @Component({})
 export default class ForkChefs extends Vue {
+    @Prop() private authService!: AuthService;
     @Prop() private stallList: IBasicDataProject[] = [];
     private WINDOW_CARDS: boolean = false;
 
     constructor() {
         super();
         this.fetchProjectList();
+        this.isAccessible();
+    }
+
+    /** Checks if the current view route can be accessed. */
+    private isAccessible() {
+        if (Vue.prototype.$authService === undefined) {
+            this.$router.push("/");
+        } else {
+            this.authService = Vue.prototype.$authService;
+            this.authService.refresh(true, true, true);
+
+            if (this.authService.authenticationInfo.level === 0) {
+                this.$router.push("/");
+            }
+        }
     }
 
     // GETTERS METHODS.
@@ -104,7 +122,13 @@ export default class ForkChefs extends Vue {
 
     // WINDOW METHODS.
     private launchCardsWindow() {
-        this.WINDOW_CARDS = true;
+        if (this.stallList.length > 0) {
+            this.WINDOW_CARDS = true;
+        }
+    }
+
+    private goToRestaurant(identifier: string) {
+        this.changeRoute(`order/${identifier}`);
     }
 }
 </script>
@@ -117,6 +141,7 @@ export default class ForkChefs extends Vue {
 .extremelyhighmargintop {
     margin-top: 200px;
 }
+
 .fork-chefs-logo {
     position: absolute;
     top: 27%;
@@ -183,7 +208,7 @@ button.big:hover {
 
 .project-title {
     position: absolute;
-    top: 95px;
+    top: 75px;
     left: 70px;
     font-family: "Gotham-bold";
     font-size: 230%;
@@ -193,5 +218,34 @@ button.big:hover {
     position: absolute;
     top: 65px;
     left: 69%;
+}
+
+.chef-button {
+    transition-property: background-color, color;
+    transition-duration: 0.2s;
+}
+
+.chef-button:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.chef-button:hover > .votes {
+    display: none;
+}
+
+.thanks {
+    display: none;
+}
+
+.chef-button:hover > .thanks {
+    position: absolute;
+    top: 55px;
+    right: 55px;
+    display: block;
+    width: 63px;
+    height: 62px;
+    background-image: url("../assets/images/thanks.png");
 }
 </style>

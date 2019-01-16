@@ -19,6 +19,19 @@ interface IBasicDataStorageLinkedProduct {
     creditState: boolean;
 }
 
+interface IBasicDataStorageLinkedProductInWayToBeOrdered {
+    storageLinkedProductId: number;
+    storageId: number;
+    productId: number;
+    productName: string;
+    productDesc: string;
+    productAvatarUrl: string;
+    unitPrice: number;
+    stock: number;
+    creditState: boolean;
+    quantity: number;
+}
+
 interface ILinkedProductCreationViewModel {
     userId: number;
     storageId: number;
@@ -37,6 +50,7 @@ export {
     IBasicDataStorage,
     IStorageCreationViewModel,
     IBasicDataStorageLinkedProduct,
+    IBasicDataStorageLinkedProductInWayToBeOrdered,
     ILinkedProductCreationViewModel,
     ILinkedProductUpdateViewModel,
 };
