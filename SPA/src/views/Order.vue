@@ -5,7 +5,7 @@
             <h1 class="specialtitle">Bienvenue sur notre carte</h1>
             <h3 class="specialtitle">Où voici donc nos produits</h3>
             <div @click="addProduct(product)" v-for="product in linkedProducts" :key="product.storageLinkedProductId" class="product">
-                <div class="bar"></div>
+                <div class="productBar"></div>
                 <p>
                     <span class="openSans-bold">{{ product.productName }}</span>, <span class="price">{{ product.unitPrice / 100 }}€</span>,
                     <span class="description">{{ product.productDesc.toLowerCase() }}</span>
@@ -195,6 +195,7 @@ export default class Order extends Vue {
     private async closeWindow() {
         this.WINDOW_ORDER = false;
         this.displayedOrderProducts = [];
+        this.totalPrice = 0;
         this.selectedClassroom = {
                 classroomId: 0,
                 name: ""
@@ -230,7 +231,7 @@ h1.specialtitle {
     user-select: none;
 }
 
-.product:hover > .bar {
+.product:hover > .productBar {
     opacity: 1;
 }
 
@@ -247,7 +248,7 @@ h1.specialtitle {
     color: #4b80ac;
 }
 
-.bar {
+.productBar {
     opacity: 0;
     position: absolute;
     height: 40px;

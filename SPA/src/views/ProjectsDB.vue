@@ -60,6 +60,10 @@
                             @click="launchProjectInventory()"
                             :class="{ inventoryselected : WINDOW_PROJECT_INVENTORY }"
                             class="bottom-button inventory"></button>
+                            <button
+                            v-if="displayedProject.semesterId === 4"
+                            @click="launchStall()"
+                            class="bottom-button openStall"></button>
                         <button
                             v-if="displayedProject.semesterId === 4"
                             @click="launchProjectAccounts()"
@@ -275,7 +279,7 @@
             <div class="medium-top-margin">
                 <img width="80" :src="searchBarCreditResult.avatarUrl" class="avatar light-right-margin" />
                 <div :class="{ goodBalance: searchBarCreditResult.balance > 0, badBalance: searchBarCreditResult.balance < 0 }" class="subtitle balance-state">
-                    Solde <span v-if="searchBarCreditResult.balance > 0">positif</span><span v-else>négatif</span>
+                    Solde <span v-if="searchBarCreditResult.balance > 0">positif</span><span v-if="searchBarCreditResult.balance < 0">négatif</span>
                 </div>
                 <div :class="{ goodBalance: searchBarCreditResult.balance > 0, badBalance: searchBarCreditResult.balance < 0 }" class="openSans-bold bigbalance">
                     {{ searchBarCreditResult.balance / 100 }} €
@@ -332,7 +336,8 @@ import { IDetailedDataUser } from "@/models/model.User";
 import {
     IBasicDataStorageLinkedProduct,
     IStorageCreationViewModel,
-    ILinkedProductCreationViewModel
+    ILinkedProductCreationViewModel,
+IStallUpdateViewModel
 } from "@/models/model.Storage";
 import { IBasicDataProduct } from "@/models/model.Product";
 import { IUserBalance, IOrderCreditGettingViewModel, IOrderCredit, IUserBalanceUpdateViewModel } from "@/models/model.Order";
@@ -711,6 +716,18 @@ export default class ProjectsDB extends Vue {
         this.fetchSpecificCreditList(user.userId);
     }
 
+    private async launchStall() {
+        if (!this.displayedProject.openedStall) {
+            const payload: IStallUpdateViewModel = {
+                userId: this.authService.authenticationInfo.user.userId,
+                storageId: this.displayedProject.storageId,
+                openState: true
+            };
+            const response = await API.put(`${Endpoint.Storage}/stall`, payload);
+        }
+        this.changeRoute(`order/dashboard/${this.displayedProject.storageId}`);
+    }
+
     private closeProjectSetupWindow() {
         this.WINDOW_PROJECT_SETUP = false;
         this.searchResult = null;
@@ -957,8 +974,8 @@ export default class ProjectsDB extends Vue {
 
 .action-buttons {
     position: relative;
-    bottom: -40px;
-    left: 220px;
+    left: 28%;
+    top: 60px;
 }
 
 .bottom-button {
@@ -985,18 +1002,18 @@ export default class ProjectsDB extends Vue {
 .inventorysidetext {
     position: absolute;
     bottom: 45px;
-    left: -230px;
-    width: 200px;
-    height: 68px;
+    left: -180px;
+    width: 162px;
+    height: 55px;
     background-image: url("../assets/images/client-pleasure.png");
 }
 
 .accountssidetext {
     position: absolute;
     bottom: 55px;
-    left: 310px;
-    width: 199px;
-    height: 52px;
+    left: 450px;
+    width: 164px;
+    height: 43px;
     background-image: url("../assets/images/who-own-you.png");
 }
 
@@ -1021,6 +1038,17 @@ export default class ProjectsDB extends Vue {
 
 .accountsselected {
     background-image: url("../assets/images/button-accounts-hovered.png");
+}
+
+.openStall {
+    background-image: url("../assets/images/button-openStall.png");
+    
+    transition-property: background-image;
+    transition-duration: 0.2s;
+}
+
+.openStall:hover {
+    background-image: url("../assets/images/button-openStall-hovered.png");
 }
 
 .info-account-title {

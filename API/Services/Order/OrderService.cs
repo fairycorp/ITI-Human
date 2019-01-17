@@ -213,6 +213,24 @@ namespace API.Services.Order
             return Failure("User does not exist.");
         }
 
+        /// <summary>
+        /// Updates an Order global Current State.
+        /// </summary>
+        /// <param name="model">Matching model.</param>
+        /// <returns></returns>
+        public async Task<GuardResult> GuardedUpdateCurrentState(OrderCurrentStateUpdateViewModel model)
+        {
+            var doesOrderExist = await Get(model.OrderId);
+            if (doesOrderExist == null) return Failure(
+                string.Format("No Order with id {0} was found.", model.OrderId)
+            );
+
+            var result = await UpdateCurrentState(model);
+            if (result == false) return Failure("Error in update process.");
+
+            return Success(result);
+        }
+
         // --------------------------------------------------------------------------------------------
 
         private async Task<List<DetailedDataOrder>> GetAll()
@@ -306,7 +324,9 @@ namespace API.Services.Order
                         FROM
                             ITIH.vOrders
                         WHERE
-                            StorageId = @id;",
+                            StorageId = @id
+                            AND
+                            CurrentState != 3;",
                         new { id = ((BasicDataStorage)storage.Content).StorageId }
                     );
 
@@ -447,6 +467,14 @@ namespace API.Services.Order
                     }
                 }
                 return order;
+            }
+        }
+
+        private async Task<bool> UpdateCurrentState(OrderCurrentStateUpdateViewModel model)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await OrderTable.Update(ctx, model.UserId, model.OrderId, model.CurrentState);
             }
         }
 

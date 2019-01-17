@@ -1,5 +1,4 @@
-﻿using API.Services.Order;
-using API.Services.Product;
+﻿using API.Services.Product;
 using API.Services.Project;
 using CK.SqlServer;
 using Dapper;
@@ -110,6 +109,24 @@ namespace API.Services.Storage
         }
 
         /// <summary>
+        /// Changes current Storage Stall open state.
+        /// </summary>
+        /// <param name="model">Matching model.</param>
+        /// <returns></returns>
+        public async Task<GuardResult> GuardedUpdateStall(StallUpdateViewModel model)
+        {
+            var doesStorageExist = await Get(model.StorageId);
+            if (doesStorageExist == null) return Failure(
+               string.Format("No Storage with storageId {0} was found.", model.StorageId)
+            );
+
+            var result = await UpdateStall(model);
+            if (result == false) return Failure("Error in update process.");
+
+            return Success(result);
+        }
+
+        /// <summary>
         /// Creates a new Storage.
         /// </summary>
         /// <param name="model">Matching model.</param>
@@ -205,6 +222,14 @@ namespace API.Services.Storage
                         );
 
                 return await Get(storageId);
+            }
+        }
+
+        private async Task<bool> UpdateStall(StallUpdateViewModel model)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await StorageTable.UpdateStall(ctx, model.UserId, model.StorageId, model.OpenState);
             }
         }
 

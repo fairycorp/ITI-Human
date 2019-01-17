@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Services.Storage;
 using API.Services.Auth;
+using ITI.Human.ViewModels.Storage;
 
 namespace API.Controllers
 {
@@ -82,6 +83,28 @@ namespace API.Controllers
             return BadRequest(check.Info);
         }
 
+        [HttpPut("stall")]
+        public async Task<IActionResult> UpdateStall([FromBody] StallUpdateViewModel model)
+        {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
+            if (model == null) return BadRequest();
+
+            var check = Guard.IsAdmissible(nameof(model.StorageId), model.StorageId);
+
+            if (check.Code == Status.Success)
+            {
+                var result = await StorageService.GuardedUpdateStall(model);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
+
+            return BadRequest(check.Info);
+        }
+
         [HttpPost("create")]
         public async Task<IActionResult> CreateStorage(
             [FromBody] ITI.Human.ViewModels.Storage.CreationViewModel model)
@@ -139,7 +162,7 @@ namespace API.Controllers
         }
 
         [HttpPost("products/create")]
-        public async Task<IActionResult> CreateStorageLinkedProduct([FromBody] CreationViewModel model)
+        public async Task<IActionResult> CreateStorageLinkedProduct([FromBody] ITI.Human.ViewModels.Storage.LinkedProduct.CreationViewModel model)
         {
             var isAuthenticated =
                 AuthCheckService.CheckUserAuthenticationLevel(HttpContext);

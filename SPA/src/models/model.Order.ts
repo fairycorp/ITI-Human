@@ -18,6 +18,7 @@ interface IBasicDataOrder {
     orderId: number;
     userId: number;
     creationDate: Date;
+    displayedDate: string;
     currentState: State;
 }
 
@@ -31,7 +32,6 @@ interface IBasicDataOrderedProduct {
     quantity: number;
     currentState: State;
     payment: PaymentState;
-
 }
 
 interface IOrderCreationViewModel {
@@ -39,6 +39,12 @@ interface IOrderCreationViewModel {
     userId: number;
     classroomId: number;
     products: IBasicDataProductToOrder[];
+}
+
+interface IOrderCurrentStateUpdateViewModel {
+    userId: number;
+    orderId: number;
+    currentState: State;
 }
 
 interface IBasicDataProductToOrder {
@@ -85,6 +91,18 @@ interface PaymentState {
     amount: number;
 }
 
+interface IPaymentStateUpdateViewModel {
+    userId: number;
+    orderedProductId: number;
+    paymentState: PaymentState;
+}
+
+interface ICurrentStateUpdateViewModel {
+    userId: number;
+    orderedProductId: number;
+    currentState: State;
+}
+
 export {
     State,
     Payment,
@@ -97,5 +115,8 @@ export {
     IOrderCredit,
     IUserBalanceUpdateViewModel,
     IOrderCreditGettingViewModel,
+    IOrderCurrentStateUpdateViewModel,
+    IPaymentStateUpdateViewModel,
+    ICurrentStateUpdateViewModel,
     PaymentState,
 };

@@ -46,6 +46,12 @@ interface ILinkedProductUpdateViewModel {
     stock: number;
 }
 
+interface IStallUpdateViewModel {
+    userId: number;
+    storageId: number;
+    openState: boolean;
+}
+
 export {
     IBasicDataStorage,
     IStorageCreationViewModel,
@@ -53,4 +59,5 @@ export {
     IBasicDataStorageLinkedProductInWayToBeOrdered,
     ILinkedProductCreationViewModel,
     ILinkedProductUpdateViewModel,
+    IStallUpdateViewModel,
 };
