@@ -1,7 +1,7 @@
 ﻿using CK.SqlServer;
 using Dapper;
 using ITI.Human.Data;
-using ITI.Human.ViewModels.User.SchoolMember;
+using ITI.Human.ViewModels.User;
 using Stall.Guard.System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

@@ -1,4 +1,7 @@
-﻿namespace ITI.Human.ViewModels.Project
+﻿using ITI.Human.ViewModels.Project.Member;
+using System.Collections.Generic;
+
+namespace ITI.Human.ViewModels.Project
 {
     /// <summary>
     /// Represents what a Project is.
@@ -49,5 +52,20 @@
         /// Project Storage id.
         /// </summary>
         public int StorageId { get; set; }
+
+        /// <summary>
+        /// Current project members list.
+        /// </summary>
+        public IEnumerable<DetailedDataProjectMember> Members { get; set; }
+
+        /// <summary>
+        /// Project Stall state.
+        /// </summary>
+        public bool OpenedStall { get; set; }
+
+        /// <summary>
+        /// Project linked votes.
+        /// </summary>
+        public IEnumerable<int> Votes { get; set; }
     }
 }

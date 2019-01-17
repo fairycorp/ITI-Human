@@ -22,7 +22,7 @@ namespace ITI.Human.Data
         public abstract Task<int> Create(ISqlCallContext ctx, int actorId, int storageId, int userId, int classroomId, DateTime creationDate);
 
         [SqlProcedure("sOrderUpdate")]
-        public abstract Task<State> Update(ISqlCallContext ctx, int actorId, int orderId, State currentState);
+        public abstract Task<bool> Update(ISqlCallContext ctx, int actorId, int orderId, State currentState);
 
         [SqlProcedure("sOrderDelete")]
         public abstract Task<bool> Delete(ISqlCallContext ctx, int actorId, int orderId);

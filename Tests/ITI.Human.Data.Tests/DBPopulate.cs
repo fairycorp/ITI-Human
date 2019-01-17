@@ -28,6 +28,14 @@ namespace ITI.Human.Data.Tests
         const string userName1 = "Geralt";
         const string userName2 = "Jasquier";
         const string userName3 = "Priscilla";
+        const string userName4 = "BobbyCarotte";
+        const string userName5 = "Azsher";
+        const string userName6 = "Legann";
+        const string userName7 = "Fixesuarez";
+        const string userName8 = "TheAmazing";
+        const string userName9 = "Luthys";
+        const string userName10 = "Surface";
+        const string userName11 = "TakiTaki";
         const string projectName1 = "Stall";
         const string projectName2 = "Atome";
 
@@ -49,6 +57,12 @@ namespace ITI.Human.Data.Tests
             var pJTable = (ProjectTable)
                 Initialize(Element.Project);
 
+            var pMTable = (ProjectMemberTable)
+                Initialize(Element.ProjectMember);
+
+            var sMTable = (SchoolMemberTable)
+                Initialize(Element.SchoolMember);
+
             var sTable = (StorageTable)
                 Initialize(Element.Storage);
 
@@ -58,8 +72,11 @@ namespace ITI.Human.Data.Tests
             var uTable = (UserTable)
                 Initialize(Element.User);
 
-            var sMTable = (SchoolMemberTable)
-                Initialize(Element.SchoolMember);
+            var uATable = (UserAvatarsTable)
+                Initialize(Element.UserAvatars);
+
+            var uBTable = (UserBalanceTable)
+                Initialize(Element.UserBalance);
 
             var uDTable = (UserDetailsTable)
                 Initialize(Element.UserDetails);
@@ -82,39 +99,78 @@ namespace ITI.Human.Data.Tests
                 }
 
                 // Creates products.
-                var productId1 = await pTable.Create(ctx, 0, productName1, string.Empty);
-                var productId2 = await pTable.Create(ctx, 0, productName2, string.Empty);
-                var productId3 = await pTable.Create(ctx, 0, productName3, string.Empty);
-                var productId4 = await pTable.Create(ctx, 0, productName4, string.Empty);
-                var productId5 = await pTable.Create(ctx, 0, productName5, string.Empty);
-                var productId6 = await pTable.Create(ctx, 0, productName6, string.Empty);
-                var productId7 = await pTable.Create(ctx, 0, productName7, string.Empty);
-                var productId8 = await pTable.Create(ctx, 0, productName8, string.Empty);
-                var productId9 = await pTable.Create(ctx, 0, productName9, string.Empty);
+                var productId1 = await pTable.Create(ctx, 0, productName1, "Deux délicieuses barres chocolatées pralinées.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463367-kbueno.png");
+                var productId2 = await pTable.Create(ctx, 0, productName2, "L'original Kinder, prêt à être dévoré.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463387-kmaxi.png");
+                var productId3 = await pTable.Create(ctx, 0, productName3, "Certain(e)s disent qu'il est le meilleur en bouche.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463367-kcountry.png");
+                var productId4 = await pTable.Create(ctx, 0, productName4, "Cannette au format standard.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463367-coca-33.png");
+                var productId5 = await pTable.Create(ctx, 0, productName5, "Bouteille au format standard.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463367-coca-50.png");
+                var productId6 = await pTable.Create(ctx, 0, productName6, "Canette au format standard.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463472-redbull-33.png");
+                var productId7 = await pTable.Create(ctx, 0, productName7, "Canette au grand format.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463387-redbull-50.png");
+                var productId8 = await pTable.Create(ctx, 0, productName8, "Canette au format standard.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463367-fanta-33.png");
+                var productId9 = await pTable.Create(ctx, 0, productName9, "Bouteille au format standard.",
+                    "https://image.noelshack.com/fichiers/2019/03/1/1547463367-fanta-50.png");
 
 
                 // Checks on users.
                 doesExist = await GetElement(Element.User, strIdentifier: userName1);
                 if (doesExist != null) return;
 
-                doesExist = await GetElement(Element.User, strIdentifier: userName2);
-                if (doesExist != null) return;
-
-                doesExist = await GetElement(Element.User, strIdentifier: userName3);
-                if (doesExist != null) return;
-
                 // Creates users (considered as school members) and their details.
                 var userId1 = await uTable.CreateUserAsync(ctx, 1, userName1);
                 var userId2 = await uTable.CreateUserAsync(ctx, 1, userName2);
                 var userId3 = await uTable.CreateUserAsync(ctx, 1, userName3);
+                var userId4 = await uTable.CreateUserAsync(ctx, 1, userName4);
+                var userId5 = await uTable.CreateUserAsync(ctx, 1, userName5);
+                var userId6 = await uTable.CreateUserAsync(ctx, 1, userName6);
+                var userId7 = await uTable.CreateUserAsync(ctx, 1, userName7);
+                var userId8 = await uTable.CreateUserAsync(ctx, 1, userName8);
+                var userId9 = await uTable.CreateUserAsync(ctx, 1, userName9);
+                var userId10 = await uTable.CreateUserAsync(ctx, 1, userName10);
+                var userId11 = await uTable.CreateUserAsync(ctx, 1, userName11);
 
-                var schoolMember1 = await sMTable.Create(ctx, 0, userId1, 5);
-                var schoolMember2 = await sMTable.Create(ctx, 0, userId2, 5);
-                var schoolMember3 = await sMTable.Create(ctx, 0, userId3, 5);
+                var schoolMember1 = await sMTable.Create(ctx, 0, userId1, 3);
+                var schoolMember2 = await sMTable.Create(ctx, 0, userId2, 3);
+                var schoolMember3 = await sMTable.Create(ctx, 0, userId3, 3);
+                var schoolMember4 = await sMTable.Create(ctx, 0, userId4, 3);
+                var schoolMember5 = await sMTable.Create(ctx, 0, userId5, 3);
+                var schoolMember6 = await sMTable.Create(ctx, 0, userId6, 3);
+                var schoolMember7 = await sMTable.Create(ctx, 0, userId7, 3);
+                var schoolMember8 = await sMTable.Create(ctx, 0, userId8, 3);
+                var schoolMember9 = await sMTable.Create(ctx, 0, userId9, 3);
+                var schoolMember10 = await sMTable.Create(ctx, 0, userId10, 3);
+                var schoolMember11 = await sMTable.Create(ctx, 0, userId11, 3);
 
                 var userDetails1 = await uDTable.Create(ctx, 0, userId1, "Charles", "Resini", new DateTime(1997, 10, 12));
                 var userDetails2 = await uDTable.Create(ctx, 0, userId2, "Pierre", "Loderin", new DateTime(1995, 04, 19));
                 var userDetails3 = await uDTable.Create(ctx, 0, userId3, "Emma", "Ruvol", new DateTime(1996, 07, 02));
+                var userDetails4 = await uDTable.Create(ctx, 0, userId4, "Loïc", "Monard", new DateTime(1996, 07, 02));
+                var userDetails5 = await uDTable.Create(ctx, 0, userId5, "Damien", "Gidon", new DateTime(1996, 07, 02));
+                var userDetails6 = await uDTable.Create(ctx, 0, userId6, "Thibault", "Cam", new DateTime(1996, 07, 02));
+                var userDetails7 = await uDTable.Create(ctx, 0, userId7, "François-Xavier", "Suarez", new DateTime(1996, 07, 02));
+                var userDetails8 = await uDTable.Create(ctx, 0, userId8, "Hugo", "Thomas", new DateTime(1996, 07, 02));
+                var userDetails9 = await uDTable.Create(ctx, 0, userId9, "Sébastien", "Martins", new DateTime(1996, 07, 02));
+                var userDetails10 = await uDTable.Create(ctx, 0, userId10, "Hugo", "Loiseau", new DateTime(1996, 07, 02));
+                var userDetails11 = await uDTable.Create(ctx, 0, userId11, "Abdelmadjid", "Sahki", new DateTime(1996, 07, 02));
+
+                var userAvatar1 = await uATable.Create(ctx, 0, userId1, "https://image.noelshack.com/fichiers/2019/02/4/1547118763-geralt.png");
+                var userAvatar2 = await uATable.Create(ctx, 0, userId2, "https://image.noelshack.com/fichiers/2019/02/4/1547118763-jaskier.png");
+                var userAvatar3 = await uATable.Create(ctx, 0, userId3, "https://image.noelshack.com/fichiers/2019/02/4/1547118763-priscilla.png");
+                var userAvatar4 = await uATable.Create(ctx, 0, userId4, "https://image.noelshack.com/fichiers/2019/02/4/1547126824-loic.jpg");
+                var userAvatar5 = await uATable.Create(ctx, 0, userId5, "https://image.noelshack.com/fichiers/2019/02/4/1547126824-damien.jpg");
+                var userAvatar6 = await uATable.Create(ctx, 0, userId6, "https://image.noelshack.com/fichiers/2019/02/4/1547126900-thibault.jpg");
+                var userAvatar7 = await uATable.Create(ctx, 0, userId7, "https://image.noelshack.com/fichiers/2019/02/4/1547126910-suarez.jpg");
+                var userAvatar8 = await uATable.Create(ctx, 0, userId8, "https://image.noelshack.com/fichiers/2019/02/4/1547126824-hugot.jpg");
+                var userAvatar9 = await uATable.Create(ctx, 0, userId9, "https://image.noelshack.com/fichiers/2019/02/4/1547126945-seb.jpg");
+                var userAvatar10 = await uATable.Create(ctx, 0, userId10, "https://image.noelshack.com/fichiers/2019/02/4/1547126824-hugo.jpg");
+                var userAvatar11 = await uATable.Create(ctx, 0, userId11, "https://image.noelshack.com/fichiers/2019/02/4/1547126824-madjid.jpg");
 
 
                 // Checks on projects.
@@ -125,8 +181,8 @@ namespace ITI.Human.Data.Tests
                 if (doesExist != null) return;
 
                 // Creates projects.
-                var projectId1 = await pJTable.Create(ctx, 0, 1, 2, projectName1, "Project about something.", "Sample pitch.");
-                var projectId2 = await pJTable.Create(ctx, 0, 1, 3, projectName2, "Loving great projecters.", "Greats pitch.");
+                var projectId1 = await pJTable.Create(ctx, 0, 1, 4, projectName1, "Project about something.", "Sample pitch.");
+                var projectId2 = await pJTable.Create(ctx, 0, 1, 4, projectName2, "Loving great projecters.", "Greats pitch.");
 
 
                 // Creates storages.
@@ -146,6 +202,12 @@ namespace ITI.Human.Data.Tests
                 var storageLinkedProductId9 = await sLTable.Create(ctx, 0, storageId2, productId5, 140, 30);
                 var storageLinkedProductId10 = await sLTable.Create(ctx, 0, storageId2, productId6, 150, 20);
                 var storageLinkedProductId11 = await sLTable.Create(ctx, 0, storageId2, productId7, 180, 40);
+
+
+                // Creates project members.
+                var projectMember1 = await pMTable.Create(ctx, 0, projectId1, 2, userId1);
+                var projectMember2 = await pMTable.Create(ctx, 0, projectId1, 1, userId2);
+                var projectMember3 = await pMTable.Create(ctx, 0, projectId1, 2, userId3);
 
 
                 // Creates orders.
@@ -207,6 +269,86 @@ namespace ITI.Human.Data.Tests
             }
         }
 
+        [Test]
+        public async Task SetupPoneyProject()
+        {
+            var oCTable = (OrderCreditTable)
+                Initialize(Element.OrderCredit);
+
+            var uTable = (UserTable)
+                Initialize(Element.User);
+
+            var uBTable = (UserBalanceTable)
+                Initialize(Element.UserBalance);
+
+            var pVTable = (ProjectVotesTable)
+                Initialize(Element.ProjectVotes);
+
+            async Task<int> GetUser(ISqlCallContext ctx, string userName)
+            {
+                return await ctx[uTable].Connection
+                .QueryFirstOrDefaultAsync<int>(
+                    "SELECT UserId FROM CK.tUser WHERE UserName = @nm;",
+                    new { nm = userName }
+                );
+            };
+
+            async Task<int> GetProject(ISqlCallContext ctx, string projectName)
+            {
+                return await ctx[uTable].Connection
+                .QueryFirstOrDefaultAsync<int>(
+                    "SELECT ProjectId FROM ITIH.tProject WHERE [Name] = @nm;",
+                    new { nm = projectName }
+                );
+            };
+
+            async Task<int> GetBalance(ISqlCallContext ctx, int projectId)
+            {
+                return await ctx[uBTable].Connection
+                .QueryFirstOrDefaultAsync<int>(
+                    "SELECT UserBalanceId FROM ITIH.tUserBalance WHERE ProjectId = @id;",
+                    new { id = projectId }
+                );
+            }
+
+            using (var ctx = new SqlStandardCallContext())
+            {
+                var doesProjectExist = await GetProject(ctx, "Poney");
+                if (doesProjectExist == 0) return;
+
+                var hasCreationAlreadyBeenMade =
+                    await GetBalance(ctx, doesProjectExist);
+                if (hasCreationAlreadyBeenMade > 0) return;
+
+                var userId1 = await GetUser(ctx, "fairyfingers");
+                var userId2 = await GetUser(ctx, "BobbyCarotte");
+                var userId3 = await GetUser(ctx, "Azsher");
+                var userId4 = await GetUser(ctx, "Legann");
+                var projectId = await GetProject(ctx, "Poney");
+
+                var projectNoteId1 = await pVTable.Create(ctx, 0, projectId, userId1, 4);
+                var projectNoteId2 = await pVTable.Create(ctx, 0, projectId, userId2, 3);
+                var projectNoteId3 = await pVTable.Create(ctx, 0, projectId, userId3, 3);
+                var projectNoteId4 = await pVTable.Create(ctx, 0, projectId, userId4, 5);
+
+                var uBalanceId1 = await uBTable.Create(ctx, 0, userId1, projectId);
+                var uBalanceId2 = await uBTable.Create(ctx, 0, userId2, projectId);
+                var uBalanceId3 = await uBTable.Create(ctx, 0, userId3, projectId);
+
+                await oCTable.Create(ctx, 0, projectId, userId1, 40, new DateTime(2018, 12, 12));
+                await oCTable.Create(ctx, 0, projectId, userId1, 120, new DateTime(2019, 01, 4));
+                await oCTable.Create(ctx, 0, projectId, userId1, 100, new DateTime(2018, 01, 7));
+                await oCTable.Create(ctx, 0, projectId, userId1, 90, new DateTime(2018, 01, 14));
+
+                await oCTable.Create(ctx, 0, projectId, userId2, 160, new DateTime(2018, 11, 20));
+                await oCTable.Create(ctx, 0, projectId, userId2, 70, new DateTime(2018, 12, 19));
+
+                await uBTable.Update(ctx, 0, uBalanceId1, -350);
+                await uBTable.Update(ctx, 0, uBalanceId2, -230);
+                await uBTable.Update(ctx, 0, uBalanceId3, 410);
+            }
+        }
+
         static int CalculateOrderTotal(IEnumerable<DetailedDataOrderedProduct> products)
         {
             int total = 0;
@@ -223,15 +365,20 @@ namespace ITI.Human.Data.Tests
         private enum Element
         {
             Order,
+            OrderCredit,
             OrderFinalDue,
             OrderedProduct,
             Product,
             Project,
+            ProjectMember,
+            ProjectVotes,
+            SchoolMember,
             Storage,
             StorageLinkedProduct,
             User,
-            UserDetails,
-            SchoolMember
+            UserAvatars,
+            UserBalance,
+            UserDetails
         }
 
         /// <summary>
@@ -262,6 +409,11 @@ namespace ITI.Human.Data.Tests
                         tableName = "ITIH.tOrder"; fieldName = "OrderId";
                         break;
 
+                    case (Element.OrderCredit):
+                        table = (OrderTable)Initialize(Element.OrderCredit);
+                        tableName = "ITIH.tOrderCredit"; fieldName = "OrderCreditId";
+                        break;
+
                     case (Element.OrderFinalDue):
                         table = (OrderFinalDueTable)Initialize(Element.OrderFinalDue);
                         tableName = "ITIH.tOrderFinalDue"; fieldName = "OrderFinalDueId";
@@ -282,6 +434,21 @@ namespace ITI.Human.Data.Tests
                         tableName = "ITIH.tProject"; fieldName = "[Name]";
                         break;
 
+                    case (Element.ProjectMember):
+                        table = (ProjectMemberTable)Initialize(Element.ProjectMember);
+                        tableName = "ITIH.tProjectMember"; fieldName = "ProjectMemberId";
+                        break;
+
+                    case (Element.ProjectVotes):
+                        table = (ProjectVotesTable)Initialize(Element.ProjectVotes);
+                        tableName = "ITIH.tProjectVotes"; fieldName = "ProjectVoteId";
+                        break;
+
+                    case (Element.SchoolMember):
+                        table = (SchoolMemberTable)Initialize(Element.SchoolMember);
+                        tableName = "ITIH.tSchoolMember"; fieldName = "SchoolMemberId";
+                        break;
+
                     case (Element.Storage):
                         table = (StorageTable)Initialize(Element.Storage);
                         tableName = "ITIH.tStorage"; fieldName = "StorageId";
@@ -297,14 +464,19 @@ namespace ITI.Human.Data.Tests
                         tableName = "CK.tUser"; fieldName = "UserName";
                         break;
 
+                    case (Element.UserBalance):
+                        table = (UserBalanceTable)Initialize(Element.UserBalance);
+                        tableName = "ITIH.tUserBalance"; fieldName = "UserBalanceId";
+                        break;
+
+                    case (Element.UserAvatars):
+                        table = (UserAvatarsTable)Initialize(Element.UserAvatars);
+                        tableName = "ITIH.tUserAvatars"; fieldName = "UserAvatarId";
+                        break;
+
                     case (Element.UserDetails):
                         table = (UserDetailsTable)Initialize(Element.UserDetails);
                         tableName = "ITIH.tUserDetails"; fieldName = "UserDetailsId";
-                        break;
-
-                    case (Element.SchoolMember):
-                        table = (SchoolMemberTable)Initialize(Element.SchoolMember);
-                        tableName = "ITIH.tSchoolMember"; fieldName = "SchoolMemberId";
                         break;
                 }
 
@@ -350,6 +522,9 @@ namespace ITI.Human.Data.Tests
                 case (Element.Order):
                     return CK.Core.StObjModelExtension.Obtain<OrderTable>(TestHelper.StObjMap.StObjs);
 
+                case (Element.OrderCredit):
+                    return CK.Core.StObjModelExtension.Obtain<OrderCreditTable>(TestHelper.StObjMap.StObjs);
+
                 case (Element.OrderFinalDue):
                     return CK.Core.StObjModelExtension.Obtain<OrderFinalDueTable>(TestHelper.StObjMap.StObjs);
 
@@ -362,6 +537,15 @@ namespace ITI.Human.Data.Tests
                 case (Element.Project):
                     return CK.Core.StObjModelExtension.Obtain<ProjectTable>(TestHelper.StObjMap.StObjs);
 
+                case (Element.ProjectMember):
+                    return CK.Core.StObjModelExtension.Obtain<ProjectMemberTable>(TestHelper.StObjMap.StObjs);
+
+                case (Element.ProjectVotes):
+                    return CK.Core.StObjModelExtension.Obtain<ProjectVotesTable>(TestHelper.StObjMap.StObjs);
+
+                case (Element.SchoolMember):
+                    return CK.Core.StObjModelExtension.Obtain<SchoolMemberTable>(TestHelper.StObjMap.StObjs);
+
                 case (Element.Storage):
                     return CK.Core.StObjModelExtension.Obtain<StorageTable>(TestHelper.StObjMap.StObjs);
 
@@ -371,11 +555,14 @@ namespace ITI.Human.Data.Tests
                 case (Element.User):
                     return CK.Core.StObjModelExtension.Obtain<UserTable>(TestHelper.StObjMap.StObjs);
 
+                case (Element.UserBalance):
+                    return CK.Core.StObjModelExtension.Obtain<UserBalanceTable>(TestHelper.StObjMap.StObjs);
+
+                case (Element.UserAvatars):
+                    return CK.Core.StObjModelExtension.Obtain<UserAvatarsTable>(TestHelper.StObjMap.StObjs);
+
                 case (Element.UserDetails):
                     return CK.Core.StObjModelExtension.Obtain<UserDetailsTable>(TestHelper.StObjMap.StObjs);
-
-                case (Element.SchoolMember):
-                    return CK.Core.StObjModelExtension.Obtain<SchoolMemberTable>(TestHelper.StObjMap.StObjs);
 
                 default:
                     return new object();

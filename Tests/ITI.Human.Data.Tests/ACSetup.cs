@@ -11,19 +11,28 @@ namespace ITI.Human.Data.Tests
     [TestFixture]
     public class ACSetup
     {
-        [Explicit]
         [Test]
         public async System.Threading.Tasks.Task CreateAdminAsync()
         {
             var uTable = CK.Core.StObjModelExtension.Obtain<UserTable>(TestHelper.StObjMap.StObjs);
             var uPTable = CK.Core.StObjModelExtension.Obtain<UserPasswordTable>(TestHelper.StObjMap.StObjs);
+            var uATable = CK.Core.StObjModelExtension.Obtain<UserAvatarsTable>(TestHelper.StObjMap.StObjs);
 
             using (var ctx = new SqlStandardCallContext())
             {
-                var userId = await uTable.CreateUserAsync(ctx, 1, "fairyfingers");
-                Assert.Greater(userId, 0);
+                var doesUserExist = await ctx[uTable].Connection
+                    .QueryFirstOrDefaultAsync<int>(
+                        "SELECT UserId FROM CK.tUser WHERE UserName = @name",
+                        new { name = "fairyfingers" }
+                    );
+                if (doesUserExist == 0)
+                {
+                    var userId = await uTable.CreateUserAsync(ctx, 1, "fairyfingers");
+                    Assert.Greater(userId, 0);
 
-                var passwordResponse = await uPTable.CreateOrUpdatePasswordUserAsync(ctx, 1, userId, "access");
+                    var avatarReponse = await uATable.Create(ctx, 1, userId, "https://image.noelshack.com/fichiers/2019/03/1/1547482142-26920011.jpg");
+                    var passwordResponse = await uPTable.CreateOrUpdatePasswordUserAsync(ctx, 1, userId, "access");
+                }
             }
         }
     }

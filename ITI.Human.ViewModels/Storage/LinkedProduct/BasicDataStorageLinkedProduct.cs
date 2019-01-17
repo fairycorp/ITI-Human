@@ -30,6 +30,11 @@ namespace ITI.Human.ViewModels.Storage.LinkedProduct
         public string ProductDesc { get; set; }
 
         /// <summary>
+        /// See <see cref="BasicDataProduct.Url"/>.
+        /// </summary>
+        public string ProductAvatarUrl { get; set; }
+
+        /// <summary>
         /// Current Storage Linked Product unit price.
         /// </summary>
         public int UnitPrice { get; set; }

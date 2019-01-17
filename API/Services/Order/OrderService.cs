@@ -7,6 +7,7 @@ using Dapper;
 using ITI.Human.Data;
 using ITI.Human.ViewModels.Order;
 using ITI.Human.ViewModels.Product.Ordered;
+using ITI.Human.ViewModels.Storage;
 using ITI.Human.ViewModels.Storage.LinkedProduct;
 using Stall.Guard.System;
 using System;
@@ -36,9 +37,12 @@ namespace API.Services.Order
 
         private OrderedProductTable OrderedProductTable { get; }
 
+        private OrderPaymentTable OrderPaymentTable { get; }
+
         public OrderService(StorageService sService, SLPService slpService,
             OrderDueServices oDServices, ClassroomService cService, 
-            UserService uService, OrderTable oTable, OrderedProductTable oPTable)
+            UserService uService, OrderTable oTable, OrderedProductTable oPTable,
+            OrderPaymentTable oPayTable)
         {
             StorageService = sService;
             SLPService = slpService;
@@ -47,6 +51,7 @@ namespace API.Services.Order
             UserService = uService;
             OrderTable = oTable;
             OrderedProductTable = oPTable;
+            OrderPaymentTable = oPayTable;
         }
 
         /// <summary>
@@ -208,6 +213,24 @@ namespace API.Services.Order
             return Failure("User does not exist.");
         }
 
+        /// <summary>
+        /// Updates an Order global Current State.
+        /// </summary>
+        /// <param name="model">Matching model.</param>
+        /// <returns></returns>
+        public async Task<GuardResult> GuardedUpdateCurrentState(OrderCurrentStateUpdateViewModel model)
+        {
+            var doesOrderExist = await Get(model.OrderId);
+            if (doesOrderExist == null) return Failure(
+                string.Format("No Order with id {0} was found.", model.OrderId)
+            );
+
+            var result = await UpdateCurrentState(model);
+            if (result == false) return Failure("Error in update process.");
+
+            return Success(result);
+        }
+
         // --------------------------------------------------------------------------------------------
 
         private async Task<List<DetailedDataOrder>> GetAll()
@@ -292,17 +315,19 @@ namespace API.Services.Order
             using (var ctx = new SqlStandardCallContext())
             {
                 // Retrieves storageId from projectId.
-                var storageId = await StorageService.GuardedGetFromProject(projectId);
+                var storage = await StorageService.GuardedGetFromProject(projectId);
 
                 var basicData = await ctx[OrderTable].Connection
                     .QueryAsync<BasicDataOrder>(
                         @"SELECT
                             *
                         FROM
-                            ITIH.tOrder
+                            ITIH.vOrders
                         WHERE
-                            StorageId = @id;",
-                        new { id = storageId.Content }
+                            StorageId = @id
+                            AND
+                            CurrentState != 3;",
+                        new { id = ((BasicDataStorage)storage.Content).StorageId }
                     );
 
                 List<DetailedDataOrder> ordersFromProject = new List<DetailedDataOrder>();
@@ -323,6 +348,41 @@ namespace API.Services.Order
                         )
                     };
                     detailedData.Info.Total = CalculateOrderTotal(detailedData.Products);
+
+                    foreach (var product in detailedData.Products)
+                    {
+                        var state = await ctx[OrderTable].Connection
+                            .QueryFirstOrDefaultAsync<Payment>(
+                                @"SELECT
+                                    PaymentState
+                                FROM
+                                    ITIH.vOrderedProducts
+                                WHERE
+                                    OrderedProductId = @id;",
+                                new { id = product.OrderedProductId }
+                            );
+
+                        var amounts = await ctx[OrderPaymentTable].Connection
+                            .QueryAsync<int>(
+                                @"SELECT
+                                    Amount
+                                FROM
+                                    ITIH.tOrderPayment
+                                WHERE
+                                    OrderedProductId = @id;",
+                                new { id = product.OrderedProductId }
+                            );
+
+                        var total = 0;
+                        foreach (var amount in amounts)
+                            total += amount;
+
+                        product.Payment = new DetailedDataOrderedProduct.PaymentState
+                        {
+                            State = state,
+                            Amount = total
+                        };
+                    }
 
                     ordersFromProject.Add(detailedData);
                 }
@@ -407,6 +467,14 @@ namespace API.Services.Order
                     }
                 }
                 return order;
+            }
+        }
+
+        private async Task<bool> UpdateCurrentState(OrderCurrentStateUpdateViewModel model)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await OrderTable.Update(ctx, model.UserId, model.OrderId, model.CurrentState);
             }
         }
 

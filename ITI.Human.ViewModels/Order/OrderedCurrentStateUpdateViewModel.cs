@@ -1,6 +1,6 @@
 ﻿namespace ITI.Human.ViewModels.Order
 {
-    public class CurrentStateUpdateViewModel
+    public class OrderedCurrentStateUpdateViewModel
     {       
         public int UserId { get; set; }
 

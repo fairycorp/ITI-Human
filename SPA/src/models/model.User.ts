@@ -1,3 +1,6 @@
+import { ESemester } from "./model.Semester";
+import { ESStatus } from "./model.SchoolStatus";
+
 interface IUserBasicData {
     userId: number;
     userName: string;
@@ -16,4 +19,14 @@ interface IDetailedDataUser {
     schoolStatusName: string;
 }
 
-export { IUserBasicData, IDetailedDataUser };
+interface IStandardProfileSetup {
+    userId: number;
+    firstname: string;
+    lastname: string;
+    desc: string;
+    schoolStatusId: ESStatus;
+    secretCode: string;
+    semesterId: ESemester;
+}
+
+export { IUserBasicData, IDetailedDataUser, IStandardProfileSetup };

@@ -1,14 +1,14 @@
 <template>
     <div class="main">
-        <div v-if="info" class="tooltip">
-            {{ info.userName }}
+        <div v-if="basicInfo" class="tooltip">
+            {{ basicInfo.userName }}
             <div class="tooltiptext">
                 <div class="image">
-                    <img :src="info.avatarUrl" width="30%" class="avatar" />
+                    <img :src="basicInfo.avatarUrl" width="30%" class="avatar" />
                 </div>
                 <div class="subinfo">
-                    {{ info.firstName }} {{ info.lastName }},<br />
-                    <span class="bold">{{ info.schoolStatusName }}</span>
+                    {{ basicInfo.firstName }} {{ basicInfo.lastName }},<br />
+                    <span class="bold">{{ basicInfo.schoolStatusName }}</span>
                 </div>
             </div>
         </div>
@@ -24,21 +24,22 @@ import Endpoint from "@/helpers/Endpoint";
 @Component({})
 export default class UserTooltip extends Vue {
     @Prop() private userId!: number;
-    private info!: IDetailedDataUser | null;
+    private basicInfo!: IDetailedDataUser | null;
 
     constructor() {
         super();
-        this.info = null;
+        this.basicInfo = null;
         this.fetchData();
     }
 
     private async fetchData() {
         const response =
             await API.get(`${Endpoint.User}/tooltip/${this.userId}`);
-        this.info = response.data;
+        this.basicInfo = response.data;
 
-        if (this.info!.avatarUrl == null) this.info!.avatarUrl = 
-            "https://image.noelshack.com/fichiers/2018/51/5/1545400783-hd-avatar2.png"
+        if (this.basicInfo!.avatarUrl == null) {
+            this.basicInfo!.avatarUrl = "https://image.noelshack.com/fichiers/2018/51/5/1545400783-hd-avatar2.png";
+        }
     }
 }
 </script>
@@ -58,7 +59,7 @@ export default class UserTooltip extends Vue {
     /* Tooltip text */
     .tooltip .tooltiptext {
         visibility: hidden;
-        width: 150px;
+        width: 180px;
         background-color: white;
         color: grey;
         text-align: left;

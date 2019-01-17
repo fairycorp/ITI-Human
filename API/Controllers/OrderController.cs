@@ -88,6 +88,53 @@ namespace API.Controllers
             return BadRequest(check.Info);
         }
 
+        [HttpPost("balance/update")]
+        public async Task<IActionResult> UpdateUserBalance([FromBody] UserBalanceUpdateViewModel model)
+        {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
+            var modelBasicIntAnalyis = new Dictionary<string, int>
+                {
+                    { nameof(model.UserBalanceId), model.UserBalanceId },
+                    { nameof(model.Amount), model.Amount }
+                };
+            var basicCheck =
+                Guard.IsAdmissible(modelBasicIntAnalyis);
+
+            if (basicCheck.Code == Status.Success)
+            {
+                var result = await OrderDueServices.GuardedUpdateUserBalance(model);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
+
+            return BadRequest(basicCheck.Info);
+        }
+
+        [HttpGet("project/{projectId}/balances")]
+        public async Task<IActionResult> GetAllUserBalanceFromProject(int projectId)
+        {
+            var isAuthenticated =
+               AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
+            var check =
+                Guard.IsAdmissible(nameof(projectId), projectId);
+
+            if (check.Code == Status.Success)
+            {
+                var result = await OrderDueServices.GuardedGetAllUserBalanceFromProject(projectId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
+
+            return BadRequest(check.Info);
+        }
+
         [HttpGet("i/{orderId}")]
         public async Task<IActionResult> Get(int orderId)
         {
@@ -122,6 +169,27 @@ namespace API.Controllers
             if (check.Code == Status.Success)
             {
                 var result = await OrderDueServices.GuardedGetFinalDueFromOrder(orderId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
+
+            return BadRequest(check.Info);
+        }
+
+        [HttpPost("credit")]
+        public async Task<IActionResult> GetUserCreditFromProject([FromBody] UserCreditGettingViewModel model)
+        {
+            var isAuthenticated =
+               AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
+            var check =
+                Guard.IsAdmissible(nameof(model.ProjectId), model.ProjectId);
+
+            if (check.Code == Status.Success)
+            {
+                var result = await OrderDueServices.GuardedGetUserCreditsFromProject(model);
                 if (result.Code == Status.Failure) return BadRequest(result.Info);
 
                 return Ok(result.Content);
@@ -178,7 +246,7 @@ namespace API.Controllers
             return BadRequest();
         }
 
-        [HttpPut("paymentState")]
+        [HttpPut("ordered/paymentState")]
         public async Task<IActionResult> UpdatePaymentState([FromBody] IEnumerable<PaymentStateUpdateViewModel> models)
         {
             var isAuthenticated =
@@ -222,7 +290,32 @@ namespace API.Controllers
         }
 
         [HttpPut("currentState")]
-        public async Task<IActionResult> UpdateCurrentState([FromBody] IEnumerable<CurrentStateUpdateViewModel> models)
+        public async Task<IActionResult> UpdateOrderCurrentState([FromBody] OrderCurrentStateUpdateViewModel model)
+        {
+            var isAuthenticated =
+                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
+            if (isAuthenticated.Code == Status.Failure) return Forbid();
+
+            var intAnalysis = new Dictionary<string, int>
+            {
+                { nameof(model.OrderId), model.OrderId },
+                { nameof(model.CurrentState), (int)model.CurrentState }
+            };
+            var check = Guard.IsAdmissible(intAnalysis);
+
+            if (check.Code == Status.Success)
+            {
+                var result = await OrderService.GuardedUpdateCurrentState(model);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
+
+            return BadRequest(check.Info);
+        }
+
+        [HttpPut("ordered/currentState")]
+        public async Task<IActionResult> UpdateCurrentState([FromBody] IEnumerable<OrderedCurrentStateUpdateViewModel> models)
         {
             var isAuthenticated =
                 AuthCheckService.CheckUserAuthenticationLevel(HttpContext);

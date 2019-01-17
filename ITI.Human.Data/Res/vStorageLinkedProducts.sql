@@ -6,6 +6,7 @@ as
 		ProductId = slp.ProductId,
 		ProductName = p.[Name],
 		ProductDesc = p.[Desc],
+		ProductAvatarUrl = p.[Url],
 		UnitPrice = slp.UnitPrice,
 		Stock = slp.Stock,
 		CreditState = slp.CreditState

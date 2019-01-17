@@ -19,5 +19,10 @@
         /// Product description.
         /// </summary>
         public string Desc { get; set; }
+
+        /// <summary>
+        /// Product avatar url.
+        /// </summary>
+        public string Url { get; set; }
     }
 }

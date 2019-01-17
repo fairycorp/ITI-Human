@@ -3,7 +3,7 @@ create proc ITIH.sOrderUpdate (
 	@ActorId int,
 	@OrderId int,
 	@CurrentState int,
-	@CurrentStateResult int output
+	@Success bit = 0 output
 )
 as
 begin
@@ -11,9 +11,15 @@ begin
 
 	--<PreCreate revert />
 
-	update ITIH.tOrder set CurrentState = @CurrentState;
+	declare @previousState int;
+	declare @newState int;
 
-	set @CurrentStateResult = (select CurrentState from ITIH.tOrder where OrderId = @OrderId);
+	set @previousState = (select CurrentState from ITIH.tOrder where OrderId = @OrderId);
+	update ITIH.tOrder set CurrentState = @CurrentState where OrderId = @OrderId;
+	set @newState = (select CurrentState from ITIH.tOrder where OrderId = @OrderId);
+
+	if (@previousState != @newstate)
+		set @Success = 1;
 
 	--<PostCreate />
 

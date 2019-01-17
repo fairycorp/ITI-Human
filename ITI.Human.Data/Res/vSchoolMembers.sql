@@ -11,8 +11,8 @@ as
 		SchoolStatusId = sm.SchoolStatusId,
 		SchoolStatusName = ss.SchoolStatusName
 	from ITIH.tSchoolMember sm
-		join CK.tUser u on u.UserId = sm.UserId
-		join ITIH.tUserDetails ud on ud.UserId = sm.UserId
+		left join CK.tUser u on u.UserId = sm.UserId
+		left join ITIH.tUserDetails ud on ud.UserId = sm.UserId
 		left join ITIH.tUserAvatars ua on ua.UserId = sm.UserId
-		join ITIH.tSchoolStatus ss on ss.SchoolStatusId = sm.SchoolStatusId
+		left join ITIH.tSchoolStatus ss on ss.SchoolStatusId = sm.SchoolStatusId
 	where sm.SchoolMemberId <> 0;

@@ -18,6 +18,7 @@ interface IBasicDataOrder {
     orderId: number;
     userId: number;
     creationDate: Date;
+    displayedDate: string;
     currentState: State;
 }
 
@@ -31,19 +32,58 @@ interface IBasicDataOrderedProduct {
     quantity: number;
     currentState: State;
     payment: PaymentState;
-
 }
 
-interface ICreationViewModel {
+interface IOrderCreationViewModel {
     storageId: number;
     userId: number;
     classroomId: number;
-    products: IBasicDataOrderedProduct[];
+    products: IBasicDataProductToOrder[];
+}
+
+interface IOrderCurrentStateUpdateViewModel {
+    userId: number;
+    orderId: number;
+    currentState: State;
+}
+
+interface IBasicDataProductToOrder {
+    storageLinkedProductId: number;
+    quantity: number;
 }
 
 interface IDetailedDataOrder {
     info: IBasicDataOrder;
     products: IBasicDataOrderedProduct[];
+}
+interface IUserBalance {
+    userBalanceId: number;
+    projectId: number;
+    userId: number;
+    userName: string;
+    firstName: string;
+    lastName: string;
+    avatarUrl: string;
+    balance: number;
+}
+
+interface IOrderCreditGettingViewModel {
+    userId: number;
+    projectId: number;
+}
+
+interface IOrderCredit {
+    orderCreditId: number;
+    userId: number;
+    projectId: number;
+    amount: number;
+    creditTime: Date;
+    displayedDate: string;
+}
+
+interface IUserBalanceUpdateViewModel {
+    userBalanceId: number;
+    amount: number;
 }
 
 interface PaymentState {
@@ -51,12 +91,32 @@ interface PaymentState {
     amount: number;
 }
 
+interface IPaymentStateUpdateViewModel {
+    userId: number;
+    orderedProductId: number;
+    paymentState: PaymentState;
+}
+
+interface ICurrentStateUpdateViewModel {
+    userId: number;
+    orderedProductId: number;
+    currentState: State;
+}
+
 export {
     State,
     Payment,
     IBasicDataOrder,
     IBasicDataOrderedProduct,
-    ICreationViewModel,
+    IBasicDataProductToOrder,
+    IOrderCreationViewModel,
     IDetailedDataOrder,
+    IUserBalance,
+    IOrderCredit,
+    IUserBalanceUpdateViewModel,
+    IOrderCreditGettingViewModel,
+    IOrderCurrentStateUpdateViewModel,
+    IPaymentStateUpdateViewModel,
+    ICurrentStateUpdateViewModel,
     PaymentState,
 };

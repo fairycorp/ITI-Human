@@ -17,15 +17,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Res\Model\ITIH.ProjectMemberTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.ProjectRankTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.ProjectVotesTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.SchoolMemberTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.SchoolStatusTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.StudentTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.UserAvatarsTable.Install.1.0.0.sql" />
     <None Remove="Res\Model\ITIH.UserDetailsTable.Install.1.0.0.sql" />
+    <None Remove="Res\sProjectMemberCreate.sql" />
+    <None Remove="Res\sProjectMemberDelete.sql" />
+    <None Remove="Res\sProjectVoteCreate.sql" />
     <None Remove="Res\sSchoolMemberCreate.sql" />
+    <None Remove="Res\sStallUpdate.sql" />
+    <None Remove="Res\sStudentCreate.sql" />
     <None Remove="Res\sUserAvatarCreate.sql" />
     <None Remove="Res\sUserDetailsCreate.sql" />
+    <None Remove="Res\sUserDetailsUpdate.sql" />
+    <None Remove="Res\vProjectMembers.sql" />
     <None Remove="Res\vSchoolMembers.sql" />
     <None Remove="Res\vStorageLinkedProducts.sql" />
+    <None Remove="Res\vUserBalance.sql" />
+    <None Remove="Res\vUserProfile.sql" />
   </ItemGroup>
 
   <ItemGroup>
