@@ -8,6 +8,7 @@ import ProfileSetup from "@/views/ProfileSetup.vue";
 import ProjectsDB from "@/views/ProjectsDB.vue";
 import ForkChefs from "@/views/ForkChefs.vue";
 import Order from "@/views/Order.vue";
+import OrderDashboard from "@/views/OrderDashboard.vue";
 
 Vue.use(Router);
 
@@ -47,6 +48,13 @@ export default new Router({
       path: "/order/:id",
       name: "order",
       component: Order,
+      props: true
+    },
+
+    {
+      path: "/order/dashboard/:id",
+      name: "orderDashboard",
+      component: OrderDashboard,
       props: true
     }
   ],

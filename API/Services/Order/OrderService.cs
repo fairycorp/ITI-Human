@@ -7,6 +7,7 @@ using Dapper;
 using ITI.Human.Data;
 using ITI.Human.ViewModels.Order;
 using ITI.Human.ViewModels.Product.Ordered;
+using ITI.Human.ViewModels.Storage;
 using ITI.Human.ViewModels.Storage.LinkedProduct;
 using Stall.Guard.System;
 using System;
@@ -36,9 +37,12 @@ namespace API.Services.Order
 
         private OrderedProductTable OrderedProductTable { get; }
 
+        private OrderPaymentTable OrderPaymentTable { get; }
+
         public OrderService(StorageService sService, SLPService slpService,
             OrderDueServices oDServices, ClassroomService cService, 
-            UserService uService, OrderTable oTable, OrderedProductTable oPTable)
+            UserService uService, OrderTable oTable, OrderedProductTable oPTable,
+            OrderPaymentTable oPayTable)
         {
             StorageService = sService;
             SLPService = slpService;
@@ -47,6 +51,7 @@ namespace API.Services.Order
             UserService = uService;
             OrderTable = oTable;
             OrderedProductTable = oPTable;
+            OrderPaymentTable = oPayTable;
         }
 
         /// <summary>
@@ -292,17 +297,17 @@ namespace API.Services.Order
             using (var ctx = new SqlStandardCallContext())
             {
                 // Retrieves storageId from projectId.
-                var storageId = await StorageService.GuardedGetFromProject(projectId);
+                var storage = await StorageService.GuardedGetFromProject(projectId);
 
                 var basicData = await ctx[OrderTable].Connection
                     .QueryAsync<BasicDataOrder>(
                         @"SELECT
                             *
                         FROM
-                            ITIH.tOrder
+                            ITIH.vOrders
                         WHERE
                             StorageId = @id;",
-                        new { id = storageId.Content }
+                        new { id = ((BasicDataStorage)storage.Content).StorageId }
                     );
 
                 List<DetailedDataOrder> ordersFromProject = new List<DetailedDataOrder>();
@@ -323,6 +328,41 @@ namespace API.Services.Order
                         )
                     };
                     detailedData.Info.Total = CalculateOrderTotal(detailedData.Products);
+
+                    foreach (var product in detailedData.Products)
+                    {
+                        var state = await ctx[OrderTable].Connection
+                            .QueryFirstOrDefaultAsync<Payment>(
+                                @"SELECT
+                                    PaymentState
+                                FROM
+                                    ITIH.vOrderedProducts
+                                WHERE
+                                    OrderedProductId = @id;",
+                                new { id = product.OrderedProductId }
+                            );
+
+                        var amounts = await ctx[OrderPaymentTable].Connection
+                            .QueryAsync<int>(
+                                @"SELECT
+                                    Amount
+                                FROM
+                                    ITIH.tOrderPayment
+                                WHERE
+                                    OrderedProductId = @id;",
+                                new { id = product.OrderedProductId }
+                            );
+
+                        var total = 0;
+                        foreach (var amount in amounts)
+                            total += amount;
+
+                        product.Payment = new DetailedDataOrderedProduct.PaymentState
+                        {
+                            State = state,
+                            Amount = total
+                        };
+                    }
 
                     ordersFromProject.Add(detailedData);
                 }
