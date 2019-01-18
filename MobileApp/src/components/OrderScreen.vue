@@ -1,7 +1,7 @@
 <template>
   <f7-page>
     <f7-list>
-      <f7-list-item title="Ta Salle" smart-select>
+      <f7-list-item title="Ta Salle" smart-select :smart-select-params="{openIn: 'popover'}">
         <select name="salle" v-model="selectValue">
           <option v-for="classrooms in Classrooms" 
           :key="classrooms.classroomId" :value="classrooms.name">
@@ -12,11 +12,11 @@
       </f7-list-item>
       <br/>
       <br/>
-      <button
+      <f7-button
         v-if="selectValue != ''"
         @click="Continue()"> 
         Continue
-      </button>
+      </f7-button>
     </f7-list>
   </f7-page>
 </template>

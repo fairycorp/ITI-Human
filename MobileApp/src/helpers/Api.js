@@ -1,19 +1,13 @@
 import Axios from 'axios';
 
 class API {
-    
-    constructor() {
-    }
-
-    //getHost () { return "10.8.110.166"; }
-
-    //getPort () { return 5000; }
 
     get Path() { return process.env.BACKEND_URL }
 
     get(endpoint) {
         const checked = this.routineCheck(endpoint);
         let url = `${this.Path}${checked}`;
+        console.log('URL : ' + url);
         return Axios.get(url);
     }
 

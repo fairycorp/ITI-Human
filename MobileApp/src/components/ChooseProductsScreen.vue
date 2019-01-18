@@ -1,20 +1,16 @@
 <template>
   <f7-page>
-    <p>{{CommandId}}</p>
-
+    <p>{{LinkedProducts}}</p>
     <f7-list>
-      <f7-list-item title="Products" smart-select :smart-select-params="{openIn: 'popup'}">
-        <select name="products" multiple v-model="selectValue">
-          <option v-for="linkedProducts in LinkedProducts" 
-          :key="linkedProducts.storageLinkedProductId" :value="linkedProducts.productId">
-            {{linkedProducts.productId}} 
-          </option>
-        </select>
+      <f7-list-item 
+        v-for="linkedProducts in LinkedProducts" 
+        :key="linkedProducts.storageLinkedProductId" :value="linkedProducts.productId" :title="linkedProducts.productName">
+
+        <f7-stepper small raised slot="after" :input="false" :min="0" :max="linkedProducts.stock" @stepper:plusclick="addOrPlusCount(linkedProducts.productName)" @stepper:minusclick="remOrMinusCount(linkedProducts.productName)"></f7-stepper>
       </f7-list-item>
       <br/>
       <br/>
       <button
-        v-if="selectValue != ''"
         @click="Continue()"> 
         Commander
       </button>
@@ -33,9 +29,11 @@ export default {
     return {
       Projects: [],
       LinkedProducts: [],
-      selectValue: [],
-      quantity: 1,
+      //listOfProducts: [],
+      ArrayOfProducts: [],
+//      quantity: 1,
       CommandId: '',
+//      Count: 0,
     };
   },
 
@@ -45,13 +43,51 @@ export default {
   },
 
   methods: {
+    checkProduct(event) {
+      const self = this;
+      const value = event.target.value;
+      if (event.target.checked) {
+        self.listOfProducts.push(value);
+      } else {
+        self.listOfProducts.splice(self.listOfProducts.indexOf(value), 1);
+      }
+    },
+
+    addOrPlusCount(nameOfProduct) {
+      let compared = false;
+       if (this.ArrayOfProducts.length > 0) {
+        for (let i = 0; i < this.ArrayOfProducts.length; i++) {
+          if (this.ArrayOfProducts[i].product == nameOfProduct) {
+            compared = true;
+            this.ArrayOfProducts[i].number++;
+          }
+        }
+        if (compared == false) {
+          this.ArrayOfProducts.push({"product" : nameOfProduct, "number" : 1 });
+        }
+      }
+      else {
+        this.ArrayOfProducts.push({"product" : nameOfProduct, "number" : 1 });
+      }
+    },
+
+    remOrMinusCount(nameOfProduct) {
+      for (let i = 0; i < this.ArrayOfProducts.length; i++) {
+        if (this.ArrayOfProducts[i].product == nameOfProduct) {
+          this.ArrayOfProducts[i].number--;
+          if (this.ArrayOfProducts[i].number == 0) {
+            this.ArrayOfProducts.splice(i, 1);
+          }
+        }
+      }
+    },
+
     async GetStorageProducts(endpoint){
       let response = await Api.get(endpoint);
       this.LinkedProducts = response.data;
     },
 
     async MakeACommand(endpoint, data){
-      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
       let response = await Api.post(endpoint, data);
       this.CommandId = response.data;
     },
