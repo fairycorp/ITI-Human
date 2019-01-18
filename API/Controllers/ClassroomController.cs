@@ -1,6 +1,9 @@
 ﻿using API.Services.Classroom;
+using API.Services.Helper.Guard;
+using ITI.Human.ViewModels.Classroom;
 using Microsoft.AspNetCore.Mvc;
 using Stall.Guard.System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -8,20 +11,35 @@ namespace API.Controllers
     [Route("[controller]")]
     public class ClassroomController : Controller
     {
-        private ClassroomService Service { get; set; }
+        public APIGuard Guard { get; }
 
-        public ClassroomController(ClassroomService cService)
+        public ClassroomService ClassroomService { get; }
+
+        public ClassroomController(ClassroomService service)
         {
-            Service = cService;
+            Guard = new APIGuard();
+            ClassroomService = service;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
-        {
-            var result = await Service.GuardedGetAll();
-            if (result.Code == Status.Failure) return BadRequest(result.Info);
+            => Ok((await ClassroomService.GuardedGetAll()).Content);
 
-            return Ok(result.Content);
+        [HttpGet("{classroomId}")]
+        public async Task<IActionResult> GetClassroomNameById(int classroomId)
+        {
+            var check =
+                Guard.IsAdmissible(nameof(classroomId), classroomId);
+
+            if (check.Code == Status.Success)
+            {
+                var result = await ClassroomService.GuardedGet(classroomId);
+                if (result.Code == Status.Failure) return BadRequest(result.Info);
+
+                return Ok(result.Content);
+            }
+
+            return BadRequest(check.Info);
         }
     }
 }

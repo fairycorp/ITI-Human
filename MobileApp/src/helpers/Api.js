@@ -1,29 +1,27 @@
 import Axios from 'axios';
 
 class API {
-    
-    constructor() {
-    }
 
-    //getHost () { return "10.8.110.166"; }
-
-    //getPort () { return 5000; }
-
-    get Path() { return "http://10.8.110.166:5000/" }
+    get Path() { return process.env.BACKEND_URL3 }
 
     get(endpoint) {
         const checked = this.routineCheck(endpoint);
-        return Axios.get(`${this.Path}${checked}`);
+        let url = `${this.Path}${checked}`;
+        console.log('URL : ' + url);
+        return Axios.get(url);
     }
 
     post(endpoint, data) {
         const checked = this.routineCheck(endpoint);
-        return Axios.post(`${this.Path}${checked}`, data);
+        let url = `${this.Path}${checked}`;
+        console.log('URL : ' + url);
+        return Axios.post(url, data);
     }
 
     put(endpoint, data) {
         const checked = this.routineCheck(endpoint);
-        return Axios.put(`${this.Path}${checked}`, data);
+        let url = `${this.Path}${checked}`;
+        return Axios.put(url, data);
     }
 
     deleteT(endpoint) {
