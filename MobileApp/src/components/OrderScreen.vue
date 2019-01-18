@@ -29,6 +29,7 @@ export default {
     
   data() {
     return {
+      authService: null,      
       Projects: '',
       StorageProducts: '',
       ProductName: '',
@@ -36,6 +37,18 @@ export default {
       selectValue: ''
     };
   },
+
+  async created() {
+    const config = {
+      identityEndPoint: {
+        hostname: "192.168.1.31",
+        port: 5000,
+        disableSsl: true
+      }
+    };
+    this.authService = new AuthService(config, Axios);
+    await this.isAccessible();
+  },  
   
   mounted() {
     this.Projects = this.projectinfos;
@@ -44,6 +57,15 @@ export default {
   },
 
   methods: {
+    async isAccessible() {
+      await this.authService.refresh(true, true, true);
+      if (this.authService != null) {
+        if (this.authService.authenticationInfo.level == 0) {
+          this.$f7router.navigate({ name: 'login' });
+        }
+      }
+    },
+
     async GetStorageProducts(endpoint){
       let response = await Api.get(endpoint);
       this.StorageProducts = response.data;

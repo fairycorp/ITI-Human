@@ -1,6 +1,5 @@
 <template>
   <f7-page>
-    <p>{{LinkedProducts}}</p>
     <f7-list>
       <f7-list-item 
         v-for="linkedProducts in LinkedProducts" 
@@ -14,27 +13,43 @@
         @click="Continue()"> 
         Commander
       </button>
-    </f7-list>  
+    </f7-list> 
   </f7-page>
 </template>
 
 <script>
 import Api from '../helpers/Api.js'
 import OrderScreen from './OrderScreen'
+import {
+    AuthService,
+    IAuthServiceConfiguration,
+    AuthLevel
+} from "@signature/webfrontauth";
+import Axios from "axios";
 
 export default {
   props: { projectinfos: Object },
 
   data() {
     return {
+      authService: null,
       Projects: [],
       LinkedProducts: [],
-      //listOfProducts: [],
       ArrayOfProducts: [],
-//      quantity: 1,
       CommandId: '',
-//      Count: 0,
     };
+  },
+
+  async created() {
+    const config = {
+      identityEndPoint: {
+        hostname: "192.168.1.31",
+        port: 5000,
+        disableSsl: true
+      }
+    };
+    this.authService = new AuthService(config, Axios);
+    await this.isAccessible();
   },
 
   mounted() {
@@ -43,13 +58,12 @@ export default {
   },
 
   methods: {
-    checkProduct(event) {
-      const self = this;
-      const value = event.target.value;
-      if (event.target.checked) {
-        self.listOfProducts.push(value);
-      } else {
-        self.listOfProducts.splice(self.listOfProducts.indexOf(value), 1);
+    async isAccessible() {
+      await this.authService.refresh(true, true, true);
+      if (this.authService != null) {
+        if (this.authService.authenticationInfo.level == 0) {
+          this.$f7router.navigate({ name: 'login' });
+        }
       }
     },
 
@@ -63,19 +77,19 @@ export default {
           }
         }
         if (compared == false) {
-          this.ArrayOfProducts.push({"product" : nameOfProduct, "number" : 1 });
+          this.ArrayOfProducts.push({"product" : nameOfProduct, "quantity" : 1 });
         }
       }
       else {
-        this.ArrayOfProducts.push({"product" : nameOfProduct, "number" : 1 });
+        this.ArrayOfProducts.push({"product" : nameOfProduct, "quantity" : 1 });
       }
     },
 
     remOrMinusCount(nameOfProduct) {
       for (let i = 0; i < this.ArrayOfProducts.length; i++) {
         if (this.ArrayOfProducts[i].product == nameOfProduct) {
-          this.ArrayOfProducts[i].number--;
-          if (this.ArrayOfProducts[i].number == 0) {
+          this.ArrayOfProducts[i].quantity--;
+          if (this.ArrayOfProducts[i].quantity == 0) {
             this.ArrayOfProducts.splice(i, 1);
           }
         }
@@ -93,22 +107,18 @@ export default {
     },
 
     FillTheCommand(){
-      for (let index = 0; index < this.LinkedProducts.length; index++) {
-        for (let ind = 0; ind < this.selectValue.length; ind++) {
-          if (this.LinkedProducts[index].productId == this.selectValue[ind]) {
-            this.Projects.products.push(
-              {
-                storageLinkedProductId: this.LinkedProducts[index].storageLinkedProductId,
-                quantity: this.quantity
-              }
-            );
+      for (let index = 0; index < this.ArrayOfProducts.length; index++) {
+        this.Projects.products.push(
+          {
+            storageLinkedProductId: this.ArrayOfProducts[index].product,
+            quantity: this.ArrayOfProducts[index].quantity
           }
-        }
+        );
       }
     },
 
     Continue() {
-      this.FillTheCommand(this.selectValue);
+      this.FillTheCommand();
 
       this.MakeACommand("order/create", this.Projects);      
     },

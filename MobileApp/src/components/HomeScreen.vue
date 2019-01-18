@@ -16,26 +16,54 @@
 <script>
 import Api from '../helpers/Api.js'
 import OrderScreen from './OrderScreen'
+import {
+    AuthService,
+    IAuthServiceConfiguration,
+    AuthLevel
+} from "@signature/webfrontauth";
+import Axios from "axios";
 
 export default {
 
   data() {
     return {
+      authService: null,
       ProjectInfos: [],
       StorageId: '',
       StorageInfos: ''
     };
   },
-  
+
+  async created() {
+    const config = {
+      identityEndPoint: {
+        hostname: "192.168.1.31",
+        port: 5000,
+        disableSsl: true
+      }
+    };
+    this.authService = new AuthService(config, Axios);
+    await this.isAccessible();
+  },  
+
   async mounted() {
     await this.getProjectInfos("project");
   },
 
   methods: {
+
+    async isAccessible() {
+      await this.authService.refresh(true, true, true);
+      if (this.authService != null) {
+        if (this.authService.authenticationInfo.level == 0) {
+          this.$f7router.navigate({ name: 'login' });
+        }
+      }
+    },
+
     async getProjectInfos(endpoint){
       let response = await Api.get(endpoint);
       this.ProjectInfos = response.data;
-      console.log("OUT OF getProjectInfos METHOD")
     },
 
     async getStorageInfos(endpoint){
@@ -52,7 +80,6 @@ export default {
     },
 
     GetLogin(){
-      console.log("ENTER IN GETLOGIN METHOD")
       this.$f7router.navigate({ name: 'login' });
     },
   },
