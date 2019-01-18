@@ -1,8 +1,8 @@
 <template>
     <f7-page>
         <f7-button
-          @click="GetLogin()">
-          HEYYYYYYYYYYYYYYY
+          @click="startGithub()">
+          Start GitHub
         </f7-button>
     </f7-page>
 </template>
@@ -34,7 +34,18 @@ export default {
     //await this.isAccessible();
   },
 
+  watch: {
+    authService: function(newValue, oldValue) {
+      this.isAccessible();
+    }
+  },
+
   methods: {
+
+    async startGithub() {
+        return await this.authService.startPopupLogin("GitHub");
+    },
+
     async isAccessible() {
       await this.authService.refresh(true, true, true);
       if (this.authService != null) {
@@ -42,10 +53,6 @@ export default {
           this.$f7router.navigate({ name: 'home' });
         }
       }
-    },
-
-    GetLogin(){
-      this.$f7router.navigate({ name: 'login' });
     },
   }
 }
