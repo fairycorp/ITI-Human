@@ -1,5 +1,4 @@
 ﻿using API.Services.Classroom;
-using API.Services.Helper;
 using API.Services.Storage;
 using API.Services.User;
 using CK.SqlServer;
@@ -35,9 +34,9 @@ namespace API.Services.Order
 
         public OrderTable OrderTable { get; set; }
 
-        private OrderedProductTable OrderedProductTable { get; }
+        private OrderedProductTable OrderedProductTable { get; set; }
 
-        private OrderPaymentTable OrderPaymentTable { get; }
+        private OrderPaymentTable OrderPaymentTable { get; set; }
 
         public OrderService(StorageService sService, SLPService slpService,
             OrderDueServices oDServices, ClassroomService cService, 
@@ -258,7 +257,9 @@ namespace API.Services.Order
                             FROM
                                 ITIH.vOrderedProducts v
                             WHERE
-                                v.OrderId = @id;",
+                                v.OrderId = @id
+                            AND
+                                v.CurrentState != 4",
                             new { id = data.OrderId }
                         )
                     };
@@ -326,7 +327,9 @@ namespace API.Services.Order
                         WHERE
                             StorageId = @id
                             AND
-                            CurrentState != 3;",
+                            CurrentState != 3
+                            AND
+                            CurrentState != 4;",
                         new { id = ((BasicDataStorage)storage.Content).StorageId }
                     );
 
@@ -343,7 +346,9 @@ namespace API.Services.Order
                             FROM
                                 ITIH.vOrderedProducts
                             WHERE
-                                OrderId = @id;",
+                                OrderId = @id
+                            AND
+                                CurrentState != 4;",
                             new { id = data.OrderId }
                         )
                     };
@@ -415,7 +420,9 @@ namespace API.Services.Order
                             FROM
                                 ITIH.vOrderedProducts
                             WHERE
-                                OrderId = @id;",
+                                OrderId = @id
+                            AND
+                                CurrentState != 4;",
                             new { id = orderId }
                         )
                 };
@@ -475,6 +482,22 @@ namespace API.Services.Order
             using (var ctx = new SqlStandardCallContext())
             {
                 return await OrderTable.Update(ctx, model.UserId, model.OrderId, model.CurrentState);
+            }
+        }
+
+        private async Task<bool> DeleteOrder(ITI.Human.ViewModels.Order.DeletionViewModel model)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await OrderTable.Delete(ctx, model.ActorId, model.OrderId);
+            }
+        }
+
+        private async Task<bool> DeleteOrderedProduct(ITI.Human.ViewModels.Product.Ordered.DeletionViewModel model)
+        {
+            using (var ctx = new SqlStandardCallContext())
+            {
+                return await OrderedProductTable.Delete(ctx, model.ActorId, model.OrderedProductId);
             }
         }
 

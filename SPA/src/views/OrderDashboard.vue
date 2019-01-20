@@ -20,20 +20,32 @@
         <div v-if="displayedOrder != null && displayedOrder != undefined" class="right-page">
             <div @click="closeOrder()" class="cross">x</div>
             <span class="title">COMMANDE N°{{ displayedOrder.info.orderId }}</span>
+            <button @click="cancelOrder(displayedOrder.info.orderId)" class="cancel-button">ANNULER</button>
             <div class="light-top-margin orderinfo">
+                <span class="little-grey">À <span v-if="displayedOrder.info.classroomId == 0">emporter</span><span v-else>livrer en {{ displayedOrder.info.classroomName }}</span></span><br />
                 par <span class="openSans-bold">{{ displayedOrder.info.userName }}</span>,<span class="grey"> {{ displayedOrder.info.displayedDate }}</span>
             </div>
             <div class="medium-top-margin">
                 <div v-for="product in displayedOrder.products" :key="product.orderedProductId" class="singleproduct">
+                    <div v-if="product.payment.state != 2" class="cancel-order">
+                        <span class="credit-text" @click="creditProduct(product)">CREDIT</span>
+                        |
+                        <span @click="cancelProduct(product)" class="red-text">ANNULER</span></div>
                     <span class="bigger openSans-bold">{{ product.name }}</span> x {{ product.quantity }}
                     <div @click="changePaymentState(product)"
-                    :class="{ unpaid: product.payment.state == 0, paid: product.payment.state == 1 && !(product.payment.state == 1 && product.currentState == 3), credited: product.payment.state == 2 && !(product.payment.state == 1 && product.currentState == 3), nonchangable: product.payment.state == 1 && product.currentState == 3 }">
+                        :class="{ unpaid: product.payment.state == 0, 
+                        paid: product.payment.state == 1 && !(product.payment.state == 1 && product.currentState == 3), 
+                        credited: product.payment.state == 2 && !(product.payment.state == 1 && product.currentState == 3),
+                        nonchangable: product.payment.state == 1 && product.currentState == 3 || (product.payment.state == 2 && product.currentState == 3) }">
                         <span v-if="product.payment.state == 0">Impayé</span>
                         <span v-else-if="product.payment.state == 1">Payé</span>
-                        <span v-else-if="product.payment.state == 2">Crédit</span>
+                        <span v-else-if="product.payment.state == 2">Crédité</span>
                     </div>
 
-                    <div @click="changeCurrentState(product)" :class="{ paid: product.currentState == 3 && !(product.payment.state == 1 && product.currentState == 3), preparing: product.currentState == 1 && !(product.payment.state == 1 && product.currentState == 3), nonchangable: product.payment.state == 1 && product.currentState == 3 }">
+                    <div @click="changeCurrentState(product)"
+                        :class="{ paid: product.currentState == 3 && !(product.payment.state == 1 && product.currentState == 3) && !(product.payment.state == 2 && product.currentState == 3),
+                        preparing: product.currentState == 1 && !(product.payment.state == 1 && product.currentState == 3),
+                        nonchangable: (product.payment.state == 1 && product.currentState == 3) || (product.payment.state == 2 && product.currentState == 3) }">
                         <span v-if="product.currentState == 1">En préparation</span>
                         <span v-else-if="product.currentState == 3">Livré</span>
                     </div>
@@ -108,7 +120,7 @@ export default class OrderDashboard extends Vue {
 
             let fullyCompleted: boolean = true;
             order.products.forEach( (product) => {
-                if (!(product.payment.state == Payment.Paid && product.currentState == State.Delivered)) {
+                if (!((product.payment.state == Payment.Paid || product.payment.state == Payment.Credited) && product.currentState == State.Delivered)) {
                     fullyCompleted = false;
                 }
             });
@@ -170,6 +182,18 @@ export default class OrderDashboard extends Vue {
         this.fetchOrders(this.$route.params.id);
     }
 
+    private async cancelOrder(orderId: number) {
+        const payload: IOrderCurrentStateUpdateViewModel = {
+            userId: this.authService.authenticationInfo.user.userId,
+            orderId: orderId,
+            currentState: State.Canceled
+        };
+        const response = await API.put(`${Endpoint.Order}/currentState`, payload);
+        if (response.data) {
+            this.closeOrder();
+        }
+    }
+
     private async changePaymentState(product: IBasicDataOrderedProduct) {
         if (product.currentState == 3 && product.payment.state == 1) return;
 
@@ -194,7 +218,7 @@ export default class OrderDashboard extends Vue {
     }
 
     private async changeCurrentState(product: IBasicDataOrderedProduct) {
-        if (product.currentState == 3 && product.payment.state == 1) return;
+        if (product.currentState == 3 && (product.payment.state == 1 || product.payment.state == 2)) return;
 
         const payload: ICurrentStateUpdateViewModel[] = [];
         let state: State = State.NotStarted;
@@ -211,6 +235,35 @@ export default class OrderDashboard extends Vue {
         });
         await API.put(`${Endpoint.Order}/ordered/currentState`, payload);
         await this.fetchOrders(this.$route.params.id);
+    }
+
+    private async creditProduct(product: IBasicDataOrderedProduct) {
+        const payload: IPaymentStateUpdateViewModel[] = [];
+        payload.push({
+            userId: this.authService.authenticationInfo.user.userId,
+            orderedProductId: product.orderedProductId,
+            paymentState: {
+                state: Payment.Credited,
+                amount: product.unitPrice * product.quantity
+            }
+        });
+        await API.put(`${Endpoint.Order}/ordered/paymentState`, payload);
+        await this.fetchOrders(this.$route.params.id);
+    }
+
+    private async cancelProduct(product: IBasicDataOrderedProduct) {
+        const payload: ICurrentStateUpdateViewModel[] = [];
+        payload.push({
+            userId: this.authService.authenticationInfo.user.userId,
+            orderedProductId: product.orderedProductId,
+            currentState: State.Canceled
+        });
+        await API.put(`${Endpoint.Order}/ordered/currentState`, payload);
+
+        if (this.displayedOrder!.products.length == 1) {
+            this.cancelOrder(product.orderId);
+        }
+        else await this.fetchOrders(this.$route.params.id);
     }
 }
 </script>
@@ -353,5 +406,43 @@ export default class OrderDashboard extends Vue {
     padding: 10px;
     border-radius: 3px;
     background-color: #dadada;
+}
+
+.cancel-button {
+    outline-width: 0;
+    width: 166px;
+    height: 45px;
+    border-radius: 25px;
+    float: right;
+    background-color: white;
+    border: 1px solid #c71414;
+    font-family: "gotham-bold";
+    color: #c71414;
+    cursor: pointer;
+
+    transition-duration: 0.2s;
+    transition-property: background-color, color;
+}
+
+.cancel-button:hover {
+    background-color: #c71414;
+    color: white;
+}
+
+.cancel-order {
+    text-align: right;
+    float: right;
+    user-select: none;
+    font-size: 80%;
+    font-weight: bold;
+}
+
+.red-text {
+    color: #c71414;
+    cursor: pointer;
+}
+
+.credit-text {
+    cursor: pointer;
 }
 </style>

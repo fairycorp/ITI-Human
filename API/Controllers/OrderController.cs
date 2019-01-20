@@ -292,6 +292,8 @@ namespace API.Controllers
         [HttpPut("currentState")]
         public async Task<IActionResult> UpdateOrderCurrentState([FromBody] OrderCurrentStateUpdateViewModel model)
         {
+            if (model == null) return BadRequest();
+
             var isAuthenticated =
                 AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
             if (isAuthenticated.Code == Status.Failure) return Forbid();

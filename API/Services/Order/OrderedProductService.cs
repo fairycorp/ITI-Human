@@ -198,9 +198,6 @@ namespace API.Services.Order
                         if (doesOPExist.PaymentState == Payment.Paid)
                             return Failure("This ordered product has already been paid.");
 
-                        if (amount >= doesOPExist.UnitPrice)
-                            return Failure("A Credit cannot be superior or equal to the ordered product unit price.");
-
                         // Checks if the ordered product can be credited or not.
                         var slp = await SLPService.GuardedGet(doesOPExist.StorageLinkedProductId);
                         if (!CastIntoSLP(slp.Content).CreditState)
