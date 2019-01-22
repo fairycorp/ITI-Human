@@ -20,7 +20,7 @@
         <div v-if="displayedOrder != null && displayedOrder != undefined" class="right-page">
             <div @click="closeOrder()" class="cross">x</div>
             <span class="title">COMMANDE N°{{ displayedOrder.info.orderId }}</span>
-            <button @click="cancelOrder(displayedOrder.info.orderId)" class="cancel-button">ANNULER</button>
+            <button v-if="displayedOrder.info.currentState != 3" @click="cancelOrder(displayedOrder.info.orderId)" class="cancel-button">ANNULER</button>
             <div class="light-top-margin orderinfo">
                 <span class="little-grey">À <span v-if="displayedOrder.info.classroomId == 0">emporter</span><span v-else>livrer en {{ displayedOrder.info.classroomName }}</span></span><br />
                 par <span class="openSans-bold">{{ displayedOrder.info.userName }}</span>,<span class="grey"> {{ displayedOrder.info.displayedDate }}</span>
@@ -28,9 +28,9 @@
             <div class="medium-top-margin">
                 <div v-for="product in displayedOrder.products" :key="product.orderedProductId" class="singleproduct">
                     <div v-if="product.payment.state != 2" class="cancel-order">
-                        <span class="credit-text" @click="creditProduct(product)">CREDIT</span>
-                        |
-                        <span @click="cancelProduct(product)" class="red-text">ANNULER</span></div>
+                        <span v-if="product.currentState != 3 && (product.payment.state != 2)" class="credit-text" @click="creditProduct(product)">CREDIT</span>
+                        <span v-if="product.currentState != 3 && (product.payment.state != 2)">|</span>
+                        <span v-if="product.currentState != 3 && (product.payment.state != 2)" @click="cancelProduct(product)" class="red-text">ANNULER</span></div>
                     <span class="bigger openSans-bold">{{ product.name }}</span> x {{ product.quantity }}
                     <div @click="changePaymentState(product)"
                         :class="{ unpaid: product.payment.state == 0, 
@@ -138,6 +138,15 @@ export default class OrderDashboard extends Vue {
             this.orders.forEach( (order) => {
                 if (order.info.orderId === this.displayedOrder!.info.orderId) {
                     this.displayedOrder = order;
+                    let fullyCompleted = true;
+                    this.displayedOrder!.products.forEach( (product) => {
+                        if (product.currentState != 3) {
+                            fullyCompleted = false;
+                        }
+                    });
+                    if (fullyCompleted) {
+                        this.displayedOrder!.info.currentState = 3;
+                    }
                     return;
                 }
             });          

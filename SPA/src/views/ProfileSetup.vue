@@ -1,6 +1,6 @@
 <template>
     <div class="global-content">
-      <button @click="logout()">logout</button>
+      <!-- <button @click="logout()">logout</button> -->
         <div 
             class="left-page">
             <h1>Setup de votre profil</h1>
