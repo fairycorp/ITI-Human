@@ -1,7 +1,8 @@
 <template>
   <f7-page>
+    <div class="orderList">
     <f7-list>
-      <f7-list-item title="Ta Salle" smart-select :smart-select-params="{openIn: 'popover'}">
+      <f7-list-item class="salle" title="Ta Salle" smart-select :smart-select-params="{openIn: 'popover'}">
         <select name="salle" v-model="selectValue">
           <option v-for="classrooms in Classrooms" 
           :key="classrooms.classroomId" :value="classrooms.name">
@@ -12,12 +13,13 @@
       </f7-list-item>
       <br/>
       <br/>
-      <f7-button
+      <f7-button class="unselectable-text col button color-white"
         v-if="selectValue != ''"
         @click="Continue()"> 
         Continue
       </f7-button>
     </f7-list>
+    </div>
   </f7-page>
 </template>
 
@@ -120,5 +122,17 @@ export default {
 </script>
 
 <style lang="scss">
+
+.orderList{
+    position: absolute;
+    top: 0%;
+    //bottom: 400px;
+    left: 35%;
+    color: black;
+}
+
+.salle{
+  background-color: white;
+}
 
 </style>

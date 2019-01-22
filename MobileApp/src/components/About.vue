@@ -1,7 +1,12 @@
 <template>
     <f7-page>
         <div
-        class="light-left-page">
+        class="about">
+        <f7-button class="backButton color-white"
+            @click="Back()"
+            icon-f7="arrow_right">
+        </f7-button>
+
             <h1>À propos</h1>
 
             <h3 class="light-top-margin lightly-reduced-bottom-margin">
@@ -74,6 +79,11 @@ export default {
   },  
 
   methods: {
+
+    Back() {
+        this.$f7router.navigate({ name: 'home' });
+    },
+
     async isAccessible() {
       await this.authService.refresh(true, true, true);
       //console.log(this.authService.authenticationInfo.level);
@@ -87,20 +97,21 @@ export default {
 
 <style lang="scss">
 
+.about{
+    color: white;
+}
+
+.backButton{
+    position: absolute;
+    top: 0%;
+    right: 0%;
+}
+
 .contact-button {
     width: 193px;
     height: 46px;
     background-image: url("../../../SPA/src/assets/images/contact-button.png");
     cursor: pointer;
-}
-
-.moved-logo {
-    position: absolute;
-    top: 65%;
-    left: 21%;
-    width: 252px;
-    height: 270px;
-    background-image: url("../../../SPA/src/assets/images/logo.png");
 }
 
 </style>

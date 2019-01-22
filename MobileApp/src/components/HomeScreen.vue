@@ -1,18 +1,21 @@
 <template>
     <f7-page>
       <div
-          class="default-logo">
+          class="home-logo">
       </div>
-      <f7-button v-for="projectInfos in ProjectInfos" 
+        <f7-button class="logOutButton color-white"
+            @click="LogOut()"
+            icon-f7="close_round">
+        </f7-button>
+
+      <div class="header">
+      <h3 class="h3"> Voici la liste des Projets  </h3>
+      <f7-button class="unselectable-text col button color-white" v-for="projectInfos in ProjectInfos" 
           :key="projectInfos.projectId" 
           @click="GetStorage(projectInfos.projectId)">
           {{ projectInfos.projectName }}
       </f7-button>
-
-      <f7-button
-          @click="LogOut()">
-          Logout
-      </f7-button>
+      </div>
 
       <div class="footer">
         <button @click="About" class="about-link unselectable-text col button color-gray">
@@ -81,12 +84,8 @@ export default {
     },
 
     GetStorage(projectId) {
-      this.StorageId = projectId
-      this.getStorageInfos("storage/project/"+ this.StorageId)
-    },
-
-    GetLogin(){
-      this.$f7router.navigate({ name: 'login' });
+      this.StorageId = projectId;
+      this.getStorageInfos("storage/project/"+ this.StorageId);
     },
 
     async LogOut(){
@@ -102,7 +101,7 @@ export default {
       }
     },
 
-    toggleWindowAbout() {
+    About() {
         this.$f7router.navigate({ name: 'about' });
     }
   },
@@ -111,14 +110,36 @@ export default {
 
 <style lang="scss">
 
-.default-logo {
+/*.p{
+    color: white;
+}*/
+
+.home-logo {
     position: absolute;
-    top: 35%;
-    left: 18%;
-    width: 252px;
-    height: 270px;
-    background-image: url("../../../SPA/src/assets/images/logo.png");
+    top: 40%;
+    left: 35%;
+    width: 126px;
+    height: 135px;
+    background-image: url("../../../SPA/src/assets/images/logo-small.png");
 }
+
+.logOutButton{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.header{
+    position: absolute;
+    left: 26%;
+    top: 0px;
+}
+
+.header .h3{
+    font-family: "gotham-bold";
+    color: gray;
+}
+
 
 .footer {
     position: absolute;
