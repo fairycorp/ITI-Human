@@ -2,12 +2,13 @@ import Home from './components/HomeScreen.vue';
 import ChooseProducts from './components/ChooseProductsScreen.vue';
 import Order from './components/OrderScreen.vue';
 import Login from './components/Login.vue';
+import About from './components/About.vue';
 
 export default [
   {
     path: '/',
-    component: Home,
-    name: 'home'
+    component: Login,
+    name: 'login'
   },
   {
     path: '/Order/',
@@ -20,9 +21,14 @@ export default [
     name: 'chooseproducts'
   },
   {
-    path: '/Login/',
-    component: Login,
-    name: 'login'
+    path: '/Home/',
+    component: Home,
+    name: 'home'
+  },
+  {
+    path: '/About/',
+    component: About,
+    name: 'about'
   },
 
 ]

@@ -1,21 +1,30 @@
 <template>
     <f7-page>
-        <f7-button v-for="projectInfos in ProjectInfos" 
+      <div
+          class="default-logo">
+      </div>
+      <f7-button v-for="projectInfos in ProjectInfos" 
           :key="projectInfos.projectId" 
           @click="GetStorage(projectInfos.projectId)">
           {{ projectInfos.projectName }}
-        </f7-button>
+      </f7-button>
 
-        <f7-button
-          @click="GetLogin()">
-          Go loginScreen
-        </f7-button>
+      <f7-button
+          @click="LogOut()">
+          Logout
+      </f7-button>
+
+      <div class="footer">
+        <button @click="About" class="about-link unselectable-text col button color-gray">
+            QUI SOMMES-NOUS
+        </button>
+        <div class="collab-info">EN COLLABORATION AVEC IN'TECH</div>
+      </div>
     </f7-page>
 </template>
 
 <script>
 import Api from '../helpers/Api.js'
-import OrderScreen from './OrderScreen'
 import {
     AuthService,
     IAuthServiceConfiguration,
@@ -30,7 +39,7 @@ export default {
       authService: null,
       ProjectInfos: [],
       StorageId: '',
-      StorageInfos: ''
+      StorageInfos: '',
     };
   },
 
@@ -44,22 +53,19 @@ export default {
     };
     this.authService = new AuthService(config, Axios);
     await this.isAccessible();
-  },  
+  },
 
   async mounted() {
     await this.getProjectInfos("project");
   },
 
-  methods: {
+  watch: {
+    authService: function(newValue, oldValue) {
+      this.isAccessible();
+    }
+  }, 
 
-    async isAccessible() {
-      await this.authService.refresh(true, true, true);
-      if (this.authService != null) {
-        if (this.authService.authenticationInfo.level == 0) {
-          this.$f7router.navigate({ name: 'login' });
-        }
-      }
-    },
+  methods: {
 
     async getProjectInfos(endpoint){
       let response = await Api.get(endpoint);
@@ -82,14 +88,60 @@ export default {
     GetLogin(){
       this.$f7router.navigate({ name: 'login' });
     },
+
+    async LogOut(){
+      await this.authService.logout(true);
+      await this.isAccessible();
+    },
+
+    async isAccessible() {
+      await this.authService.refresh(true, true, true);
+      //console.log(this.authService.authenticationInfo.level);
+      if (this.authService.authenticationInfo.level == 0) {
+        this.$f7router.navigate({ name: 'login' });
+      }
+    },
+
+    toggleWindowAbout() {
+        this.$f7router.navigate({ name: 'about' });
+    }
   },
 };
-
 </script>
 
-<style>
-.text-color-primary {
-  color: blue;
-  font-size: 30;
+<style lang="scss">
+
+.default-logo {
+    position: absolute;
+    top: 35%;
+    left: 18%;
+    width: 252px;
+    height: 270px;
+    background-image: url("../../../SPA/src/assets/images/logo.png");
+}
+
+.footer {
+    position: absolute;
+    bottom: 45px;
+}
+
+.collab-info {
+    position: absolute;
+    left: 175px;
+    width: 200px;
+    font-family: "gotham-bold";
+    letter-spacing: 2px;
+    color: #cac8c9;
+    font-size: 10px
+}
+
+.about-link {
+    position: absolute;
+    left: 0px;
+    width: 160px;
+    font-family: "gotham-bold";
+    letter-spacing: 2px;
+    color: #666567;
+    font-size: 13px
 }
 </style>

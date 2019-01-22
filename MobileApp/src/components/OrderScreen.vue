@@ -23,10 +23,16 @@
 
 <script>
 import Api from '../helpers/Api.js'
+import {
+    AuthService,
+    IAuthServiceConfiguration,
+    AuthLevel
+} from "@signature/webfrontauth";
+import Axios from "axios";
 
 export default {
   props: { projectinfos: Object },
-    
+
   data() {
     return {
       authService: null,      
@@ -48,13 +54,19 @@ export default {
     };
     this.authService = new AuthService(config, Axios);
     await this.isAccessible();
-  },  
-  
+  },
+
   mounted() {
     this.Projects = this.projectinfos;
     this.GetStorageProducts("storage/products/from/"+this.Projects.storageId);
     this.GetClassrooms("classroom");
   },
+
+  watch: {
+    authService: function(newValue, oldValue) {
+      this.isAccessible();
+    }
+  },  
 
   methods: {
     async isAccessible() {
@@ -85,18 +97,16 @@ export default {
       for (let index = 0; index < this.Classrooms.length; index++) {
         if (this.Classrooms[index].name == classromName) {
           return this.Classrooms[index].classroomId
-
         }
       }
     },
 
     Continue() {
-
       let ClassroomId = this.GetClassRoomId(this.selectValue);
 
       let order = {
         storageId: this.Projects.storageId,
-        userId: 1,
+        userId: this.authService.authenticationInfo.user.userId,
         classroomId: ClassroomId,
         products: []
       }
@@ -106,13 +116,9 @@ export default {
       });
     }
   },
-        //new OrderViewModel(0, 1739, 0, {StorageLinkedProductId: 2147, Quantity: 2369})
 };
 </script>
 
-<style>
-.text-color-primary {
-  color: blue;
-  font-size: 30;
-}
+<style lang="scss">
+
 </style>

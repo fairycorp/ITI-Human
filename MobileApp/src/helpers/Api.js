@@ -7,14 +7,12 @@ class API {
     get(endpoint) {
         const checked = this.routineCheck(endpoint);
         let url = `${this.Path}${checked}`;
-        console.log('URL : ' + url);
         return Axios.get(url);
     }
 
     post(endpoint, data) {
         const checked = this.routineCheck(endpoint);
         let url = `${this.Path}${checked}`;
-        console.log('URL : ' + url);
         return Axios.post(url, data);
     }
 

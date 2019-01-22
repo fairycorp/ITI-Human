@@ -9,17 +9,17 @@
       </f7-list-item>
       <br/>
       <br/>
-      <button
+      <f7-button
+        v-if="ArrayOfProducts.length > 0"
         @click="Continue()"> 
         Commander
-      </button>
+      </f7-button>
     </f7-list> 
   </f7-page>
 </template>
 
 <script>
 import Api from '../helpers/Api.js'
-import OrderScreen from './OrderScreen'
 import {
     AuthService,
     IAuthServiceConfiguration,
@@ -57,11 +57,17 @@ export default {
     this.GetStorageProducts("storage/products/from/"+this.Projects.storageId);
   },
 
+  watch: {
+    authService: function(newValue, oldValue) {
+      this.isAccessible();
+    }
+  },
+
   methods: {
     async isAccessible() {
       await this.authService.refresh(true, true, true);
       if (this.authService != null) {
-        if (this.authService.authenticationInfo.level == 0) {
+        if (this.authService.authenticationInfo.level > 0) {
           this.$f7router.navigate({ name: 'login' });
         }
       }
@@ -73,7 +79,7 @@ export default {
         for (let i = 0; i < this.ArrayOfProducts.length; i++) {
           if (this.ArrayOfProducts[i].product == nameOfProduct) {
             compared = true;
-            this.ArrayOfProducts[i].number++;
+            this.ArrayOfProducts[i].quantity++;
           }
         }
         if (compared == false) {
@@ -107,13 +113,17 @@ export default {
     },
 
     FillTheCommand(){
-      for (let index = 0; index < this.ArrayOfProducts.length; index++) {
-        this.Projects.products.push(
-          {
-            storageLinkedProductId: this.ArrayOfProducts[index].product,
-            quantity: this.ArrayOfProducts[index].quantity
+      for (let i = 0; i < this.ArrayOfProducts.length; i++) {
+        for (let j = 0; j < this.LinkedProducts.length; j++) {
+          if (this.ArrayOfProducts[i].product == this.LinkedProducts[j].productName) {
+            this.Projects.products.push(
+              {
+                storageLinkedProductId: this.LinkedProducts[j].storageLinkedProductId,
+                quantity: this.ArrayOfProducts[i].quantity
+              }
+            );
           }
-        );
+        }
       }
     },
 
@@ -127,9 +137,6 @@ export default {
 
 </script>
 
-<style>
-.text-color-primary {
-  color: blue;
-  font-size: 30;
-}
+<style lang="scss">
+
 </style>

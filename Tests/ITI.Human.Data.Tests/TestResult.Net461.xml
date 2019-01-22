@@ -43,7 +43,7 @@
 |  |  |  |  |  > Info: Reading binary folders.
 |  |  |  |  |  |  > Info: Reading files from 'C:\Users\dizy9\OneDrive\Bureau\Intech\S5\Info\ITI-Human\ITI.Human.Data\bin\Debug\net461'.
 |  |  |  |  |  < 1 folders read.
-|  |  |  |  |  - Info: Created temporary Working Directory: C:\Users\dizy9\AppData\Local\Temp\CKSetup2018-12-12 13h56.34.5231906\.
+|  |  |  |  |  - Info: Created temporary Working Directory: C:\Users\dizy9\AppData\Local\Temp\CKSetup2019-01-18 20h32.43.7331595\.
 |  |  |  |  > Info: Resolving runtime support for 'C:\Users\dizy9\OneDrive\Bureau\Intech\S5\Info\ITI-Human\ITI.Human.Data\bin\Debug\net461\'.
 |  |  |  |  |  > Info: Creating runtime dependencies resolver for C:\Users\dizy9\OneDrive\Bureau\Intech\S5\Info\ITI-Human\ITI.Human.Data\bin\Debug\net461\.
 |  |  |  |  |  |  - Info: Found Models: CK.Setupable.Model/8.0.1--0046-develop/Net461/, CK.SqlServer.Setup.Model/8.0.1--0046-develop/Net461/, CK.StObj.Model/8.0.1--0046-develop/Net461/
@@ -62,8 +62,8 @@
 |  |  |  |  |  |           Resolved required dependency -> CK.SqlServer.Setup.Engine/8.0.1--0046-develop to local CK.SqlServer.Setup.Engine/8.0.1--0046-develop/Net461/.
 |  |  |  |  |  |           Resolved required dependency -> CK.StObj.Engine/8.0.1--0046-develop to local CK.StObj.Engine/8.0.1--0046-develop/Net461/.
 |  |  |  |  |  > Info: Selected 156 setup files.
-|  |  |  |  > Info: Copying files to 'C:\Users\dizy9\AppData\Local\Temp\CKSetup2018-12-12 13h56.34.5231906\'.
-|  |  |  |  > Info: Copying 114 files from bin folders.
+|  |  |  |  > Info: Copying files to 'C:\Users\dizy9\AppData\Local\Temp\CKSetup2019-01-18 20h32.43.7331595\'.
+|  |  |  |  > Info: Copying 115 files from bin folders.
 |  |  |  |  < Skipped 99 file(s).
 |  |  |  |  > Info: Generating CKSetup.Runner.Config.xml file.
 |  |  |  |  |  - Info: <Configuration>
@@ -82,7 +82,7 @@
 |  |  |  |  |            <CKSetup>
 |  |  |  |  |              <BasePath>C:\Users\dizy9\OneDrive\Bureau\Intech\S5\Info\ITI-Human\Tests\ITI.Human.Data.Tests\bin\Debug\net461</BasePath>
 |  |  |  |  |              <EngineAssemblyQualifiedName>CK.Setup.StObjEngine, CK.StObj.Engine</EngineAssemblyQualifiedName>
-|  |  |  |  |              <RunSignature>5d5a82414ef1f330e17cc29621e6a7f908cc9c73</RunSignature>
+|  |  |  |  |              <RunSignature>1c199dd5ae75c4d8c3fe2da0ae511cc1bf89ccac</RunSignature>
 |  |  |  |  |              <BinPaths>
 |  |  |  |  |                <BinPath BinPath="C:\Users\dizy9\OneDrive\Bureau\Intech\S5\Info\ITI-Human\ITI.Human.Data\bin\Debug\net461\">
 |  |  |  |  |                  <Model>CK.Setupable.Model</Model>
@@ -99,7 +99,7 @@
 |  |  |  |  |            </CKSetup>
 |  |  |  |  |          </Configuration>
 |  |  |  |  > Info: Launching CKSetup.Runner process.
-|  |  |  |  |  > Trace: C:\Users\dizy9\AppData\Local\Temp\CKSetup2018-12-12 13h56.34.5231906\CKSetup.Runner.exe  /silent /logPipe:2464
+|  |  |  |  |  > Trace: C:\Users\dizy9\AppData\Local\Temp\CKSetup2019-01-18 20h32.43.7331595\CKSetup.Runner.exe  /silent /logPipe:2208
 |  |  |  |  |  |  > Info: Starting CKSetup.Runner .NETFramework,Version=v4.6.1 - 8.0.1--ci.29.develop (8.0.1--0029-develop) - SHA1: 3113e0abf25593fedb4c6c44b659b7e3b3b854ce - CommitDate: 2018-10-24 06:50:32Z
 |  |  |  |  |  |  |  > Info: Applying CKSetup configuration.
 |  |  |  |  |  |  |  |  - Info: Handling 1 BinPath(s).
@@ -135,7 +135,7 @@
 |  |  |  |  |  |  |  |  |  |  > Trace: Registering assembly 'CK.SqlServer'.
 |  |  |  |  |  |  |  |  |  |  < 22 types(s) registered.
 |  |  |  |  |  |  |  |  |  |  > Trace: Registering assembly 'ITI.Human.Data'.
-|  |  |  |  |  |  |  |  |  |  < 22 types(s) registered.
+|  |  |  |  |  |  |  |  |  |  < 30 types(s) registered.
 |  |  |  |  |  |  |  |  |  > Trace: Explicitly registering IPoco interfaces, or Ambient Contract or Service classes: handling 0 type(s).
 |  |  |  |  |  |  |  |  |  - Info: Explicitly registering 'CK.SqlServer.Setup.SqlDefaultDatabase, CK.SqlServer.Setup.Model, Version=8.0.0.0, Culture=neutral, PublicKeyToken=731c291b31fb8d27'.
 |  |  |  |  |  |  |  |  > Info: Resolving StObj dependency graph.
@@ -149,10 +149,10 @@
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  - Trace: Found 1 unambiguous paths.
 |  |  |  |  |  |  |  |  |  |  |  |  |  - Info: 2 Service interfaces with 1 roots and 1 interface leaves.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Collector summary:
-|  |  |  |  |  |  |  |  |  |  |  |  > Trace: Ambient Contracts: 43 mappings for 35 concrete paths.
+|  |  |  |  |  |  |  |  |  |  |  |  > Trace: Ambient Contracts: 53 mappings for 43 concrete paths.
 |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Ambient Services: 1 most specialized interfaces and 1 concrete paths.
 |  |  |  |  |  |  |  |  |  |  > Info: Creating final objects and configuring items.
-|  |  |  |  |  |  |  |  |  |  < 35 items configured.
+|  |  |  |  |  |  |  |  |  |  < 43 items configured.
 |  |  |  |  |  |  |  |  |  > Info: Topological graph ordering.
 |  |  |  |  |  |  |  |  |  |  > Info: Preparing dependent items.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Preparing 'CK.SqlServer.Setup.SqlDefaultDatabase'.
@@ -201,9 +201,19 @@
 |  |  |  |  |  |  |  |  |  |  |  < ItemKind is Container
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Preparing 'ITI.Human.Data.ProductTable'.
 |  |  |  |  |  |  |  |  |  |  |  < ItemKind is Container
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Preparing 'ITI.Human.Data.ProjectMemberTable'.
+|  |  |  |  |  |  |  |  |  |  |  < ItemKind is Container
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Preparing 'ITI.Human.Data.ProjectRankTable'.
+|  |  |  |  |  |  |  |  |  |  |  < ItemKind is Container
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Preparing 'ITI.Human.Data.ProjectTable'.
 |  |  |  |  |  |  |  |  |  |  |  < ItemKind is Container
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Preparing 'ITI.Human.Data.ProjectTypeTable'.
+|  |  |  |  |  |  |  |  |  |  |  < ItemKind is Container
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Preparing 'ITI.Human.Data.ProjectVotesTable'.
+|  |  |  |  |  |  |  |  |  |  |  < ItemKind is Container
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Preparing 'ITI.Human.Data.SchoolMemberTable'.
+|  |  |  |  |  |  |  |  |  |  |  < ItemKind is Container
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Preparing 'ITI.Human.Data.SchoolStatusTable'.
 |  |  |  |  |  |  |  |  |  |  |  < ItemKind is Container
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Preparing 'ITI.Human.Data.SemesterTable'.
 |  |  |  |  |  |  |  |  |  |  |  < ItemKind is Container
@@ -219,9 +229,15 @@
 |  |  |  |  |  |  |  |  |  |  |  < ItemKind is Container
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Preparing 'ITI.Human.Data.StorageTable'.
 |  |  |  |  |  |  |  |  |  |  |  < ItemKind is Container
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Preparing 'ITI.Human.Data.StudentTable'.
+|  |  |  |  |  |  |  |  |  |  |  < ItemKind is Container
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Preparing 'ITI.Human.Data.UpdateTrackTable'.
 |  |  |  |  |  |  |  |  |  |  |  < ItemKind is Container
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Preparing 'ITI.Human.Data.UserAvatarsTable'.
+|  |  |  |  |  |  |  |  |  |  |  < ItemKind is Container
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Preparing 'ITI.Human.Data.UserBalanceTable'.
+|  |  |  |  |  |  |  |  |  |  |  < ItemKind is Container
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Preparing 'ITI.Human.Data.UserDetailsTable'.
 |  |  |  |  |  |  |  |  |  |  |  < ItemKind is Container
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Preparing 'CK._g.poco.Factory'.
 |  |  |  |  |  |  |  |  |  |  |  |  - Warn: Since ItemKind is not specified on this base class ('CK._g.poco.Factory'), it defaults to SimpleItem. It should be explicitly set to either SimpleItem, Group or Container.
@@ -245,12 +261,20 @@
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.Package'.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.ClassroomTable'.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.ProductTable'.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.ProjectRankTable'.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.ProjectTypeTable'.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.SchoolStatusTable'.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.UpdateTrackTable'.
-|  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.UserBalanceTable'.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.UserAvatarsTable'.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.UserDetailsTable'.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.SchoolMemberTable'.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.SemesterTable'.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.ProjectTable'.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.StudentTable'.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.ProjectMemberTable'.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.ProjectVotesTable'.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.StorageTable'.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.UserBalanceTable'.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.OrderTable'.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.StorageLinkedProductTable'.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Constructing 'ITI.Human.Data.OrderedProductTable'.
@@ -270,7 +294,7 @@
 |  |  |  |  |  |  |  > Info: Running Aspects.
 |  |  |  |  |  |  |  |  > Info: Aspect: CK.Setup.SetupableAspect.
 |  |  |  |  |  |  |  |  |  > Info: Creating Setup Items from Structured Objects.
-|  |  |  |  |  |  |  |  |  |  > Info: Building setupable items from 35 Structure Objects (calling IStObjSetupConfigurator.ConfigureDependentItem and IStObjSetupItemFactory.CreateDependentItem for each of them).
+|  |  |  |  |  |  |  |  |  |  > Info: Building setupable items from 43 Structure Objects (calling IStObjSetupConfigurator.ConfigureDependentItem and IStObjSetupItemFactory.CreateDependentItem for each of them).
 |  |  |  |  |  |  |  |  |  |  |  - Info: SqlPackage 'CK.DB.Actor.Package' uses its own full name as its SetupName.
 |  |  |  |  |  |  |  |  |  |  |          SqlTable 'CK.DB.Actor.ActorTable' uses 'CK.ActorTable' as its SetupName.
 |  |  |  |  |  |  |  |  |  |  |          SqlTable 'CK.DB.Actor.GroupTable' uses 'CK.GroupTable' as its SetupName.
@@ -285,12 +309,20 @@
 |  |  |  |  |  |  |  |  |  |  |          SqlPackage 'ITI.Human.Data.Package' uses its own full name as its SetupName.
 |  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.ClassroomTable' uses 'ITIH.ClassroomTable' as its SetupName.
 |  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.ProductTable' uses 'ITIH.ProductTable' as its SetupName.
+|  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.ProjectRankTable' uses 'ITIH.ProjectRankTable' as its SetupName.
 |  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.ProjectTypeTable' uses 'ITIH.ProjectTypeTable' as its SetupName.
+|  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.SchoolStatusTable' uses 'ITIH.SchoolStatusTable' as its SetupName.
 |  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.UpdateTrackTable' uses 'ITIH.UpdateTrackTable' as its SetupName.
-|  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.UserBalanceTable' uses 'ITIH.UserBalanceTable' as its SetupName.
+|  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.UserAvatarsTable' uses 'ITIH.UserAvatarsTable' as its SetupName.
+|  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.UserDetailsTable' uses 'ITIH.UserDetailsTable' as its SetupName.
+|  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.SchoolMemberTable' uses 'ITIH.SchoolMemberTable' as its SetupName.
 |  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.SemesterTable' uses 'ITIH.SemesterTable' as its SetupName.
 |  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.ProjectTable' uses 'ITIH.ProjectTable' as its SetupName.
+|  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.StudentTable' uses 'ITIH.StudentTable' as its SetupName.
+|  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.ProjectMemberTable' uses 'ITIH.ProjectMemberTable' as its SetupName.
+|  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.ProjectVotesTable' uses 'ITIH.ProjectVotesTable' as its SetupName.
 |  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.StorageTable' uses 'ITIH.StorageTable' as its SetupName.
+|  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.UserBalanceTable' uses 'ITIH.UserBalanceTable' as its SetupName.
 |  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.OrderTable' uses 'ITIH.OrderTable' as its SetupName.
 |  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.StorageLinkedProductTable' uses 'ITIH.StorageLinkedProductTable' as its SetupName.
 |  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.OrderedProductTable' uses 'ITIH.OrderedProductTable' as its SetupName.
@@ -306,7 +338,7 @@
 |  |  |  |  |  |  |  |  |  |  |          SqlTable 'ITI.Human.Data.OPPaymentStateUpdateTrackTable' uses 'ITIH.OPPaymentStateUpdateTrackTable' as its SetupName.
 |  |  |  |  |  |  |  |  |  |  > Info: Binding dependencies between Setupable items.
 |  |  |  |  |  |  |  |  |  |  > Info: Dynamic initialization of Setup items.
-|  |  |  |  |  |  |  |  |  |  |  > Info: Executing 65 deferred actions.
+|  |  |  |  |  |  |  |  |  |  |  > Info: Executing 81 deferred actions.
 |  |  |  |  |  |  |  |  |  |  |  |  > Info: Starting intialization round n°0.
 |  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: '[]db^CK.sActorCreate' in SqlObjectItem attribute of '[]db^CK.ActorTable'
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^CK.sActorCreate' of '[]db^CK.ActorTable'.
@@ -392,6 +424,27 @@
 |  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: 'sProjectTypeCreate' in 'Create' SqlProcedure attribute of '[]db^ITIH.ProjectTypeTable'
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.sProjectTypeCreate' of '[]db^ITIH.ProjectTypeTable'.
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded Procedure from file 'sProjectTypeCreate.sql'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: 'sUserAvatarCreate' in 'Create' SqlProcedure attribute of '[]db^ITIH.UserAvatarsTable'
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.sUserAvatarCreate' of '[]db^ITIH.UserAvatarsTable'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded Procedure from file 'sUserAvatarCreate.sql'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: '[]db^ITIH.vUserProfile' in SqlObjectItem attribute of '[]db^ITIH.UserDetailsTable'
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.vUserProfile' of '[]db^ITIH.UserDetailsTable'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  - Warn: Missing SetupConfig:{}. At least an empty one should appear in the header.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded View from file 'vUserProfile.sql'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: 'sUserDetailsCreate' in 'Create' SqlProcedure attribute of '[]db^ITIH.UserDetailsTable'
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.sUserDetailsCreate' of '[]db^ITIH.UserDetailsTable'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded Procedure from file 'sUserDetailsCreate.sql'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: 'sUserDetailsUpdate' in 'Update' SqlProcedure attribute of '[]db^ITIH.UserDetailsTable'
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.sUserDetailsUpdate' of '[]db^ITIH.UserDetailsTable'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  - Warn: Missing SetupConfig:{}. At least an empty one should appear in the header.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded Procedure from file 'sUserDetailsUpdate.sql'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: '[]db^ITIH.vSchoolMembers' in SqlObjectItem attribute of '[]db^ITIH.SchoolMemberTable'
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.vSchoolMembers' of '[]db^ITIH.SchoolMemberTable'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  - Warn: Missing SetupConfig:{}. At least an empty one should appear in the header.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded View from file 'vSchoolMembers.sql'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: 'sSchoolMemberCreate' in 'Create' SqlProcedure attribute of '[]db^ITIH.SchoolMemberTable'
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.sSchoolMemberCreate' of '[]db^ITIH.SchoolMemberTable'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded Procedure from file 'sSchoolMemberCreate.sql'.
 |  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: 'sSemesterCreate' in 'Create' SqlProcedure attribute of '[]db^ITIH.SemesterTable'
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.sSemesterCreate' of '[]db^ITIH.SemesterTable'.
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded Procedure from file 'sSemesterCreate.sql'.
@@ -405,9 +458,38 @@
 |  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: 'sProjectDelete' in 'Delete' SqlProcedure attribute of '[]db^ITIH.ProjectTable'
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.sProjectDelete' of '[]db^ITIH.ProjectTable'.
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded Procedure from file 'sProjectDelete.sql'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: 'sStudentCreate' in 'Create' SqlProcedure attribute of '[]db^ITIH.StudentTable'
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.sStudentCreate' of '[]db^ITIH.StudentTable'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded Procedure from file 'sStudentCreate.sql'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: '[]db^ITIH.vProjectMembers' in SqlObjectItem attribute of '[]db^ITIH.ProjectMemberTable'
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.vProjectMembers' of '[]db^ITIH.ProjectMemberTable'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  - Warn: Missing SetupConfig:{}. At least an empty one should appear in the header.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded View from file 'vProjectMembers.sql'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: 'sProjectMemberCreate' in 'Create' SqlProcedure attribute of '[]db^ITIH.ProjectMemberTable'
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.sProjectMemberCreate' of '[]db^ITIH.ProjectMemberTable'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded Procedure from file 'sProjectMemberCreate.sql'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: 'sProjectMemberDelete' in 'Delete' SqlProcedure attribute of '[]db^ITIH.ProjectMemberTable'
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.sProjectMemberDelete' of '[]db^ITIH.ProjectMemberTable'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded Procedure from file 'sProjectMemberDelete.sql'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: 'sProjectVoteCreate' in 'Create' SqlProcedure attribute of '[]db^ITIH.ProjectVotesTable'
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.sProjectVoteCreate' of '[]db^ITIH.ProjectVotesTable'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded Procedure from file 'sProjectVoteCreate.sql'.
 |  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: 'sStorageCreate' in 'Create' SqlProcedure attribute of '[]db^ITIH.StorageTable'
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.sStorageCreate' of '[]db^ITIH.StorageTable'.
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded Procedure from file 'sStorageCreate.sql'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: 'sStallUpdate' in 'UpdateStall' SqlProcedure attribute of '[]db^ITIH.StorageTable'
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.sStallUpdate' of '[]db^ITIH.StorageTable'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded Procedure from file 'sStallUpdate.sql'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: '[]db^ITIH.vUserBalance' in SqlObjectItem attribute of '[]db^ITIH.UserBalanceTable'
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.vUserBalance' of '[]db^ITIH.UserBalanceTable'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  - Warn: Missing SetupConfig:{}. At least an empty one should appear in the header.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded View from file 'vUserBalance.sql'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: 'sUserBalanceCreate' in 'Create' SqlProcedure attribute of '[]db^ITIH.UserBalanceTable'
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.sUserBalanceCreate' of '[]db^ITIH.UserBalanceTable'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded Procedure from file 'sUserBalanceCreate.sql'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: 'sUserBalanceUpdate' in 'Update' SqlProcedure attribute of '[]db^ITIH.UserBalanceTable'
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.sUserBalanceUpdate' of '[]db^ITIH.UserBalanceTable'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded Procedure from file 'sUserBalanceUpdate.sql'.
 |  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: '[]db^ITIH.vOrderedProducts' in SqlObjectItem attribute of '[]db^ITIH.OrderTable'
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.vOrderedProducts' of '[]db^ITIH.OrderTable'.
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  - Warn: Missing SetupConfig:{}. At least an empty one should appear in the header.
@@ -425,6 +507,10 @@
 |  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: 'sOrderDelete' in 'Delete' SqlProcedure attribute of '[]db^ITIH.OrderTable'
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.sOrderDelete' of '[]db^ITIH.OrderTable'.
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded Procedure from file 'sOrderDelete.sql'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: '[]db^ITIH.vStorageLinkedProducts' in SqlObjectItem attribute of '[]db^ITIH.StorageLinkedProductTable'
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.vStorageLinkedProducts' of '[]db^ITIH.StorageLinkedProductTable'.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  - Warn: Missing SetupConfig:{}. At least an empty one should appear in the header.
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded View from file 'vStorageLinkedProducts.sql'.
 |  |  |  |  |  |  |  |  |  |  |  |  |  > Info: Handling: 'sStorageLinkedProductCreate' in 'Create' SqlProcedure attribute of '[]db^ITIH.StorageLinkedProductTable'
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  > Trace: Loading '[]db^ITIH.sStorageLinkedProductCreate' of '[]db^ITIH.StorageLinkedProductTable'.
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  < Loaded Procedure from file 'sStorageLinkedProductCreate.sql'.
@@ -474,8 +560,8 @@
 |  |  |  |  |  |  |  |  |  > Info: Setupable Core Engine initialization.
 |  |  |  |  |  |  |  |  |  |  - Info: Starting a new setup.
 |  |  |  |  |  |  |  |  |  > Info: Register step.
-|  |  |  |  |  |  |  |  |  |  > Info: Instanciating drivers for 192 items.
-|  |  |  |  |  |  |  |  |  |  > Info: Calling PreInit on 192 drivers.
+|  |  |  |  |  |  |  |  |  |  > Info: Instanciating drivers for 240 items.
+|  |  |  |  |  |  |  |  |  |  > Info: Calling PreInit on 240 drivers.
 |  |  |  |  |  |  |  |  |  |  |  - Info: 0 sql scripts in resource found for 'CK.ActorTable' in 'CK.DB.Actor:CK.DB.Actor.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.CK.ActorTable' in 'CK.DB.Actor:CK.DB.Actor.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'CK.GroupTable' in 'CK.DB.Actor:CK.DB.Actor.Res.*.
@@ -500,20 +586,36 @@
 |  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'Model.CK.DB.User.UserPassword.Package' in 'CK.DB.User.UserPassword:CK.DB.User.UserPassword.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.ClassroomTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.ClassroomTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.ProjectRankTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.ProjectRankTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.SchoolStatusTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.SchoolStatusTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.UpdateTrackTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.UpdateTrackTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
-|  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.UserBalanceTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
-|  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.UserBalanceTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.ProductTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.ProductTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.ProjectTypeTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.ProjectTypeTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.UserAvatarsTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.UserAvatarsTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.UserDetailsTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.UserDetailsTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.SchoolMemberTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.SchoolMemberTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.SemesterTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.SemesterTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.ProjectTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.ProjectTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.StudentTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.StudentTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.ProjectMemberTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.ProjectMemberTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.ProjectVotesTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.ProjectVotesTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.StorageTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.StorageTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.UserBalanceTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
+|  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.UserBalanceTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.OrderTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.OrderTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITIH.StorageLinkedProductTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
@@ -542,7 +644,7 @@
 |  |  |  |  |  |  |  |  |  |  |          1 sql scripts in resource found for 'Model.ITIH.OPPaymentStateUpdateTrackTable' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'ITI.Human.Data.Package' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
 |  |  |  |  |  |  |  |  |  |  |          0 sql scripts in resource found for 'Model.ITI.Human.Data.Package' in 'ITI.Human.Data:ITI.Human.Data.Res.*.
-|  |  |  |  |  |  |  |  |  < 192 Setup items registered.
+|  |  |  |  |  |  |  |  |  < 240 Setup items registered.
 |  |  |  |  |  |  |  |  |  > Info: Init step.
 |  |  |  |  |  |  |  |  |  |  > Trace: Raising Init setup event.
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []CK._g.poco.Factory
@@ -600,20 +702,36 @@
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITI.Human.Data.Package.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.ClassroomTable.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.ProductTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.ProjectRankTable.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.ProjectTypeTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.SchoolStatusTable.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.UpdateTrackTable.Head
-|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.UserBalanceTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.UserAvatarsTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.UserDetailsTable.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.ClassroomTable
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.ProductTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.ProjectRankTable
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.ProjectTypeTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.SchoolStatusTable
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.UpdateTrackTable
-|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.UserBalanceTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.UserAvatarsTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.UserDetailsTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.SchoolMemberTable.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.SemesterTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.SchoolMemberTable
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.SemesterTable
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.ProjectTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.StudentTable.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.ProjectTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.StudentTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.ProjectMemberTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.ProjectVotesTable.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.StorageTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.UserBalanceTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.ProjectMemberTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.ProjectVotesTable
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.StorageTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.UserBalanceTable
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.OrderTable.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.StorageLinkedProductTable.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^Model.ITIH.OrderTable
@@ -696,28 +814,59 @@
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITI.Human.Data.Package.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.ClassroomTable.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.ProductTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.ProjectRankTable.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.ProjectTypeTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.SchoolStatusTable.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.UpdateTrackTable.Head
-|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.UserBalanceTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.UserAvatarsTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.UserDetailsTable.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.ClassroomTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.ProjectRankTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.SchoolStatusTable
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sProductCreate
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sProductUpdate
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sProjectTypeCreate
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sUserAvatarCreate
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sUserDetailsCreate
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sUserDetailsUpdate
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.UpdateTrackTable
-|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.UserBalanceTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.vUserProfile
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.ProductTable
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.ProjectTypeTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.SchoolMemberTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.UserAvatarsTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.UserDetailsTable
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.SemesterTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sSchoolMemberCreate
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.vSchoolMembers
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.SchoolMemberTable
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sSemesterCreate
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.SemesterTable
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.ProjectTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.StudentTable.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sProjectCreate
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sProjectDelete
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sStudentCreate
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.vProjects
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.ProjectTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.StudentTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.ProjectMemberTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.ProjectVotesTable.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.StorageTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.UserBalanceTable.Head
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sProjectMemberCreate
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sProjectMemberDelete
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sProjectVoteCreate
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sStallUpdate
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sStorageCreate
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sUserBalanceCreate
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sUserBalanceUpdate
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.vProjectMembers
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.vUserBalance
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.ProjectMemberTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.ProjectVotesTable
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.StorageTable
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.UserBalanceTable
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.OrderTable.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.StorageLinkedProductTable.Head
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sOrderCreate
@@ -729,6 +878,7 @@
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.sStorageLinkedProductUnitPriceUpdate
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.vOrderedProducts
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.vOrders
+|  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.vStorageLinkedProducts
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.OrderTable
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.StorageLinkedProductTable
 |  |  |  |  |  |  |  |  |  |  > Info: Initializing []db^ITIH.OrderedProductTable.Head
@@ -976,13 +1126,27 @@
 |  |  |  |  |  |  |  |  |  |  |  |  - Trace: create table ITIH.tProduct (
 |  |  |  |  |  |  |  |  |  |  |  |           	ProductId int not null identity(0, 1),
 |  |  |  |  |  |  |  |  |  |  |  |           	[Name] nvarchar(256) not null,
-|  |  |  |  |  |  |  |  |  |  |  |           	[Desc] nvarchar(512) not null
+|  |  |  |  |  |  |  |  |  |  |  |           	[Desc] nvarchar(512) not null,
+|  |  |  |  |  |  |  |  |  |  |  |           	[Url] varchar(max) default 'https://image.noelshack.com/fichiers/2019/03/1/1547459850-barcode512.png'
 |  |  |  |  |  |  |  |  |  |  |  |           
 |  |  |  |  |  |  |  |  |  |  |  |           	constraint PK_ITIH_tProduct primary key (ProductId),
 |  |  |  |  |  |  |  |  |  |  |  |           );
 |  |  |  |  |  |  |  |  |  |  |  |           
-|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tProduct ([Name], [Desc])
-|  |  |  |  |  |  |  |  |  |  |  |           	values (N'', N'');
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tProduct ([Name], [Desc], [Url])
+|  |  |  |  |  |  |  |  |  |  |  |           	values (N'', N'', N'');
+|  |  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.ProjectRankTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.ProjectRankTable|Install||1.0.0|AutoLabel0'.
+|  |  |  |  |  |  |  |  |  |  |  |  - Trace: create table ITIH.tProjectRank (
+|  |  |  |  |  |  |  |  |  |  |  |           	ProjectRankId int not null identity(0, 1),
+|  |  |  |  |  |  |  |  |  |  |  |           	[Name] nvarchar(256) not null
+|  |  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint PK_tProjectRank_ProjectRankId primary key (ProjectRankId)
+|  |  |  |  |  |  |  |  |  |  |  |           );
+|  |  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tProjectRank ([Name]) values (N'');
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tProjectRank ([Name]) values ('Chef de projet');
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tProjectRank ([Name]) values ('Standard');
 |  |  |  |  |  |  |  |  |  |  |  |           GO
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.ProjectTypeTable.Head (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.ProjectTypeTable|Install||1.0.0|AutoLabel0'.
@@ -994,8 +1158,22 @@
 |  |  |  |  |  |  |  |  |  |  |  |           );
 |  |  |  |  |  |  |  |  |  |  |  |           
 |  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tProjectType ([Name]) values (N'');
-|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tProjectType ([Name]) values ('HFP');
-|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tProjectType ([Name]) values ('ITP');
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tProjectType ([Name]) values ('PFH');
+|  |  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.SchoolStatusTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.SchoolStatusTable|Install||1.0.0|AutoLabel0'.
+|  |  |  |  |  |  |  |  |  |  |  |  - Trace: create table ITIH.tSchoolStatus (
+|  |  |  |  |  |  |  |  |  |  |  |           	SchoolStatusId int not null identity(0, 1),
+|  |  |  |  |  |  |  |  |  |  |  |           	SchoolStatusName nvarchar(126) not null
+|  |  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint PK_tSchoolStatus_SchoolStatusId primary key (SchoolStatusId)
+|  |  |  |  |  |  |  |  |  |  |  |           );
+|  |  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tSchoolStatus (SchoolStatusName) values (N'');
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tSchoolStatus (SchoolStatusName) values ('Professeur');
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tSchoolStatus (SchoolStatusName) values ('Administrant');
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tSchoolStatus (SchoolStatusName) values ('Étudiant');
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tSchoolStatus (SchoolStatusName) values ('Tiers');
 |  |  |  |  |  |  |  |  |  |  |  |           GO
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.UpdateTrackTable.Head (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.UpdateTrackTable|Install||1.0.0|AutoLabel0'.
@@ -1011,25 +1189,57 @@
 |  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tUpdateTrack (ActorId, UpdateDate)
 |  |  |  |  |  |  |  |  |  |  |  |           	values(0, sysutcdatetime());
 |  |  |  |  |  |  |  |  |  |  |  |           GO
-|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.UserBalanceTable.Head (¤ => 1.0.0).
-|  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.UserBalanceTable|Install||1.0.0|AutoLabel0'.
-|  |  |  |  |  |  |  |  |  |  |  |  - Trace: create table ITIH.tUserBalance (
-|  |  |  |  |  |  |  |  |  |  |  |           
-|  |  |  |  |  |  |  |  |  |  |  |           	UserBalanceId int not null identity(0, 1),
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.UserAvatarsTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.UserAvatarsTable|Install||1.0.0|AutoLabel0'.
+|  |  |  |  |  |  |  |  |  |  |  |  - Trace: create table ITIH.tUserAvatars (
+|  |  |  |  |  |  |  |  |  |  |  |           	UserAvatarId int not null identity(0, 1),
 |  |  |  |  |  |  |  |  |  |  |  |           	UserId int not null,
-|  |  |  |  |  |  |  |  |  |  |  |           	Balance int not null default 0
+|  |  |  |  |  |  |  |  |  |  |  |           	[Url] varchar(max) not null
 |  |  |  |  |  |  |  |  |  |  |  |           
-|  |  |  |  |  |  |  |  |  |  |  |           	constraint PK_tUserBalance_UserBalanceId primary key (UserBalanceId),
-|  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tUserBalance_UserId foreign key (UserId) references CK.tUser(UserId)
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint PK_tUserAvatars_UserAvatarId primary key (UserAvatarId),
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tUserAvatars_UserId foreign key (UserId) references CK.tUser (UserId)
 |  |  |  |  |  |  |  |  |  |  |  |           );
 |  |  |  |  |  |  |  |  |  |  |  |           
-|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tUserBalance(UserId) values (0);
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tUserAvatars (UserId, [Url])
+|  |  |  |  |  |  |  |  |  |  |  |           	values (0, 'https://image.noelshack.com/fichiers/2019/03/1/1547459724-unknown-user.png');
+|  |  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.UserDetailsTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.UserDetailsTable|Install||1.0.0|AutoLabel0'.
+|  |  |  |  |  |  |  |  |  |  |  |  - Trace: create table ITIH.tUserDetails (
+|  |  |  |  |  |  |  |  |  |  |  |           	UserDetailsId int not null identity(0, 1),
+|  |  |  |  |  |  |  |  |  |  |  |           	UserId int not null,
+|  |  |  |  |  |  |  |  |  |  |  |           	FirstName nvarchar(128) not null default N'',
+|  |  |  |  |  |  |  |  |  |  |  |           	LastName nvarchar(128) not null default N'',
+|  |  |  |  |  |  |  |  |  |  |  |           	BirthDate datetime2 not null default '00010101'
+|  |  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint PK_tUserDetails_UserDetailsId primary key (UserDetailsId),
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tUserDetails_UserId foreign key (UserId) references CK.tUser (UserId)
+|  |  |  |  |  |  |  |  |  |  |  |           );
+|  |  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tUserDetails (UserId) values (0);
 |  |  |  |  |  |  |  |  |  |  |  |           GO
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.ClassroomTable (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.ProductTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.ProjectRankTable (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.ProjectTypeTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.SchoolStatusTable (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.UpdateTrackTable (¤ => 1.0.0).
-|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.UserBalanceTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.UserAvatarsTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.UserDetailsTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.SchoolMemberTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.SchoolMemberTable|Install||1.0.0|AutoLabel0'.
+|  |  |  |  |  |  |  |  |  |  |  |  - Trace: create table ITIH.tSchoolMember (
+|  |  |  |  |  |  |  |  |  |  |  |           	SchoolMemberId int not null identity(0, 1),
+|  |  |  |  |  |  |  |  |  |  |  |           	UserId int not null,
+|  |  |  |  |  |  |  |  |  |  |  |           	SchoolStatusId int not null
+|  |  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint PK_tSchoolMember_SchoolMemberId primary key (SchoolMemberId),
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tSchoolMember_UserId foreign key (UserId) references CK.tUser (UserId),
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tSchoolMember_SchoolStatusId foreign key (SchoolStatusId) references ITIH.tSchoolStatus (SchoolStatusId)
+|  |  |  |  |  |  |  |  |  |  |  |           );
+|  |  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tSchoolMember (UserId, SchoolStatusId) values (0, 0);
+|  |  |  |  |  |  |  |  |  |  |  |           GO
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.SemesterTable.Head (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.SemesterTable|Install||1.0.0|AutoLabel0'.
 |  |  |  |  |  |  |  |  |  |  |  |  - Trace: create table ITIH.tSemester (
@@ -1045,7 +1255,13 @@
 |  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tSemester ([Name]) values ('S3');
 |  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tSemester ([Name]) values ('S4');
 |  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tSemester ([Name]) values ('S5');
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tSemester ([Name]) values ('S6');
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tSemester ([Name]) values ('S7');
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tSemester ([Name]) values ('S8');
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tSemester ([Name]) values ('S9');
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tSemester ([Name]) values ('S10');
 |  |  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.SchoolMemberTable (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.SemesterTable (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.ProjectTable.Head (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.ProjectTable|Install||1.0.0|AutoLabel0'.
@@ -1065,12 +1281,59 @@
 |  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tProject (TypeId, SemesterId, [Name], Headline, Pitch)
 |  |  |  |  |  |  |  |  |  |  |  |           	values (0, 0, N'', N'', N'');
 |  |  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.StudentTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.StudentTable|Install||1.0.0|AutoLabel0'.
+|  |  |  |  |  |  |  |  |  |  |  |  - Trace: create table ITIH.tStudent (
+|  |  |  |  |  |  |  |  |  |  |  |           	StudentId int not null identity(0, 1),
+|  |  |  |  |  |  |  |  |  |  |  |           	UserId int not null,
+|  |  |  |  |  |  |  |  |  |  |  |           	SemesterId int not null
+|  |  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint PK_tStudent_StudentId primary key (StudentId),
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tStudent_UserId foreign key (UserId) references CK.tUser (UserId),
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tStudent_SemesterId foreign key (SemesterId) references ITIH.tSemester (SemesterId)
+|  |  |  |  |  |  |  |  |  |  |  |           );
+|  |  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tStudent (UserId, SemesterId) values (0, 0);
+|  |  |  |  |  |  |  |  |  |  |  |           GO
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.ProjectTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.StudentTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.ProjectMemberTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.ProjectMemberTable|Install||1.0.0|AutoLabel0'.
+|  |  |  |  |  |  |  |  |  |  |  |  - Trace: create table ITIH.tProjectMember (
+|  |  |  |  |  |  |  |  |  |  |  |           	ProjectMemberId int not null identity(0, 1),
+|  |  |  |  |  |  |  |  |  |  |  |           	ProjectId int not null,
+|  |  |  |  |  |  |  |  |  |  |  |           	ProjectRankId int not null,
+|  |  |  |  |  |  |  |  |  |  |  |           	UserId int not null,
+|  |  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint PK_tProjectMember_ProjectMemberId primary key (ProjectMemberId),
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tProjectMember_ProjectId foreign key (ProjectId) references ITIH.tProject (ProjectId),
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tProjectMember_RankId foreign key (ProjectRankId) references ITIH.tProjectRank (ProjectRankId),
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tProjectMember_UserId foreign key (UserId) references CK.tUser (UserId)
+|  |  |  |  |  |  |  |  |  |  |  |           );
+|  |  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tProjectMember (ProjectId, ProjectRankId, UserId) values (0, 0, 0);
+|  |  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.ProjectVotesTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.ProjectVotesTable|Install||1.0.0|AutoLabel0'.
+|  |  |  |  |  |  |  |  |  |  |  |  - Trace: create table ITIH.tProjectVotes (
+|  |  |  |  |  |  |  |  |  |  |  |           	ProjectVoteId int not null identity(0, 1),
+|  |  |  |  |  |  |  |  |  |  |  |           	ProjectId int not null,
+|  |  |  |  |  |  |  |  |  |  |  |           	UserId int not null,
+|  |  |  |  |  |  |  |  |  |  |  |           	Note int not null
+|  |  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint PK_tProjectVotes_ProjectVoteId primary key (ProjectVoteId),
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tProjectVotes_ProjectId foreign key (ProjectId) references ITIH.tProject (ProjectId),
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tProjectVotes_UserId foreign key (UserId) references CK.tUser (UserId)
+|  |  |  |  |  |  |  |  |  |  |  |           );
+|  |  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tProjectVotes (ProjectId, UserId, Note) values (0, 0, 0);
+|  |  |  |  |  |  |  |  |  |  |  |           GO
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.StorageTable.Head (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.StorageTable|Install||1.0.0|AutoLabel0'.
 |  |  |  |  |  |  |  |  |  |  |  |  - Trace: create table ITIH.tStorage (
 |  |  |  |  |  |  |  |  |  |  |  |           	StorageId int not null identity(0, 1),
-|  |  |  |  |  |  |  |  |  |  |  |           	ProjectId int not null
+|  |  |  |  |  |  |  |  |  |  |  |           	ProjectId int not null,
+|  |  |  |  |  |  |  |  |  |  |  |           	OpenedStall bit not null default 0
 |  |  |  |  |  |  |  |  |  |  |  |           
 |  |  |  |  |  |  |  |  |  |  |  |           	constraint PK_tStorage_StorageId primary key (StorageId),
 |  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tStorage_ProjectId foreign key (ProjectId) references ITIH.tProject (ProjectId)
@@ -1078,7 +1341,25 @@
 |  |  |  |  |  |  |  |  |  |  |  |           
 |  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tStorage (ProjectId) values (0);
 |  |  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.UserBalanceTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.UserBalanceTable|Install||1.0.0|AutoLabel0'.
+|  |  |  |  |  |  |  |  |  |  |  |  - Trace: create table ITIH.tUserBalance (
+|  |  |  |  |  |  |  |  |  |  |  |           	UserBalanceId int not null identity(0, 1),
+|  |  |  |  |  |  |  |  |  |  |  |           	UserId int not null,
+|  |  |  |  |  |  |  |  |  |  |  |           	ProjectId int not null,
+|  |  |  |  |  |  |  |  |  |  |  |           	Balance int not null default 0
+|  |  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint PK_tUserBalance_UserBalanceId primary key (UserBalanceId),
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tUserBalance_UserId foreign key (UserId) references CK.tUser(UserId),
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tUserBalance_ProjectId foreign key (ProjectId) references ITIH.tProject(ProjectId)
+|  |  |  |  |  |  |  |  |  |  |  |           );
+|  |  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tUserBalance(UserId, ProjectId) values (0, 0);
+|  |  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.ProjectMemberTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.ProjectVotesTable (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.StorageTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.UserBalanceTable (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.OrderTable.Head (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.OrderTable|Install||1.0.0|AutoLabel0'.
 |  |  |  |  |  |  |  |  |  |  |  |  - Trace: create table ITIH.tOrder (
@@ -1173,16 +1454,18 @@
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.OrderCreditTable|Install||1.0.0|AutoLabel0'.
 |  |  |  |  |  |  |  |  |  |  |  |  - Trace: create table ITIH.tOrderCredit (
 |  |  |  |  |  |  |  |  |  |  |  |           	OrderCreditId int not null identity(0, 1),
-|  |  |  |  |  |  |  |  |  |  |  |           	OrderedProductId int not null,
+|  |  |  |  |  |  |  |  |  |  |  |           	ProjectId int not null,
+|  |  |  |  |  |  |  |  |  |  |  |           	UserId int not null,
 |  |  |  |  |  |  |  |  |  |  |  |           	Amount int not null,
 |  |  |  |  |  |  |  |  |  |  |  |           	CreditTime datetime2 default sysutcdatetime()
 |  |  |  |  |  |  |  |  |  |  |  |           
 |  |  |  |  |  |  |  |  |  |  |  |           	constraint PK_tOrderCredit_OrderCreditId primary key (OrderCreditId),
-|  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tOrderCredit_OrderedProductId foreign key (OrderedProductId) references ITIH.tOrderedProduct (OrderedProductId)
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tOrderCredit_ProjectId foreign key (ProjectId) references ITIH.tProject (ProjectId),
+|  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tOrderCredit_UserId foreign key (UserId) references CK.tUser (UserId)
 |  |  |  |  |  |  |  |  |  |  |  |           );
 |  |  |  |  |  |  |  |  |  |  |  |           
-|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tOrderCredit (OrderedProductId, Amount)
-|  |  |  |  |  |  |  |  |  |  |  |           	values (0, 0);
+|  |  |  |  |  |  |  |  |  |  |  |           insert into ITIH.tOrderCredit (ProjectId, UserId, Amount)
+|  |  |  |  |  |  |  |  |  |  |  |           	values (0, 0, 0);
 |  |  |  |  |  |  |  |  |  |  |  |           GO
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^Model.ITIH.OrderedProductUpdateTrackTable.Head (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Executing 'sql|[]db^Model.ITIH.OrderedProductUpdateTrackTable|Install||1.0.0|AutoLabel0'.
@@ -2492,10 +2775,15 @@
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITI.Human.Data.Package.Head (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.ClassroomTable.Head (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.ProductTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.ProjectRankTable.Head (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.ProjectTypeTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.SchoolStatusTable.Head (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.UpdateTrackTable.Head (¤ => 1.0.0).
-|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.UserBalanceTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.UserAvatarsTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.UserDetailsTable.Head (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.ClassroomTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.ProjectRankTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.SchoolStatusTable (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.sProductCreate (unversioned).
 |  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.sProductCreate') is not null drop Procedure ITIH.sProductCreate;
 |  |  |  |  |  |  |  |  |  |  |           GO
@@ -2504,6 +2792,7 @@
 |  |  |  |  |  |  |  |  |  |  |           	@ActorId int,
 |  |  |  |  |  |  |  |  |  |  |           	@Name nvarchar(256),
 |  |  |  |  |  |  |  |  |  |  |           	@Desc nvarchar(512),
+|  |  |  |  |  |  |  |  |  |  |           	@Url nvarchar(max),
 |  |  |  |  |  |  |  |  |  |  |           	@ProductIdResult int output
 |  |  |  |  |  |  |  |  |  |  |           )
 |  |  |  |  |  |  |  |  |  |  |           as
@@ -2514,8 +2803,8 @@
 |  |  |  |  |  |  |  |  |  |  |           --[=/beginsp]
 |  |  |  |  |  |  |  |  |  |  |           --<PreCreate revert />
 |  |  |  |  |  |  |  |  |  |  |           
-|  |  |  |  |  |  |  |  |  |  |           	insert into ITIH.tProduct ([Name], [Desc])
-|  |  |  |  |  |  |  |  |  |  |           		values (@Name, @Desc);
+|  |  |  |  |  |  |  |  |  |  |           	insert into ITIH.tProduct ([Name], [Desc], [Url])
+|  |  |  |  |  |  |  |  |  |  |           		values (@Name, @Desc, @Url);
 |  |  |  |  |  |  |  |  |  |  |           
 |  |  |  |  |  |  |  |  |  |  |           	set @ProductIdResult = scope_identity();
 |  |  |  |  |  |  |  |  |  |  |           
@@ -2537,6 +2826,7 @@
 |  |  |  |  |  |  |  |  |  |  |           	@ProductId int,
 |  |  |  |  |  |  |  |  |  |  |           	@Name nvarchar(256),
 |  |  |  |  |  |  |  |  |  |  |           	@Desc nvarchar(512),
+|  |  |  |  |  |  |  |  |  |  |           	@Url nvarchar(max),
 |  |  |  |  |  |  |  |  |  |  |           	@Success bit = 0 output
 |  |  |  |  |  |  |  |  |  |  |           )
 |  |  |  |  |  |  |  |  |  |  |           as
@@ -2549,11 +2839,14 @@
 |  |  |  |  |  |  |  |  |  |  |           
 |  |  |  |  |  |  |  |  |  |  |           	declare @previousName nvarchar(256);
 |  |  |  |  |  |  |  |  |  |  |           	declare @previousDesc nvarchar(512);
+|  |  |  |  |  |  |  |  |  |  |           	declare @previousUrl nvarchar(max);
 |  |  |  |  |  |  |  |  |  |  |           	declare @newName nvarchar(256);
 |  |  |  |  |  |  |  |  |  |  |           	declare @newDesc nvarchar(512);
+|  |  |  |  |  |  |  |  |  |  |           	declare @newUrl nvarchar(max);
 |  |  |  |  |  |  |  |  |  |  |           
 |  |  |  |  |  |  |  |  |  |  |           	set @previousName = (select [Name] from ITIH.tProduct where ProductId = @ProductId);
 |  |  |  |  |  |  |  |  |  |  |           	set @previousDesc = (select [Desc] from ITIH.tProduct where ProductId = @ProductId);
+|  |  |  |  |  |  |  |  |  |  |           	set @previousUrl = (select [Url] from ITIH.tProduct where ProductId = @ProductId);
 |  |  |  |  |  |  |  |  |  |  |           
 |  |  |  |  |  |  |  |  |  |  |           	if (@Name = null)
 |  |  |  |  |  |  |  |  |  |  |           		set @Name = @previousName;
@@ -2561,13 +2854,18 @@
 |  |  |  |  |  |  |  |  |  |  |           	if (@Desc = null)
 |  |  |  |  |  |  |  |  |  |  |           		set @Desc = @previousDesc;
 |  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	if (@Url = null)
+|  |  |  |  |  |  |  |  |  |  |           		set @Url = @previousUrl;
+|  |  |  |  |  |  |  |  |  |  |           
 |  |  |  |  |  |  |  |  |  |  |           	update ITIH.tProduct set [Name] = @Name where ProductId = @ProductId;
 |  |  |  |  |  |  |  |  |  |  |           	update ITIH.tProduct set [Desc] = @Desc where ProductId = @ProductId;
+|  |  |  |  |  |  |  |  |  |  |           	update ITIH.tProduct set [Url] = @Url where ProductId = @ProductId;
 |  |  |  |  |  |  |  |  |  |  |           
 |  |  |  |  |  |  |  |  |  |  |           	set @newName = (select [Name] from ITIH.tProduct where ProductId = @ProductId);
 |  |  |  |  |  |  |  |  |  |  |           	set @newDesc = (select [Desc] from ITIH.tProduct where ProductId = @ProductId);
+|  |  |  |  |  |  |  |  |  |  |           	set @newUrl = (select [Url] from ITIH.tProduct where ProductId = @ProductId);
 |  |  |  |  |  |  |  |  |  |  |           
-|  |  |  |  |  |  |  |  |  |  |           	if (@newName != @previousName or @newDesc != @previousDesc)
+|  |  |  |  |  |  |  |  |  |  |           	if (@newName != @previousName or @newDesc != @previousDesc or @newUrl != @previousUrl)
 |  |  |  |  |  |  |  |  |  |  |           		set @Success = 1;
 |  |  |  |  |  |  |  |  |  |  |           
 |  |  |  |  |  |  |  |  |  |  |           	--<PostCreate />
@@ -2609,11 +2907,168 @@
 |  |  |  |  |  |  |  |  |  |  |           --[=/endsp]
 |  |  |  |  |  |  |  |  |  |  |           end;
 |  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.sUserAvatarCreate (unversioned).
+|  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.sUserAvatarCreate') is not null drop Procedure ITIH.sUserAvatarCreate;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  |           -- SetupConfig: {}
+|  |  |  |  |  |  |  |  |  |  |           create proc ITIH.sUserAvatarCreate (
+|  |  |  |  |  |  |  |  |  |  |           	@ActorId int,
+|  |  |  |  |  |  |  |  |  |  |           	@UserId int,
+|  |  |  |  |  |  |  |  |  |  |           	@Url nvarchar(max),
+|  |  |  |  |  |  |  |  |  |  |           	@UserAvatarIdResult int output
+|  |  |  |  |  |  |  |  |  |  |           )
+|  |  |  |  |  |  |  |  |  |  |           as
+|  |  |  |  |  |  |  |  |  |  |           begin
+|  |  |  |  |  |  |  |  |  |  |           --[=beginsp]
+|  |  |  |  |  |  |  |  |  |  |           set nocount on; declare @SPCallTC int = @@TRANCOUNT, @SPCallId sysname; 
+|  |  |  |  |  |  |  |  |  |  |           beginsp: if @SPCallTC = 0 begin tran; else begin set @SPCallId = cast(32*cast(@@PROCID as bigint)+@@NESTLEVEL as varchar); save transaction @SPCallId; end begin try
+|  |  |  |  |  |  |  |  |  |  |           --[=/beginsp]
+|  |  |  |  |  |  |  |  |  |  |           --<PreCreate revert />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	insert into ITIH.tUserAvatars (UserId, [Url])
+|  |  |  |  |  |  |  |  |  |  |           		values (@UserId, @Url);
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	set @UserAvatarIdResult = scope_identity();
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	--<PostCreate />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           --[=endsp]
+|  |  |  |  |  |  |  |  |  |  |           end try
+|  |  |  |  |  |  |  |  |  |  |           begin catch if @SPCallTC = 0 rollback; else if XACT_STATE() = 1 rollback transaction @SPCallId; exec CKCore.sErrorRethrow @@ProcId; return -1; end catch;
+|  |  |  |  |  |  |  |  |  |  |           endsp: if @SPCallTC = 0 commit; return 0;
+|  |  |  |  |  |  |  |  |  |  |           --[=/endsp]
+|  |  |  |  |  |  |  |  |  |  |           end;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.sUserDetailsCreate (unversioned).
+|  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.sUserDetailsCreate') is not null drop Procedure ITIH.sUserDetailsCreate;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  |           -- SetupConfig: {}
+|  |  |  |  |  |  |  |  |  |  |           create proc ITIH.sUserDetailsCreate (
+|  |  |  |  |  |  |  |  |  |  |           	@ActorId int,
+|  |  |  |  |  |  |  |  |  |  |           	@UserId int,
+|  |  |  |  |  |  |  |  |  |  |           	@FirstName nvarchar(126),
+|  |  |  |  |  |  |  |  |  |  |           	@LastName nvarchar(126),
+|  |  |  |  |  |  |  |  |  |  |           	@BirthDate datetime2,
+|  |  |  |  |  |  |  |  |  |  |           	@UserDetailsIdResult int output
+|  |  |  |  |  |  |  |  |  |  |           )
+|  |  |  |  |  |  |  |  |  |  |           as
+|  |  |  |  |  |  |  |  |  |  |           begin
+|  |  |  |  |  |  |  |  |  |  |           --[=beginsp]
+|  |  |  |  |  |  |  |  |  |  |           set nocount on; declare @SPCallTC int = @@TRANCOUNT, @SPCallId sysname; 
+|  |  |  |  |  |  |  |  |  |  |           beginsp: if @SPCallTC = 0 begin tran; else begin set @SPCallId = cast(32*cast(@@PROCID as bigint)+@@NESTLEVEL as varchar); save transaction @SPCallId; end begin try
+|  |  |  |  |  |  |  |  |  |  |           --[=/beginsp]
+|  |  |  |  |  |  |  |  |  |  |           --<PreCreate revert />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	insert into ITIH.tUserDetails (UserId, FirstName, LastName, BirthDate)
+|  |  |  |  |  |  |  |  |  |  |           		values (@UserId, @FirstName, @LastName, @BirthDate);
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	set @UserDetailsIdResult = scope_identity();
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	--<PostCreate />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           --[=endsp]
+|  |  |  |  |  |  |  |  |  |  |           end try
+|  |  |  |  |  |  |  |  |  |  |           begin catch if @SPCallTC = 0 rollback; else if XACT_STATE() = 1 rollback transaction @SPCallId; exec CKCore.sErrorRethrow @@ProcId; return -1; end catch;
+|  |  |  |  |  |  |  |  |  |  |           endsp: if @SPCallTC = 0 commit; return 0;
+|  |  |  |  |  |  |  |  |  |  |           --[=/endsp]
+|  |  |  |  |  |  |  |  |  |  |           end;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.sUserDetailsUpdate (unversioned).
+|  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.sUserDetailsUpdate') is not null drop Procedure ITIH.sUserDetailsUpdate;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  |           create proc ITIH.sUserDetailsUpdate (
+|  |  |  |  |  |  |  |  |  |  |           	@ActorId int,
+|  |  |  |  |  |  |  |  |  |  |           	@UserId int,
+|  |  |  |  |  |  |  |  |  |  |           	@FirstName nvarchar(128),
+|  |  |  |  |  |  |  |  |  |  |           	@LastName nvarchar(128),
+|  |  |  |  |  |  |  |  |  |  |           	@BirthDate datetime2,
+|  |  |  |  |  |  |  |  |  |  |           	@Success bit output
+|  |  |  |  |  |  |  |  |  |  |           )
+|  |  |  |  |  |  |  |  |  |  |           as
+|  |  |  |  |  |  |  |  |  |  |           begin
+|  |  |  |  |  |  |  |  |  |  |           	UPDATE ITIH.tUserDetails SET FirstName = @FirstName WHERE UserId = @UserId;
+|  |  |  |  |  |  |  |  |  |  |           	UPDATE ITIH.tUserDetails SET LastName = @LastName WHERE UserId = @UserId;
+|  |  |  |  |  |  |  |  |  |  |           	UPDATE ITIH.tUserDetails SET BirthDate = @BirthDate WHERE UserId = @UserId;
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	set @Success = 1;
+|  |  |  |  |  |  |  |  |  |  |           end;
+|  |  |  |  |  |  |  |  |  |  |           GO
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.UpdateTrackTable (¤ => 1.0.0).
-|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.UserBalanceTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.vUserProfile (unversioned).
+|  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.vUserProfile') is not null drop View ITIH.vUserProfile;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  |           create view ITIH.vUserProfile
+|  |  |  |  |  |  |  |  |  |  |           as
+|  |  |  |  |  |  |  |  |  |  |           	select
+|  |  |  |  |  |  |  |  |  |  |           		UserId = ud.UserId,
+|  |  |  |  |  |  |  |  |  |  |           		UserName = u.UserName,
+|  |  |  |  |  |  |  |  |  |  |           		Firstname = ud.FirstName,
+|  |  |  |  |  |  |  |  |  |  |           		Lastname = ud.LastName
+|  |  |  |  |  |  |  |  |  |  |           	from ITIH.tUserDetails ud
+|  |  |  |  |  |  |  |  |  |  |           		join CK.tUser u on u.UserId = ud.UserId
+|  |  |  |  |  |  |  |  |  |  |           	where ud.UserId <> 0;
+|  |  |  |  |  |  |  |  |  |  |           GO
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.ProductTable (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.ProjectTypeTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.SchoolMemberTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.UserAvatarsTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.UserDetailsTable (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.SemesterTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.sSchoolMemberCreate (unversioned).
+|  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.sSchoolMemberCreate') is not null drop Procedure ITIH.sSchoolMemberCreate;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  |           -- SetupConfig: {}
+|  |  |  |  |  |  |  |  |  |  |           create proc ITIH.sSchoolMemberCreate (
+|  |  |  |  |  |  |  |  |  |  |           	@ActorId int,
+|  |  |  |  |  |  |  |  |  |  |           	@UserId int,
+|  |  |  |  |  |  |  |  |  |  |           	@SchoolStatusId int,
+|  |  |  |  |  |  |  |  |  |  |           	@SchoolMemberIdResult int output
+|  |  |  |  |  |  |  |  |  |  |           )
+|  |  |  |  |  |  |  |  |  |  |           as
+|  |  |  |  |  |  |  |  |  |  |           begin
+|  |  |  |  |  |  |  |  |  |  |           --[=beginsp]
+|  |  |  |  |  |  |  |  |  |  |           set nocount on; declare @SPCallTC int = @@TRANCOUNT, @SPCallId sysname; 
+|  |  |  |  |  |  |  |  |  |  |           beginsp: if @SPCallTC = 0 begin tran; else begin set @SPCallId = cast(32*cast(@@PROCID as bigint)+@@NESTLEVEL as varchar); save transaction @SPCallId; end begin try
+|  |  |  |  |  |  |  |  |  |  |           --[=/beginsp]
+|  |  |  |  |  |  |  |  |  |  |           --<PreCreate revert />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	insert into ITIH.tSchoolMember (UserId, SchoolStatusId)
+|  |  |  |  |  |  |  |  |  |  |           		values (@UserId, @SchoolStatusId);
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	set @SchoolMemberIdResult = scope_identity();
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	--<PostCreate />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           --[=endsp]
+|  |  |  |  |  |  |  |  |  |  |           end try
+|  |  |  |  |  |  |  |  |  |  |           begin catch if @SPCallTC = 0 rollback; else if XACT_STATE() = 1 rollback transaction @SPCallId; exec CKCore.sErrorRethrow @@ProcId; return -1; end catch;
+|  |  |  |  |  |  |  |  |  |  |           endsp: if @SPCallTC = 0 commit; return 0;
+|  |  |  |  |  |  |  |  |  |  |           --[=/endsp]
+|  |  |  |  |  |  |  |  |  |  |           end;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.vSchoolMembers (unversioned).
+|  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.vSchoolMembers') is not null drop View ITIH.vSchoolMembers;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  |           create view ITIH.vSchoolMembers
+|  |  |  |  |  |  |  |  |  |  |           as
+|  |  |  |  |  |  |  |  |  |  |           	select
+|  |  |  |  |  |  |  |  |  |  |           		UserId = sm.UserId,
+|  |  |  |  |  |  |  |  |  |  |           		AvatarUrl = ua.[Url],
+|  |  |  |  |  |  |  |  |  |  |           		UserName = u.UserName,
+|  |  |  |  |  |  |  |  |  |  |           		FirstName = ud.FirstName,
+|  |  |  |  |  |  |  |  |  |  |           		LastName = ud.LastName,
+|  |  |  |  |  |  |  |  |  |  |           		BirthDate = ud.BirthDate,
+|  |  |  |  |  |  |  |  |  |  |           		SchoolMemberId = sm.SchoolMemberId,
+|  |  |  |  |  |  |  |  |  |  |           		SchoolStatusId = sm.SchoolStatusId,
+|  |  |  |  |  |  |  |  |  |  |           		SchoolStatusName = ss.SchoolStatusName
+|  |  |  |  |  |  |  |  |  |  |           	from ITIH.tSchoolMember sm
+|  |  |  |  |  |  |  |  |  |  |           		left join CK.tUser u on u.UserId = sm.UserId
+|  |  |  |  |  |  |  |  |  |  |           		left join ITIH.tUserDetails ud on ud.UserId = sm.UserId
+|  |  |  |  |  |  |  |  |  |  |           		left join ITIH.tUserAvatars ua on ua.UserId = sm.UserId
+|  |  |  |  |  |  |  |  |  |  |           		left join ITIH.tSchoolStatus ss on ss.SchoolStatusId = sm.SchoolStatusId
+|  |  |  |  |  |  |  |  |  |  |           	where sm.SchoolMemberId <> 0;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.SchoolMemberTable (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.sSemesterCreate (unversioned).
 |  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.sSemesterCreate') is not null drop Procedure ITIH.sSemesterCreate;
 |  |  |  |  |  |  |  |  |  |  |           GO
@@ -2646,6 +3101,7 @@
 |  |  |  |  |  |  |  |  |  |  |           GO
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.SemesterTable (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.ProjectTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.StudentTable.Head (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.sProjectCreate (unversioned).
 |  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.sProjectCreate') is not null drop Procedure ITIH.sProjectCreate;
 |  |  |  |  |  |  |  |  |  |  |           GO
@@ -2722,6 +3178,38 @@
 |  |  |  |  |  |  |  |  |  |  |           --[=/endsp]
 |  |  |  |  |  |  |  |  |  |  |           end;
 |  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.sStudentCreate (unversioned).
+|  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.sStudentCreate') is not null drop Procedure ITIH.sStudentCreate;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  |           -- SetupConfig: {}
+|  |  |  |  |  |  |  |  |  |  |           create proc ITIH.sStudentCreate (
+|  |  |  |  |  |  |  |  |  |  |           	@ActorId int,
+|  |  |  |  |  |  |  |  |  |  |           	@UserId int,
+|  |  |  |  |  |  |  |  |  |  |           	@SemesterId int,
+|  |  |  |  |  |  |  |  |  |  |           	@StudentIdResult int output
+|  |  |  |  |  |  |  |  |  |  |           )
+|  |  |  |  |  |  |  |  |  |  |           as
+|  |  |  |  |  |  |  |  |  |  |           begin
+|  |  |  |  |  |  |  |  |  |  |           --[=beginsp]
+|  |  |  |  |  |  |  |  |  |  |           set nocount on; declare @SPCallTC int = @@TRANCOUNT, @SPCallId sysname; 
+|  |  |  |  |  |  |  |  |  |  |           beginsp: if @SPCallTC = 0 begin tran; else begin set @SPCallId = cast(32*cast(@@PROCID as bigint)+@@NESTLEVEL as varchar); save transaction @SPCallId; end begin try
+|  |  |  |  |  |  |  |  |  |  |           --[=/beginsp]
+|  |  |  |  |  |  |  |  |  |  |           --<PreCreate revert />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	insert into ITIH.tStudent (UserId, SemesterId)
+|  |  |  |  |  |  |  |  |  |  |           		values (@UserId, @SemesterId);
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	set @StudentIdResult = scope_identity();
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	--<PostCreate />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           --[=endsp]
+|  |  |  |  |  |  |  |  |  |  |           end try
+|  |  |  |  |  |  |  |  |  |  |           begin catch if @SPCallTC = 0 rollback; else if XACT_STATE() = 1 rollback transaction @SPCallId; exec CKCore.sErrorRethrow @@ProcId; return -1; end catch;
+|  |  |  |  |  |  |  |  |  |  |           endsp: if @SPCallTC = 0 commit; return 0;
+|  |  |  |  |  |  |  |  |  |  |           --[=/endsp]
+|  |  |  |  |  |  |  |  |  |  |           end;
+|  |  |  |  |  |  |  |  |  |  |           GO
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.vProjects (unversioned).
 |  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.vProjects') is not null drop View ITIH.vProjects;
 |  |  |  |  |  |  |  |  |  |  |           GO
@@ -2736,15 +3224,159 @@
 |  |  |  |  |  |  |  |  |  |  |           		ProjectPitch = p.Pitch,
 |  |  |  |  |  |  |  |  |  |  |           		SemesterId = p.SemesterId,
 |  |  |  |  |  |  |  |  |  |  |           		SemesterName = sem.[Name],
-|  |  |  |  |  |  |  |  |  |  |           		StorageId = sto.StorageId
+|  |  |  |  |  |  |  |  |  |  |           		StorageId = case when (p.SemesterId < 4) then 0 else sto.StorageId end,
+|  |  |  |  |  |  |  |  |  |  |           		OpenedStall = case when (p.SemesterId < 4) then 0 else sto.OpenedStall end
 |  |  |  |  |  |  |  |  |  |  |           	from ITIH.tProject p
-|  |  |  |  |  |  |  |  |  |  |           		join ITIH.tProjectType typ on typ.TypeId = p.TypeId
-|  |  |  |  |  |  |  |  |  |  |           		join ITIH.tSemester sem on sem.SemesterId = p.SemesterId
-|  |  |  |  |  |  |  |  |  |  |           		join ITIH.tStorage sto on sto.ProjectId = p.ProjectId
+|  |  |  |  |  |  |  |  |  |  |           		left join ITIH.tProjectType typ on typ.TypeId = p.TypeId
+|  |  |  |  |  |  |  |  |  |  |           		left join ITIH.tSemester sem on sem.SemesterId = p.SemesterId
+|  |  |  |  |  |  |  |  |  |  |           		left join ITIH.tStorage sto on sto.ProjectId = p.ProjectId
 |  |  |  |  |  |  |  |  |  |  |           	where p.ProjectId <> 0;
 |  |  |  |  |  |  |  |  |  |  |           GO
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.ProjectTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.StudentTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.ProjectMemberTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.ProjectVotesTable.Head (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.StorageTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.UserBalanceTable.Head (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.sProjectMemberCreate (unversioned).
+|  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.sProjectMemberCreate') is not null drop Procedure ITIH.sProjectMemberCreate;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  |           -- SetupConfig: {}
+|  |  |  |  |  |  |  |  |  |  |           create procedure ITIH.sProjectMemberCreate (
+|  |  |  |  |  |  |  |  |  |  |           	@ActorId int,
+|  |  |  |  |  |  |  |  |  |  |           	@ProjectId int,
+|  |  |  |  |  |  |  |  |  |  |           	@ProjectRankId int,
+|  |  |  |  |  |  |  |  |  |  |           	@UserId int,
+|  |  |  |  |  |  |  |  |  |  |           	@ProjectMemberIdResult int output
+|  |  |  |  |  |  |  |  |  |  |           )
+|  |  |  |  |  |  |  |  |  |  |           as
+|  |  |  |  |  |  |  |  |  |  |           begin
+|  |  |  |  |  |  |  |  |  |  |           --[=beginsp]
+|  |  |  |  |  |  |  |  |  |  |           set nocount on; declare @SPCallTC int = @@TRANCOUNT, @SPCallId sysname; 
+|  |  |  |  |  |  |  |  |  |  |           beginsp: if @SPCallTC = 0 begin tran; else begin set @SPCallId = cast(32*cast(@@PROCID as bigint)+@@NESTLEVEL as varchar); save transaction @SPCallId; end begin try
+|  |  |  |  |  |  |  |  |  |  |           --[=/beginsp]
+|  |  |  |  |  |  |  |  |  |  |           --<PreCreate revert />
+|  |  |  |  |  |  |  |  |  |  |           	
+|  |  |  |  |  |  |  |  |  |  |           	insert into ITIH.tProjectMember (ProjectId, ProjectRankId, UserId)
+|  |  |  |  |  |  |  |  |  |  |           		values (@ProjectId, @ProjectRankId, @UserId);
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	set @ProjectMemberIdResult = scope_identity();
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	--<PostCreate />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           --[=endsp]
+|  |  |  |  |  |  |  |  |  |  |           end try
+|  |  |  |  |  |  |  |  |  |  |           begin catch if @SPCallTC = 0 rollback; else if XACT_STATE() = 1 rollback transaction @SPCallId; exec CKCore.sErrorRethrow @@ProcId; return -1; end catch;
+|  |  |  |  |  |  |  |  |  |  |           endsp: if @SPCallTC = 0 commit; return 0;
+|  |  |  |  |  |  |  |  |  |  |           --[=/endsp]
+|  |  |  |  |  |  |  |  |  |  |           end;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.sProjectMemberDelete (unversioned).
+|  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.sProjectMemberDelete') is not null drop Procedure ITIH.sProjectMemberDelete;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  |           -- SetupConfig: {}
+|  |  |  |  |  |  |  |  |  |  |           create proc ITIH.sProjectMemberDelete (
+|  |  |  |  |  |  |  |  |  |  |           	@ActorId int,
+|  |  |  |  |  |  |  |  |  |  |           	@ProjectMemberId int,
+|  |  |  |  |  |  |  |  |  |  |           	@Success bit = 0 output
+|  |  |  |  |  |  |  |  |  |  |           )
+|  |  |  |  |  |  |  |  |  |  |           as
+|  |  |  |  |  |  |  |  |  |  |           begin
+|  |  |  |  |  |  |  |  |  |  |           --[=beginsp]
+|  |  |  |  |  |  |  |  |  |  |           set nocount on; declare @SPCallTC int = @@TRANCOUNT, @SPCallId sysname; 
+|  |  |  |  |  |  |  |  |  |  |           beginsp: if @SPCallTC = 0 begin tran; else begin set @SPCallId = cast(32*cast(@@PROCID as bigint)+@@NESTLEVEL as varchar); save transaction @SPCallId; end begin try
+|  |  |  |  |  |  |  |  |  |  |           --[=/beginsp]
+|  |  |  |  |  |  |  |  |  |  |           --<PreCreate revert />
+|  |  |  |  |  |  |  |  |  |  |           	
+|  |  |  |  |  |  |  |  |  |  |           	declare @stillExisting int;
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	delete from ITIH.tProjectMember where ProjectMemberId = @ProjectMemberId;
+|  |  |  |  |  |  |  |  |  |  |           	set @stillExisting = (select ProjectMemberId from ITIH.tProjectMember where ProjectMemberId = @ProjectMemberId);
+|  |  |  |  |  |  |  |  |  |  |           	
+|  |  |  |  |  |  |  |  |  |  |           	if (@stillExisting is null)
+|  |  |  |  |  |  |  |  |  |  |           		begin; 
+|  |  |  |  |  |  |  |  |  |  |           			set @Success = 1;
+|  |  |  |  |  |  |  |  |  |  |           		end;
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	--<PostCreate />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           --[=endsp]
+|  |  |  |  |  |  |  |  |  |  |           end try
+|  |  |  |  |  |  |  |  |  |  |           begin catch if @SPCallTC = 0 rollback; else if XACT_STATE() = 1 rollback transaction @SPCallId; exec CKCore.sErrorRethrow @@ProcId; return -1; end catch;
+|  |  |  |  |  |  |  |  |  |  |           endsp: if @SPCallTC = 0 commit; return 0;
+|  |  |  |  |  |  |  |  |  |  |           --[=/endsp]
+|  |  |  |  |  |  |  |  |  |  |           end;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.sProjectVoteCreate (unversioned).
+|  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.sProjectVoteCreate') is not null drop Procedure ITIH.sProjectVoteCreate;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  |           --SetupConfig: {}
+|  |  |  |  |  |  |  |  |  |  |           create proc ITIH.sProjectVoteCreate (
+|  |  |  |  |  |  |  |  |  |  |           	@ActorId int,
+|  |  |  |  |  |  |  |  |  |  |           	@ProjectId int,
+|  |  |  |  |  |  |  |  |  |  |           	@UserId int,
+|  |  |  |  |  |  |  |  |  |  |           	@Note int,
+|  |  |  |  |  |  |  |  |  |  |           	@ProjectVoteIdResult int output
+|  |  |  |  |  |  |  |  |  |  |           )
+|  |  |  |  |  |  |  |  |  |  |           as
+|  |  |  |  |  |  |  |  |  |  |           begin
+|  |  |  |  |  |  |  |  |  |  |           --[=beginsp]
+|  |  |  |  |  |  |  |  |  |  |           set nocount on; declare @SPCallTC int = @@TRANCOUNT, @SPCallId sysname; 
+|  |  |  |  |  |  |  |  |  |  |           beginsp: if @SPCallTC = 0 begin tran; else begin set @SPCallId = cast(32*cast(@@PROCID as bigint)+@@NESTLEVEL as varchar); save transaction @SPCallId; end begin try
+|  |  |  |  |  |  |  |  |  |  |           --[=/beginsp]
+|  |  |  |  |  |  |  |  |  |  |           --<PreCreate revert />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	insert into ITIH.tProjectVotes (ProjectId, UserId, Note)
+|  |  |  |  |  |  |  |  |  |  |           		values (@ProjectId, @UserId, @Note);
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	set @ProjectVoteIdResult = scope_identity();
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	--<PostCreate />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           --[=endsp]
+|  |  |  |  |  |  |  |  |  |  |           end try
+|  |  |  |  |  |  |  |  |  |  |           begin catch if @SPCallTC = 0 rollback; else if XACT_STATE() = 1 rollback transaction @SPCallId; exec CKCore.sErrorRethrow @@ProcId; return -1; end catch;
+|  |  |  |  |  |  |  |  |  |  |           endsp: if @SPCallTC = 0 commit; return 0;
+|  |  |  |  |  |  |  |  |  |  |           --[=/endsp]
+|  |  |  |  |  |  |  |  |  |  |           end;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.sStallUpdate (unversioned).
+|  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.sStallUpdate') is not null drop Procedure ITIH.sStallUpdate;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  |           --SetupConfig:{}
+|  |  |  |  |  |  |  |  |  |  |           create proc ITIH.sStallUpdate (
+|  |  |  |  |  |  |  |  |  |  |           	@ActorId int,
+|  |  |  |  |  |  |  |  |  |  |           	@StorageId int,
+|  |  |  |  |  |  |  |  |  |  |           	@OpenedStall bit,
+|  |  |  |  |  |  |  |  |  |  |           	@Success bit = 0 output
+|  |  |  |  |  |  |  |  |  |  |           )
+|  |  |  |  |  |  |  |  |  |  |           as
+|  |  |  |  |  |  |  |  |  |  |           begin
+|  |  |  |  |  |  |  |  |  |  |           --[=beginsp]
+|  |  |  |  |  |  |  |  |  |  |           set nocount on; declare @SPCallTC int = @@TRANCOUNT, @SPCallId sysname; 
+|  |  |  |  |  |  |  |  |  |  |           beginsp: if @SPCallTC = 0 begin tran; else begin set @SPCallId = cast(32*cast(@@PROCID as bigint)+@@NESTLEVEL as varchar); save transaction @SPCallId; end begin try
+|  |  |  |  |  |  |  |  |  |  |           --[=/beginsp]
+|  |  |  |  |  |  |  |  |  |  |           --<PreCreate revert />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	declare @previousState bit;
+|  |  |  |  |  |  |  |  |  |  |           	declare @newState bit;
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	set @previousState = (select OpenedStall from ITIH.tStorage where StorageId = @StorageId);
+|  |  |  |  |  |  |  |  |  |  |           	update ITIH.tStorage set OpenedStall = @OpenedStall where StorageId = @StorageId;
+|  |  |  |  |  |  |  |  |  |  |           	set @newState = (select OpenedStall from ITIH.tStorage where StorageId = @StorageId);
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	if (@previousState != @newState)
+|  |  |  |  |  |  |  |  |  |  |           		set @Success = 1;
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	--<PostCreate />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           --[=endsp]
+|  |  |  |  |  |  |  |  |  |  |           end try
+|  |  |  |  |  |  |  |  |  |  |           begin catch if @SPCallTC = 0 rollback; else if XACT_STATE() = 1 rollback transaction @SPCallId; exec CKCore.sErrorRethrow @@ProcId; return -1; end catch;
+|  |  |  |  |  |  |  |  |  |  |           endsp: if @SPCallTC = 0 commit; return 0;
+|  |  |  |  |  |  |  |  |  |  |           --[=/endsp]
+|  |  |  |  |  |  |  |  |  |  |           end;
+|  |  |  |  |  |  |  |  |  |  |           GO
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.sStorageCreate (unversioned).
 |  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.sStorageCreate') is not null drop Procedure ITIH.sStorageCreate;
 |  |  |  |  |  |  |  |  |  |  |           GO
@@ -2775,7 +3407,118 @@
 |  |  |  |  |  |  |  |  |  |  |           --[=/endsp]
 |  |  |  |  |  |  |  |  |  |  |           end;
 |  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.sUserBalanceCreate (unversioned).
+|  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.sUserBalanceCreate') is not null drop Procedure ITIH.sUserBalanceCreate;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  |           --SetupConfig:{}
+|  |  |  |  |  |  |  |  |  |  |           create proc ITIH.sUserBalanceCreate (
+|  |  |  |  |  |  |  |  |  |  |           	@ActorId int,
+|  |  |  |  |  |  |  |  |  |  |           	@UserId int,
+|  |  |  |  |  |  |  |  |  |  |           	@ProjectId int,
+|  |  |  |  |  |  |  |  |  |  |           	@UserBalanceId int output
+|  |  |  |  |  |  |  |  |  |  |           )
+|  |  |  |  |  |  |  |  |  |  |           as
+|  |  |  |  |  |  |  |  |  |  |           begin
+|  |  |  |  |  |  |  |  |  |  |           --[=beginsp]
+|  |  |  |  |  |  |  |  |  |  |           set nocount on; declare @SPCallTC int = @@TRANCOUNT, @SPCallId sysname; 
+|  |  |  |  |  |  |  |  |  |  |           beginsp: if @SPCallTC = 0 begin tran; else begin set @SPCallId = cast(32*cast(@@PROCID as bigint)+@@NESTLEVEL as varchar); save transaction @SPCallId; end begin try
+|  |  |  |  |  |  |  |  |  |  |           --[=/beginsp]
+|  |  |  |  |  |  |  |  |  |  |           --<PreCreate revert />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	insert into ITIH.tUserBalance (UserId, ProjectId) values (@UserId, @ProjectId);
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	set @UserBalanceId = scope_identity();
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	--<PostCreate />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           --[=endsp]
+|  |  |  |  |  |  |  |  |  |  |           end try
+|  |  |  |  |  |  |  |  |  |  |           begin catch if @SPCallTC = 0 rollback; else if XACT_STATE() = 1 rollback transaction @SPCallId; exec CKCore.sErrorRethrow @@ProcId; return -1; end catch;
+|  |  |  |  |  |  |  |  |  |  |           endsp: if @SPCallTC = 0 commit; return 0;
+|  |  |  |  |  |  |  |  |  |  |           --[=/endsp]
+|  |  |  |  |  |  |  |  |  |  |           end;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.sUserBalanceUpdate (unversioned).
+|  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.sUserBalanceUpdate') is not null drop Procedure ITIH.sUserBalanceUpdate;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  |           --SetupConfig:{}
+|  |  |  |  |  |  |  |  |  |  |           create proc ITIH.sUserBalanceUpdate (
+|  |  |  |  |  |  |  |  |  |  |           	@ActorId int,
+|  |  |  |  |  |  |  |  |  |  |           	@UserBalanceId int,
+|  |  |  |  |  |  |  |  |  |  |           	@Amount int,
+|  |  |  |  |  |  |  |  |  |  |           	@Success bit = 0 output
+|  |  |  |  |  |  |  |  |  |  |           )
+|  |  |  |  |  |  |  |  |  |  |           as
+|  |  |  |  |  |  |  |  |  |  |           begin
+|  |  |  |  |  |  |  |  |  |  |           --[=beginsp]
+|  |  |  |  |  |  |  |  |  |  |           set nocount on; declare @SPCallTC int = @@TRANCOUNT, @SPCallId sysname; 
+|  |  |  |  |  |  |  |  |  |  |           beginsp: if @SPCallTC = 0 begin tran; else begin set @SPCallId = cast(32*cast(@@PROCID as bigint)+@@NESTLEVEL as varchar); save transaction @SPCallId; end begin try
+|  |  |  |  |  |  |  |  |  |  |           --[=/beginsp]
+|  |  |  |  |  |  |  |  |  |  |           --<PreCreate revert />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	declare @previousBalance nvarchar(512);
+|  |  |  |  |  |  |  |  |  |  |           	declare @newBalance nvarchar(256);
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	set @previousBalance = (select Balance from ITIH.tUserBalance where UserBalanceId = @UserBalanceId);
+|  |  |  |  |  |  |  |  |  |  |           	update ITIH.tUserBalance set Balance = (@previousBalance + @Amount) where UserBalanceId = @UserBalanceId;
+|  |  |  |  |  |  |  |  |  |  |           	set @newBalance = (select Balance from ITIH.tUserBalance where UserBalanceId = @UserBalanceId);
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	if (@previousBalance != @newBalance)
+|  |  |  |  |  |  |  |  |  |  |           		set @Success = 1;
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	--<PostCreate />
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           --[=endsp]
+|  |  |  |  |  |  |  |  |  |  |           end try
+|  |  |  |  |  |  |  |  |  |  |           begin catch if @SPCallTC = 0 rollback; else if XACT_STATE() = 1 rollback transaction @SPCallId; exec CKCore.sErrorRethrow @@ProcId; return -1; end catch;
+|  |  |  |  |  |  |  |  |  |  |           endsp: if @SPCallTC = 0 commit; return 0;
+|  |  |  |  |  |  |  |  |  |  |           --[=/endsp]
+|  |  |  |  |  |  |  |  |  |  |           end;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.vProjectMembers (unversioned).
+|  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.vProjectMembers') is not null drop View ITIH.vProjectMembers;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  |           create view ITIH.vProjectMembers
+|  |  |  |  |  |  |  |  |  |  |           as
+|  |  |  |  |  |  |  |  |  |  |           	select
+|  |  |  |  |  |  |  |  |  |  |           		ProjectMemberId = pm.ProjectMemberId,
+|  |  |  |  |  |  |  |  |  |  |           		ProjectId = pm.ProjectId,
+|  |  |  |  |  |  |  |  |  |  |           		ProjectName = p.[Name],
+|  |  |  |  |  |  |  |  |  |  |           		ProjectRankId = pm.ProjectRankId,
+|  |  |  |  |  |  |  |  |  |  |           		ProjectRankName = pr.[Name],
+|  |  |  |  |  |  |  |  |  |  |           		UserId = pm.UserId,
+|  |  |  |  |  |  |  |  |  |  |           		UserName = u.UserName,
+|  |  |  |  |  |  |  |  |  |  |           		AvatarUrl = ua.[Url]
+|  |  |  |  |  |  |  |  |  |  |           	from ITIH.tProjectMember pm
+|  |  |  |  |  |  |  |  |  |  |           		left join ITIH.tProject p on p.ProjectId = pm.ProjectId
+|  |  |  |  |  |  |  |  |  |  |           		left join CK.tUser u on u.UserId = pm.UserId
+|  |  |  |  |  |  |  |  |  |  |           		left join ITIH.tProjectRank pr on pr.ProjectRankId = pm.ProjectRankId
+|  |  |  |  |  |  |  |  |  |  |           		left join ITIH.tUserAvatars ua on ua.UserId = pm.UserId
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.vUserBalance (unversioned).
+|  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.vUserBalance') is not null drop View ITIH.vUserBalance;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  |           create view ITIH.vUserBalance
+|  |  |  |  |  |  |  |  |  |  |           as
+|  |  |  |  |  |  |  |  |  |  |           	select
+|  |  |  |  |  |  |  |  |  |  |           		UserBalanceId = uB.UserBalanceId,
+|  |  |  |  |  |  |  |  |  |  |           		ProjectId = uB.ProjectId,
+|  |  |  |  |  |  |  |  |  |  |           		UserId = uB.UserId,
+|  |  |  |  |  |  |  |  |  |  |           		UserName = u.UserName,
+|  |  |  |  |  |  |  |  |  |  |           		FirstName = uD.FirstName,
+|  |  |  |  |  |  |  |  |  |  |           		LastName = uD.LastName,
+|  |  |  |  |  |  |  |  |  |  |           		AvatarUrl = uA.[Url],
+|  |  |  |  |  |  |  |  |  |  |           		Balance = uB.Balance
+|  |  |  |  |  |  |  |  |  |  |           	from ITIH.tUserBalance uB
+|  |  |  |  |  |  |  |  |  |  |           		left join CK.tUser u on u.UserId = uB.UserId
+|  |  |  |  |  |  |  |  |  |  |           		left join ITIH.tUserDetails uD on uD.UserId = uB.UserId
+|  |  |  |  |  |  |  |  |  |  |           		left join ITIH.tUserAvatars uA on uA.UserId = uB.UserId
+|  |  |  |  |  |  |  |  |  |  |           	where uB.UserBalanceId <> 0;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.ProjectMemberTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.ProjectVotesTable (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.StorageTable (¤ => 1.0.0).
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.UserBalanceTable (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.OrderTable.Head (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.StorageLinkedProductTable.Head (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.sOrderCreate (unversioned).
@@ -2855,7 +3598,7 @@
 |  |  |  |  |  |  |  |  |  |  |           	@ActorId int,
 |  |  |  |  |  |  |  |  |  |  |           	@OrderId int,
 |  |  |  |  |  |  |  |  |  |  |           	@CurrentState int,
-|  |  |  |  |  |  |  |  |  |  |           	@CurrentStateResult int output
+|  |  |  |  |  |  |  |  |  |  |           	@Success bit = 0 output
 |  |  |  |  |  |  |  |  |  |  |           )
 |  |  |  |  |  |  |  |  |  |  |           as
 |  |  |  |  |  |  |  |  |  |  |           begin
@@ -2865,9 +3608,15 @@
 |  |  |  |  |  |  |  |  |  |  |           --[=/beginsp]
 |  |  |  |  |  |  |  |  |  |  |           --<PreCreate revert />
 |  |  |  |  |  |  |  |  |  |  |           
-|  |  |  |  |  |  |  |  |  |  |           	update ITIH.tOrder set CurrentState = @CurrentState;
+|  |  |  |  |  |  |  |  |  |  |           	declare @previousState int;
+|  |  |  |  |  |  |  |  |  |  |           	declare @newState int;
 |  |  |  |  |  |  |  |  |  |  |           
-|  |  |  |  |  |  |  |  |  |  |           	set @CurrentStateResult = (select CurrentState from ITIH.tOrder where OrderId = @OrderId);
+|  |  |  |  |  |  |  |  |  |  |           	set @previousState = (select CurrentState from ITIH.tOrder where OrderId = @OrderId);
+|  |  |  |  |  |  |  |  |  |  |           	update ITIH.tOrder set CurrentState = @CurrentState where OrderId = @OrderId;
+|  |  |  |  |  |  |  |  |  |  |           	set @newState = (select CurrentState from ITIH.tOrder where OrderId = @OrderId);
+|  |  |  |  |  |  |  |  |  |  |           
+|  |  |  |  |  |  |  |  |  |  |           	if (@previousState != @newstate)
+|  |  |  |  |  |  |  |  |  |  |           		set @Success = 1;
 |  |  |  |  |  |  |  |  |  |  |           
 |  |  |  |  |  |  |  |  |  |  |           	--<PostCreate />
 |  |  |  |  |  |  |  |  |  |  |           
@@ -3075,7 +3824,8 @@
 |  |  |  |  |  |  |  |  |  |  |           		[Desc] = p.[Desc],
 |  |  |  |  |  |  |  |  |  |  |           		Quantity = op.Quantity,
 |  |  |  |  |  |  |  |  |  |  |           		UnitPrice = slp.UnitPrice,
-|  |  |  |  |  |  |  |  |  |  |           		CurrentState = op.CurrentState
+|  |  |  |  |  |  |  |  |  |  |           		CurrentState = op.CurrentState,
+|  |  |  |  |  |  |  |  |  |  |           		PaymentState = op.PaymentState
 |  |  |  |  |  |  |  |  |  |  |           	from ITIH.tOrderedProduct op
 |  |  |  |  |  |  |  |  |  |  |           		join ITIH.tStorageLinkedProduct slp on slp.StorageLinkedProductId = op.StorageLinkedProductId
 |  |  |  |  |  |  |  |  |  |  |           		join ITIH.tProduct p on p.ProductId = slp.ProductId
@@ -3099,6 +3849,25 @@
 |  |  |  |  |  |  |  |  |  |  |           		join CK.tUser u on u.UserId = o.UserId
 |  |  |  |  |  |  |  |  |  |  |           		join ITIH.tClassroom c on c.ClassroomId = o.ClassroomId
 |  |  |  |  |  |  |  |  |  |  |           	where OrderId <> 0;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.vStorageLinkedProducts (unversioned).
+|  |  |  |  |  |  |  |  |  |  |  - Trace: if OBJECT_ID('ITIH.vStorageLinkedProducts') is not null drop View ITIH.vStorageLinkedProducts;
+|  |  |  |  |  |  |  |  |  |  |           GO
+|  |  |  |  |  |  |  |  |  |  |           create view ITIH.vStorageLinkedProducts
+|  |  |  |  |  |  |  |  |  |  |           as
+|  |  |  |  |  |  |  |  |  |  |           	select
+|  |  |  |  |  |  |  |  |  |  |           		StorageLinkedProductId = slp.StorageLinkedProductId,
+|  |  |  |  |  |  |  |  |  |  |           		StorageId = slp.StorageId,
+|  |  |  |  |  |  |  |  |  |  |           		ProductId = slp.ProductId,
+|  |  |  |  |  |  |  |  |  |  |           		ProductName = p.[Name],
+|  |  |  |  |  |  |  |  |  |  |           		ProductDesc = p.[Desc],
+|  |  |  |  |  |  |  |  |  |  |           		ProductAvatarUrl = p.[Url],
+|  |  |  |  |  |  |  |  |  |  |           		UnitPrice = slp.UnitPrice,
+|  |  |  |  |  |  |  |  |  |  |           		Stock = slp.Stock,
+|  |  |  |  |  |  |  |  |  |  |           		CreditState = slp.CreditState
+|  |  |  |  |  |  |  |  |  |  |           	from ITIH.tStorageLinkedProduct slp
+|  |  |  |  |  |  |  |  |  |  |           		join ITIH.tProduct p on p.ProductId = slp.ProductId
+|  |  |  |  |  |  |  |  |  |  |           	where slp.StorageLinkedProductId <> 0;
 |  |  |  |  |  |  |  |  |  |  |           GO
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.OrderTable (¤ => 1.0.0).
 |  |  |  |  |  |  |  |  |  |  > Info: Installing []db^ITIH.StorageLinkedProductTable (¤ => 1.0.0).
@@ -3267,7 +4036,9 @@
 |  |  |  |  |  |  |  |  |  |  |           			set @OPUpdateTrack = scope_identity();
 |  |  |  |  |  |  |  |  |  |  |           			insert into ITIH.tOPPaymentStateUpdateTrack (OPUpdateTrackId, PreviousState, NewState) values (@OPUpdateTrack, @previousState, @newState);
 |  |  |  |  |  |  |  |  |  |  |           			
-|  |  |  |  |  |  |  |  |  |  |           			insert into ITIH.tOrderPayment (OrderedProductId, OrderFinalDueId, Amount, PaymentTime) values (@OrderedProductId, @OrderFinalDueId, @Amount, @UpdateDate);
+|  |  |  |  |  |  |  |  |  |  |           			if (@PaymentState = 1)
+|  |  |  |  |  |  |  |  |  |  |           				insert into ITIH.tOrderPayment (OrderedProductId, OrderFinalDueId, Amount, PaymentTime) values (@OrderedProductId, @OrderFinalDueId, @Amount, @UpdateDate);
+|  |  |  |  |  |  |  |  |  |  |           
 |  |  |  |  |  |  |  |  |  |  |           			update ITIH.tOrderFinalDue 
 |  |  |  |  |  |  |  |  |  |  |           				set Paid = 
 |  |  |  |  |  |  |  |  |  |  |           					((select Paid from ITIH.tOrderFinalDue where OrderFinalDueId = @OrderFinalDueId) + @Amount)
@@ -3372,7 +4143,8 @@
 |  |  |  |  |  |  |  |  |  |  |           -- SetupConfig: {}
 |  |  |  |  |  |  |  |  |  |  |           create proc ITIH.sOrderCreditCreate (
 |  |  |  |  |  |  |  |  |  |  |           	@ActorId int,
-|  |  |  |  |  |  |  |  |  |  |           	@OrderedProductId int,
+|  |  |  |  |  |  |  |  |  |  |           	@ProjectId int,
+|  |  |  |  |  |  |  |  |  |  |           	@UserId int,
 |  |  |  |  |  |  |  |  |  |  |           	@Amount int,
 |  |  |  |  |  |  |  |  |  |  |           	@CreditTime datetime2,
 |  |  |  |  |  |  |  |  |  |  |           	@OrderCreditId int output
@@ -3385,8 +4157,8 @@
 |  |  |  |  |  |  |  |  |  |  |           --[=/beginsp]
 |  |  |  |  |  |  |  |  |  |  |           --<PreCreate revert />
 |  |  |  |  |  |  |  |  |  |  |           
-|  |  |  |  |  |  |  |  |  |  |           	insert into ITIH.tOrderCredit (OrderedProductId, Amount, CreditTime)
-|  |  |  |  |  |  |  |  |  |  |           		values (@OrderedProductId, @Amount, @CreditTime);
+|  |  |  |  |  |  |  |  |  |  |           	insert into ITIH.tOrderCredit (ProjectId, UserId, Amount, CreditTime)
+|  |  |  |  |  |  |  |  |  |  |           		values (@ProjectId, @UserId, @Amount, @CreditTime);
 |  |  |  |  |  |  |  |  |  |  |           
 |  |  |  |  |  |  |  |  |  |  |           	set @OrderCreditId = scope_identity();
 |  |  |  |  |  |  |  |  |  |  |           
@@ -3519,20 +4291,36 @@
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITI.Human.Data.Package.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.ClassroomTable.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.ProductTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.ProjectRankTable.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.ProjectTypeTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.SchoolStatusTable.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.UpdateTrackTable.Head.
-|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.UserBalanceTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.UserAvatarsTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.UserDetailsTable.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.ClassroomTable.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.ProductTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.ProjectRankTable.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.ProjectTypeTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.SchoolStatusTable.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.UpdateTrackTable.
-|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.UserBalanceTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.UserAvatarsTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.UserDetailsTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.SchoolMemberTable.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.SemesterTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.SchoolMemberTable.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.SemesterTable.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.ProjectTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.StudentTable.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.ProjectTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.StudentTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.ProjectMemberTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.ProjectVotesTable.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.StorageTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.UserBalanceTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.ProjectMemberTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.ProjectVotesTable.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.StorageTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.UserBalanceTable.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.OrderTable.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.StorageLinkedProductTable.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^Model.ITIH.OrderTable.
@@ -3621,28 +4409,59 @@
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITI.Human.Data.Package.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.ClassroomTable.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.ProductTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.ProjectRankTable.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.ProjectTypeTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.SchoolStatusTable.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.UpdateTrackTable.Head.
-|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.UserBalanceTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.UserAvatarsTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.UserDetailsTable.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.ClassroomTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.ProjectRankTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.SchoolStatusTable.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sProductCreate.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sProductUpdate.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sProjectTypeCreate.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sUserAvatarCreate.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sUserDetailsCreate.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sUserDetailsUpdate.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.UpdateTrackTable.
-|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.UserBalanceTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.vUserProfile.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.ProductTable.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.ProjectTypeTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.SchoolMemberTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.UserAvatarsTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.UserDetailsTable.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.SemesterTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sSchoolMemberCreate.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.vSchoolMembers.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.SchoolMemberTable.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sSemesterCreate.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.SemesterTable.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.ProjectTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.StudentTable.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sProjectCreate.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sProjectDelete.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sStudentCreate.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.vProjects.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.ProjectTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.StudentTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.ProjectMemberTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.ProjectVotesTable.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.StorageTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.UserBalanceTable.Head.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sProjectMemberCreate.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sProjectMemberDelete.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sProjectVoteCreate.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sStallUpdate.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sStorageCreate.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sUserBalanceCreate.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sUserBalanceUpdate.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.vProjectMembers.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.vUserBalance.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.ProjectMemberTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.ProjectVotesTable.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.StorageTable.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.UserBalanceTable.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.OrderTable.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.StorageLinkedProductTable.Head.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sOrderCreate.
@@ -3654,6 +4473,7 @@
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.sStorageLinkedProductUnitPriceUpdate.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.vOrderedProducts.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.vOrders.
+|  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.vStorageLinkedProducts.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.OrderTable.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.StorageLinkedProductTable.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITIH.OrderedProductTable.Head.
@@ -3690,7 +4510,7 @@
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^ITI.Human.Data.Package.
 |  |  |  |  |  |  |  |  |  |  > Info: Settling []db^SqlDatabase.
 |  |  |  |  |  |  |  |  |  |  > Trace: Raising Success setup event.
-|  |  |  |  |  |  |  |  |  > Info: Disposing 192 drivers.
+|  |  |  |  |  |  |  |  |  > Info: Disposing 240 drivers.
 |  |  |  |  |  |  |  |  |  > Trace: Raising Disposed setup event.
 |  |  |  |  |  |  |  |  |  - Trace: Item '[]db^Model.CK.ActorTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^Model.CK.GroupTable' is a new one.
@@ -3705,12 +4525,20 @@
 |  |  |  |  |  |  |  |  |           Item '[]db^Model.CK.DB.User.UserPassword.Package' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.ClassroomTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.ProductTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.ProjectRankTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.ProjectTypeTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.SchoolStatusTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.UpdateTrackTable' is a new one.
-|  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.UserBalanceTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.UserAvatarsTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.UserDetailsTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.SchoolMemberTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.SemesterTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.ProjectTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.StudentTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.ProjectMemberTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.ProjectVotesTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.StorageTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.UserBalanceTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.OrderTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.StorageLinkedProductTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^Model.ITIH.OrderedProductTable' is a new one.
@@ -3737,13 +4565,21 @@
 |  |  |  |  |  |  |  |  |           Item '[]db^CK.DB.User.UserGitHub.Package' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^CK.DB.User.UserPassword.Package' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^ITIH.ClassroomTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^ITIH.ProjectRankTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^ITIH.SchoolStatusTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^ITIH.UpdateTrackTable' is a new one.
-|  |  |  |  |  |  |  |  |           Item '[]db^ITIH.UserBalanceTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^ITIH.ProductTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^ITIH.ProjectTypeTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^ITIH.UserAvatarsTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^ITIH.UserDetailsTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^ITIH.SchoolMemberTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^ITIH.SemesterTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^ITIH.ProjectTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^ITIH.StudentTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^ITIH.ProjectMemberTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^ITIH.ProjectVotesTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^ITIH.StorageTable' is a new one.
+|  |  |  |  |  |  |  |  |           Item '[]db^ITIH.UserBalanceTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^ITIH.OrderTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^ITIH.StorageLinkedProductTable' is a new one.
 |  |  |  |  |  |  |  |  |           Item '[]db^ITIH.StorageLinkedProductUpdateTrackTable' is a new one.
@@ -3813,8 +4649,8 @@
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'procedure CK.sUserPasswordUCL(@ActorId int, @UserId int /*input*/output, @PwdHash varbinary(64), @Mode int, @UCResult int output, @LoginFailureCode int /*input*/output, @LoginFailureReason nvarchar(255) output)'.
 |  |  |  |  |  |  |  |  |  |  > Info: Generating Method UserPasswordTable.DestroyPasswordUser( ISqlCallContext ctx, Int32 actorId, Int32 userId ).
 |  |  |  |  |  |  |  |  |  |  > Info: Generating Method UserPasswordTable.PasswordUserUCL( ISqlCallContext ctx, Int32 actorId, Int32 userId, Byte[] pwdHash, UCLMode mode, Nullable`1 loginFailureCode ) => UCLResult.
-|  |  |  |  |  |  |  |  |  |  > Info: Generating Method OrderCreditTable.Create( ISqlCallContext ctx, Int32 actorId, Int32 orderedProductId, Int32 amount, DateTime creditTime ) => Task`1.
-|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sOrderCreditCreate(@ActorId int, @OrderedProductId int, @Amount int, @CreditTime datetime2, @OrderCreditId int output)'.
+|  |  |  |  |  |  |  |  |  |  > Info: Generating Method OrderCreditTable.Create( ISqlCallContext ctx, Int32 actorId, Int32 projectId, Int32 userId, Int32 amount, DateTime creditTime ) => Task`1.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sOrderCreditCreate(@ActorId int, @ProjectId int, @UserId int, @Amount int, @CreditTime datetime2, @OrderCreditId int output)'.
 |  |  |  |  |  |  |  |  |  |  > Info: Generating Method OrderedProductTable.Create( ISqlCallContext ctx, Int32 actorId, Int32 orderId, Int32 storageLinkedProductId, Int32 quantity ) => Task`1.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sOrderedProductCreate(@ActorId int, @OrderId int, @StorageLinkedProductId int, @Quantity int, @OrderedProductId int output)'.
 |  |  |  |  |  |  |  |  |  |  > Info: Generating Method OrderedProductTable.UpdateCurrentState( ISqlCallContext ctx, Int32 actorId, DateTime updateDate, Int32 orderedProductId, State currentState ) => Task`1.
@@ -3849,16 +4685,26 @@
 |  |  |  |  |  |  |  |  |  |  > Info: Generating Method OrderTable.Create( ISqlCallContext ctx, Int32 actorId, Int32 storageId, Int32 userId, Int32 classroomId, DateTime creationDate ) => Task`1.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sOrderCreate(@ActorId int, @StorageId int, @UserId int, @ClassroomId int, @CreationDate datetime2, @OrderIdResult int output)'.
 |  |  |  |  |  |  |  |  |  |  > Info: Generating Method OrderTable.Update( ISqlCallContext ctx, Int32 actorId, Int32 orderId, State currentState ) => Task`1.
-|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sOrderUpdate(@ActorId int, @OrderId int, @CurrentState int, @CurrentStateResult int output)'.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sOrderUpdate(@ActorId int, @OrderId int, @CurrentState int, @Success bit=0 output)'.
+|  |  |  |  |  |  |  |  |  |  |  |  - Warn: Sql parameter '@Success' is an output parameter but has a default value: if it is used as an input parameter it should be marked as /*input*/output.
+|  |  |  |  |  |  |  |  |  |  |  - Warn: Sql parameter '@Success' in procedure is a pure output parameter that has a default value. If the input matters, it should be marked /*input*/output.
+|  |  |  |  |  |  |  |  |  |  |  - Info: Parameter '@Success bit=0 output' will use its default sql value '0'.
 |  |  |  |  |  |  |  |  |  |  > Info: Generating Method OrderTable.Delete( ISqlCallContext ctx, Int32 actorId, Int32 orderId ) => Task`1.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sOrderDelete(@ActorId int, @OrderId int, @Success bit=0 output)'.
 |  |  |  |  |  |  |  |  |  |  |  |  - Warn: Sql parameter '@Success' is an output parameter but has a default value: if it is used as an input parameter it should be marked as /*input*/output.
 |  |  |  |  |  |  |  |  |  |  |  - Warn: Sql parameter '@Success' in procedure is a pure output parameter that has a default value. If the input matters, it should be marked /*input*/output.
 |  |  |  |  |  |  |  |  |  |  |  - Info: Parameter '@Success bit=0 output' will use its default sql value '0'.
-|  |  |  |  |  |  |  |  |  |  > Info: Generating Method ProductTable.Create( ISqlCallContext ctx, Int32 actorId, String name, String desc ) => Task`1.
-|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sProductCreate(@ActorId int, @Name nvarchar(256), @Desc nvarchar(512), @ProductIdResult int output)'.
-|  |  |  |  |  |  |  |  |  |  > Info: Generating Method ProductTable.Update( ISqlCallContext ctx, Int32 actorId, Int32 productId, String name, String desc ) => Task`1.
-|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sProductUpdate(@ActorId int, @ProductId int, @Name nvarchar(256), @Desc nvarchar(512), @Success bit=0 output)'.
+|  |  |  |  |  |  |  |  |  |  > Info: Generating Method ProductTable.Create( ISqlCallContext ctx, Int32 actorId, String name, String desc, String url = null ) => Task`1.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sProductCreate(@ActorId int, @Name nvarchar(256), @Desc nvarchar(512), @Url nvarchar(max), @ProductIdResult int output)'.
+|  |  |  |  |  |  |  |  |  |  > Info: Generating Method ProductTable.Update( ISqlCallContext ctx, Int32 actorId, Int32 productId, String name, String desc, String url ) => Task`1.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sProductUpdate(@ActorId int, @ProductId int, @Name nvarchar(256), @Desc nvarchar(512), @Url nvarchar(max), @Success bit=0 output)'.
+|  |  |  |  |  |  |  |  |  |  |  |  - Warn: Sql parameter '@Success' is an output parameter but has a default value: if it is used as an input parameter it should be marked as /*input*/output.
+|  |  |  |  |  |  |  |  |  |  |  - Warn: Sql parameter '@Success' in procedure is a pure output parameter that has a default value. If the input matters, it should be marked /*input*/output.
+|  |  |  |  |  |  |  |  |  |  |  - Info: Parameter '@Success bit=0 output' will use its default sql value '0'.
+|  |  |  |  |  |  |  |  |  |  > Info: Generating Method ProjectMemberTable.Create( ISqlCallContext ctx, Int32 actorId, Int32 projectId, Int32 projectRankId, Int32 userId ) => Task`1.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'procedure ITIH.sProjectMemberCreate(@ActorId int, @ProjectId int, @ProjectRankId int, @UserId int, @ProjectMemberIdResult int output)'.
+|  |  |  |  |  |  |  |  |  |  > Info: Generating Method ProjectMemberTable.Delete( ISqlCallContext ctx, Int32 actorId, Int32 projectMemberId ) => Task`1.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sProjectMemberDelete(@ActorId int, @ProjectMemberId int, @Success bit=0 output)'.
 |  |  |  |  |  |  |  |  |  |  |  |  - Warn: Sql parameter '@Success' is an output parameter but has a default value: if it is used as an input parameter it should be marked as /*input*/output.
 |  |  |  |  |  |  |  |  |  |  |  - Warn: Sql parameter '@Success' in procedure is a pure output parameter that has a default value. If the input matters, it should be marked /*input*/output.
 |  |  |  |  |  |  |  |  |  |  |  - Info: Parameter '@Success bit=0 output' will use its default sql value '0'.
@@ -3872,6 +4718,10 @@
 |  |  |  |  |  |  |  |  |  |  |          Parameter '@Success bit=0 output' will use its default sql value '0'.
 |  |  |  |  |  |  |  |  |  |  > Info: Generating Method ProjectTypeTable.Create( ISqlCallContext ctx, Int32 actorId, String name ) => Task`1.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sProjectTypeCreate(@ActorId int, @Name nvarchar(256), @ProjectTypeIdResult int output)'.
+|  |  |  |  |  |  |  |  |  |  > Info: Generating Method ProjectVotesTable.Create( ISqlCallContext ctx, Int32 actorId, Int32 projectId, Int32 userId, Int32 note ) => Task`1.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sProjectVoteCreate(@ActorId int, @ProjectId int, @UserId int, @Note int, @ProjectVoteIdResult int output)'.
+|  |  |  |  |  |  |  |  |  |  > Info: Generating Method SchoolMemberTable.Create( ISqlCallContext ctx, Int32 actorId, Int32 userId, Int32 schoolStatusId ) => Task`1.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sSchoolMemberCreate(@ActorId int, @UserId int, @SchoolStatusId int, @SchoolMemberIdResult int output)'.
 |  |  |  |  |  |  |  |  |  |  > Info: Generating Method SemesterTable.Create( ISqlCallContext ctx, Int32 actorId, String name ) => Task`1.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sSemesterCreate(@ActorId int, @Name nvarchar(256), @SemesterIdResult int output)'.
 |  |  |  |  |  |  |  |  |  |  > Info: Generating Method StorageLinkedProductTable.Create( ISqlCallContext ctx, Int32 actorId, Int32 storageId, Int32 productId, Int32 unitPrice, Int32 stock ) => Task`1.
@@ -3893,9 +4743,29 @@
 |  |  |  |  |  |  |  |  |  |  |  - Info: Parameter '@Success bit=0 output' will use its default sql value '0'.
 |  |  |  |  |  |  |  |  |  |  > Info: Generating Method StorageTable.Create( ISqlCallContext ctx, Int32 actorId, Int32 projectId ) => Task`1.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sStorageCreate(@ActorId int, @ProjectId int, @StorageIdResult int output)'.
+|  |  |  |  |  |  |  |  |  |  > Info: Generating Method StorageTable.UpdateStall( ISqlCallContext ctx, Int32 actorId, Int32 storageId, Boolean openedStall ) => Task`1.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sStallUpdate(@ActorId int, @StorageId int, @OpenedStall bit, @Success bit=0 output)'.
+|  |  |  |  |  |  |  |  |  |  |  |  - Warn: Sql parameter '@Success' is an output parameter but has a default value: if it is used as an input parameter it should be marked as /*input*/output.
+|  |  |  |  |  |  |  |  |  |  |  - Warn: Sql parameter '@Success' in procedure is a pure output parameter that has a default value. If the input matters, it should be marked /*input*/output.
+|  |  |  |  |  |  |  |  |  |  |  - Info: Parameter '@Success bit=0 output' will use its default sql value '0'.
+|  |  |  |  |  |  |  |  |  |  > Info: Generating Method StudentTable.Create( ISqlCallContext ctx, Int32 actorId, Int32 userId, Int32 semesterId ) => Task`1.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sStudentCreate(@ActorId int, @UserId int, @SemesterId int, @StudentIdResult int output)'.
+|  |  |  |  |  |  |  |  |  |  > Info: Generating Method UserAvatarsTable.Create( ISqlCallContext ctx, Int32 actorId, Int32 userId, String url ) => Task`1.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sUserAvatarCreate(@ActorId int, @UserId int, @Url nvarchar(max), @UserAvatarIdResult int output)'.
+|  |  |  |  |  |  |  |  |  |  > Info: Generating Method UserBalanceTable.Create( ISqlCallContext ctx, Int32 actorId, Int32 userId, Int32 projectId ) => Task`1.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sUserBalanceCreate(@ActorId int, @UserId int, @ProjectId int, @UserBalanceId int output)'.
+|  |  |  |  |  |  |  |  |  |  > Info: Generating Method UserBalanceTable.Update( ISqlCallContext ctx, Int32 actorId, Int32 userBalanceId, Int32 amount ) => Task`1.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sUserBalanceUpdate(@ActorId int, @UserBalanceId int, @Amount int, @Success bit=0 output)'.
+|  |  |  |  |  |  |  |  |  |  |  |  - Warn: Sql parameter '@Success' is an output parameter but has a default value: if it is used as an input parameter it should be marked as /*input*/output.
+|  |  |  |  |  |  |  |  |  |  |  - Warn: Sql parameter '@Success' in procedure is a pure output parameter that has a default value. If the input matters, it should be marked /*input*/output.
+|  |  |  |  |  |  |  |  |  |  |  - Info: Parameter '@Success bit=0 output' will use its default sql value '0'.
+|  |  |  |  |  |  |  |  |  |  > Info: Generating Method UserDetailsTable.Create( ISqlCallContext ctx, Int32 actorId, Int32 userId, String firstName, String lastName, DateTime birthDate ) => Task`1.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sUserDetailsCreate(@ActorId int, @UserId int, @FirstName nvarchar(126), @LastName nvarchar(126), @BirthDate datetime2, @UserDetailsIdResult int output)'.
+|  |  |  |  |  |  |  |  |  |  > Info: Generating Method UserDetailsTable.Update( ISqlCallContext ctx, Int32 actorId, Int32 userId, String firstName, String lastName, DateTime birthDate ) => Task`1.
+|  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sUserDetailsUpdate(@ActorId int, @UserId int, @FirstName nvarchar(128), @LastName nvarchar(128), @BirthDate datetime2, @Success bit output)'.
 |  |  |  |  |  |  |  |  |  > Info: Compiling source code.
-|  |  |  |  |  |  |  |  |  |  - Info: Saved source file: C:\Users\dizy9\AppData\Local\Temp\CKSetup2018-12-12 13h56.34.5231906\CK.StObj.AutoAssembly.dll.0.cs
-|  |  |  |  |  |  |  |  |  |          Saved source file: C:\Users\dizy9\AppData\Local\Temp\CKSetup2018-12-12 13h56.34.5231906\CK.StObj.AutoAssembly.dll.1.cs
+|  |  |  |  |  |  |  |  |  |  - Info: Saved source file: C:\Users\dizy9\AppData\Local\Temp\CKSetup2019-01-18 20h32.43.7331595\CK.StObj.AutoAssembly.dll.0.cs
+|  |  |  |  |  |  |  |  |  |          Saved source file: C:\Users\dizy9\AppData\Local\Temp\CKSetup2019-01-18 20h32.43.7331595\CK.StObj.AutoAssembly.dll.1.cs
 |  |  |  |  |  |  |  |  |  |  > Info: Code Generation information.
 |  |  |  |  |  |  |  |  |  |  |  - Info: Source code generation and compilation succeeded.
 |  |  |  |  |  |  |  |  |  |  < Succeeded.
