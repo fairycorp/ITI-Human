@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <div class="menu profile">
+            <div @click="changeRoute('profile')" class="menu profile">
                 <div class="illustration-profile"></div>
                 <div class="main-menu-title">
                     PROFIL

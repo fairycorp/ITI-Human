@@ -5,6 +5,7 @@ import Router from "vue-router";
 import Homepage from "@/views/Homepage.vue";
 import Landing from "@/views/Landing.vue";
 import ProfileSetup from "@/views/ProfileSetup.vue";
+import Profile from "@/views/Profile.vue";
 import ProjectsDB from "@/views/ProjectsDB.vue";
 import ForkChefs from "@/views/ForkChefs.vue";
 import Order from "@/views/Order.vue";
@@ -30,6 +31,12 @@ export default new Router({
       path: "/profile/setup",
       name: "profileSetup",
       component: ProfileSetup
+    },
+
+    {
+      path: "/profile",
+      name: "profile",
+      component: Profile
     },
 
     {

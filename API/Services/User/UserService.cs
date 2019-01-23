@@ -187,38 +187,43 @@ namespace API.Services.User
                     );
 
                 int result1 = 0, result2 = 0;
-                if (doesMemberExist == 0)
+                bool launchCreationProcess = false;
+                switch (model.SchoolStatusId)
                 {
-                    bool launchCreationProcess = false;
-                    switch (model.SchoolStatusId)
-                    {
-                        case 0:
-                            launchCreationProcess = false;
-                            break;
+                    case 0:
+                        launchCreationProcess = true;
+                        break;
 
-                        case 1:
-                            if (model.SecretCode == "A8191?KS#QL?QM°&S+=QJN61I4P0QI1S&&3840#-2DK")
-                                launchCreationProcess = true;
-                            break;
-
-                        case 2:
-                            if (model.SecretCode == "A8191?KS#QL?QM°&S+=QJN61I4P0QI1S&&3840#-2DK")
-                                launchCreationProcess = true;
-                            break;
-
-                        case 3:
+                    case 1:
+                        if (model.SecretCode == "A8191?KS#QL?QM°&S+=QJN61I4P0QI1S&&3840#-2DK")
                             launchCreationProcess = true;
-                            break;
-                    }
-                    if (launchCreationProcess && doesDetailsExist == 0)
+                        break;
+
+                    case 2:
+                        if (model.SecretCode == "A8191?KS#QL?QM°&S+=QJN61I4P0QI1S&&3840#-2DK")
+                            launchCreationProcess = true;
+                        break;
+
+                    case 3:
+                        launchCreationProcess = true;
+                        break;
+                }
+                if (launchCreationProcess && doesDetailsExist == 0)
+                {
+                    result1 = await UserDetailsTable.Create(ctx, model.UserId, model.UserId, model.Firstname, model.Lastname, DateTime.Now);
+
+                    if (doesMemberExist == 0)
                     {
-                        result1 = await UserDetailsTable.Create(ctx, model.UserId, model.UserId, model.Firstname, model.Lastname, DateTime.Now);
                         result2 = await SchoolMemberTable.Create(ctx, model.UserId, model.UserId, model.SchoolStatusId);
                     }
-                    if (launchCreationProcess && doesDetailsExist > 0)
+                }
+                if (launchCreationProcess && doesDetailsExist > 0)
+                {
+                    result1 = -1;
+                    await UserDetailsTable.Update(ctx, model.UserId, model.UserId, model.Firstname, model.Lastname, DateTime.Now);
+
+                    if (doesMemberExist == 0)
                     {
-                        result1 = -1;
-                        await UserDetailsTable.Update(ctx, model.UserId, model.UserId, model.Firstname, model.Lastname, DateTime.Now);
                         result2 = await SchoolMemberTable.Create(ctx, model.UserId, model.UserId, model.SchoolStatusId);
                     }
                 }

@@ -12,7 +12,7 @@
                 <div :class="{ visible: displayedOrder != null && displayedOrder.info.orderId == order.info.orderId }" class="bar"></div>
                 <p>
                     Commande n°<span class="openSans-bold">{{ order.info.orderId }}</span>, par <span class="openSans-bold">{{ order.info.userName }}</span><br />
-                    <span class="articles"><span class="openSans-bold">{{ order.products.length }}</span> articles</span><br />
+                    <span class="articles"><span class="openSans-bold">{{ order.products.length }}</span> article<span v-if="order.products.length > 1">s</span></span><br />
                     <span class="little-grey">Effectuée le {{ order.info.displayedDate }}</span>
                 </p>
             </div>
