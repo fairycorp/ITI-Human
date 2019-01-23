@@ -1,18 +1,29 @@
 <template>
   <f7-page>
-    <f7-list>
+    <f7-button class="backChButton color-white"
+      @click="Back()"
+      icon-f7="arrow_left">
+    </f7-button>
+    <h1 class="bv">Bienvenue sur notre carte</h1>
+    <h3 class="pr">Où voici donc nos produits</h3>
+    <f7-list class="prodList">
       <f7-list-item 
+        class="linked"
         v-for="linkedProducts in LinkedProducts" 
-        :key="linkedProducts.storageLinkedProductId" :value="linkedProducts.productId" :title="linkedProducts.productName">
-
-        <f7-stepper small raised slot="after" :input="false" :min="0" :max="linkedProducts.stock" @stepper:plusclick="addOrPlusCount(linkedProducts.productName)" @stepper:minusclick="remOrMinusCount(linkedProducts.productName)"></f7-stepper>
+        :key="linkedProducts.storageLinkedProductId" :value="linkedProducts.productId">
+        <p>
+          <img width="50" class="pictureproduct" :src="linkedProducts.productAvatarUrl" />
+          <span class="proName openSans-bold">{{ linkedProducts.productName }}</span>, <span class="price">{{ linkedProducts.unitPrice / 100 }}€</span>,
+          <f7-stepper class="stepper" small raised slot="after" :input="false" :min="0" :max="linkedProducts.stock" @stepper:plusclick="addOrPlusCount(linkedProducts.productName)" @stepper:minusclick="remOrMinusCount(linkedProducts.productName)"></f7-stepper>
+          <br />
+          <span class="product-info"><span class="openSans-bold">{{ linkedProducts.stock }}</span> produits restants.</span>
+        </p>
       </f7-list-item>
       <br/>
-      <br/>
-      <f7-button
+      <f7-button class="unselectable-text col button color-white"
         v-if="ArrayOfProducts.length > 0"
         @click="Continue()"> 
-        Commander
+        Continuer
       </f7-button>
     </f7-list> 
   </f7-page>
@@ -43,7 +54,7 @@ export default {
   async created() {
     const config = {
       identityEndPoint: {
-        hostname: "192.168.1.31",
+        hostname: process.env.HOST_NAME,
         port: 5000,
         disableSsl: true
       }
@@ -64,6 +75,10 @@ export default {
   },
 
   methods: {
+    Back() {
+        this.$f7router.navigate({ name: 'home' });
+    },
+
     async isAccessible() {
       await this.authService.refresh(true, true, true);
       if (this.authService != null) {
@@ -110,13 +125,14 @@ export default {
     async MakeACommand(endpoint, data){
       let response = await Api.post(endpoint, data);
       this.CommandId = response.data;
+      this.$f7router.navigate({ name: 'home' });
     },
 
     FillTheCommand(){
       for (let i = 0; i < this.ArrayOfProducts.length; i++) {
         for (let j = 0; j < this.LinkedProducts.length; j++) {
           if (this.ArrayOfProducts[i].product == this.LinkedProducts[j].productName) {
-            this.Projects.products.push(
+            this.order.products.push(
               {
                 storageLinkedProductId: this.LinkedProducts[j].storageLinkedProductId,
                 quantity: this.ArrayOfProducts[i].quantity
@@ -130,7 +146,16 @@ export default {
     Continue() {
       this.FillTheCommand();
 
-      this.MakeACommand("order/create", this.Projects);      
+      let order = {
+        storageId: this.Projects.storageId,
+        userId: this.authService.authenticationInfo.user.userId,
+        classroomId: 0,
+        products: []
+      }
+
+      this.$f7router.navigate({ name: 'order' }, {
+        props: { projectinfos: order }
+      });
     },
   },
 }
@@ -138,5 +163,62 @@ export default {
 </script>
 
 <style lang="scss">
+.backChButton{
+    position: absolute;
+    top: 0%;
+    left: 0%;
+}
+
+.bv{
+    position: absolute;
+    top: 2%;
+    left: 5%;
+    color: gray;
+    font-family: "Script";    
+}
+
+.pr{
+    position: absolute;
+    top: 10%;
+    left: 23%;
+    color: gray;
+    font-family: "Script";
+
+}
+
+.pictureproduct {
+    vertical-align: middle;
+    width: 6%;
+    height: 6%;
+}
+
+.description {
+    color: #757575;
+}
+
+.product-info {
+    font-size: 80%;
+    color: #757575;
+}
+
+.price {
+    color: #4b80ac;
+}
+
+.linked{
+    background-color: white;
+}
+
+.prodList{
+    position: absolute;
+    top: 15%;
+    width: 100%
+}
+
+.stepper{
+    position: absolute;  
+    right: 0%;
+    top: 35%;
+}
 
 </style>

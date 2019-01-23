@@ -1,7 +1,10 @@
 <template>
   <f7-page>
-    <div class="orderList">
-    <f7-list>
+    <f7-button class="backOrButton color-white"
+      @click="Back()"
+      icon-f7="arrow_left">
+    </f7-button>
+    <f7-list class="orderList" no-hairlines-md>
       <f7-list-item class="salle" title="Ta Salle" smart-select :smart-select-params="{openIn: 'popover'}">
         <select name="salle" v-model="selectValue">
           <option v-for="classrooms in Classrooms" 
@@ -16,10 +19,9 @@
       <f7-button class="unselectable-text col button color-white"
         v-if="selectValue != ''"
         @click="Continue()"> 
-        Continue
+        Continue 
       </f7-button>
     </f7-list>
-    </div>
   </f7-page>
 </template>
 
@@ -49,7 +51,7 @@ export default {
   async created() {
     const config = {
       identityEndPoint: {
-        hostname: "192.168.1.31",
+        hostname: process.env.HOST_NAME,
         port: 5000,
         disableSsl: true
       }
@@ -71,6 +73,11 @@ export default {
   },  
 
   methods: {
+
+    Back() {
+        this.$f7router.navigate({ name: 'home' });
+    },
+
     async isAccessible() {
       await this.authService.refresh(true, true, true);
       if (this.authService != null) {
@@ -104,18 +111,9 @@ export default {
     },
 
     Continue() {
-      let ClassroomId = this.GetClassRoomId(this.selectValue);
+      this.MakeACommand("order/create", this.Projects);
 
-      let order = {
-        storageId: this.Projects.storageId,
-        userId: this.authService.authenticationInfo.user.userId,
-        classroomId: ClassroomId,
-        products: []
-      }
-
-      this.$f7router.navigate({ name: 'chooseproducts' }, {
-        props: { projectinfos: order }
-      });
+      this.$f7router.navigate({ name: 'home' });
     }
   },
 };
@@ -123,16 +121,22 @@ export default {
 
 <style lang="scss">
 
+.backOrButton{
+    position: absolute;
+    top: 0%;
+    left: 0%;
+}
+
 .orderList{
     position: absolute;
     top: 0%;
-    //bottom: 400px;
-    left: 35%;
+    left: 5%;
+    width: 325px;
     color: black;
 }
 
 .salle{
-  background-color: white;
+    background-color: white;
 }
 
 </style>

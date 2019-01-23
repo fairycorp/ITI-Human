@@ -49,7 +49,7 @@ export default {
   async created() {
     const config = {
       identityEndPoint: {
-        hostname: "192.168.1.31",
+        hostname: process.env.HOST_NAME,
         port: 5000,
         disableSsl: true
       }
@@ -78,7 +78,7 @@ export default {
     async getStorageInfos(endpoint){
       let response = await Api.get(endpoint);
       this.StorageInfos = response.data;
-      this.$f7router.navigate({ name: 'order' }, {
+      this.$f7router.navigate({ name: 'chooseproducts' }, {
         props: { projectinfos: this.StorageInfos }
       });
     },

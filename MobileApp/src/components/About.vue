@@ -63,7 +63,7 @@ export default {
   async created() {
     const config = {
       identityEndPoint: {
-        hostname: "192.168.1.31",
+        hostname: process.env.HOST_NAME,
         port: 5000,
         disableSsl: true
       }

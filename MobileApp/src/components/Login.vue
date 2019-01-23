@@ -3,7 +3,7 @@
       <div
           class="default-logo">
       </div>
-      <f7-list class="list" inline-labels no-hairlines-md>
+      <f7-list class="listLogin" inline-labels no-hairlines-md>
         <h2 class="h2"> Identifiez-vous  </h2>
           <f7-list-input
             class="name"
@@ -55,7 +55,7 @@ export default {
   async created() {
     const config = {
       identityEndPoint: {
-        hostname: "192.168.1.31",
+        hostname: process.env.HOST_NAME,
         port: 5000,
         disableSsl: true
       }
@@ -107,7 +107,7 @@ export default {
     color: gray;
 }
 
-.list {
+.listLogin {
     position: absolute;
     top: 215px;
     left: 5%;
