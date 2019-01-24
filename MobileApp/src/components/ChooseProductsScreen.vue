@@ -4,6 +4,10 @@
       @click="Back()"
       icon-f7="arrow_left">
     </f7-button>
+    <f7-button class="logOutButton color-white"
+      @click="LogOut()"
+      icon-f7="close_round">
+    </f7-button>
     <h1 class="bv">Bienvenue sur notre carte</h1>
     <h3 class="pr">Où voici donc nos produits</h3>
     <f7-list class="prodList">
@@ -47,6 +51,7 @@ export default {
       Projects: [],
       LinkedProducts: [],
       ArrayOfProducts: [],
+      CompInfoLProducts: [],
       CommandId: '',
     };
   },
@@ -79,6 +84,11 @@ export default {
         this.$f7router.navigate({ name: 'home' });
     },
 
+    async LogOut(){
+      await this.authService.logout(true);
+      await this.isAccessible();
+    },
+
     async isAccessible() {
       await this.authService.refresh(true, true, true);
       if (this.authService != null) {
@@ -92,23 +102,23 @@ export default {
       let compared = false;
        if (this.ArrayOfProducts.length > 0) {
         for (let i = 0; i < this.ArrayOfProducts.length; i++) {
-          if (this.ArrayOfProducts[i].product == nameOfProduct) {
+          if (this.ArrayOfProducts[i].storageLinkedProductId == nameOfProduct) {
             compared = true;
             this.ArrayOfProducts[i].quantity++;
           }
         }
         if (compared == false) {
-          this.ArrayOfProducts.push({"product" : nameOfProduct, "quantity" : 1 });
+          this.ArrayOfProducts.push({"storageLinkedProductId" : nameOfProduct, "quantity" : 1 });
         }
       }
       else {
-        this.ArrayOfProducts.push({"product" : nameOfProduct, "quantity" : 1 });
+        this.ArrayOfProducts.push({"storageLinkedProductId" : nameOfProduct, "quantity" : 1 });
       }
     },
 
     remOrMinusCount(nameOfProduct) {
       for (let i = 0; i < this.ArrayOfProducts.length; i++) {
-        if (this.ArrayOfProducts[i].product == nameOfProduct) {
+        if (this.ArrayOfProducts[i].storageLinkedProductId == nameOfProduct) {
           this.ArrayOfProducts[i].quantity--;
           if (this.ArrayOfProducts[i].quantity == 0) {
             this.ArrayOfProducts.splice(i, 1);
@@ -122,39 +132,41 @@ export default {
       this.LinkedProducts = response.data;
     },
 
-    async MakeACommand(endpoint, data){
-      let response = await Api.post(endpoint, data);
-      this.CommandId = response.data;
-      this.$f7router.navigate({ name: 'home' });
-    },
-
     FillTheCommand(){
       for (let i = 0; i < this.ArrayOfProducts.length; i++) {
         for (let j = 0; j < this.LinkedProducts.length; j++) {
-          if (this.ArrayOfProducts[i].product == this.LinkedProducts[j].productName) {
-            this.order.products.push(
-              {
-                storageLinkedProductId: this.LinkedProducts[j].storageLinkedProductId,
-                quantity: this.ArrayOfProducts[i].quantity
-              }
-            );
+          if (this.ArrayOfProducts[i].storageLinkedProductId == this.LinkedProducts[j].productName) {
+            this.ArrayOfProducts[i].storageLinkedProductId = this.LinkedProducts[j].storageLinkedProductId
           }
         }
       }
     },
 
+    GetCompInfoLProducts(){
+      for (let i = 0; i < this.ArrayOfProducts.length; i++) {
+        for (let j = 0; j < this.LinkedProducts.length; j++) {
+            if (this.ArrayOfProducts[i].storageLinkedProductId == this.LinkedProducts[j].productName) {
+              this.CompInfoLProducts.push( {"product" : this.LinkedProducts[j], "quantity" : this.ArrayOfProducts[i].quantity});
+            }
+        }
+      }
+    },
+
     Continue() {
+      this.GetCompInfoLProducts();
+
       this.FillTheCommand();
 
       let order = {
         storageId: this.Projects.storageId,
         userId: this.authService.authenticationInfo.user.userId,
         classroomId: 0,
-        products: []
+        products: this.ArrayOfProducts
       }
 
+
       this.$f7router.navigate({ name: 'order' }, {
-        props: { projectinfos: order }
+        props: { projectinfos: order, ArrayOfInfoLProducts: this.CompInfoLProducts }
       });
     },
   },
