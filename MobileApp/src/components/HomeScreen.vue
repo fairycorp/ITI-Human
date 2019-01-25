@@ -1,21 +1,29 @@
 <template>
     <f7-page>
-      <div
-          class="home-logo">
-      </div>
         <f7-button class="logOutButton color-white"
             @click="LogOut()"
             icon-f7="close_round">
         </f7-button>
 
-      <div class="header">
-      <h3 class="h3"> Voici la liste des Projets  </h3>
-      <f7-button class="unselectable-text col button color-white" v-for="projectInfos in ProjectInfos" 
-          :key="projectInfos.projectId" 
-          @click="GetStorage(projectInfos.projectId)">
-          {{ projectInfos.projectName }}
-      </f7-button>
-      </div>
+        <div @click="ChangeRoute('profile')" class="menu profile">
+          <div class="illustration-profile"></div>
+          <div class="profil unselectable-text">
+              PROFIL
+          </div>
+          <div class="modify unselectable-text">
+              MODIFIER
+          </div>
+        </div>
+        <br/>
+        <div @click="ChangeRoute('hungry')" class="menu order">
+            <div class="illustration-order"></div>
+            <div class="hungry unselectable-text">
+                J'AI FAIM
+            </div>
+            <div class="command unselectable-text">
+                COMMANDER
+            </div>
+        </div>
 
       <div class="footer">
         <button @click="About" class="about-link unselectable-text col button color-gray">
@@ -88,6 +96,15 @@ export default {
       this.getStorageInfos("storage/project/"+ this.StorageId);
     },
 
+    ChangeRoute(route){
+      if (route == 'hungry') {
+        this.$f7router.navigate({ name: 'chooseproducts' });
+      }
+      else if (route == 'profile') {
+        this.$f7router.navigate({ name: 'about' });
+      }
+    },
+
     async LogOut(){
       await this.authService.logout(true);
       await this.isAccessible();
@@ -110,36 +127,11 @@ export default {
 
 <style lang="scss">
 
-/*.p{
-    color: white;
-}*/
-
-.home-logo {
-    position: absolute;
-    top: 40%;
-    left: 35%;
-    width: 126px;
-    height: 135px;
-    background-image: url("../../../SPA/src/assets/images/logo-small.png");
-}
-
 .logOutButton{
     position: absolute;
     top: 0px;
     right: 0px;
 }
-
-.header{
-    position: absolute;
-    left: 26%;
-    top: 0px;
-}
-
-.header .h3{
-    font-family: "gotham-bold";
-    color: gray;
-}
-
 
 .footer {
     position: absolute;
@@ -164,5 +156,83 @@ export default {
     letter-spacing: 2px;
     color: #666567;
     font-size: 13px
+}
+
+.menu {
+    position: absolute;
+    left: 10%;
+    width: 80%;
+    height: 30%;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+
+    transition-property: background-color, color;
+    transition-duration: 0.2s;
+}
+
+.menu:hover {
+    background-color: black;
+    color: white;
+}
+
+.hungry {
+    position: absolute;
+    top: 65%;
+    left: 26%;
+    font-family: "gotham-bold";
+    font-size: 150%;
+    letter-spacing: 6px;
+}
+ 
+.profil {
+    position: absolute;
+    top: 65%;
+    left: 30%;    
+    font-family: "gotham-bold";
+    font-size: 150%;
+    letter-spacing: 6px;
+}
+
+.modify {
+    position: absolute;
+    top: 80%;
+    left: 30%;
+    font-family: "gotham-bold";
+    font-size: 140%;
+    letter-spacing: 2px;
+    color: grey;
+}
+
+.command {
+    position: absolute;
+    top: 80%;
+    left: 25%;
+    font-family: "gotham-bold";
+    font-size: 140%;
+    letter-spacing: 2px;
+    color: grey;
+}
+
+.profile {
+    position: absolute;
+    top: 15%
+}
+
+.illustration-profile {
+    width: 100%;
+    height: 60%;
+    background-image: url("../../../SPA/src/assets/images/middle-profile-menu.png")
+}
+
+.order {
+    position: absolute;
+    top: 50%
+}
+
+.illustration-order {
+    width: 100%;
+    height: 60%;
+    background-image: url("../../../SPA/src/assets/images/middle-order-menu.png")
 }
 </style>
