@@ -86,6 +86,8 @@ export default {
 
     async LogOut(){
       await this.authService.logout(true);
+      await this.authService.logout(true);
+      await this.authService.logout(true);
       await this.isAccessible();
     },
 

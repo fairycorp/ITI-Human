@@ -2,7 +2,7 @@ import Axios from 'axios';
 
 class API {
 
-    get Path() { return process.env.BACKEND_URL1 }
+    get Path() { return process.env.BACKEND_URL}
 
     get(endpoint) {
         const checked = this.routineCheck(endpoint);

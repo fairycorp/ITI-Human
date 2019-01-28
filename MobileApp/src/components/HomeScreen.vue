@@ -1,10 +1,13 @@
 <template>
     <f7-page>
-        <f7-button class="logOutButton color-white"
-            @click="LogOut()"
-            icon-f7="close_round">
+        <f7-button class="backChButton color-white"
+        @click="Back()"
+        icon-f7="arrow_left">
         </f7-button>
-
+        <f7-button class="logOutButton color-white"
+        @click="LogOut()"
+        icon-f7="close_round">
+        </f7-button>
         <div @click="ChangeRoute('profile')" class="menu profile">
           <div class="illustration-profile"></div>
           <div class="profil unselectable-text">
@@ -83,22 +86,9 @@ export default {
       this.ProjectInfos = response.data;
     },
 
-    async getStorageInfos(endpoint){
-      let response = await Api.get(endpoint);
-      this.StorageInfos = response.data;
-      this.$f7router.navigate({ name: 'chooseproducts' }, {
-        props: { projectinfos: this.StorageInfos }
-      });
-    },
-
-    GetStorage(projectId) {
-      this.StorageId = projectId;
-      this.getStorageInfos("storage/project/"+ this.StorageId);
-    },
-
     ChangeRoute(route){
       if (route == 'hungry') {
-        this.$f7router.navigate({ name: 'chooseproducts' });
+        this.$f7router.navigate({ name: 'chooseProject' });
       }
       else if (route == 'profile') {
         this.$f7router.navigate({ name: 'about' });
@@ -107,13 +97,16 @@ export default {
 
     async LogOut(){
       await this.authService.logout(true);
+      await this.authService.logout(true);
+      await this.authService.logout(true);
       await this.isAccessible();
     },
 
     async isAccessible() {
       await this.authService.refresh(true, true, true);
-      //console.log(this.authService.authenticationInfo.level);
+      console.log("MDR" + this.authService.authenticationInfo.level);
       if (this.authService.authenticationInfo.level == 0) {
+        console.log("LOL" + this.authService.authenticationInfo.level);
         this.$f7router.navigate({ name: 'login' });
       }
     },
