@@ -249,7 +249,8 @@ export default class OrderDashboard extends Vue {
     private async creditProduct(product: IBasicDataOrderedProduct) {
         const payload: IPaymentStateUpdateViewModel[] = [];
         payload.push({
-            userId: this.authService.authenticationInfo.user.userId,
+            actorId: this.authService.authenticationInfo.user.userId,
+            userId: this.displayedOrder!.info.userId,
             orderedProductId: product.orderedProductId,
             paymentState: {
                 state: Payment.Credited,

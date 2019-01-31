@@ -92,6 +92,7 @@ interface PaymentState {
 }
 
 interface IPaymentStateUpdateViewModel {
+    actorId: number;
     userId: number;
     orderedProductId: number;
     paymentState: PaymentState;

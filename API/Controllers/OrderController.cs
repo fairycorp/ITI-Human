@@ -272,11 +272,11 @@ namespace API.Controllers
                     if (check.Code == Status.Success)
                     {
                         var isUserIsWhoHeSaidHeWas =
-                            AuthCheckService.CheckCurrentUserIdentity(HttpContext, model.UserId);
+                            AuthCheckService.CheckCurrentUserIdentity(HttpContext, model.ActorId);
                         if (isUserIsWhoHeSaidHeWas.Code == Status.Failure) return Forbid();
 
                         var result = await OrderedProductService.GuardedUpdatePaymentState(
-                            model.UserId, model.OrderedProductId, model.PaymentState.State, model.PaymentState.Amount
+                            model.ActorId, model.UserId, model.OrderedProductId, model.PaymentState.State, model.PaymentState.Amount
                         );
                         if (result.Code == Status.Failure) results.Add(result.Info);
                         else results.Add(result.Content);

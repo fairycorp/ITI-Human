@@ -116,7 +116,7 @@ namespace API.Services.Order
         /// Success result where result content is a <see cref="bool"/> that indicates if an update was made
         /// or Failure result if element does not exist in db.
         /// </returns>
-        public async Task<GuardResult> GuardedUpdatePaymentState(int userId, int orderedProductId, Payment paymentState, int amount)
+        public async Task<GuardResult> GuardedUpdatePaymentState(int actorId, int userId, int orderedProductId, Payment paymentState, int amount)
         {
             // Checks if Ordered Product exists.
             // If not, returns Failure().
