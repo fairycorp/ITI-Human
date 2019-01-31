@@ -36,10 +36,13 @@
 <script>
 import Api from '../helpers/Api.js'
 import {
-    AuthService,
-    IAuthServiceConfiguration,
-    AuthLevel
+  AuthService,
+  IAuthServiceConfiguration,
+  AuthLevel
 } from "@signature/webfrontauth";
+import {
+    getAuthService
+} from "../helpers/AuthServiceHelp.js";
 import Axios from "axios";
 
 export default {
@@ -57,26 +60,13 @@ export default {
   },
 
   async created() {
-    const config = {
-      identityEndPoint: {
-        hostname: process.env.HOST_NAME,
-        port: 5000,
-        disableSsl: true
-      }
-    };
-    this.authService = new AuthService(config, Axios);
+    this.authService = getAuthService();
     await this.isAccessible();
   },
 
   mounted() {
     this.Projects = this.projectinfos;
     this.GetStorageProducts("storage/products/from/"+this.Projects.storageId);
-  },
-
-  watch: {
-    authService: function(newValue, oldValue) {
-      this.isAccessible();
-    }
   },
 
   methods: {
@@ -86,17 +76,12 @@ export default {
 
     async LogOut(){
       await this.authService.logout(true);
-      await this.authService.logout(true);
-      await this.authService.logout(true);
       await this.isAccessible();
     },
 
     async isAccessible() {
-      await this.authService.refresh(true, true, true);
-      if (this.authService != null) {
-        if (this.authService.authenticationInfo.level > 0) {
-          this.$f7router.navigate({ name: 'login' });
-        }
+      if (this.authService.authenticationInfo.level == 0) {
+        this.$f7router.navigate({ name: 'login' });
       }
     },
 
@@ -165,7 +150,6 @@ export default {
         classroomId: 0,
         products: this.ArrayOfProducts
       }
-
 
       this.$f7router.navigate({ name: 'order' }, {
         props: { projectinfos: order, ArrayOfInfoLProducts: this.CompInfoLProducts }

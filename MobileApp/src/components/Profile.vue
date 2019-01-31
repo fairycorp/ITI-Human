@@ -139,6 +139,17 @@
 </template>
 
 <script>
+import Api from '../helpers/Api.js'
+import {
+  AuthService,
+  IAuthServiceConfiguration,
+  AuthLevel
+} from "@signature/webfrontauth";
+import {
+    getAuthService
+} from "../helpers/AuthServiceHelp.js";
+import Axios from "axios";
+
 export default {
 
 }

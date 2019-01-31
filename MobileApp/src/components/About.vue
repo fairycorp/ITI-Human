@@ -48,8 +48,9 @@ import Api from '../helpers/Api.js'
 import {
     AuthService,
     IAuthServiceConfiguration,
-    AuthLevel
-} from "@signature/webfrontauth";
+    AuthLevel,
+    getAuthService
+} from "../helpers/AuthServiceHelp.js";
 import Axios from "axios";
 
 export default {
@@ -61,22 +62,9 @@ export default {
   },
 
   async created() {
-    const config = {
-      identityEndPoint: {
-        hostname: process.env.HOST_NAME,
-        port: 5000,
-        disableSsl: true
-      }
-    };
-    this.authService = new AuthService(config, Axios);
+    this.authService = getAuthService();
     await this.isAccessible();
   },
-
-  watch: {
-    authService: function(newValue, oldValue) {
-      this.isAccessible();
-    }
-  },  
 
   methods: {
 
@@ -85,8 +73,6 @@ export default {
     },
 
     async isAccessible() {
-      await this.authService.refresh(true, true, true);
-      //console.log(this.authService.authenticationInfo.level);
       if (this.authService.authenticationInfo.level == 0) {
         this.$f7router.navigate({ name: 'login' });
       }

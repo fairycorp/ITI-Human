@@ -31,43 +31,41 @@
             @click="Connecting()"> 
             Se connecter
           </f7-button>
-      </f7-list>  
+      </f7-list>
     </f7-page>
 </template>
 
 <script>
 import {
-    AuthService,
-    IAuthServiceConfiguration,
-    AuthLevel
+  AuthService,
+  IAuthServiceConfiguration,
+  AuthLevel
 } from "@signature/webfrontauth";
+import {
+    getAuthService
+} from "../helpers/AuthServiceHelp.js";
 import Axios from "axios";
 
 export default {
-    data() {
-      return {
-        Password: "",
-        Name: "",
-        authService: null
-      }
-    },
-
-  async created() {
-    const config = {
-      identityEndPoint: {
-        hostname: process.env.HOST_NAME,
-        port: 5000,
-        disableSsl: true
-      }
-    };
-    this.authService = new AuthService(config, Axios);
-    await this.isAccessible();
+  data() {
+    return {
+      Password: "",
+      Name: "",
+      authService: null
+    }
   },
 
-  watch: {
-    authService: function(newValue, oldValue) {
-      this.isAccessible();
-    }
+async created() {
+
+    setTimeout(function(){
+      getAuthService();
+    }, 2000);
+
+    this.authService = getAuthService();
+
+    console.log(this.authService);
+
+    await this.isAccessible();
   },
 
   methods: {
@@ -77,11 +75,8 @@ export default {
     },
 
     async isAccessible() {
-      await this.authService.refresh(true, true, true);
-      if (this.authService != null) {
-        if (this.authService.authenticationInfo.level > 0) {
-          this.$f7router.navigate({ name: 'home' });
-        }
+      if (this.authService != null && this.authService.authenticationInfo.level > 0) {
+        this.$f7router.navigate({ name: 'home' });
       }
     },
   }
