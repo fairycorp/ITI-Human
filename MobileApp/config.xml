@@ -4,7 +4,7 @@
     <preference name="DisallowOverscroll" value="true" />
     <hook src="hooks/hookers.js" type="before_prepare" />
     <hook src="hooks/beforedep.js" type="before_deploy" />
-    <name>MobileApp</name>
+    <name>Fork</name>
     <description>
         Brand new cordova project!
     </description>
@@ -28,5 +28,6 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+    <icon density="mdpi" height="57" platform="android" src="../SPA/src/assets/images/fork-logo-app.png" width="57" />
     <engine name="android" spec="^7.1.4" />
 </widget>

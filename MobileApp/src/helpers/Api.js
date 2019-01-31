@@ -2,19 +2,17 @@ import Axios from 'axios';
 
 class API {
 
-    get Path() { return process.env.BACKEND_URL3 }
+    get Path() { return process.env.BACKEND_URL3}
 
     get(endpoint) {
         const checked = this.routineCheck(endpoint);
         let url = `${this.Path}${checked}`;
-        console.log('URL : ' + url);
         return Axios.get(url);
     }
 
     post(endpoint, data) {
         const checked = this.routineCheck(endpoint);
         let url = `${this.Path}${checked}`;
-        console.log('URL : ' + url);
         return Axios.post(url, data);
     }
 

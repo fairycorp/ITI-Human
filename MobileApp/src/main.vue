@@ -29,3 +29,15 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+
+.page {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-image: url("../../SPA/src/assets/images/page-background.jpg") !important;
+  background-attachment: fixed;
+}
+
+</style>
