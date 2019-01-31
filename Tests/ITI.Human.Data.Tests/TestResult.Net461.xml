@@ -43,7 +43,7 @@
 |  |  |  |  |  > Info: Reading binary folders.
 |  |  |  |  |  |  > Info: Reading files from 'C:\Users\dizy9\OneDrive\Bureau\Intech\S5\Info\ITI-Human\ITI.Human.Data\bin\Debug\net461'.
 |  |  |  |  |  < 1 folders read.
-|  |  |  |  |  - Info: Created temporary Working Directory: C:\Users\dizy9\AppData\Local\Temp\CKSetup2019-01-27 20h52.36.1169799\.
+|  |  |  |  |  - Info: Created temporary Working Directory: C:\Users\dizy9\AppData\Local\Temp\CKSetup2019-01-31 22h40.33.8815328\.
 |  |  |  |  > Info: Resolving runtime support for 'C:\Users\dizy9\OneDrive\Bureau\Intech\S5\Info\ITI-Human\ITI.Human.Data\bin\Debug\net461\'.
 |  |  |  |  |  > Info: Creating runtime dependencies resolver for C:\Users\dizy9\OneDrive\Bureau\Intech\S5\Info\ITI-Human\ITI.Human.Data\bin\Debug\net461\.
 |  |  |  |  |  |  - Info: Found Models: CK.Setupable.Model/8.0.1--0046-develop/Net461/, CK.SqlServer.Setup.Model/8.0.1--0046-develop/Net461/, CK.StObj.Model/8.0.1--0046-develop/Net461/
@@ -62,7 +62,7 @@
 |  |  |  |  |  |           Resolved required dependency -> CK.SqlServer.Setup.Engine/8.0.1--0046-develop to local CK.SqlServer.Setup.Engine/8.0.1--0046-develop/Net461/.
 |  |  |  |  |  |           Resolved required dependency -> CK.StObj.Engine/8.0.1--0046-develop to local CK.StObj.Engine/8.0.1--0046-develop/Net461/.
 |  |  |  |  |  > Info: Selected 156 setup files.
-|  |  |  |  > Info: Copying files to 'C:\Users\dizy9\AppData\Local\Temp\CKSetup2019-01-27 20h52.36.1169799\'.
+|  |  |  |  > Info: Copying files to 'C:\Users\dizy9\AppData\Local\Temp\CKSetup2019-01-31 22h40.33.8815328\'.
 |  |  |  |  > Info: Copying 115 files from bin folders.
 |  |  |  |  < Skipped 99 file(s).
 |  |  |  |  > Info: Generating CKSetup.Runner.Config.xml file.
@@ -82,7 +82,7 @@
 |  |  |  |  |            <CKSetup>
 |  |  |  |  |              <BasePath>C:\Users\dizy9\OneDrive\Bureau\Intech\S5\Info\ITI-Human\Tests\ITI.Human.Data.Tests\bin\Debug\net461</BasePath>
 |  |  |  |  |              <EngineAssemblyQualifiedName>CK.Setup.StObjEngine, CK.StObj.Engine</EngineAssemblyQualifiedName>
-|  |  |  |  |              <RunSignature>1c199dd5ae75c4d8c3fe2da0ae511cc1bf89ccac</RunSignature>
+|  |  |  |  |              <RunSignature>f69a86fe634d47df5b2dfa88b603cae2f5e85536</RunSignature>
 |  |  |  |  |              <BinPaths>
 |  |  |  |  |                <BinPath BinPath="C:\Users\dizy9\OneDrive\Bureau\Intech\S5\Info\ITI-Human\ITI.Human.Data\bin\Debug\net461\">
 |  |  |  |  |                  <Model>CK.Setupable.Model</Model>
@@ -99,7 +99,7 @@
 |  |  |  |  |            </CKSetup>
 |  |  |  |  |          </Configuration>
 |  |  |  |  > Info: Launching CKSetup.Runner process.
-|  |  |  |  |  > Trace: C:\Users\dizy9\AppData\Local\Temp\CKSetup2019-01-27 20h52.36.1169799\CKSetup.Runner.exe  /silent /logPipe:2360
+|  |  |  |  |  > Trace: C:\Users\dizy9\AppData\Local\Temp\CKSetup2019-01-31 22h40.33.8815328\CKSetup.Runner.exe  /silent /logPipe:2404
 |  |  |  |  |  |  > Info: Starting CKSetup.Runner .NETFramework,Version=v4.6.1 - 8.0.1--ci.29.develop (8.0.1--0029-develop) - SHA1: 3113e0abf25593fedb4c6c44b659b7e3b3b854ce - CommitDate: 2018-10-24 06:50:32Z
 |  |  |  |  |  |  |  > Info: Applying CKSetup configuration.
 |  |  |  |  |  |  |  |  - Info: Handling 1 BinPath(s).
@@ -1387,7 +1387,7 @@
 |  |  |  |  |  |  |  |  |  |  |  |           	ProductId int not null,
 |  |  |  |  |  |  |  |  |  |  |  |           	UnitPrice int not null default 0,
 |  |  |  |  |  |  |  |  |  |  |  |           	Stock int not null default 0,
-|  |  |  |  |  |  |  |  |  |  |  |           	CreditState bit not null default 0
+|  |  |  |  |  |  |  |  |  |  |  |           	CreditState bit not null default 1
 |  |  |  |  |  |  |  |  |  |  |  |           
 |  |  |  |  |  |  |  |  |  |  |  |           	constraint PK_tStorageLinkedProduct_StorageLinkedProductId primary key (StorageLinkedProductId),
 |  |  |  |  |  |  |  |  |  |  |  |           	constraint FK_tStorageLinkedProduct_StorageId foreign key (StorageId) references ITIH.tStorage (StorageId),
@@ -4764,8 +4764,8 @@
 |  |  |  |  |  |  |  |  |  |  > Info: Generating Method UserDetailsTable.Update( ISqlCallContext ctx, Int32 actorId, Int32 userId, String firstName, String lastName, DateTime birthDate ) => Task`1.
 |  |  |  |  |  |  |  |  |  |  |  > Trace: Low level SqlCommand create method for: 'proc ITIH.sUserDetailsUpdate(@ActorId int, @UserId int, @FirstName nvarchar(128), @LastName nvarchar(128), @BirthDate datetime2, @Success bit output)'.
 |  |  |  |  |  |  |  |  |  > Info: Compiling source code.
-|  |  |  |  |  |  |  |  |  |  - Info: Saved source file: C:\Users\dizy9\AppData\Local\Temp\CKSetup2019-01-27 20h52.36.1169799\CK.StObj.AutoAssembly.dll.0.cs
-|  |  |  |  |  |  |  |  |  |          Saved source file: C:\Users\dizy9\AppData\Local\Temp\CKSetup2019-01-27 20h52.36.1169799\CK.StObj.AutoAssembly.dll.1.cs
+|  |  |  |  |  |  |  |  |  |  - Info: Saved source file: C:\Users\dizy9\AppData\Local\Temp\CKSetup2019-01-31 22h40.33.8815328\CK.StObj.AutoAssembly.dll.0.cs
+|  |  |  |  |  |  |  |  |  |          Saved source file: C:\Users\dizy9\AppData\Local\Temp\CKSetup2019-01-31 22h40.33.8815328\CK.StObj.AutoAssembly.dll.1.cs
 |  |  |  |  |  |  |  |  |  |  > Info: Code Generation information.
 |  |  |  |  |  |  |  |  |  |  |  - Info: Source code generation and compilation succeeded.
 |  |  |  |  |  |  |  |  |  |  < Succeeded.
