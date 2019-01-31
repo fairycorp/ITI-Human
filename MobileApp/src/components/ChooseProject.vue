@@ -126,12 +126,13 @@ export default {
 
 .signature {
     position: absolute;
-    top: 85%;
+    top: 80%;
     left: 0%;
     width: 83%;
     font-family: "Gloria";
-    font-size: 140%;
+    font-size: 120%;
     color: gray;
+    padding: 5px;
 }
 
 .main-button {
@@ -146,17 +147,17 @@ export default {
     left: 18%;
     width: 232px;
     height: 206px;
-    background-image: url("../../../SPA/src/assets/images/fork-chefs.png");
+    background-image: url("../../../SPA/src/assets/images/fork-chefs-grey.png");
 }
 
 .text-at-bottom {
     position: absolute;
     top: 48%;
-    width: 100%;
     font-family: "Gloria";
-    font-size: 120%;
+    font-size: 110%;
     color: #ababab;
     text-align: justify;
+    padding: 5px;
 }
 
 button.big {

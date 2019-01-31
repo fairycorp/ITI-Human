@@ -85,6 +85,7 @@ export default {
 
 .about{
     color: white;
+    padding: 5px;
 }
 
 .backButton{
@@ -96,7 +97,7 @@ export default {
 .contact-button {
     width: 193px;
     height: 46px;
-    background-image: url("../../../SPA/src/assets/images/contact-button.png");
+    background-image: url("../../../SPA/src/assets/images/contact-button-grey.png");
     cursor: pointer;
 }
 

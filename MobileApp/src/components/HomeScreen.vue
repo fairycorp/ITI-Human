@@ -1,6 +1,5 @@
 <template>
   <f7-page>
-    <f7-button class="backChButton color-white" @click="Back()" icon-f7="arrow_left"></f7-button>
     <f7-button class="logOutButton color-white" @click="LogOut()" icon-f7="close_round"></f7-button>
     <div @click="ChangeRoute('profile')" class="menu profile">
       <div class="illustration-profile"></div>
