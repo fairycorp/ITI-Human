@@ -40,4 +40,16 @@ export default {
   background-attachment: fixed;
 }
 
+.openSans-bold {
+  font-family: "OpenSans-semiBold";
+}
+
+.openSans-litalic {
+  font-family: "OpenSans-litalic";
+}
+
+.unselectable-text {
+  user-select: none;
+}
+
 </style>

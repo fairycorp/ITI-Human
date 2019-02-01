@@ -1,49 +1,55 @@
 <template>
   <f7-page>
-    <f7-button class="backChButton color-white"
-      @click="Back()"
-      icon-f7="arrow_left">
-    </f7-button>
-    <f7-button class="logOutButton color-white"
-      @click="LogOut()"
-      icon-f7="close_round">
-    </f7-button>
-
-    <h1 class="cm">Votre commande</h1>
-    <h3 class="cm2">Où voici ce que vous avez pris</h3>
-    <div class="global">
-      <div class="under_global">
-      <div
-        v-for="infolproducts in InfoLProducts" 
-        :key="infolproducts.product.storageLinkedProductId" :value="infolproducts.product.storageLinkedProductId" class="ordered">
-          <img width="50" class="pictureproduct" :src="infolproducts.product.productAvatarUrl" />
-          <span class="quantity">
-            <span class="grey">x </span>
-            <span class="openSans-bold">{{ infolproducts.quantity }}</span>
-            <span class="grey"> ({{ infolproducts.product.unitPrice / 100 }} €)</span>
-          </span>
-      </div>
-      <div class="totalPrice medium-top-margin">TOTAL <span class="openSans-bold">{{ totalPrice / 100 }} €</span>,<br />
-        <span v-if="selectedClassroom.classroomId === 0" class="openSans-bold">À emporter</span>
-        <span v-else>Livrée en <span class="openSans-bold">{{ selectedClassroom.name }}</span></span>.
-      </div>
-      <h3 class="medium-top-margin">Où voulez-vous être livré(e) ?</h3>
-      </div>
-      <f7-row tag="p">
-      <f7-button big small outline round
-          class="selectClass selection unselectable-text button color-white light-top-margin light-right-margin"
-          @click="selectClassroom(classroom)"
-          :class="{ selectedButton : selectedClassroom.classroomId === classroom.classroomId }"
-          v-for="classroom in Classrooms" :key="classroom.classroomId">
-            <span v-if="classroom.classroomId > 0">{{classroom.name}}</span>
-            <span v-else>TWAY</span>
+    <div v-if="Command == false">
+      <f7-button class="backChButton color-white"
+        @click="Back()"
+        icon-f7="arrow_left">
       </f7-button>
-      </f7-row>
-      <f7-button class="unselectable-text col button color-white"
-        @click="Continue()"> 
-        Commander 
+      <f7-button class="logOutButton color-white"
+        @click="LogOut()"
+        icon-f7="close_round">
       </f7-button>
-    </div>  
+      <h1 class="cm">Votre commande</h1>
+      <h3 class="cm2">Où voici ce que vous avez pris</h3>
+      <div class="global">
+        <div class="under_global">
+          <div
+            v-for="infolproducts in InfoLProducts" 
+            :key="infolproducts.product.storageLinkedProductId" :value="infolproducts.product.storageLinkedProductId" class="ordered">
+              <img width="50" class="pictureproduct" :src="infolproducts.product.productAvatarUrl" />
+              <span class="quantity">
+                <span class="grey">x </span>
+                <span class="openSans-bold">{{ infolproducts.quantity }}</span>
+                <span class="grey"> ({{ infolproducts.product.unitPrice / 100 }} €)</span>
+              </span>
+          </div>
+          <div class="totalPrice medium-top-margin">TOTAL <span class="openSans-bold">{{ totalPrice / 100 }} €</span>,<br />
+            <span v-if="selectedClassroom.classroomId === 0" class="openSans-bold">À emporter</span>
+            <span v-else>Livrée en <span class="openSans-bold">{{ selectedClassroom.name }}</span></span>.
+          </div>
+        </div>
+        <h3 class="class medium-top-margin">Où voulez-vous être livré(e) ?</h3>
+        <f7-row tag="p">
+        <f7-button big small outline round
+            class="selectClass selection unselectable-text button color-white light-top-margin light-right-margin"
+            @click="selectClassroom(classroom)"
+            :class="{ selectedButton : selectedClassroom.classroomId === classroom.classroomId }"
+            v-for="classroom in Classrooms" :key="classroom.classroomId">
+              <span v-if="classroom.classroomId > 0">{{classroom.name}}</span>
+              <span v-else>TWAY</span>
+        </f7-button>
+        </f7-row>
+        <f7-button class="unselectable-text col button color-white"
+          @click="Continue()"> 
+          Commander 
+        </f7-button>
+      </div>
+    </div>
+    <div v-else >
+      <div class="orderedMessage"></div>
+      <br/>
+      <button @click="GoHome()" class="gohome unselectable-text">D'accord !</button>
+    </div>
   </f7-page>
 </template>
 
@@ -71,6 +77,7 @@ export default {
       Classrooms: [],
       selectValue: '',
       selectedClassroom:'',
+      Command: false,
     };
   },
 
@@ -133,16 +140,18 @@ export default {
     async MakeACommand(endpoint, data){
       let response = await Api.post(endpoint, data);
       this.CommandId = response.data;
-      this.$f7router.navigate({ name: 'home' });
     },
 
     Continue() {
       let ClassroomId = this.selectedClassroom.classroomId;
       this.Projects.classroomId = ClassroomId;
       this.MakeACommand("order/create", this.Projects);
+      this.Command = true;
+    },
 
+    GoHome(){
       this.$f7router.navigate({ name: 'home' });
-    }
+    },
   },
 };
 </script>
@@ -194,6 +203,7 @@ export default {
 
 .under_global{
     background-color: white;
+    padding: 10px;
 }
 
 .backOrButton{
@@ -211,5 +221,36 @@ export default {
 .selectClass{
     width: 60px;
     margin-bottom: 3px;
+}
+
+.class{
+  color: white;
+}
+
+.orderedMessage {
+    position: absolute;
+    top: 25%;
+    left: 2.5%;
+    width: 343px;
+    height: 230px;
+    background-image: url("../../../SPA/src/assets/images/preparing-order-mobile.png");
+}    
+
+button.gohome {
+    position: absolute;
+    outline-width: 0;
+    top: 65%;
+    left: 25%;
+    width: 175px;
+    height: 30px;
+    border-radius: 45px;
+    background-color: white;
+    border: 1px solid black;
+    font-family: "gotham-bold";
+    color: black;
+    letter-spacing: 2px;
+    
+    transition-duration: 0.2s;
+    transition-property: background-color, color;
 }
 </style>
