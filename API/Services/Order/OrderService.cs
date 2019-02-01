@@ -434,8 +434,9 @@ namespace API.Services.Order
         {
             using (var ctx = new SqlStandardCallContext())
             {
+                var date = DateTime.Now;
                 var order =
-                await OrderTable.Create(ctx, model.UserId, model.StorageId, model.UserId, model.ClassroomId, DateTime.UtcNow);
+                await OrderTable.Create(ctx, model.UserId, model.StorageId, model.UserId, model.ClassroomId, date.AddHours(1));
 
                 foreach (var product in model.Products)
                 {

@@ -8,7 +8,11 @@
             v-for="order in orders" :key="order.info.orderId"
             @click="openNewOrder(order)"
             class="orderlist"
-            :class="{ green: order.info.currentState == 3, red: order.info.currentState == 0, yellow: order.info.currentState == 1 }">
+            :class="{ 
+                red: order.info.currentState == 0, 
+                yellow: order.info.currentState == 1 || (order.info.currentState == 3 && order.info.fullyPaid == false),
+                green: order.info.currentState == 3 && order.info.fullyPaid == true
+            }">
                 <div :class="{ visible: displayedOrder != null && displayedOrder.info.orderId == order.info.orderId }" class="bar"></div>
                 <p>
                     Commande n°<span class="openSans-bold">{{ order.info.orderId }}</span>, par <span class="openSans-bold">{{ order.info.userName }}</span><br />
@@ -16,13 +20,18 @@
                     <span class="little-grey">Effectuée le {{ order.info.displayedDate }}</span>
                 </p>
             </div>
+            <div v-if="orders == null || orders == undefined || orders.length == 0">
+                <span class="little-grey">Aucune commande reçue à l'heure actuelle.</span>
+            </div>
         </div>
         <div v-if="displayedOrder != null && displayedOrder != undefined" class="right-page">
             <div @click="closeOrder()" class="cross">x</div>
             <span class="title">COMMANDE N°{{ displayedOrder.info.orderId }}</span>
             <button v-if="displayedOrder.info.currentState != 3" @click="cancelOrder(displayedOrder.info.orderId)" class="cancel-button">ANNULER</button>
             <div class="light-top-margin orderinfo">
-                <span class="little-grey">À <span v-if="displayedOrder.info.classroomId == 0">emporter</span><span v-else>livrer en {{ displayedOrder.info.classroomName }}</span></span><br />
+                <span class="openSans-bold">TOTAL {{ displayedOrder.info.total / 100 }}€</span> | 
+                <span class="little-grey">À <span v-if="displayedOrder.info.classroomId == 0">emporter</span><span v-else>livrer en {{ displayedOrder.info.classroomName }}</span></span>
+                <br />
                 par <span class="openSans-bold">{{ displayedOrder.info.userName }}</span>,<span class="grey"> {{ displayedOrder.info.displayedDate }}</span>
             </div>
             <div class="medium-top-margin">
@@ -132,6 +141,11 @@ export default class OrderDashboard extends Vue {
                 };
                 const response = await API.put(`${Endpoint.Order}/currentState`, payload);
             }
+
+            order.info.total = 0;
+            order.products.forEach( (product) => {
+                order.info.total += product.unitPrice * product.quantity;
+            });
         });
 
         if (this.displayedOrder != null) {
@@ -142,6 +156,12 @@ export default class OrderDashboard extends Vue {
                     this.displayedOrder!.products.forEach( (product) => {
                         if (product.currentState != 3) {
                             fullyCompleted = false;
+                        }
+                        if (product.payment.state == Payment.Unpaid) {
+                            this.displayedOrder!.info.fullyPaid = false;
+                        }
+                        else if (product.payment.state == Payment.Paid || product.payment.state == Payment.Credited) {
+                            this.displayedOrder!.info.fullyPaid = true;
                         }
                     });
                     if (fullyCompleted) {
@@ -218,7 +238,8 @@ export default class OrderDashboard extends Vue {
         }
 
         payload.push({
-            userId: this.authService.authenticationInfo.user.userId,
+            actorId: this.authService.authenticationInfo.user.userId,
+            userId: this.displayedOrder!.info.userId,
             orderedProductId: product.orderedProductId,
             paymentState: state
         });

@@ -249,8 +249,9 @@ namespace API.Services.Order
                         // Updates Ordered Product payment state (sets it to Payment.Credited).
                         using (var ctx = new SqlStandardCallContext())
                         {
+                            var date = DateTime.Now;
                             var updated = await OrderedProductTable.UpdatePaymentState(
-                                ctx, userId, DateTime.UtcNow, orderedProductId, 
+                                ctx, userId, date.AddHours(1), orderedProductId, 
                                 CastIntoOrderFinalDue(orderFinalDue.Content).Info.OrderFinalDueId,
                                 paymentState, 0
                             );
@@ -301,7 +302,8 @@ namespace API.Services.Order
         {
             using (var ctx = new SqlStandardCallContext())
             {
-                return await OrderedProductTable.UpdateCurrentState(ctx, userId, DateTime.UtcNow, orderedProductId, currentState);
+                var date = DateTime.Now;
+                return await OrderedProductTable.UpdateCurrentState(ctx, userId, date.AddHours(1), orderedProductId, currentState);
             }
         }
 
@@ -312,7 +314,8 @@ namespace API.Services.Order
                 var orderedProduct = await Get(orderedProductId);
                 var orderFinalDue = await OrderDueServices.GuardedGetFinalDueFromOrder(orderedProduct.OrderId);
 
-                return await OrderedProductTable.UpdatePaymentState(ctx, userId, DateTime.UtcNow, orderedProductId,
+                var date = DateTime.Now;
+                return await OrderedProductTable.UpdatePaymentState(ctx, userId, date.AddHours(1), orderedProductId,
                     ((DetailedDataOrderFinalDue)orderFinalDue.Content).Info.OrderFinalDueId, paymentState, amount);
             }
         }

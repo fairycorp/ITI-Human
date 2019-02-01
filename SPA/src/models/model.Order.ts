@@ -20,6 +20,8 @@ interface IBasicDataOrder {
     creationDate: Date;
     displayedDate: string;
     currentState: State;
+    total: number;
+    fullyPaid: boolean;
 }
 
 interface IBasicDataOrderedProduct {

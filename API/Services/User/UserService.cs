@@ -210,7 +210,8 @@ namespace API.Services.User
                 }
                 if (launchCreationProcess && doesDetailsExist == 0)
                 {
-                    result1 = await UserDetailsTable.Create(ctx, model.UserId, model.UserId, model.Firstname, model.Lastname, DateTime.Now);
+                    var date = DateTime.Now;
+                    result1 = await UserDetailsTable.Create(ctx, model.UserId, model.UserId, model.Firstname, model.Lastname, date.AddHours(1));
 
                     if (doesMemberExist == 0)
                     {
@@ -220,7 +221,8 @@ namespace API.Services.User
                 if (launchCreationProcess && doesDetailsExist > 0)
                 {
                     result1 = -1;
-                    await UserDetailsTable.Update(ctx, model.UserId, model.UserId, model.Firstname, model.Lastname, DateTime.Now);
+                    var date = DateTime.Now;
+                    await UserDetailsTable.Update(ctx, model.UserId, model.UserId, model.Firstname, model.Lastname, date.AddHours(1));
 
                     if (doesMemberExist == 0)
                     {

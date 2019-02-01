@@ -260,7 +260,8 @@ namespace API.Services.Order
 
             if (doesProjectExist.Code == Status.Failure) return Failure(doesProjectExist.Info);
 
-            var result = await CreateOrderCredit(actorId, projectId, userId, amount, DateTime.UtcNow);
+            var date = DateTime.Now;
+            var result = await CreateOrderCredit(actorId, projectId, userId, amount, date.AddHours(1));
             if (result == 0) return Failure("Error in creation process.");
 
             return Success(result);
