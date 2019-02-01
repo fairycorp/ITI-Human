@@ -25,6 +25,7 @@ namespace ITI.Human.Data.Tests
         const string productName7 = "Redbull (50cl)";
         const string productName8 = "Fanta (33cl)";
         const string productName9 = "Fanta (50cl)";
+        const string productName10 = "Perrier (20cl)";
         const string userName1 = "Geralt";
         const string userName2 = "Jasquier";
         const string userName3 = "Priscilla";
@@ -89,7 +90,8 @@ namespace ITI.Human.Data.Tests
                 var productNames = new string[] {
                     productName1, productName2, productName3,
                     productName4, productName5, productName6,
-                    productName7, productName8, productName9
+                    productName7, productName8, productName9,
+                    productName10
                 };
 
                 foreach (var productName in productNames)
@@ -117,6 +119,8 @@ namespace ITI.Human.Data.Tests
                     "https://image.noelshack.com/fichiers/2019/03/1/1547463367-fanta-33.png");
                 var productId9 = await pTable.Create(ctx, 0, productName9, "Bouteille au format standard.",
                     "https://image.noelshack.com/fichiers/2019/03/1/1547463367-fanta-50.png");
+                var productId10 = await pTable.Create(ctx, 0, productName10, "Petite bouteille pleine de bubulles.",
+                    "https://image.noelshack.com/fichiers/2019/05/5/1548982923-perrier-20.png");
 
 
                 // Checks on users.
