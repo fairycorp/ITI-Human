@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ITI.Human.Data\ITI.Human.Data.csproj" />
+    <ProjectReference Include="..\Fork.Data\Fork.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

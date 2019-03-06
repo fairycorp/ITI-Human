@@ -1,8 +1,8 @@
 ﻿using API.Services.Product;
 using CK.SqlServer;
 using Dapper;
-using ITI.Human.Data;
-using ITI.Human.ViewModels.Storage.LinkedProduct;
+using Fork.Data;
+using Fork.ViewModels.Storage.LinkedProduct;
 using Stall.Guard.System;
 using System;
 using System.Collections.Generic;

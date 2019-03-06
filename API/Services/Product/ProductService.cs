@@ -1,7 +1,7 @@
-﻿using ITI.Human.ViewModels.Product;
+﻿using Fork.ViewModels.Product;
 using CK.SqlServer;
 using Dapper;
-using ITI.Human.Data;
+using Fork.Data;
 using Stall.Guard.System;
 using System.Collections.Generic;
 using System.Linq;

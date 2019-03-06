@@ -1,8 +1,8 @@
 ﻿using API.Services.Auth;
 using API.Services.Helper.Guard;
 using API.Services.Project;
-using ITI.Human.ViewModels.Project;
-using ITI.Human.ViewModels.Project.Member;
+using Fork.ViewModels.Project;
+using Fork.ViewModels.Project.Member;
 using Microsoft.AspNetCore.Mvc;
 using Stall.Guard.System;
 using System.Collections.Generic;
@@ -66,7 +66,7 @@ namespace API.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] ITI.Human.ViewModels.Project.CreationViewModel model)
+        public async Task<IActionResult> Create([FromBody] Fork.ViewModels.Project.CreationViewModel model)
         {
             var isAuthenticated =
                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
@@ -90,7 +90,7 @@ namespace API.Controllers
         }
 
         [HttpPost("member/add")]
-        public async Task<IActionResult> AddMember([FromBody] ITI.Human.ViewModels.Project.Member.CreationViewModel model)
+        public async Task<IActionResult> AddMember([FromBody] Fork.ViewModels.Project.Member.CreationViewModel model)
         {
             var isAuthenticated =
                AuthCheckService.CheckUserAuthenticationLevel(HttpContext);

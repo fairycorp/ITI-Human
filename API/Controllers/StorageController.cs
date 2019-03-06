@@ -1,12 +1,12 @@
 ﻿using API.Services.Helper.Guard;
-using ITI.Human.ViewModels.Storage.LinkedProduct;
+using Fork.ViewModels.Storage.LinkedProduct;
 using Microsoft.AspNetCore.Mvc;
 using Stall.Guard.System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Services.Storage;
 using API.Services.Auth;
-using ITI.Human.ViewModels.Storage;
+using Fork.ViewModels.Storage;
 
 namespace API.Controllers
 {
@@ -107,7 +107,7 @@ namespace API.Controllers
 
         [HttpPost("create")]
         public async Task<IActionResult> CreateStorage(
-            [FromBody] ITI.Human.ViewModels.Storage.CreationViewModel model)
+            [FromBody] Fork.ViewModels.Storage.CreationViewModel model)
         {
             var isAuthenticated =
                 AuthCheckService.CheckUserAuthenticationLevel(HttpContext);
@@ -162,7 +162,7 @@ namespace API.Controllers
         }
 
         [HttpPost("products/create")]
-        public async Task<IActionResult> CreateStorageLinkedProduct([FromBody] ITI.Human.ViewModels.Storage.LinkedProduct.CreationViewModel model)
+        public async Task<IActionResult> CreateStorageLinkedProduct([FromBody] Fork.ViewModels.Storage.LinkedProduct.CreationViewModel model)
         {
             var isAuthenticated =
                 AuthCheckService.CheckUserAuthenticationLevel(HttpContext);

@@ -2,9 +2,9 @@
 using API.Services.User;
 using CK.SqlServer;
 using Dapper;
-using ITI.Human.Data;
-using ITI.Human.ViewModels.Project;
-using ITI.Human.ViewModels.Project.Member;
+using Fork.Data;
+using Fork.ViewModels.Project;
+using Fork.ViewModels.Project.Member;
 using Stall.Guard.System;
 using System.Collections.Generic;
 using System.Linq;
@@ -116,7 +116,7 @@ namespace API.Services.Project
         /// Success result where result content is a <see cref="BasicDataProject.ProjectId"/>
         /// or Failure result if element has not been created.
         /// </returns>
-        public async Task<GuardResult> GuardedCreate(ITI.Human.ViewModels.Project.CreationViewModel model)
+        public async Task<GuardResult> GuardedCreate(Fork.ViewModels.Project.CreationViewModel model)
         {
             using (var ctx = new SqlStandardCallContext())
             {
@@ -137,8 +137,8 @@ namespace API.Services.Project
             var result = await Create(model);
             if (result == 0) return Failure("Error in creation process.");
 
-            ITI.Human.ViewModels.Project.Member.CreationViewModel memberAddModel =
-                new ITI.Human.ViewModels.Project.Member.CreationViewModel
+            Fork.ViewModels.Project.Member.CreationViewModel memberAddModel =
+                new Fork.ViewModels.Project.Member.CreationViewModel
                 {
                     ProjectId = result,
                     UserId = 0
@@ -160,7 +160,7 @@ namespace API.Services.Project
         /// Success result where result content is a <see cref="DetailedDataProjectMember.ProjectMemberId"/>
         /// or Failure result if element has not been created.
         /// </returns>
-        public async Task<GuardResult> GuardedAddMember(ITI.Human.ViewModels.Project.Member.CreationViewModel model)
+        public async Task<GuardResult> GuardedAddMember(Fork.ViewModels.Project.Member.CreationViewModel model)
         {
             var doesProjectExist = await Get(model.ProjectId);
             if (doesProjectExist == null) return Failure(
@@ -310,7 +310,7 @@ namespace API.Services.Project
             }
         }
         
-        private async Task<int> Create(ITI.Human.ViewModels.Project.CreationViewModel model)
+        private async Task<int> Create(Fork.ViewModels.Project.CreationViewModel model)
         {
             using (var ctx = new SqlStandardCallContext())
             {
@@ -319,7 +319,7 @@ namespace API.Services.Project
 
                 if (model.SemesterId == 4)
                 {
-                    ITI.Human.ViewModels.Storage.CreationViewModel storageModel = new ITI.Human.ViewModels.Storage.CreationViewModel
+                    Fork.ViewModels.Storage.CreationViewModel storageModel = new Fork.ViewModels.Storage.CreationViewModel
                     {
                         UserId = model.ActorId,
                         ProjectId = projectId
@@ -331,7 +331,7 @@ namespace API.Services.Project
             }
         }
 
-        private async Task<int> AddMember(ITI.Human.ViewModels.Project.Member.CreationViewModel model)
+        private async Task<int> AddMember(Fork.ViewModels.Project.Member.CreationViewModel model)
         {
             using (var ctx = new SqlStandardCallContext())
             {

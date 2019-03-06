@@ -3,11 +3,11 @@ using API.Services.Storage;
 using API.Services.User;
 using CK.SqlServer;
 using Dapper;
-using ITI.Human.Data;
-using ITI.Human.ViewModels.Order;
-using ITI.Human.ViewModels.Product.Ordered;
-using ITI.Human.ViewModels.Storage;
-using ITI.Human.ViewModels.Storage.LinkedProduct;
+using Fork.Data;
+using Fork.ViewModels.Order;
+using Fork.ViewModels.Product.Ordered;
+using Fork.ViewModels.Storage;
+using Fork.ViewModels.Storage.LinkedProduct;
 using Stall.Guard.System;
 using System;
 using System.Collections.Generic;
@@ -130,7 +130,7 @@ namespace API.Services.Order
         /// Success result where result content is a <see cref="BasicDataOrder.OrderId"/>
         /// or Failure result if element has not been created.
         /// </returns>
-        public async Task<GuardResult> GuardedCreate(ITI.Human.ViewModels.Order.CreationViewModel model)
+        public async Task<GuardResult> GuardedCreate(Fork.ViewModels.Order.CreationViewModel model)
         {
             // Checks if classroom id & storage id are not 0.
             if (model.StorageId == 0 || model.UserId == 0)
@@ -430,7 +430,7 @@ namespace API.Services.Order
             }
         }
 
-        private async Task<int> Create(ITI.Human.ViewModels.Order.CreationViewModel model)
+        private async Task<int> Create(Fork.ViewModels.Order.CreationViewModel model)
         {
             using (var ctx = new SqlStandardCallContext())
             {
@@ -486,7 +486,7 @@ namespace API.Services.Order
             }
         }
 
-        private async Task<bool> DeleteOrder(ITI.Human.ViewModels.Order.DeletionViewModel model)
+        private async Task<bool> DeleteOrder(Fork.ViewModels.Order.DeletionViewModel model)
         {
             using (var ctx = new SqlStandardCallContext())
             {
@@ -494,7 +494,7 @@ namespace API.Services.Order
             }
         }
 
-        private async Task<bool> DeleteOrderedProduct(ITI.Human.ViewModels.Product.Ordered.DeletionViewModel model)
+        private async Task<bool> DeleteOrderedProduct(Fork.ViewModels.Product.Ordered.DeletionViewModel model)
         {
             using (var ctx = new SqlStandardCallContext())
             {

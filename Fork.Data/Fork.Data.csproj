@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\Common\Shared.props" />
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <CopyLocalLockFileAssemblies>True</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Res\**\*.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\**\*.tql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Res\Model\ITIH.ProjectMemberTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.ProjectRankTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.ProjectVotesTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.SchoolMemberTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.SchoolStatusTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.StudentTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.UserAvatarsTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\ITIH.UserDetailsTable.Install.1.0.0.sql" />
+    <None Remove="Res\sProjectMemberCreate.sql" />
+    <None Remove="Res\sProjectMemberDelete.sql" />
+    <None Remove="Res\sProjectVoteCreate.sql" />
+    <None Remove="Res\sSchoolMemberCreate.sql" />
+    <None Remove="Res\sStallUpdate.sql" />
+    <None Remove="Res\sStudentCreate.sql" />
+    <None Remove="Res\sUserAvatarCreate.sql" />
+    <None Remove="Res\sUserDetailsCreate.sql" />
+    <None Remove="Res\sUserDetailsUpdate.sql" />
+    <None Remove="Res\vProjectMembers.sql" />
+    <None Remove="Res\vSchoolMembers.sql" />
+    <None Remove="Res\vStorageLinkedProducts.sql" />
+    <None Remove="Res\vUserBalance.sql" />
+    <None Remove="Res\vUserProfile.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CK.DB.Auth" Version="3.0.1--0028-develop" />
+    <PackageReference Include="CK.DB.User.UserGithub" Version="0.3.1--0032-develop" />
+    <PackageReference Include="CK.DB.User.UserPassword" Version="3.0.1--0028-develop" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fork.ViewModels\Fork.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

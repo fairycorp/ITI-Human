@@ -1,7 +1,7 @@
 ﻿using API.Services.Auth;
 using API.Services.Helper.Guard;
 using API.Services.User;
-using ITI.Human.ViewModels.User.Profile;
+using Fork.ViewModels.User.Profile;
 using Microsoft.AspNetCore.Mvc;
 using Stall.Guard.System;
 using System.Collections.Generic;

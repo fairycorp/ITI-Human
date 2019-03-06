@@ -1,8 +1,8 @@
 ﻿using API.Services.Auth;
 using API.Services.Helper.Guard;
 using API.Services.Order;
-using ITI.Human.ViewModels.Order;
-using ITI.Human.ViewModels.Order.Payment;
+using Fork.ViewModels.Order;
+using Fork.ViewModels.Order.Payment;
 using Microsoft.AspNetCore.Mvc;
 using Stall.Guard.System;
 using System.Collections.Generic;

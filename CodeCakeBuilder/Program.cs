@@ -1,7 +1,7 @@
 ﻿using System;
 using CodeCake;
 
-namespace ITI.Human.CodeCakeBuilder
+namespace Fork.CodeCakeBuilder
 {
     public class Program
     {
