@@ -16,7 +16,7 @@ namespace CodeCake
             Cake.Log.Verbosity = Verbosity.Diagnostic;
 
             var configuration = "Debug";
-            var solutionName = "ITI-Human.sln";
+            var solutionName = "Fork.sln";
             var projects = Cake.ParseSolution(solutionName)
                            .Projects
                            .Where(p => !(p is SolutionFolder)
