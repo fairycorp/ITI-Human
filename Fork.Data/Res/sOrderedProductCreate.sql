@@ -1,5 +1,5 @@
 ﻿--SetupConfig: {}
-create proc ITIH.sOrderedProductCreate (
+create proc FRK.sOrderedProductCreate (
 	@ActorId int,
 	@OrderId int,
 	@StorageLinkedProductId int,
@@ -11,7 +11,7 @@ begin
 	--[beginsp]
 	--<PreCreate revert />
 
-	insert into ITIH.tOrderedProduct (OrderId, StorageLinkedProductId, Quantity)
+	insert into FRK.tOrderedProduct (OrderId, StorageLinkedProductId, Quantity)
 		values (@OrderId, @StorageLinkedProductId, @Quantity);
 
 	set @OrderedProductId = scope_identity();

@@ -1,5 +1,5 @@
 ﻿-- SetupConfig: {}
-create proc ITIH.sOrderDelete (
+create proc FRK.sOrderDelete (
 	@ActorId int,
 	@OrderId int,
 	@Success bit = 0 output

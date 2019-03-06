@@ -139,7 +139,7 @@ namespace API.Services.Product
                     .QueryAsync<BasicDataProduct>(
                         @"SELECT
                             *
-                        FROM ITIH.tProduct;"
+                        FROM FRK.tProduct;"
                     )).ToArray();
             }
         }
@@ -152,7 +152,7 @@ namespace API.Services.Product
                     .QueryFirstOrDefaultAsync<BasicDataProduct>(
                         @"SELECT
                             *
-                        FROM ITIH.tProduct
+                        FROM FRK.tProduct
                         WHERE ProductId = @id;",
                         new { id = productId }
                     );
@@ -167,7 +167,7 @@ namespace API.Services.Product
                     .QueryFirstOrDefaultAsync<BasicDataProduct>(
                         @"SELECT
                             *
-                        FROM ITIH.tProduct
+                        FROM FRK.tProduct
                         WHERE [Name] = @nM;",
                         new { nM = productName }
                 );

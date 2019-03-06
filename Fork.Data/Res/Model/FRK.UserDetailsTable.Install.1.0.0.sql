@@ -1,4 +1,4 @@
-﻿create table ITIH.tUserDetails (
+﻿create table FRK.tUserDetails (
 	UserDetailsId int not null identity(0, 1),
 	UserId int not null,
 	FirstName nvarchar(128) not null default N'',
@@ -9,4 +9,4 @@
 	constraint FK_tUserDetails_UserId foreign key (UserId) references CK.tUser (UserId)
 );
 
-insert into ITIH.tUserDetails (UserId) values (0);
+insert into FRK.tUserDetails (UserId) values (0);

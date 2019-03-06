@@ -1,5 +1,5 @@
 ﻿--SetupConfig: {}
-create proc ITIH.sProjectVoteCreate (
+create proc FRK.sProjectVoteCreate (
 	@ActorId int,
 	@ProjectId int,
 	@UserId int,
@@ -12,7 +12,7 @@ begin
 	
 	--<PreCreate revert />
 
-	insert into ITIH.tProjectVotes (ProjectId, UserId, Note)
+	insert into FRK.tProjectVotes (ProjectId, UserId, Note)
 		values (@ProjectId, @UserId, @Note);
 
 	set @ProjectVoteIdResult = scope_identity();

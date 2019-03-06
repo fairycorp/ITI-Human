@@ -123,7 +123,7 @@ namespace API.Services.Project
                 var doesProjectAlreadyExist =
                     await ctx[ProjectTable].Connection
                         .QueryFirstOrDefaultAsync<int>(
-                            "SELECT ProjectId FROM ITIH.tProject WHERE Name = @nm;",
+                            "SELECT ProjectId FROM FRK.tProject WHERE Name = @nm;",
                             new { nm = model.Name }
                         );
                 if (doesProjectAlreadyExist > 0) return Failure("A project with this name already exists.");
@@ -171,7 +171,7 @@ namespace API.Services.Project
             {
                 var doesMemberAlreadyRegistered = await ctx[ProjectMemberTable].Connection
                     .QueryFirstOrDefaultAsync<int>(
-                        "SELECT ProjectMemberId FROM ITIH.tProjectMember WHERE UserId = @uId AND ProjectId = @pId;",
+                        "SELECT ProjectMemberId FROM FRK.tProjectMember WHERE UserId = @uId AND ProjectId = @pId;",
                         new { uId = model.UserId, pId = model.ProjectId }
                     );
                 if (doesMemberAlreadyRegistered > 0) return Failure(
@@ -197,7 +197,7 @@ namespace API.Services.Project
             {
                 var doesProjectMemberExist = await ctx[ProjectMemberTable].Connection
                     .QueryFirstOrDefaultAsync(
-                        "SELECT * FROM ITIH.tProjectMember WHERE ProjectMemberId = @id;",
+                        "SELECT * FROM FRK.tProjectMember WHERE ProjectMemberId = @id;",
                         new { id = model.ProjectMemberId }
                     );
                 if (doesProjectMemberExist == null) return Failure(
@@ -221,7 +221,7 @@ namespace API.Services.Project
                          @"SELECT
                             *
                         FROM 
-                            ITIH.vProjects;"
+                            FRK.vProjects;"
                     );
                 if (projects == null) return null;
 
@@ -229,13 +229,13 @@ namespace API.Services.Project
                 {
                     project.Members = await ctx[ProjectMemberTable].Connection
                         .QueryAsync<DetailedDataProjectMember>(
-                            "SELECT * FROM ITIH.vProjectMembers WHERE ProjectId = @id;",
+                            "SELECT * FROM FRK.vProjectMembers WHERE ProjectId = @id;",
                             new { id = project.ProjectId }
                         );
 
                     project.Votes = await ctx[ProjectVotesTable].Connection
                         .QueryAsync<int>(
-                            "SELECT Note FROM ITIH.tProjectVotes WHERE ProjectId = @id;",
+                            "SELECT Note FROM FRK.tProjectVotes WHERE ProjectId = @id;",
                             new { id = project.ProjectId }
                         );
                 }
@@ -253,7 +253,7 @@ namespace API.Services.Project
                         @"SELECT
                         *
                     FROM 
-                        ITIH.vProjects
+                        FRK.vProjects
                     WHERE
                         ProjectId = @Id;",
                         new { Id = projectId }
@@ -262,13 +262,13 @@ namespace API.Services.Project
 
                 project.Members = await ctx[ProjectMemberTable].Connection
                     .QueryAsync<DetailedDataProjectMember>(
-                        "SELECT * FROM ITIH.vProjectMembers WHERE ProjectId = @id;",
+                        "SELECT * FROM FRK.vProjectMembers WHERE ProjectId = @id;",
                         new { id = project.ProjectId }
                     );
 
                 project.Votes = await ctx[ProjectVotesTable].Connection
                     .QueryAsync<int>(
-                        "SELECT Note FROM ITIH.tProjectVotes WHERE ProjectId = @id;",
+                        "SELECT Note FROM FRK.tProjectVotes WHERE ProjectId = @id;",
                         new { id = project.ProjectId }
                     );
 
@@ -282,7 +282,7 @@ namespace API.Services.Project
             {
                 var projectMemberings = await ctx[ProjectMemberTable].Connection
                     .QueryAsync<DetailedDataProjectMember>(
-                        "SELECT * FROM ITIH.vProjectMembers WHERE UserId = @id;",
+                        "SELECT * FROM FRK.vProjectMembers WHERE UserId = @id;",
                         new { id = userId }
                     );
                 List<BasicDataProject> projects = new List<BasicDataProject>();
@@ -303,7 +303,7 @@ namespace API.Services.Project
             {
                 var projectId = await ctx[ProjectMemberTable].Connection
                     .QueryFirstOrDefaultAsync<int>(
-                        "SELECT ProjectId FROM ITIH.vProjectMembers WHERE ProjectMemberId = @id;",
+                        "SELECT ProjectId FROM FRK.vProjectMembers WHERE ProjectMemberId = @id;",
                         new { id = projectMemberId }
                     );
                 return await Get(projectId);

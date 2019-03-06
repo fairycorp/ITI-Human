@@ -63,7 +63,7 @@ namespace API.Services.User
             {
                 return await ctx[SchoolMemberTable].Connection
                     .QueryAsync<DetailedDataUserReferenceTooltip>(
-                        "SELECT * FROM ITIH.vSchoolMembers;"
+                        "SELECT * FROM FRK.vSchoolMembers;"
                     );
             }
         }
@@ -74,7 +74,7 @@ namespace API.Services.User
             {
                 return await ctx[SchoolMemberTable].Connection
                     .QueryFirstOrDefaultAsync<DetailedDataUserReferenceTooltip>(
-                        "SELECT * FROM ITIH.vSchoolMembers WHERE UserId = @id;",
+                        "SELECT * FROM FRK.vSchoolMembers WHERE UserId = @id;",
                         new { id = userId }
                     );
             }

@@ -1,5 +1,5 @@
 ﻿--SetupConfig: {}
-create proc ITIH.sStorageLinkedProductCreate (
+create proc FRK.sStorageLinkedProductCreate (
 	@ActorId int,
 	@StorageId int,
 	@ProductId int,
@@ -13,7 +13,7 @@ begin
 
 	--<PreCreate revert />
 
-	insert into ITIH.tStorageLinkedProduct (StorageId, ProductId, UnitPrice, Stock)
+	insert into FRK.tStorageLinkedProduct (StorageId, ProductId, UnitPrice, Stock)
 		values (@StorageId, @ProductId, @UnitPrice, @Stock);
 
 	set @StorageLinkedProductIdResult = scope_identity();

@@ -1,5 +1,5 @@
 ﻿-- SetupConfig: {}
-create proc ITIH.sOrderCreditCreate (
+create proc FRK.sOrderCreditCreate (
 	@ActorId int,
 	@ProjectId int,
 	@UserId int,
@@ -13,7 +13,7 @@ begin
 
 	--<PreCreate revert />
 
-	insert into ITIH.tOrderCredit (ProjectId, UserId, Amount, CreditTime)
+	insert into FRK.tOrderCredit (ProjectId, UserId, Amount, CreditTime)
 		values (@ProjectId, @UserId, @Amount, @CreditTime);
 
 	set @OrderCreditId = scope_identity();

@@ -1,5 +1,5 @@
 ﻿--SetupConfig:{}
-create proc ITIH.sStorageCreate (
+create proc FRK.sStorageCreate (
 	@ActorId int,
 	@ProjectId int,
 	@StorageIdResult int output
@@ -10,7 +10,7 @@ begin
 	
 	--<PreCreate revert />
 
-	insert into ITIH.tStorage (ProjectId) values (@ProjectId);
+	insert into FRK.tStorage (ProjectId) values (@ProjectId);
 
 	set @StorageIdResult = scope_identity();
 

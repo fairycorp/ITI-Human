@@ -1,5 +1,5 @@
 ﻿-- SetupConfig: {}
-create proc ITIH.sOrderedProductPaymentStateUpdate (
+create proc FRK.sOrderedProductPaymentStateUpdate (
 	@ActorId int,
 	@UpdateDate datetime2,
 	@OrderedProductId int,
@@ -27,20 +27,20 @@ begin
 		begin;
 			set @Success = 1;
 
-			insert into ITIH.tUpdateTrack (ActorId, UpdateDate) values (@ActorId, @UpdateDate);
+			insert into FRK.tUpdateTrack (ActorId, UpdateDate) values (@ActorId, @UpdateDate);
 
 			set @updateTrack = scope_identity();
-			insert into ITIH.tOrderedProductUpdateTrack (UpdateTrackId, OrderedProductId) values (@updateTrack, @OrderedProductId);
+			insert into FRK.tOrderedProductUpdateTrack (UpdateTrackId, OrderedProductId) values (@updateTrack, @OrderedProductId);
 
 			set @OPUpdateTrack = scope_identity();
-			insert into ITIH.tOPPaymentStateUpdateTrack (OPUpdateTrackId, PreviousState, NewState) values (@OPUpdateTrack, @previousState, @newState);
+			insert into FRK.tOPPaymentStateUpdateTrack (OPUpdateTrackId, PreviousState, NewState) values (@OPUpdateTrack, @previousState, @newState);
 			
 			if (@PaymentState = 1)
-				insert into ITIH.tOrderPayment (OrderedProductId, OrderFinalDueId, Amount, PaymentTime) values (@OrderedProductId, @OrderFinalDueId, @Amount, @UpdateDate);
+				insert into FRK.tOrderPayment (OrderedProductId, OrderFinalDueId, Amount, PaymentTime) values (@OrderedProductId, @OrderFinalDueId, @Amount, @UpdateDate);
 
-			update ITIH.tOrderFinalDue 
+			update FRK.tOrderFinalDue 
 				set Paid = 
-					((select Paid from ITIH.tOrderFinalDue where OrderFinalDueId = @OrderFinalDueId) + @Amount)
+					((select Paid from FRK.tOrderFinalDue where OrderFinalDueId = @OrderFinalDueId) + @Amount)
 				where OrderFinalDueId = @OrderFinalDueId;
 		end;
 

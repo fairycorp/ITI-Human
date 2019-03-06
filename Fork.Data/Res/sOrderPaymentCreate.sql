@@ -1,5 +1,5 @@
 ﻿-- SetupConfig: {}
-create proc ITIH.sOrderPaymentCreate (
+create proc FRK.sOrderPaymentCreate (
 	@ActorId int,
 	@OrderFinalDueId int,
 	@OrderedProductId int,
@@ -13,7 +13,7 @@ begin
 
 	--<PreCreate revert />
 
-	insert into ITIH.tOrderPayment (OrderFinalDueId, OrderedProductId, Amount, PaymentTime)
+	insert into FRK.tOrderPayment (OrderFinalDueId, OrderedProductId, Amount, PaymentTime)
 		values (@OrderFinalDueId, @OrderedProductId, @Amount, @PaymentTime);
 
 	set @OrderPaymentId = scope_identity();

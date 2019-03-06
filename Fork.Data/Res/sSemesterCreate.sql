@@ -1,5 +1,5 @@
 ﻿--SetupConfig: {}
-create proc ITIH.sSemesterCreate (
+create proc FRK.sSemesterCreate (
 	@ActorId int,
 	@Name nvarchar(256),
 	@SemesterIdResult int output
@@ -10,7 +10,7 @@ begin
 	
 	--<PreCreate revert />
 
-	insert into ITIH.tSemester ([Name]) values (@Name);
+	insert into FRK.tSemester ([Name]) values (@Name);
 
 	set @SemesterIdResult = scope_identity();
 

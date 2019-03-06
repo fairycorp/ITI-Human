@@ -1,5 +1,5 @@
 ﻿-- SetupConfig: {}
-create proc ITIH.sUserDetailsCreate (
+create proc FRK.sUserDetailsCreate (
 	@ActorId int,
 	@UserId int,
 	@FirstName nvarchar(126),
@@ -13,7 +13,7 @@ begin
 
 	--<PreCreate revert />
 
-	insert into ITIH.tUserDetails (UserId, FirstName, LastName, BirthDate)
+	insert into FRK.tUserDetails (UserId, FirstName, LastName, BirthDate)
 		values (@UserId, @FirstName, @LastName, @BirthDate);
 
 	set @UserDetailsIdResult = scope_identity();

@@ -1,5 +1,5 @@
 ﻿-- SetupConfig: {}
-create proc ITIH.sProjectMemberDelete (
+create proc FRK.sProjectMemberDelete (
 	@ActorId int,
 	@ProjectMemberId int,
 	@Success bit = 0 output
@@ -12,8 +12,8 @@ begin
 	
 	declare @stillExisting int;
 
-	delete from ITIH.tProjectMember where ProjectMemberId = @ProjectMemberId;
-	set @stillExisting = (select ProjectMemberId from ITIH.tProjectMember where ProjectMemberId = @ProjectMemberId);
+	delete from FRK.tProjectMember where ProjectMemberId = @ProjectMemberId;
+	set @stillExisting = (select ProjectMemberId from FRK.tProjectMember where ProjectMemberId = @ProjectMemberId);
 	
 	if (@stillExisting is null)
 		begin; 

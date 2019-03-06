@@ -1,5 +1,5 @@
 ﻿--SetupConfig: {}
-create proc ITIH.sProjectTypeCreate (
+create proc FRK.sProjectTypeCreate (
 	@ActorId int,
 	@Name nvarchar(256),
 	@ProjectTypeIdResult int output
@@ -10,7 +10,7 @@ begin
 	
 	--<PreCreate revert />
 
-	insert into ITIH.tProjectType ([Name]) values (@Name);
+	insert into FRK.tProjectType ([Name]) values (@Name);
 
 	set @ProjectTypeIdResult = scope_identity();
 

@@ -1,4 +1,4 @@
-﻿create view ITIH.vProjects
+﻿create view FRK.vProjects
 as
 	select
 		ProjectId = p.ProjectId,
@@ -11,8 +11,8 @@ as
 		SemesterName = sem.[Name],
 		StorageId = case when (p.SemesterId < 4) then 0 else sto.StorageId end,
 		OpenedStall = case when (p.SemesterId < 4) then 0 else sto.OpenedStall end
-	from ITIH.tProject p
-		left join ITIH.tProjectType typ on typ.TypeId = p.TypeId
-		left join ITIH.tSemester sem on sem.SemesterId = p.SemesterId
-		left join ITIH.tStorage sto on sto.ProjectId = p.ProjectId
+	from FRK.tProject p
+		left join FRK.tProjectType typ on typ.TypeId = p.TypeId
+		left join FRK.tSemester sem on sem.SemesterId = p.SemesterId
+		left join FRK.tStorage sto on sto.ProjectId = p.ProjectId
 	where p.ProjectId <> 0;

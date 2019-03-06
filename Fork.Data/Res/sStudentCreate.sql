@@ -1,5 +1,5 @@
 ﻿-- SetupConfig: {}
-create proc ITIH.sStudentCreate (
+create proc FRK.sStudentCreate (
 	@ActorId int,
 	@UserId int,
 	@SemesterId int,
@@ -11,7 +11,7 @@ begin
 
 	--<PreCreate revert />
 
-	insert into ITIH.tStudent (UserId, SemesterId)
+	insert into FRK.tStudent (UserId, SemesterId)
 		values (@UserId, @SemesterId);
 
 	set @StudentIdResult = scope_identity();

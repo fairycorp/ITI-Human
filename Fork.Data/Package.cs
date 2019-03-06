@@ -5,7 +5,7 @@ namespace Fork.Data
 {
     [SqlPackage(
     ResourcePath = "Res",
-    Schema = "ITIH",
+    Schema = "FRK",
     Database = typeof(SqlDefaultDatabase),
     ResourceType = typeof(Package)),
     Versions("1.0.0")]

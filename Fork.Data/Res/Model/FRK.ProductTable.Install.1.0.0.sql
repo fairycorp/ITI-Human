@@ -1,4 +1,4 @@
-﻿create table ITIH.tProduct (
+﻿create table FRK.tProduct (
 	ProductId int not null identity(0, 1),
 	[Name] nvarchar(256) not null,
 	[Desc] nvarchar(512) not null,
@@ -7,5 +7,5 @@
 	constraint PK_ITIH_tProduct primary key (ProductId),
 );
 
-insert into ITIH.tProduct ([Name], [Desc], [Url])
+insert into FRK.tProduct ([Name], [Desc], [Url])
 	values (N'', N'', N'');

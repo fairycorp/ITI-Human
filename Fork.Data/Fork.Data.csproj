@@ -17,14 +17,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Res\Model\ITIH.ProjectMemberTable.Install.1.0.0.sql" />
-    <None Remove="Res\Model\ITIH.ProjectRankTable.Install.1.0.0.sql" />
-    <None Remove="Res\Model\ITIH.ProjectVotesTable.Install.1.0.0.sql" />
-    <None Remove="Res\Model\ITIH.SchoolMemberTable.Install.1.0.0.sql" />
-    <None Remove="Res\Model\ITIH.SchoolStatusTable.Install.1.0.0.sql" />
-    <None Remove="Res\Model\ITIH.StudentTable.Install.1.0.0.sql" />
-    <None Remove="Res\Model\ITIH.UserAvatarsTable.Install.1.0.0.sql" />
-    <None Remove="Res\Model\ITIH.UserDetailsTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\FRK.ProjectMemberTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\FRK.ProjectRankTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\FRK.ProjectVotesTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\FRK.SchoolMemberTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\FRK.SchoolStatusTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\FRK.StudentTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\FRK.UserAvatarsTable.Install.1.0.0.sql" />
+    <None Remove="Res\Model\FRK.UserDetailsTable.Install.1.0.0.sql" />
     <None Remove="Res\sProjectMemberCreate.sql" />
     <None Remove="Res\sProjectMemberDelete.sql" />
     <None Remove="Res\sProjectVoteCreate.sql" />

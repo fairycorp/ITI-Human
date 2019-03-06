@@ -273,7 +273,7 @@ namespace API.Services.Order
             {
                 return await ctx[OrderedProductTable].Connection
                     .QueryFirstOrDefaultAsync<BasicDataOrderedProduct>(
-                        "SELECT * FROM ITIH.vOrderedProducts WHERE OrderedProductId = @id;",
+                        "SELECT * FROM FRK.vOrderedProducts WHERE OrderedProductId = @id;",
                         new { id = orderedProductId }
                     );
             }
@@ -288,7 +288,7 @@ namespace API.Services.Order
                         @"SELECT
                             *
                         FROM
-                            ITIH.tOrderedProduct
+                            FRK.tOrderedProduct
                         WHERE
                             OrderedProductId = @firstId
                             AND

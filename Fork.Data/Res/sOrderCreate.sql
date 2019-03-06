@@ -1,5 +1,5 @@
 ﻿-- SetupConfig: {}
-create proc ITIH.sOrderCreate (
+create proc FRK.sOrderCreate (
 	@ActorId int,
 	@StorageId int,
 	@UserId int,
@@ -13,7 +13,7 @@ begin
 
 	--<PreCreate revert />
 
-	insert into ITIH.tOrder (StorageId, UserId, ClassroomId, CreationDate)
+	insert into FRK.tOrder (StorageId, UserId, ClassroomId, CreationDate)
 		values (@StorageId, @UserId, @ClassroomId, @CreationDate);
 
 	set @OrderIdResult = scope_identity();

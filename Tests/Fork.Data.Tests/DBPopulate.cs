@@ -234,7 +234,7 @@ namespace Fork.Data.Tests
                         @"SELECT
                             *
                         FROM
-                            ITIH.vOrders;"
+                            FRK.vOrders;"
                     );
 
                 List<DetailedDataOrder> ordersList = new List<DetailedDataOrder>();
@@ -248,7 +248,7 @@ namespace Fork.Data.Tests
                             @"SELECT
                                 *
                             FROM
-                                ITIH.vOrderedProducts v
+                                FRK.vOrderedProducts v
                             WHERE
                                 v.OrderId = @id;",
                             new { id = data.OrderId }
@@ -301,7 +301,7 @@ namespace Fork.Data.Tests
             {
                 return await ctx[uTable].Connection
                 .QueryFirstOrDefaultAsync<int>(
-                    "SELECT ProjectId FROM ITIH.tProject WHERE [Name] = @nm;",
+                    "SELECT ProjectId FROM FRK.tProject WHERE [Name] = @nm;",
                     new { nm = projectName }
                 );
             };
@@ -310,7 +310,7 @@ namespace Fork.Data.Tests
             {
                 return await ctx[uBTable].Connection
                 .QueryFirstOrDefaultAsync<int>(
-                    "SELECT UserBalanceId FROM ITIH.tUserBalance WHERE ProjectId = @id;",
+                    "SELECT UserBalanceId FROM FRK.tUserBalance WHERE ProjectId = @id;",
                     new { id = projectId }
                 );
             }
@@ -410,57 +410,57 @@ namespace Fork.Data.Tests
                 {
                     case (Element.Order):
                         table = (OrderTable)Initialize(Element.Order);
-                        tableName = "ITIH.tOrder"; fieldName = "OrderId";
+                        tableName = "FRK.tOrder"; fieldName = "OrderId";
                         break;
 
                     case (Element.OrderCredit):
                         table = (OrderTable)Initialize(Element.OrderCredit);
-                        tableName = "ITIH.tOrderCredit"; fieldName = "OrderCreditId";
+                        tableName = "FRK.tOrderCredit"; fieldName = "OrderCreditId";
                         break;
 
                     case (Element.OrderFinalDue):
                         table = (OrderFinalDueTable)Initialize(Element.OrderFinalDue);
-                        tableName = "ITIH.tOrderFinalDue"; fieldName = "OrderFinalDueId";
+                        tableName = "FRK.tOrderFinalDue"; fieldName = "OrderFinalDueId";
                         break;
 
                     case (Element.OrderedProduct):
                         table = (OrderedProductTable)Initialize(Element.OrderedProduct);
-                        tableName = "ITIH.tOrderedProduct"; fieldName = "OrderedProductId";
+                        tableName = "FRK.tOrderedProduct"; fieldName = "OrderedProductId";
                         break;
 
                     case (Element.Product):
                         table = (ProductTable)Initialize(Element.Product);
-                        tableName = "ITIH.tProduct"; fieldName = "[Name]";
+                        tableName = "FRK.tProduct"; fieldName = "[Name]";
                         break;
 
                     case (Element.Project):
                         table = (ProjectTable)Initialize(Element.Project);
-                        tableName = "ITIH.tProject"; fieldName = "[Name]";
+                        tableName = "FRK.tProject"; fieldName = "[Name]";
                         break;
 
                     case (Element.ProjectMember):
                         table = (ProjectMemberTable)Initialize(Element.ProjectMember);
-                        tableName = "ITIH.tProjectMember"; fieldName = "ProjectMemberId";
+                        tableName = "FRK.tProjectMember"; fieldName = "ProjectMemberId";
                         break;
 
                     case (Element.ProjectVotes):
                         table = (ProjectVotesTable)Initialize(Element.ProjectVotes);
-                        tableName = "ITIH.tProjectVotes"; fieldName = "ProjectVoteId";
+                        tableName = "FRK.tProjectVotes"; fieldName = "ProjectVoteId";
                         break;
 
                     case (Element.SchoolMember):
                         table = (SchoolMemberTable)Initialize(Element.SchoolMember);
-                        tableName = "ITIH.tSchoolMember"; fieldName = "SchoolMemberId";
+                        tableName = "FRK.tSchoolMember"; fieldName = "SchoolMemberId";
                         break;
 
                     case (Element.Storage):
                         table = (StorageTable)Initialize(Element.Storage);
-                        tableName = "ITIH.tStorage"; fieldName = "StorageId";
+                        tableName = "FRK.tStorage"; fieldName = "StorageId";
                         break;
 
                     case (Element.StorageLinkedProduct):
                         table = (StorageLinkedProductTable)Initialize(Element.StorageLinkedProduct);
-                        tableName = "ITIH.tStorageLinkedProduct"; fieldName = "StorageLinkedProductId";
+                        tableName = "FRK.tStorageLinkedProduct"; fieldName = "StorageLinkedProductId";
                         break;
 
                     case (Element.User):
@@ -470,17 +470,17 @@ namespace Fork.Data.Tests
 
                     case (Element.UserBalance):
                         table = (UserBalanceTable)Initialize(Element.UserBalance);
-                        tableName = "ITIH.tUserBalance"; fieldName = "UserBalanceId";
+                        tableName = "FRK.tUserBalance"; fieldName = "UserBalanceId";
                         break;
 
                     case (Element.UserAvatars):
                         table = (UserAvatarsTable)Initialize(Element.UserAvatars);
-                        tableName = "ITIH.tUserAvatars"; fieldName = "UserAvatarId";
+                        tableName = "FRK.tUserAvatars"; fieldName = "UserAvatarId";
                         break;
 
                     case (Element.UserDetails):
                         table = (UserDetailsTable)Initialize(Element.UserDetails);
-                        tableName = "ITIH.tUserDetails"; fieldName = "UserDetailsId";
+                        tableName = "FRK.tUserDetails"; fieldName = "UserDetailsId";
                         break;
                 }
 

@@ -1,5 +1,5 @@
 ﻿-- SetupConfig: {}
-create proc ITIH.sOrderedProductCurrentStateUpdate (
+create proc FRK.sOrderedProductCurrentStateUpdate (
 	@ActorId int,
 	@UpdateDate datetime2,
 	@OrderedProductId int,
@@ -25,13 +25,13 @@ begin
 		begin;
 			set @Success = 1;
 
-			insert into ITIH.tUpdateTrack (ActorId, UpdateDate) values (@ActorId, @UpdateDate);
+			insert into FRK.tUpdateTrack (ActorId, UpdateDate) values (@ActorId, @UpdateDate);
 
 			set @updateTrack = scope_identity();
-			insert into ITIH.tOrderedProductUpdateTrack (UpdateTrackId, OrderedProductId) values (@updateTrack, @OrderedProductId);
+			insert into FRK.tOrderedProductUpdateTrack (UpdateTrackId, OrderedProductId) values (@updateTrack, @OrderedProductId);
 
 			set @OPUpdateTrack = scope_identity();
-			insert into ITIH.tOPCurrentStateUpdateTrack (OPUpdateTrackId, PreviousState, NewState) values (@OPUpdateTrack, @previousState, @newState);
+			insert into FRK.tOPCurrentStateUpdateTrack (OPUpdateTrackId, PreviousState, NewState) values (@OPUpdateTrack, @previousState, @newState);
 		end;
 
 	--<PostCreate />

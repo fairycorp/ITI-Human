@@ -275,7 +275,7 @@ namespace API.Services.Order
             {
                 return await ctx[OrderFinalDueTable].Connection
                     .QueryFirstOrDefaultAsync<BasicDataOrderFinalDue>(
-                        "SELECT * FROM ITIH.tOrderFinalDue WHERE OrderFinalDueId = @id",
+                        "SELECT * FROM FRK.tOrderFinalDue WHERE OrderFinalDueId = @id",
                         new { id = orderFinalDue }
                     );
             }
@@ -287,13 +287,13 @@ namespace API.Services.Order
             {
                 var info = await ctx[OrderFinalDueTable].Connection
                     .QueryFirstOrDefaultAsync<BasicDataOrderFinalDue>(
-                        "SELECT * FROM ITIH.tOrderFinalDue WHERE OrderId = @id",
+                        "SELECT * FROM FRK.tOrderFinalDue WHERE OrderId = @id",
                         new { id = orderId }
                     );
 
                 var payments = await ctx[OrderPaymentTable].Connection
                     .QueryAsync<BasicDataOrderPayment>(
-                        "SELECT * FROM ITIH.tOrderPayment WHERE OrderFinalDueId = @id",
+                        "SELECT * FROM FRK.tOrderPayment WHERE OrderFinalDueId = @id",
                         new { id = info.OrderFinalDueId }
                     );
 
@@ -330,7 +330,7 @@ namespace API.Services.Order
                         @"SELECT
                             *
                         FROM
-                            ITIH.tOrderPayment
+                            FRK.tOrderPayment
                         WHERE
                             OrderId = @id",
                         new { id = orderId }
@@ -344,7 +344,7 @@ namespace API.Services.Order
             {
                 return await ctx[OrderPaymentTable].Connection
                     .QueryFirstOrDefaultAsync<BasicDataOrderPayment>(
-                        "SELECT * FROM ITIH.tOrderPayment WHERE OrderedProductId = @id",
+                        "SELECT * FROM FRK.tOrderPayment WHERE OrderedProductId = @id",
                         new { id = orderedProductId }
                     );
             }
@@ -356,7 +356,7 @@ namespace API.Services.Order
             {
                 return await ctx[OrderPaymentTable].Connection
                     .QueryAsync<BasicDataOrderPayment>(
-                        "SELECT * FROM ITIH.tOrderPayment WHERE OrderedProductId = @id",
+                        "SELECT * FROM FRK.tOrderPayment WHERE OrderedProductId = @id",
                         new { id = orderedProductId }
                     );
             }
@@ -371,7 +371,7 @@ namespace API.Services.Order
                         @"SELECT
                             *
                         FROM
-                            ITIH.tOrderPayment
+                            FRK.tOrderPayment
                         WHERE
                             OrderPaymentId = @id",
                         new { id = orderPaymentId }
@@ -401,7 +401,7 @@ namespace API.Services.Order
             {
                 return await ctx[UserBalanceTable].Connection
                     .QueryFirstOrDefaultAsync<BasicDataUserBalance>(
-                        "SELECT * FROM ITIH.tUserBalance WHERE UserBalanceId = @id",
+                        "SELECT * FROM FRK.tUserBalance WHERE UserBalanceId = @id",
                         new { id = userBalanceId }
                     );
             }
@@ -413,7 +413,7 @@ namespace API.Services.Order
             {
                 return await ctx[UserBalanceTable].Connection
                     .QueryAsync<BasicDataUserBalance>(
-                        "SELECT * FROM ITIH.vUserBalance WHERE ProjectId = @id;",
+                        "SELECT * FROM FRK.vUserBalance WHERE ProjectId = @id;",
                         new { id = projectId }
                     );
             }
@@ -425,7 +425,7 @@ namespace API.Services.Order
             {
                 return await ctx[UserBalanceTable].Connection
                     .QueryFirstOrDefaultAsync<BasicDataUserBalance>(
-                        "SELECT * FROM ITIH.vUserBalance WHERE UserId = @uId AND ProjectId = @pId;",
+                        "SELECT * FROM FRK.vUserBalance WHERE UserId = @uId AND ProjectId = @pId;",
                         new { uId = model.UserId, pId = model.ProjectId }
                     );
             }
@@ -437,7 +437,7 @@ namespace API.Services.Order
             {
                 return await ctx[OrderCreditTable].Connection
                     .QueryAsync<BasicDataOrderCredit>(
-                        "SELECT * FROM ITIH.tOrderCredit WHERE UserId = @uId AND ProjectId = @pId;",
+                        "SELECT * FROM FRK.tOrderCredit WHERE UserId = @uId AND ProjectId = @pId;",
                         new { uId = model.UserId, pId = model.ProjectId }
                     );
             }

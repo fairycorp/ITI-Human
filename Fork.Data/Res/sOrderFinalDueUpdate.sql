@@ -1,5 +1,5 @@
 ﻿-- SetupConfig: {}
-create proc ITIH.sOrderFinalDueUpdate (
+create proc FRK.sOrderFinalDueUpdate (
 	@ActorId int,
 	@OrderFinalDueId int,
 	@Paid int,
@@ -14,9 +14,9 @@ begin
 	declare @previousPaid float;
 	declare @newPaid float;
 
-	set @previousPaid = (select Paid from ITIH.tOrderFinalDue where OrderFinalDueId = @OrderFinalDueId);
-	update ITIH.tOrderFinalDue set Paid = (@previousPaid + @Paid) where OrderFinalDueId = @OrderFinalDueId;
-	set @newPaid = (select Paid from ITIH.tOrderFinalDue where OrderFinalDueId = @OrderFinalDueId);
+	set @previousPaid = (select Paid from FRK.tOrderFinalDue where OrderFinalDueId = @OrderFinalDueId);
+	update FRK.tOrderFinalDue set Paid = (@previousPaid + @Paid) where OrderFinalDueId = @OrderFinalDueId;
+	set @newPaid = (select Paid from FRK.tOrderFinalDue where OrderFinalDueId = @OrderFinalDueId);
 
 	if (@previousPaid != @newPaid and @Paid > 0)
 		set @Success = 1;

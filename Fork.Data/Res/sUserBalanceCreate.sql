@@ -1,5 +1,5 @@
 ﻿--SetupConfig:{}
-create proc ITIH.sUserBalanceCreate (
+create proc FRK.sUserBalanceCreate (
 	@ActorId int,
 	@UserId int,
 	@ProjectId int,
@@ -11,7 +11,7 @@ begin
 	
 	--<PreCreate revert />
 
-	insert into ITIH.tUserBalance (UserId, ProjectId) values (@UserId, @ProjectId);
+	insert into FRK.tUserBalance (UserId, ProjectId) values (@UserId, @ProjectId);
 
 	set @UserBalanceId = scope_identity();
 

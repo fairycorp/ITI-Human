@@ -1,5 +1,5 @@
 ﻿--SetupConfig: {}
-create proc ITIH.sProjectDelete (
+create proc FRK.sProjectDelete (
 	@ActorId int,
 	@ProjectId int,
 	@StorageId int = 0,
@@ -11,13 +11,13 @@ begin
 	
 	--<PreCreate revert />
 
-	set @StorageId = (select StorageId from ITIH.tStorage where ProjectId = @ProjectId);
+	set @StorageId = (select StorageId from FRK.tStorage where ProjectId = @ProjectId);
 	
 	if (@StorageId != 0)
-		delete from ITIH.tStorageLinkedProduct where StorageId = @StorageId;
-		delete from ITIH.tStorage where StorageId = @StorageId;
+		delete from FRK.tStorageLinkedProduct where StorageId = @StorageId;
+		delete from FRK.tStorage where StorageId = @StorageId;
 
-	delete from ITIH.tProject where ProjectId = @ProjectId;
+	delete from FRK.tProject where ProjectId = @ProjectId;
 
 	declare @DoesIdStillExist int;
 	set @DoesIdStillExist = (select ProjectId from tProject where ProjectId = @ProjectId);

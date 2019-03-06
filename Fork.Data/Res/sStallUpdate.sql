@@ -1,5 +1,5 @@
 ﻿--SetupConfig:{}
-create proc ITIH.sStallUpdate (
+create proc FRK.sStallUpdate (
 	@ActorId int,
 	@StorageId int,
 	@OpenedStall bit,
@@ -14,9 +14,9 @@ begin
 	declare @previousState bit;
 	declare @newState bit;
 
-	set @previousState = (select OpenedStall from ITIH.tStorage where StorageId = @StorageId);
-	update ITIH.tStorage set OpenedStall = @OpenedStall where StorageId = @StorageId;
-	set @newState = (select OpenedStall from ITIH.tStorage where StorageId = @StorageId);
+	set @previousState = (select OpenedStall from FRK.tStorage where StorageId = @StorageId);
+	update FRK.tStorage set OpenedStall = @OpenedStall where StorageId = @StorageId;
+	set @newState = (select OpenedStall from FRK.tStorage where StorageId = @StorageId);
 
 	if (@previousState != @newState)
 		set @Success = 1;

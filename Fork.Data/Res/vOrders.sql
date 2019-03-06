@@ -1,4 +1,4 @@
-﻿create view ITIH.vOrders
+﻿create view FRK.vOrders
 as
 	select
 		OrderId = o.OrderId,
@@ -9,7 +9,7 @@ as
 		ClassroomName = c.[Name],
 		CreationDate = o.CreationDate,
 		CurrentState = o.CurrentState
-	from ITIH.tOrder o
+	from FRK.tOrder o
 		join CK.tUser u on u.UserId = o.UserId
-		join ITIH.tClassroom c on c.ClassroomId = o.ClassroomId
+		join FRK.tClassroom c on c.ClassroomId = o.ClassroomId
 	where OrderId <> 0;

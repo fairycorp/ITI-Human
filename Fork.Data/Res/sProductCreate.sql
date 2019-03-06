@@ -1,5 +1,5 @@
 ﻿--SetupConfig: {}
-create proc ITIH.sProductCreate (
+create proc FRK.sProductCreate (
 	@ActorId int,
 	@Name nvarchar(256),
 	@Desc nvarchar(512),
@@ -12,7 +12,7 @@ begin
 	
 	--<PreCreate revert />
 
-	insert into ITIH.tProduct ([Name], [Desc], [Url])
+	insert into FRK.tProduct ([Name], [Desc], [Url])
 		values (@Name, @Desc, @Url);
 
 	set @ProductIdResult = scope_identity();

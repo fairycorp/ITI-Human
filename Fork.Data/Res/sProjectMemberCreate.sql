@@ -1,5 +1,5 @@
 ﻿-- SetupConfig: {}
-create procedure ITIH.sProjectMemberCreate (
+create procedure FRK.sProjectMemberCreate (
 	@ActorId int,
 	@ProjectId int,
 	@ProjectRankId int,
@@ -12,7 +12,7 @@ begin
 
 	--<PreCreate revert />
 	
-	insert into ITIH.tProjectMember (ProjectId, ProjectRankId, UserId)
+	insert into FRK.tProjectMember (ProjectId, ProjectRankId, UserId)
 		values (@ProjectId, @ProjectRankId, @UserId);
 
 	set @ProjectMemberIdResult = scope_identity();

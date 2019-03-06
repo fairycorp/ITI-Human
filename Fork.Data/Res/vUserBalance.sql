@@ -1,4 +1,4 @@
-﻿create view ITIH.vUserBalance
+﻿create view FRK.vUserBalance
 as
 	select
 		UserBalanceId = uB.UserBalanceId,
@@ -9,8 +9,8 @@ as
 		LastName = uD.LastName,
 		AvatarUrl = uA.[Url],
 		Balance = uB.Balance
-	from ITIH.tUserBalance uB
+	from FRK.tUserBalance uB
 		left join CK.tUser u on u.UserId = uB.UserId
-		left join ITIH.tUserDetails uD on uD.UserId = uB.UserId
-		left join ITIH.tUserAvatars uA on uA.UserId = uB.UserId
+		left join FRK.tUserDetails uD on uD.UserId = uB.UserId
+		left join FRK.tUserAvatars uA on uA.UserId = uB.UserId
 	where uB.UserBalanceId <> 0;

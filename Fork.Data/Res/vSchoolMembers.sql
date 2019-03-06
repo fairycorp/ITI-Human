@@ -1,4 +1,4 @@
-﻿create view ITIH.vSchoolMembers
+﻿create view FRK.vSchoolMembers
 as
 	select
 		UserId = sm.UserId,
@@ -10,9 +10,9 @@ as
 		SchoolMemberId = sm.SchoolMemberId,
 		SchoolStatusId = sm.SchoolStatusId,
 		SchoolStatusName = ss.SchoolStatusName
-	from ITIH.tSchoolMember sm
+	from FRK.tSchoolMember sm
 		left join CK.tUser u on u.UserId = sm.UserId
-		left join ITIH.tUserDetails ud on ud.UserId = sm.UserId
-		left join ITIH.tUserAvatars ua on ua.UserId = sm.UserId
-		left join ITIH.tSchoolStatus ss on ss.SchoolStatusId = sm.SchoolStatusId
+		left join FRK.tUserDetails ud on ud.UserId = sm.UserId
+		left join FRK.tUserAvatars ua on ua.UserId = sm.UserId
+		left join FRK.tSchoolStatus ss on ss.SchoolStatusId = sm.SchoolStatusId
 	where sm.SchoolMemberId <> 0;

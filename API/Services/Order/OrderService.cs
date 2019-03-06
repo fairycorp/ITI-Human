@@ -241,7 +241,7 @@ namespace API.Services.Order
                         @"SELECT
                             *
                         FROM
-                            ITIH.vOrders;"
+                            FRK.vOrders;"
                     );
 
                 List<DetailedDataOrder> ordersList = new List<DetailedDataOrder>();
@@ -255,7 +255,7 @@ namespace API.Services.Order
                             @"SELECT
                                 *
                             FROM
-                                ITIH.vOrderedProducts v
+                                FRK.vOrderedProducts v
                             WHERE
                                 v.OrderId = @id
                             AND
@@ -280,7 +280,7 @@ namespace API.Services.Order
                         @"SELECT
                             *
                         FROM
-                            ITIH.vOrders
+                            FRK.vOrders
                         WHERE
                             UserId = @id;",
                         new { id = userId }
@@ -297,7 +297,7 @@ namespace API.Services.Order
                             @"SELECT
                                 *
                             FROM
-                                ITIH.vOrderedProducts
+                                FRK.vOrderedProducts
                             WHERE
                                 OrderId = @id;",
                             new { id = data.OrderId }
@@ -323,7 +323,7 @@ namespace API.Services.Order
                         @"SELECT
                             *
                         FROM
-                            ITIH.vOrders
+                            FRK.vOrders
                         WHERE
                             StorageId = @id
                             AND
@@ -344,7 +344,7 @@ namespace API.Services.Order
                             @"SELECT
                                 *
                             FROM
-                                ITIH.vOrderedProducts
+                                FRK.vOrderedProducts
                             WHERE
                                 OrderId = @id
                             AND
@@ -361,7 +361,7 @@ namespace API.Services.Order
                                 @"SELECT
                                     PaymentState
                                 FROM
-                                    ITIH.vOrderedProducts
+                                    FRK.vOrderedProducts
                                 WHERE
                                     OrderedProductId = @id;",
                                 new { id = product.OrderedProductId }
@@ -372,7 +372,7 @@ namespace API.Services.Order
                                 @"SELECT
                                     Amount
                                 FROM
-                                    ITIH.tOrderPayment
+                                    FRK.tOrderPayment
                                 WHERE
                                     OrderedProductId = @id;",
                                 new { id = product.OrderedProductId }
@@ -404,7 +404,7 @@ namespace API.Services.Order
                         @"SELECT
                             *
                         FROM
-                            ITIH.tOrder
+                            FRK.tOrder
                         WHERE
                             OrderId = @id;",
                         new { id = orderId }
@@ -418,7 +418,7 @@ namespace API.Services.Order
                             @"SELECT
                                 *
                             FROM
-                                ITIH.vOrderedProducts
+                                FRK.vOrderedProducts
                             WHERE
                                 OrderId = @id
                             AND

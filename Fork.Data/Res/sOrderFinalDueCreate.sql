@@ -1,5 +1,5 @@
 ﻿-- SetupConfig: {}
-create proc ITIH.sOrderFinalDueCreate (
+create proc FRK.sOrderFinalDueCreate (
 	@ActorId int,
 	@OrderId int,
 	@Total int,
@@ -12,7 +12,7 @@ begin
 
 	--<PreCreate revert />
 
-	insert into ITIH.tOrderFinalDue (OrderId, Total, Paid)
+	insert into FRK.tOrderFinalDue (OrderId, Total, Paid)
 		values (@OrderId, @Total, @Paid);
 
 	set @OrderFinalDueIdResult = scope_identity();

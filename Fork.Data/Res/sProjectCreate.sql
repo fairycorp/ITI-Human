@@ -1,5 +1,5 @@
 ﻿--SetupConfig: {}
-create proc ITIH.sProjectCreate (
+create proc FRK.sProjectCreate (
 	@ActorId int,
 	@TypeId int,
 	@SemesterId int,
@@ -14,7 +14,7 @@ begin
 	
 	--<PreCreate revert />
 
-	insert into ITIH.tProject (TypeId, SemesterId, [Name], Headline, Pitch)
+	insert into FRK.tProject (TypeId, SemesterId, [Name], Headline, Pitch)
 		values (@TypeId, @SemesterId, @Name, @Headline, @Pitch);
 
 	set @ProjectIdResult = scope_identity();

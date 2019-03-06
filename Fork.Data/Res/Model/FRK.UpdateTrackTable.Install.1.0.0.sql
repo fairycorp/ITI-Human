@@ -1,4 +1,4 @@
-﻿create table ITIH.tUpdateTrack (
+﻿create table FRK.tUpdateTrack (
 	UpdateTrackId int not null identity(0, 1),
 	ActorId int not null,
 	UpdateDate datetime2 not null
@@ -7,5 +7,5 @@
 	constraint FK_tUpdateTrack_ActorId foreign key (ActorId) references CK.tActor (ActorId)
 );
 
-insert into ITIH.tUpdateTrack (ActorId, UpdateDate)
+insert into FRK.tUpdateTrack (ActorId, UpdateDate)
 	values(0, sysutcdatetime());

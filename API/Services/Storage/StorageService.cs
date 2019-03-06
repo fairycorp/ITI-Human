@@ -171,7 +171,7 @@ namespace API.Services.Storage
                         @"SELECT
                             *
                         FROM
-                            ITIH.tStorage;"
+                            FRK.tStorage;"
                     )).ToArray();
             }
         }
@@ -185,7 +185,7 @@ namespace API.Services.Storage
                         @"SELECT
                             *
                         FROM 
-                            ITIH.tStorage
+                            FRK.tStorage
                         WHERE
                             StorageId = @Id;",
                         new { Id = storageId }
@@ -202,7 +202,7 @@ namespace API.Services.Storage
                             @"SELECT
                                 *
                             FROM 
-                                ITIH.tStorage
+                                FRK.tStorage
                             WHERE
                                 ProjectId = @Id;",
                             new { Id = projectId }
@@ -217,7 +217,7 @@ namespace API.Services.Storage
                 var storageId =
                     await ctx[SLPTable].Connection
                         .QueryFirstAsync<int>(
-                            "SELECT StorageId FROM ITIH.tStorageLinkedProduct WHERE StorageLinkedProductId = @id",
+                            "SELECT StorageId FROM FRK.tStorageLinkedProduct WHERE StorageLinkedProductId = @id",
                             new { id = orderedProduct.StorageLinkedProductId }
                         );
 

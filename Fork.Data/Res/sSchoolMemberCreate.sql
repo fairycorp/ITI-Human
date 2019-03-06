@@ -1,5 +1,5 @@
 ﻿-- SetupConfig: {}
-create proc ITIH.sSchoolMemberCreate (
+create proc FRK.sSchoolMemberCreate (
 	@ActorId int,
 	@UserId int,
 	@SchoolStatusId int,
@@ -11,7 +11,7 @@ begin
 
 	--<PreCreate revert />
 
-	insert into ITIH.tSchoolMember (UserId, SchoolStatusId)
+	insert into FRK.tSchoolMember (UserId, SchoolStatusId)
 		values (@UserId, @SchoolStatusId);
 
 	set @SchoolMemberIdResult = scope_identity();

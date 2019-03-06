@@ -1,5 +1,5 @@
 ﻿--SetupConfig: {}
-create proc ITIH.sProductUpdate (
+create proc FRK.sProductUpdate (
 	@ActorId int,
 	@ProductId int,
 	@Name nvarchar(256),
@@ -20,9 +20,9 @@ begin
 	declare @newDesc nvarchar(512);
 	declare @newUrl nvarchar(max);
 
-	set @previousName = (select [Name] from ITIH.tProduct where ProductId = @ProductId);
-	set @previousDesc = (select [Desc] from ITIH.tProduct where ProductId = @ProductId);
-	set @previousUrl = (select [Url] from ITIH.tProduct where ProductId = @ProductId);
+	set @previousName = (select [Name] from FRK.tProduct where ProductId = @ProductId);
+	set @previousDesc = (select [Desc] from FRK.tProduct where ProductId = @ProductId);
+	set @previousUrl = (select [Url] from FRK.tProduct where ProductId = @ProductId);
 
 	if (@Name = null)
 		set @Name = @previousName;
@@ -33,13 +33,13 @@ begin
 	if (@Url = null)
 		set @Url = @previousUrl;
 
-	update ITIH.tProduct set [Name] = @Name where ProductId = @ProductId;
-	update ITIH.tProduct set [Desc] = @Desc where ProductId = @ProductId;
-	update ITIH.tProduct set [Url] = @Url where ProductId = @ProductId;
+	update FRK.tProduct set [Name] = @Name where ProductId = @ProductId;
+	update FRK.tProduct set [Desc] = @Desc where ProductId = @ProductId;
+	update FRK.tProduct set [Url] = @Url where ProductId = @ProductId;
 
-	set @newName = (select [Name] from ITIH.tProduct where ProductId = @ProductId);
-	set @newDesc = (select [Desc] from ITIH.tProduct where ProductId = @ProductId);
-	set @newUrl = (select [Url] from ITIH.tProduct where ProductId = @ProductId);
+	set @newName = (select [Name] from FRK.tProduct where ProductId = @ProductId);
+	set @newDesc = (select [Desc] from FRK.tProduct where ProductId = @ProductId);
+	set @newUrl = (select [Url] from FRK.tProduct where ProductId = @ProductId);
 
 	if (@newName != @previousName or @newDesc != @previousDesc or @newUrl != @previousUrl)
 		set @Success = 1;

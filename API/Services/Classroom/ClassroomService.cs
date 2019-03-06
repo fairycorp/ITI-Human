@@ -67,7 +67,7 @@ namespace API.Services.Classroom
                     @"SELECT
                         *
                     FROM
-                        ITIH.tClassroom;"
+                        FRK.tClassroom;"
                 )).ToArray();
             }
         }
@@ -81,7 +81,7 @@ namespace API.Services.Classroom
                     @"SELECT
                         *
                     FROM
-                        ITIH.tClassroom
+                        FRK.tClassroom
                     WHERE
                         ClassroomId = @id;",
                     new { id = classroomId }

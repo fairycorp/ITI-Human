@@ -149,7 +149,7 @@ namespace API.Services.User
             {
                 return await ctx[UserTable].Connection
                     .QueryFirstOrDefaultAsync<BasicDataUserProfile>(
-                        "SELECT * FROM ITIH.vUserProfile WHERE UserId = @id;",
+                        "SELECT * FROM FRK.vUserProfile WHERE UserId = @id;",
                         new { id = userId }
                     );
             }
@@ -161,7 +161,7 @@ namespace API.Services.User
             {
                 var doesMemberExist = await ctx[SchoolMemberTable].Connection
                     .QueryFirstOrDefaultAsync<int>(
-                        "SELECT SchoolMemberId FROM ITIH.tSchoolMember WHERE UserId = @id;",
+                        "SELECT SchoolMemberId FROM FRK.tSchoolMember WHERE UserId = @id;",
                         new { id = userId }
                     );
 
@@ -176,13 +176,13 @@ namespace API.Services.User
             {
                 var doesDetailsExist = await ctx[UserDetailsTable].Connection
                     .QueryFirstOrDefaultAsync<int>(
-                        "SELECT UserDetailsId FROM ITIH.tUserDetails WHERE UserId = @id;",
+                        "SELECT UserDetailsId FROM FRK.tUserDetails WHERE UserId = @id;",
                         new { id = model.UserId }
                     );
 
                 var doesMemberExist = await ctx[SchoolMemberTable].Connection
                     .QueryFirstOrDefaultAsync<int>(
-                        "SELECT SchoolMemberId FROM ITIH.tSchoolMember WHERE UserId = @id;",
+                        "SELECT SchoolMemberId FROM FRK.tSchoolMember WHERE UserId = @id;",
                         new { id = model.UserId }
                     );
 

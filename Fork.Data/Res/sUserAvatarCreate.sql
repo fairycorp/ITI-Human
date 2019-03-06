@@ -1,5 +1,5 @@
 ﻿-- SetupConfig: {}
-create proc ITIH.sUserAvatarCreate (
+create proc FRK.sUserAvatarCreate (
 	@ActorId int,
 	@UserId int,
 	@Url nvarchar(max),
@@ -11,7 +11,7 @@ begin
 
 	--<PreCreate revert />
 
-	insert into ITIH.tUserAvatars (UserId, [Url])
+	insert into FRK.tUserAvatars (UserId, [Url])
 		values (@UserId, @Url);
 
 	set @UserAvatarIdResult = scope_identity();

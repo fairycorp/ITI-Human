@@ -95,7 +95,7 @@ namespace API.Services.User
             {
                 return await ctx[UserBalanceTable].Connection
                     .QueryFirstOrDefaultAsync<BasicDataUserBalance>(
-                        "SELECT * FROM ITIH.tUserBalance WHERE UserBalanceId = @id",
+                        "SELECT * FROM FRK.tUserBalance WHERE UserBalanceId = @id",
                         new { id = userBalanceId }
                     );
             }
@@ -107,7 +107,7 @@ namespace API.Services.User
             {
                 return await ctx[UserBalanceTable].Connection
                     .QueryFirstOrDefaultAsync<BasicDataUserBalance>(
-                        "SELECT * FROM ITIH.tUserBalance WHERE UserId = @id",
+                        "SELECT * FROM FRK.tUserBalance WHERE UserId = @id",
                         new { id = userId }
                     );
             }
